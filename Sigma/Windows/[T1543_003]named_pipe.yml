@@ -1,0 +1,26 @@
+title: Service Creation Using a Named Pipe
+id: 8ca2a7bf-42a1-4d95-8d55-93f4df3b4b7f
+status: experimental
+description: >
+  Detects the creation of a Windows service (Event ID 7045) referencing a named pipe path in
+  the service file name (e.g., \\.\pipe\...). Attackers sometimes abuse named pipes when creating
+  malicious services for lateral movement or privilege escalation.
+references:
+  - https://attack.mitre.org/techniques/T1543/003/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.privilege_escalation
+  - attack.persistence
+  - attack.t1543.003
+logsource:
+  product: windows
+  service: system
+detection:
+  selection:
+    EventID: 7045        # "A service was installed in the system"
+    ServiceFileName|contains: '\\.\pipe\'  
+  condition: selection
+falsepositives:
+  - Legitimate internal or custom services using named pipes
+level: high
