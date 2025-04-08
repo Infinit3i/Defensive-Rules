@@ -1,0 +1,27 @@
+title: Large Volume of HTTP POST Traffic
+id: bdf91234-5a6b-4c7d-9ef0-abcdef123456
+status: experimental
+description: "Detects hosts generating an unusually high number of HTTP POST requests, which may indicate data exfiltration, beaconing, or abuse of web services for command and control."
+references:
+  - https://attack.mitre.org/techniques/T1041/
+  - https://attack.mitre.org/techniques/T1071/001/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.exfiltration
+  - attack.command_and_control
+  - attack.t1041
+  - attack.t1071.001
+logsource:
+  product: zeek
+  service: http
+detection:
+  post_method:
+    method: "POST"
+  timeframe: 5m
+  threshold:
+    count: 20
+  condition: post_method
+falsepositives:
+  - High-volume API integrations or legitimate applications uploading data.
+level: high
