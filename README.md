@@ -7,7 +7,6 @@ sigma, spl rules
 `windows`
 
 
-6. Malicious Scheduled Task Creation  
 7. Process Injection Techniques  
 8. DLL Hijacking or Side-Loading  
 9. Credential Dumping and Abnormal Memory Reads  
