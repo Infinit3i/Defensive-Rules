@@ -1,0 +1,23 @@
+title: Pass_the_Hash
+id: 1c2f3b4d-5e6f-7890-abcd-ef1234567890
+status: experimental
+description: "Detects potential pass-the-hash attack by identifying network logon events using NTLM authentication in Windows Security EventID 4624 with LogonType 3."
+references:
+  - https://attack.mitre.org/techniques/T1550/002/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.credential_access
+  - attack.t1550.002
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4624
+    LogonType: 3
+    AuthenticationPackageName: "NTLM"
+  condition: selection
+falsepositives:
+  - Legitimate network logon activity that uses NTLM authentication.
+level: high
