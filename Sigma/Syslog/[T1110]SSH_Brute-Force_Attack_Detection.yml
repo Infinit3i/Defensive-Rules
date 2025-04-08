@@ -1,0 +1,23 @@
+title: SSH Brute-Force Attack Detection
+id: d3f6a1b2-7e3b-4c9f-82ec-abcdef123456
+status: experimental
+description: "Detects brute force SSH login attempts by monitoring syslog events for failed authentication attempts indicated by 'Failed password for' messages."
+references:
+  - https://attack.mitre.org/techniques/T1110/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.credential_access
+  - attack.t1110
+logsource:
+  product: linux
+  service: sshd
+  category: authentication
+detection:
+  selection:
+    Message|contains:
+      - "Failed password for"
+  condition: selection
+falsepositives:
+  - Legitimate authentication errors or temporary issues causing failed SSH logins.
+level: high
