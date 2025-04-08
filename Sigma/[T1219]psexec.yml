@@ -1,0 +1,25 @@
+title: Suspicious Execution of PsExec
+id: d2e8fc3b-9f12-4bfc-bf58-5b24a5a1be9e
+status: experimental
+description: Detects potential malicious usage of PsExec, a legitimate administration tool that is frequently used by adversaries for lateral movement and remote command execution. This rule triggers when a process creation event has a CommandLine field containing "psexec" or the Image field ends with "psexec.exe". Further investigation is recommended for each alert.
+references:
+    - https://attack.mitre.org/techniques/T1219/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+    - attack.execution
+    - attack.lateral_movement
+    - attack.t1219
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        CommandLine|contains:
+            - "psexec"
+        Image|endswith:
+            - "\psexec.exe"
+    condition: selection
+falsepositives:
+    - Legitimate administrative use of PsExec by IT operations
+level: medium
