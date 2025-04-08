@@ -5,6 +5,7 @@ sigma, spl rules
 
 
 `windows`
+
 2. LSASS Process Access or Injection  
 3. Suspicious RDP Activity and Firewall Changes  
 4. Windows Management Instrumentation (WMI) Abuse  
@@ -22,6 +23,7 @@ sigma, spl rules
 
     
 `syslog`
+
 1. SSH Brute-Force Attack Detection  
 2. Repeated Failed Login Attempts  
 3. Suspicious Sudo Command Usage  
@@ -40,6 +42,7 @@ sigma, spl rules
 
     
 `zeek`
+
 1. DNS Tunneling Detection  
 2. Malicious Domain Resolution  
 3. Anomalous DNS Query Patterns  
