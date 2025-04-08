@@ -7,7 +7,6 @@ sigma, spl rules
 `windows`
 
 
-7. Process Injection Techniques  
 8. DLL Hijacking or Side-Loading  
 9. Credential Dumping and Abnormal Memory Reads  
 10. Unusual File System Activities in Sensitive Directories  
