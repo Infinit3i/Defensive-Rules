@@ -1,0 +1,26 @@
+title: Anomalous Connection Volume and Duration
+id: b231fa84-6789-4cde-9abc-def123456789
+status: experimental
+description: "Detects hosts with a high number of connections or abnormally long connection durations using Zeek conn logs. These may indicate beaconing, data exfiltration, or scanning behavior."
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+  - https://attack.mitre.org/techniques/T1041/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.command_and_control
+  - attack.exfiltration
+  - attack.t1071.001
+  - attack.t1041
+logsource:
+  product: zeek
+  service: conn
+detection:
+  long_duration:
+    duration|gt: 600.0  # connections > 10 minutes
+  high_volume:
+    history|contains: "S"  # many TCP SYNs, i.e. initiating lots of connections
+  condition: long_duration OR high_volume
+falsepositives:
+  - Backup systems, monitoring agents, or CDN connections.
+level: medium

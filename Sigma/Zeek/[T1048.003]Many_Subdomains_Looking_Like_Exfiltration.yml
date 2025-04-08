@@ -1,0 +1,24 @@
+title: Many Subdomains Looking Like Exfiltration
+id: f4e1c7a2-8d9b-4d11-bcde-123456abcdef
+status: experimental
+description: "Detects large volumes of unique subdomain queries to the same root domain, which may indicate DNS-based data exfiltration using tunneling or encoding schemes."
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+  - https://attack.mitre.org/techniques/T1048/003/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.exfiltration
+  - attack.command_and_control
+  - attack.t1071.004
+  - attack.t1048.003
+logsource:
+  product: zeek
+  service: dns
+detection:
+  encoded_query:
+    query|re: "([a-zA-Z0-9]{10,}\\.){3,}"  # Deeply nested and encoded-looking subdomains
+  condition: encoded_query
+falsepositives:
+  - Legitimate telemetry domains (e.g., antivirus or EDR heartbeat pings) and some CDN services.
+level: high

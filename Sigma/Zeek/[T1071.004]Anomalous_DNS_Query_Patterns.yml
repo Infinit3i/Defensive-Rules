@@ -1,0 +1,25 @@
+title: Anomalous DNS Query Patterns
+id: a9b2c3d4-e5f6-4a7b-bcde-abcdef123456
+status: experimental
+description: "Detects anomalies in DNS query behavior using Zeek logs, including high-frequency requests, repetitive subdomain patterns, or excessive use of randomized or dynamic DNS queries, which may indicate tunneling or malware beaconing."
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.command_and_control
+  - attack.t1071.004
+logsource:
+  product: zeek
+  service: dns
+detection:
+  long_length:
+    query|re: ".{50,}"
+  numeric_subdomains:
+    query|re: "[0-9]{6,}"
+  repeated_host_patterns:
+    query|re: "([a-zA-Z0-9]{10,}\.){3,}"
+  condition: long_length or numeric_subdomains or repeated_host_patterns
+falsepositives:
+  - CDNs or legitimate telemetry platforms using long subdomains.
+level: high

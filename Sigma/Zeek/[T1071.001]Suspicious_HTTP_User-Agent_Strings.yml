@@ -1,0 +1,30 @@
+title: Suspicious HTTP User-Agent Strings
+id: f2c1a8b9-d456-4e7c-8123-abcdef987654
+status: experimental
+description: "Detects suspicious or malicious HTTP User-Agent strings observed in Zeek HTTP logs, which may indicate malware beaconing, automated tools, or penetration testing frameworks."
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.command_and_control
+  - attack.t1071.001
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection:
+    user_agent|contains:
+      - "curl/"
+      - "python-requests"
+      - "powershell"
+      - "Go-http-client"
+      - "wget"
+      - "nmap"
+      - "sqlmap"
+      - "fuzz"
+      - "bot"
+  condition: selection
+falsepositives:
+  - Custom integrations, vulnerability scanners, or monitoring tools with non-standard User-Agents.
+level: medium

@@ -1,0 +1,24 @@
+title: DNS Tunneling Detection
+id: 123fabc4-5678-4def-9876-a1b2c3d4e5f6
+status: experimental
+description: "Detects potential DNS tunneling by identifying long or high-frequency DNS queries, especially those using NULL or TXT query types, which are commonly abused for data exfiltration or C2."
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.command_and_control
+  - attack.t1071.004
+logsource:
+  product: zeek
+  service: dns
+detection:
+  long_query:
+    qtype_name|contains:
+      - "TXT"
+      - "NULL"
+    query|re: ".{50,}"  # Queries longer than 50 characters
+  condition: long_query
+falsepositives:
+  - Large DNS records used by cloud services or CDNs.
+level: high
