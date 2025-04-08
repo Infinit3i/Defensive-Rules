@@ -7,8 +7,6 @@ sigma, spl rules
 `windows`
 
 
-3. Suspicious RDP Activity and Firewall Changes  
-4. Windows Management Instrumentation (WMI) Abuse  
 5. New or Modified Windows Services  
 6. Malicious Scheduled Task Creation  
 7. Process Injection Techniques  
