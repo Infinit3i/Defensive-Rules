@@ -1,0 +1,28 @@
+title: Potential Meterpreter Execution Detected
+id: dcoxidm8-abcd-win1-met6-infinit3i456
+status: experimental
+description: >
+  Detects potential Meterpreter activity by searching for the string "meterpreter"
+  in process creation events. Meterpreter is a payload commonly used in
+  penetration testing frameworks (e.g., Metasploit) and may indicate
+  unauthorized remote control activity.
+author: Matthew Iverson
+date: 2025/04/08
+references:
+  - https://attack.mitre.org/techniques/T1219/   # MITRE ATT&CK: T1219 - Remote Access Tools
+tags:
+  - attack.t1219
+  - attack.execution
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - meterpreter
+  condition: selection
+falsepositives:
+  - Legitimate penetration testing or red team activities using Meterpreter.
+  - Administrative or security tools that might incidentally include the keyword.
+level: medium
