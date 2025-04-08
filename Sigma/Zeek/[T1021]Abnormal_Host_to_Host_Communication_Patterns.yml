@@ -1,0 +1,31 @@
+title: Abnormal Host-to-Host Communication Patterns
+id: a123bc45-6789-4def-9012-abcdef987654
+status: experimental
+description: "Detects abnormal internal host-to-host communication using Zeek conn logs, such as previously unseen IP pairs, unexpected protocols, or new lateral connections that may indicate reconnaissance or lateral movement."
+references:
+  - https://attack.mitre.org/techniques/T1021/
+  - https://attack.mitre.org/techniques/T1049/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.lateral_movement
+  - attack.discovery
+  - attack.t1021
+  - attack.t1049
+logsource:
+  product: zeek
+  service: conn
+detection:
+  internal_pair:
+    id.orig_h|startswith: "192.168."
+    id.resp_h|startswith: "192.168."
+  uncommon_service:
+    service|contains:
+      - "rdp"
+      - "winrm"
+      - "dcerpc"
+      - "msrpc"
+  condition: internal_pair AND uncommon_service
+falsepositives:
+  - New software deployments or administrative connections from IT or monitoring systems.
+level: high

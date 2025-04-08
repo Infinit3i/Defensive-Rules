@@ -1,0 +1,24 @@
+title: Brute-Force SSH Attempts
+id: f9c8123a-4567-4e9b-a012-abcdef123456
+status: experimental
+description: "Detects repeated failed SSH login attempts using Zeek logs by identifying high volumes of connection attempts with 'failed' authentication results from a single source."
+references:
+  - https://attack.mitre.org/techniques/T1110/001/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.credential_access
+  - attack.t1110.001
+logsource:
+  product: zeek
+  service: ssh
+detection:
+  selection:
+    auth_success: "F"
+  condition: selection
+  timeframe: 5m
+  threshold:
+    count: 5
+falsepositives:
+  - Mistyped credentials by users, poor password managers, or misconfigured automation.
+level: high

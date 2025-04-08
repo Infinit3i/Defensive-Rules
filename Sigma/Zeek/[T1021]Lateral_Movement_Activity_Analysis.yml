@@ -1,0 +1,27 @@
+title: Lateral Movement Activity Analysis
+id: e123fa45-6789-4dce-91ab-abcdef987654
+status: experimental
+description: "Detects potential lateral movement by identifying unexpected internal connections using protocols such as RDP, SMB, SSH, and WinRM. This rule uses Zeek conn logs to analyze host-to-host activity across the internal network."
+references:
+  - https://attack.mitre.org/techniques/T1021/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.lateral_movement
+  - attack.t1021
+logsource:
+  product: zeek
+  service: conn
+detection:
+  selection:
+    service|contains:
+      - "smb"
+      - "rdp"
+      - "ssh"
+      - "winrm"
+    id_orig_h|startswith: "192.168."  # internal IP range (customize for your network)
+    id_resp_h|startswith: "192.168."
+  condition: selection
+falsepositives:
+  - Normal administrative operations or backups using remote management protocols.
+level: high
