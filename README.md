@@ -5,7 +5,6 @@ sigma, spl rules
 
 
 `windows`
-1. Abnormal PowerShell Activity  
 2. LSASS Process Access or Injection  
 3. Suspicious RDP Activity and Firewall Changes  
 4. Windows Management Instrumentation (WMI) Abuse  
