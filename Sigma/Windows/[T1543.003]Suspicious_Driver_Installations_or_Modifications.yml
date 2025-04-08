@@ -1,0 +1,24 @@
+title: Suspicious Driver Installations or Modifications
+id: 4a9c8b7d-1234-4e6a-bcde-1234567890ab
+status: experimental
+description: "Detects the creation or modification of driver services (EventID 7045) where the service file (driver) ends with .sys and is installed outside of known trusted directories."
+references:
+  - https://attack.mitre.org/techniques/T1543/003/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.persistence
+  - attack.t1543.003
+logsource:
+  product: windows
+  service: system
+detection:
+  selection:
+    EventID: 7045
+    ServiceFileName|endswith: ".sys"
+  whitelist:
+    ServiceFileName|startswith: "C:\\Windows\\System32\\drivers\\"
+  condition: selection and not whitelist
+falsepositives:
+  - Legitimate driver updates or installations by trusted vendors in standard directories.
+level: high
