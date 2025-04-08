@@ -1,0 +1,25 @@
+title: Suspicious Use of ADMIN$ Administrative Share
+id: 9a8d3f1e-7c12-45ef-8d9a-123456789abc
+status: experimental
+description: >
+  Detects potential malicious use of the ADMIN$ share. Although ADMIN$ is a legitimate
+  administrative share, adversaries may abuse it during lateral movement to remotely
+  access systems. This rule searches for process creation events where the command line or
+  related fields reference "ADMIN$".
+references:
+    - https://attack.mitre.org/techniques/T1077/ 
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+    - attack.lateral_movement
+    - attack.t1077
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    selection:
+        CommandLine|contains: "ADMIN$"
+    condition: selection
+falsepositives:
+    - Legitimate administrative activities and remote management tools accessing ADMIN$ for maintenance or backups.
+level: medium
