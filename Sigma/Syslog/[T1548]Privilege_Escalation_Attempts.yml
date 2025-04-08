@@ -1,0 +1,32 @@
+title: Privilege Escalation Attempts
+id: f87a1b2c-3d4e-5f6a-9b7c-abcdef123456
+status: experimental
+description: "Detects potential privilege escalation attempts by monitoring syslog events for failed sudo authentications, messages indicating a user is not in the sudoers file, or failed su attempts."
+references:
+  - https://attack.mitre.org/techniques/T1548/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.privilege_escalation
+  - attack.t1548
+logsource:
+  product: linux
+  service: syslog
+  category: authentication
+detection:
+  sudo_failure:
+    Message|contains:
+      - "sudo:" 
+      - "authentication failure"
+  sudo_not_in_sudoers:
+    Message|contains:
+      - "sudo:" 
+      - "not in the sudoers file"
+  su_failure:
+    Message|contains:
+      - "su:"
+      - "FAILED"
+  condition: sudo_failure or sudo_not_in_sudoers or su_failure
+falsepositives:
+  - Legitimate authentication errors due to mistyped passwords or configuration issues.
+level: medium

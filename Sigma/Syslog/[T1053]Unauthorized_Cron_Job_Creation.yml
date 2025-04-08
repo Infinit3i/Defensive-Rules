@@ -1,0 +1,24 @@
+title: Unauthorized Cron Job Creation
+id: e9c71683-79f8-40c0-93e4-1234567890ab
+status: experimental
+description: "Detects syslog events indicating new or modified cron jobs by monitoring for messages such as 'crontab: installing new crontab' or 'crontab: installing for', which may signal unauthorized cron job creation."
+references:
+  - https://attack.mitre.org/techniques/T1053/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - job.creation
+  - attack.t1053
+logsource:
+  product: linux
+  service: syslog
+  category: cron
+detection:
+  selection:
+    Message|contains:
+      - "crontab: installing new crontab"
+      - "crontab: installing for"
+  condition: selection
+falsepositives:
+  - Legitimate cron job modifications performed by authorized administrators or system processes.
+level: medium

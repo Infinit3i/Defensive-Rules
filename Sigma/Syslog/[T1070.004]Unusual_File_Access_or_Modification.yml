@@ -1,0 +1,33 @@
+title: Unusual File Access or Modification
+id: d4c3b2a1-5678-4def-9abc-abcdef123456
+status: experimental
+description: "Detects unusual file access or modification events by monitoring syslog messages for keywords such as 'modified', 'changed', 'deleted', or 'created' in relation to sensitive files or directories (e.g., /etc/passwd, /etc/shadow, /etc/sudoers, /etc/group, /var/log), which may signal potential indicator removal or tampering."
+references:
+  - https://attack.mitre.org/techniques/T1070/004/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.indicator_removal
+  - attack.t1070.004
+logsource:
+  product: linux
+  service: syslog
+  category: file_activity
+detection:
+  selection:
+    Message|contains:
+      - "/etc/passwd"
+      - "/etc/shadow"
+      - "/etc/sudoers"
+      - "/etc/group"
+      - "/var/log"
+  modifications:
+    Message|contains:
+      - "modified"
+      - "changed"
+      - "deleted"
+      - "created"
+  condition: selection and modifications
+falsepositives:
+  - Legitimate file changes resulting from system updates, routine maintenance, or authorized administrative activities.
+level: medium

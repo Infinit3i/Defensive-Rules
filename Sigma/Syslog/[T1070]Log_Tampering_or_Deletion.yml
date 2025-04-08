@@ -1,0 +1,27 @@
+title: Log Tampering or Deletion
+id: 9d2f1c73-6f4e-4b2a-bd33-1234567890ab
+status: experimental
+description: "Detects potential log tampering or deletion on Linux systems by monitoring syslog events for suspicious commands or messages (e.g. 'rm -rf /var/log', 'deleted log', 'truncated log', 'log cleared') that may indicate attempts to remove or obscure log data."
+references:
+  - https://attack.mitre.org/techniques/T1070/001/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.indicator_removal
+  - attack.t1070
+logsource:
+  product: linux
+  service: syslog
+  category: system
+detection:
+  selection:
+    Message|contains:
+      - "rm -rf /var/log"
+      - "rm -f /var/log"
+      - "deleted log"
+      - "truncated log"
+      - "log cleared"
+  condition: selection
+falsepositives:
+  - Legitimate log rotation events, scheduled maintenance, or authorized system cleanup tasks.
+level: medium

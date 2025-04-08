@@ -1,0 +1,26 @@
+title: Unauthorized Package Manager Activity on Networking Equipment
+id: e2f4a789-bc12-345d-8abc-1234567890ab
+status: experimental
+description: "Detects unauthorized package manager activity on networking equipment by monitoring syslog events for commands like 'install add file', 'install activate', 'upgrade file', or 'software install' that may indicate unsanctioned software or firmware changes."
+references:
+  - https://attack.mitre.org/techniques/T1195/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.supply_chain_compromise
+  - attack.t1195
+logsource:
+  product: network
+  service: syslog
+  category: package
+detection:
+  selection:
+    Message|contains:
+      - "install add file"
+      - "install activate"
+      - "upgrade file"
+      - "software install"
+  condition: selection
+falsepositives:
+  - Legitimate and scheduled software or firmware updates performed by authorized network administrators.
+level: medium

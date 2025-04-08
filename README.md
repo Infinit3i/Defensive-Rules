@@ -1,5 +1,7 @@
 # Defensive_Rules
 
+Organized by rule type and then by data source
+
 ### Sigma
     - windows
     - syslog
@@ -16,13 +18,6 @@
 `syslog`
 
 
-5. Abnormal User Account Modifications  
-6. Log Tampering or Deletion  
-7. Unexpected Service Start/Stop  
-8. Privilege Escalation Attempts  
-9. Abnormal Kernel Module Loading  
-10. Unauthorized Package Manager Activity  
-11. Unusual File Access or Modification  
 12. Unexpected System Reboots or Shutdowns  
 13. Anomalous Network Connection Logs  
 14. Suspicious Remote Access Attempts  

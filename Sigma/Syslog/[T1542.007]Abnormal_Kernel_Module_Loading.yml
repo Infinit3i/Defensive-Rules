@@ -1,0 +1,26 @@
+title: Abnormal Kernel Module Loading
+id: 2f7e9d45-8c3a-4d5e-bf90-1234567890ab
+status: experimental
+description: "Detects potential abnormal kernel module loading on Linux systems by monitoring syslog messages for module load commands (e.g., insmod, modprobe) executed from non-standard directories such as /tmp/."
+references:
+  - https://attack.mitre.org/techniques/T1542/007/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.persistence
+  - attack.t1542.007
+logsource:
+  product: linux
+  service: syslog
+  category: kernel
+detection:
+  selection:
+    Message|contains:
+      - "insmod"
+      - "modprobe"
+  abnormal_path:
+    Message|contains: "/tmp/"
+  condition: selection and abnormal_path
+falsepositives:
+  - Legitimate kernel module loading during system updates or when modules are temporarily staged in /tmp/ during packaging.
+level: medium

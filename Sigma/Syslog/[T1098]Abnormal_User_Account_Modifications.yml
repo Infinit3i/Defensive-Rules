@@ -1,0 +1,28 @@
+title: Abnormal User Account Modifications
+id: e8b3fa21-9d45-4c2a-90d7-1234567890ab
+status: experimental
+description: "Detects abnormal modifications to user accounts, such as creation, modification, or deletion, that may indicate unauthorized account manipulation."
+references:
+  - https://attack.mitre.org/techniques/T1098/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.account_manipulation
+  - attack.t1098
+logsource:
+  product: linux
+  service: syslog
+  category: authentication
+detection:
+  selection:
+    Message|contains:
+      - "useradd"
+      - "usermod"
+      - "userdel"
+      - "groupadd"
+      - "groupdel"
+      - "passwd: password changed"
+  condition: selection
+falsepositives:
+  - Legitimate user account changes performed by system administrators or automated system processes.
+level: medium
