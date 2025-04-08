@@ -1,0 +1,24 @@
+title: Suspicious Execution of wmiexec
+id: f07d8d74-1234-5678-9abc-def123456789
+status: experimental
+description: Detects potential malicious usage of wmiexec, a tool often employed by adversaries for lateral movement and remote command execution. The rule looks for process creation events where the CommandLine field contains "wmiexec". Legitimate administrative use may trigger this, so further investigation is recommended.
+author: Matthew Iverson
+date: 2025-04-08
+references:
+  - https://attack.mitre.org/techniques/T1047/
+tags:
+  - attack.execution
+  - attack.lateral_movement
+  - attack.t1047
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - "wmiexec"
+  condition: selection
+falsepositives:
+  - Legitimate administrative use of wmiexec for remote management
+level: medium
