@@ -7,7 +7,6 @@ sigma, spl rules
 `windows`
 
 
-5. New or Modified Windows Services  
 6. Malicious Scheduled Task Creation  
 7. Process Injection Techniques  
 8. DLL Hijacking or Side-Loading  
