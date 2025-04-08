@@ -1,0 +1,26 @@
+title: Unencrypted Traffic on TCP 443
+id: 9c3f12ab-8d45-4f71-a7ef-abcdef987654
+status: experimental
+description: "Detects network connections to port 443 (typically HTTPS) that do not negotiate TLS/SSL, which may indicate misuse of the port for unencrypted or covert communication."
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+  - https://attack.mitre.org/techniques/T1041/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.command_and_control
+  - attack.exfiltration
+  - attack.t1071.001
+  - attack.t1041
+logsource:
+  product: zeek
+  service: conn
+detection:
+  unencrypted_443:
+    proto: "tcp"
+    id_resp_p: 443
+    service: "-"
+  condition: unencrypted_443
+falsepositives:
+  - Port 443 used for non-TLS services in test or legacy environments.
+level: high
