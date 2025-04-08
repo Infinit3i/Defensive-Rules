@@ -1,0 +1,28 @@
+title: LSASS_Process_Access_or_Injection
+id: d9f5b1e2-3f4a-4d2c-b1a2-9abf12345678
+status: experimental
+description: "Detects suspicious process activity targeting lsass.exe, indicating process access or injection attempts often associated with credential dumping or token theft. Monitors Sysmon events for process access (EventID 10) and remote thread creation (EventID 8) where lsass.exe is the target."
+references:
+  - https://attack.mitre.org/techniques/T1003/001/
+  - https://attack.mitre.org/techniques/T1055/003/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.credential_access
+  - attack.t1003.001
+  - attack.t1055.003
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  suspicious_access:
+    EventID: 10
+    TargetImage|endswith: "\lsass.exe"
+    GrantedAccess|re: "(?i)0x1F0FFF|0x1fffff|0x1410|0x143a"
+  suspicious_thread:
+    EventID: 8
+    TargetImage|endswith: "\lsass.exe"
+  condition: suspicious_access OR suspicious_thread
+falsepositives:
+  - Legitimate antivirus or EDR tools scanning or interacting with LSASS.
+level: high
