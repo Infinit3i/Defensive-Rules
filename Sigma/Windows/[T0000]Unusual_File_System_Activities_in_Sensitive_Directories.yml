@@ -1,0 +1,26 @@
+title: Unusual File System Activities in Sensitive Directories
+id: 5a72c8e1-0b4d-4d3a-bb7f-123456789abc
+status: experimental
+description: "Detects suspicious file system activity in sensitive directories (e.g., C:\Windows\System32, C:\Windows\Temp, C:\Program Files, C:\Windows\SysWOW64) that may indicate malicious operations such as unauthorized file creation or modification."
+references: []
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - file.activity
+  - custom.t0000
+logsource:
+  product: windows
+  service: sysmon
+  category: file_creation
+detection:
+  selection:
+    EventID: 11
+    TargetFilename|contains:
+      - "C:\Windows\System32"
+      - "C:\Windows\Temp"
+      - "C:\Program Files"
+      - "C:\Windows\SysWOW64"
+  condition: selection
+falsepositives:
+  - Legitimate file operations performed during software installations, updates, or system maintenance.
+level: medium

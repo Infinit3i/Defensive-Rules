@@ -1,20 +1,16 @@
 # Defensive_Rules
-sigma, spl rules
+
+### Sigma
+    - windows
+    - syslog
+    - zeek
+
+### Splunk
+    - windows
+    - syslog
+    - zeek
 
 **NONE OF THESE ARE TESTED YET**
-
-
-`windows`
-
-
-8. DLL Hijacking or Side-Loading  
-9. Credential Dumping and Abnormal Memory Reads  
-10. Unusual File System Activities in Sensitive Directories  
-11. Anomalous Network Traffic / C2 Beaconing  
-12. Abuse of Remote Administration Tools  
-13. Utility Abuse (Regsvr32, Rundll32, etc.)  
-14. Event Log Tampering or Clearing  
-15. Suspicious Driver Installations or Modifications
 
     
 `syslog`

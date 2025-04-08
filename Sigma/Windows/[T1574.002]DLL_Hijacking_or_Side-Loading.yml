@@ -1,0 +1,26 @@
+title: DLL Hijacking or Side-Loading
+id: c1d9a3f4-7a23-4d8e-9f12-abcdef123456
+status: experimental
+description: "Detects suspicious DLL load events that may indicate DLL hijacking or side-loading via non-standard directories."
+references:
+  - https://attack.mitre.org/techniques/T1574/002/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.persistence
+  - attack.t1574.002
+logsource:
+  product: windows
+  service: sysmon
+  category: image_load
+detection:
+  selection:
+    ImageLoaded|endswith: ".dll"
+    Image|contains:
+      - ":\Temp\"
+      - ":\Users\Public\"
+      - ":\AppData\Local\Temp\"
+  condition: selection
+falsepositives:
+  - Legitimate DLL loads from temporary directories during installations, updates, or software staging.
+level: medium

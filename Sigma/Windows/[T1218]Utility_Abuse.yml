@@ -1,0 +1,23 @@
+title: Utility Abuse (Regsvr32, Rundll32, etc.)
+id: 7bd3a9ce-4f1e-4b5c-bd3e-1234567890ab
+status: experimental
+description: "Detects the execution of legitimate Windows utilities (e.g., regsvr32.exe, rundll32.exe) that may be abused to execute arbitrary code, load malicious DLLs, or bypass security controls."
+references:
+  - https://attack.mitre.org/techniques/T1218/011/  # Reference for Regsvr32 abuse
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.execution
+  - attack.t1218.011
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  regsvr32:
+    Image|endswith: "regsvr32.exe"
+  rundll32:
+    Image|endswith: "rundll32.exe"
+  condition: regsvr32 OR rundll32
+falsepositives:
+  - Legitimate use of regsvr32 or rundll32 by system processes, software installers, and administrative tools.
+level: medium
