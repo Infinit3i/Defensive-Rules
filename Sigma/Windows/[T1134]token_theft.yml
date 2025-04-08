@@ -1,0 +1,40 @@
+title: Suspicious Domain Token Theft or Impersonation
+id: 12345678-9abc-def0-1234-56789abcdef0
+status: experimental
+description: Detects behavior that may indicate the theft or impersonation of domain tokens on a Windows system. This rule focuses on Sysmon events that capture process access operations (Event ID 10) and remote thread creation (Event ID 8) against high-value processes like LSASS or Winlogon,  which are common targets for credential or token theft.
+references:
+  - https://attack.mitre.org/techniques/T1134/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.privilege_escalation
+  - attack.credential_access
+  - attack.t1134
+logsource:
+  product: windows
+  service: sysmon
+detection:
+# SECTION 1: Suspicious Process Access (Sysmon EID 10)
+  suspicious_access:
+    EventID: 10
+    TargetImage|endswith:
+      - '\lsass.exe'
+      - '\winlogon.exe'
+      - '\spoolsv.exe'
+    # Common suspicious access rights for token theft
+    #  - 0x1F0FFF or 0x1fffff = PROCESS_ALL_ACCESS
+    #  - 0x143A and 0x1410 are typical handles for duplication and injection
+    GrantedAccess|re: '(?i)0x1F0FFF|0x1fffff|0x143a|0x1410'
+# SECTION 2: CreateRemoteThread into LSASS or other system processes (Sysmon EID 8)
+  suspicious_thread:
+    EventID: 8
+    TargetImage|endswith:
+      - '\lsass.exe'
+      - '\winlogon.exe'
+      - '\spoolsv.exe'
+  
+  condition: suspicious_access OR suspicious_thread
+falsepositives:
+  - Legitimate antivirus or EDR tools accessing LSASS
+  - Legitimate backup or monitoring software with special privileges
+level: high
