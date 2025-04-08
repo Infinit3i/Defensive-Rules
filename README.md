@@ -15,10 +15,7 @@
     
 `syslog`
 
-1. SSH Brute-Force Attack Detection  
-2. Repeated Failed Login Attempts  
-3. Suspicious Sudo Command Usage  
-4. Unauthorized Cron Job Creation  
+
 5. Abnormal User Account Modifications  
 6. Log Tampering or Deletion  
 7. Unexpected Service Start/Stop  

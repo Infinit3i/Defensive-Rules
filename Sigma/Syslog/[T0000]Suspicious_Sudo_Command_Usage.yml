@@ -1,0 +1,23 @@
+title: Suspicious Sudo Command Usage
+id: c021bac1-4d2e-4ebc-9d0c-1a2b3c4d5e6f
+status: experimental
+description: "Detects suspicious sudo command usage from syslog events, where unusual or abnormal sudo commands (indicated by the presence of 'sudo:' and 'COMMAND=') may indicate unauthorized privilege escalation attempts."
+references: []
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.privilege_escalation
+  - custom.t0000
+logsource:
+  product: linux
+  service: syslog
+  category: authentication
+detection:
+  selection:
+    Message|contains:
+      - "sudo:"
+      - "COMMAND="
+  condition: selection
+falsepositives:
+  - Legitimate sudo usage by authorized administrators.
+level: medium

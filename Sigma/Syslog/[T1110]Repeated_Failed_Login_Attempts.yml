@@ -1,0 +1,27 @@
+title: Repeated Failed Login Attempts
+id: 4e7c2b3d-89fa-4cda-8123-abcdef123456
+status: experimental
+description: "Detects repeated failed SSH login attempts by monitoring syslog events containing 'Failed password for', aggregated over a short timeframe to indicate brute force activity."
+references:
+  - https://attack.mitre.org/techniques/T1110/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.credential_access
+  - attack.t1110
+logsource:
+  product: linux
+  service: sshd
+  category: authentication
+detection:
+  selection:
+    Message|contains:
+      - "Failed password for"
+  # Note: The aggregation/threshold capability may depend on the Sigma runner implementation.
+  timeframe: 5m
+  threshold:
+    count: 5
+  condition: selection
+falsepositives:
+  - Legitimate authentication errors due to mistyped passwords or transient network issues.
+level: high
