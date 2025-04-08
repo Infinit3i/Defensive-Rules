@@ -1,0 +1,29 @@
+title: Enabling RDP Through Firewall Modification Detected
+id: 0e2a15fa-1234-5678-9abc-def098765432
+status: experimental
+description: >
+  Detects modification of Windows Firewall rules that enable Remote Desktop Protocol (RDP).
+  This rule looks for events (e.g. EventID 4946) that indicate a firewall rule change where the rule
+  involves port 3389 or mentions "Remote Desktop". This behavior can be indicative of an adversary enabling RDP
+  for remote access.
+references:
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-security-audit-events
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+    - attack.defense_evasion
+    - attack.t1562
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4946
+    rdp_indicators:
+        Message|contains:
+            - "3389"
+            - "Remote Desktop"
+    condition: selection and rdp_indicators
+falsepositives:
+    - Legitimate administrative firewall rule changes for enabling RDP
+level: medium
