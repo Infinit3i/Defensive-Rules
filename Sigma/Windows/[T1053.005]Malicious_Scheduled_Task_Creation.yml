@@ -1,0 +1,21 @@
+title: Malicious Scheduled Task Creation
+id: e4f2d6b7-8c90-4a71-bd3e-1234567890ab
+status: experimental
+description: "Detects suspicious creation or modification of scheduled tasks (EventID 4698) that may be used for persistence or malicious code execution."
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.persistence
+  - attack.t1053.005
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4698
+  condition: selection
+falsepositives:
+  - Legitimate scheduled task creation by system administrators or software update mechanisms.
+level: high
