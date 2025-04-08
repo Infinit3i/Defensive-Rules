@@ -1,0 +1,29 @@
+title: Abnormal_PowerShell_Activity
+id: f3e5a2d1-4b70-4cdb-9a54-123456789abc
+status: experimental
+description: >
+  Detects abnormal PowerShell activity that may indicate attempts to obfuscate or maliciously
+  execute commands. This rule flags process creation events where a PowerShell process is started
+  with suspicious command-line arguments such as encoded commands or inline invocation of expressions.
+references:
+  - https://attack.mitre.org/techniques/T1059/001/
+author: Matthew Iverson
+date: 2025-04-08
+tags:
+  - attack.execution
+  - attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: "\powershell.exe"
+    CommandLine|contains:
+      - "-EncodedCommand"
+      - "-enc"
+      - "IEX"
+      - "Invoke-Expression"
+  condition: selection
+falsepositives:
+  - Legitimate administrative scripting that uses encoded commands or inline command invocation.
+level: high
