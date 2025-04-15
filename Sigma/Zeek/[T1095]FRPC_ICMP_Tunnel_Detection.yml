@@ -1,0 +1,43 @@
+title: Detect ICMP-Based FRPC Communication
+id: 49e5a81b-f83d-4c26-aeaa-6b423d678c2c
+description: Detects ICMP echo request and reply traffic which may indicate FRPC tunneling behavior for C2 using non-application layer protocols.
+status: experimental
+logsource:
+  category: network-connection
+  product: zeek
+detection:
+  selection:
+    icmp_type:
+      - 0
+      - 8
+  condition: selection
+fields:
+  - _time
+  - icmp_type
+  - icmp_code
+  - src_ip
+  - dest_ip
+  - event_description
+falsepositives:
+  - Legitimate ping traffic
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1095
+  - volt_typhoon
+  - icmp
+  - frpc
+  - yara_compatible
+metadata:
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: ""
+  priority: high
+  mitre_version: 16.1
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects ICMP-based communication indicative of covert FRPC tunneling.
+  mitre_tactic: Command and Control
+  mitre_technique: Non-Application Layer Protocol
+  mitre_technique_id: T1095
+  mitre_link: https://attack.mitre.org/techniques/T1095/

@@ -1,0 +1,49 @@
+title: Detect FRPC Communication on Designated Ports
+id: b33f772a-12f3-4ae6-942c-f6c81803d107
+description: Detects possible FRPC (Fast Reverse Proxy Client) activity by identifying traffic on high-risk ports (6000, 7000) using Zeek logs.
+status: experimental
+logsource:
+  category: network-connection
+  product: zeek
+detection:
+  selection:
+    - id.orig_p:
+        - 6000
+        - 7000
+    - id.resp_p:
+        - 6000
+        - 7000
+  condition: selection
+fields:
+  - _time
+  - id.orig_p
+  - id.resp_p
+  - id.orig_h
+  - id.resp_h
+  - hash_sha256
+  - proto
+falsepositives:
+  - Legitimate applications using the same ports
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071
+  - frpc
+  - volt_typhoon
+  - ports.6000
+  - ports.7000
+  - zeek
+  - yara_compatible
+metadata:
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: 2025-04-15
+  priority: high
+  mitre_version: 16.1
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects FRPC communication using designated ports.
+  mitre_tactic: Command and Control
+  mitre_technique: Application Layer Protocol
+  mitre_technique_id: T1071
+  mitre_link: https://attack.mitre.org/techniques/T1071/

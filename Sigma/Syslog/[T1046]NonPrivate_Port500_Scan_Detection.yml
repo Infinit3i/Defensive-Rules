@@ -1,0 +1,51 @@
+title: Detect Scanning or IPsec Probing via Public IPs or Port 500
+id: 2d8dc2ac-01f4-45be-a72d-cccf594e0155
+description: Detects external IP scans or use of port 500 (commonly used for ISAKMP/IPsec VPNs), indicating reconnaissance or tunneling attempts.
+status: experimental
+logsource:
+  category: network-connection
+  product: syslog
+detection:
+  selection:
+    src_ip|cidr:
+      - "!10.0.0.0/8"
+      - "!192.168.0.0/16"
+      - "!172.16.0.0/12"
+    condition1:
+      src_ip|cidr: 137.0.0.0/16
+    condition2:
+      src_port: 500
+    condition3:
+      dest_port: 500
+  condition: selection and (condition1 or condition2 or condition3)
+fields:
+  - _time
+  - src_ip
+  - dest_ip
+  - src_port
+  - dest_port
+  - http_header
+falsepositives:
+  - Legitimate VPN clients using port 500
+  - Monitoring services scanning external hosts
+level: high
+tags:
+  - attack.discovery
+  - attack.t1046
+  - volt_typhoon
+  - ipsec
+  - isakmp
+  - yara_compatible
+metadata:
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: ""
+  priority: high
+  mitre_version: 16
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects suspicious connections to non-private IPs or port 500 usage.
+  mitre_tactic: Discovery
+  mitre_technique: Network Service Scanning
+  mitre_technique_id: T1046
+  mitre_link: https://attack.mitre.org/techniques/T1046/
