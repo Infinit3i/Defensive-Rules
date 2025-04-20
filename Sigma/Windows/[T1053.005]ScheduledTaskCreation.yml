@@ -1,0 +1,35 @@
+title: Scheduled Task Creation
+id: e7f9d280-bb95-4203-a34d-238b09d7b8a2
+status: experimental
+description: Detects new scheduled tasks which may indicate attacker persistence. Uses Windows Security Event ID 4698 and correlates with Sysmon Event ID 1 for related tooling.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  windows_event:
+    EventID: 4698
+  sysmon_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'schtasks'
+      - 'New-ScheduledTask'
+      - 'at.exe'
+  condition: windows_event or sysmon_process
+fields:
+  - TaskName
+  - CommandLine
+  - Image
+  - SubjectUserName
+  - ComputerName
+falsepositives:
+  - Legitimate task configuration by admins
+  - Patch management or monitoring tools
+level: high
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053
+  - attack.t1053.005
+  - windows
+  - sysmon

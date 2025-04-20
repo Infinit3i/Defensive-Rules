@@ -1,0 +1,39 @@
+title: User Added to Domain Admins Group
+id: c187f01b-2e2c-4f91-a4b0-81834b935d4d
+status: stable
+description: Detects unauthorized or suspicious additions to the Domain Admins group using Windows Security Event ID 4728 and correlates with suspicious process activity via Sysmon Event ID 1.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  windows_event:
+    EventID: 4728
+    GroupName|endswith: 'Domain Admins'
+  sysmon_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'net group'
+      - 'Domain Admins'
+      - '/add'
+      - 'Add-ADGroupMember'
+      - 'dsadd'
+  condition: windows_event or sysmon_process
+fields:
+  - TargetUserName
+  - GroupName
+  - SubjectUserName
+  - CommandLine
+  - Image
+  - ComputerName
+  - EventID
+falsepositives:
+  - Authorized IT admin account provisioning
+  - Legitimate domain admin role assignments
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1098
+  - windows
+  - sysmon

@@ -1,0 +1,34 @@
+title: DLL Loaded from Non-standard Directory
+id: 1f775e2d-1341-4e25-8bfb-8f5e7f488eb7
+status: experimental
+description: Detects DLL image load operations from suspicious directories like user folders, temp paths, or network shares. Based on Sysmon Event ID 7.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: sysmon
+  category: image_load
+detection:
+  selection_event:
+    EventID: 7
+  selection_path:
+    ImageLoaded|startswith:
+      - 'C:\Users\'
+      - 'C:\Windows\Temp\'
+    ImageLoaded|contains:
+      - '\\'
+  condition: selection_event and selection_path
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Developer tools
+  - Software updaters
+level: high
+tags:
+  - attack.persistence
+  - attack.t1574
+  - attack.t1574.002
+  - sysmon

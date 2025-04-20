@@ -1,0 +1,34 @@
+title: Audit Policy Change or Clearing Attempt
+id: 8f94eb0d-3aa2-4a9a-953d-cafbe548732f
+status: experimental
+description: Detects audit policy changes (Event ID 4719) and correlates with suspicious tools that modify or clear logs (auditpol, secedit, wevtutil).
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  windows_event:
+    EventID: 4719
+  sysmon_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'auditpol'
+      - 'secedit'
+      - 'wevtutil cl'
+  condition: windows_event or sysmon_process
+fields:
+  - SubjectUserName
+  - CommandLine
+  - Image
+  - EventID
+  - ComputerName
+falsepositives:
+  - Security configuration changes by IT
+  - Group Policy updates
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1562
+  - attack.t1562.002
+  - windows
+  - sysmon

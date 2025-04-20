@@ -1,0 +1,43 @@
+title: Suspicious Process Injection into LSASS or Explorer
+id: 57e5e43f-ae10-4db4-88a5-49980d05e7cc
+status: experimental
+description: Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like lsass.exe or explorer.exe are accessed in a privileged manner.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  sysmon_event:
+    EventID:
+      - 8
+      - 10
+  sysmon_target:
+    TargetImage|endswith:
+      - '\lsass.exe'
+      - '\explorer.exe'
+  security_event:
+    EventID:
+      - 4673
+      - 4674
+  security_target:
+    Message|contains:
+      - 'lsass.exe'
+      - 'explorer.exe'
+  condition: (sysmon_event and sysmon_target) or (security_event and security_target)
+fields:
+  - Image
+  - TargetImage
+  - SourceProcessId
+  - TargetProcessId
+  - Message
+  - ComputerName
+falsepositives:
+  - Security tools
+  - Backup or monitoring software
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1055
+  - attack.t1055.001
+  - windows
+  - sysmon

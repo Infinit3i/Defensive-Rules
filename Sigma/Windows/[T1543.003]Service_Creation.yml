@@ -1,0 +1,38 @@
+title: Suspicious Service Creation
+id: 76e6d2c2-9d4f-41c0-a56a-847cf50a6470
+status: experimental
+description: Detects creation of new services which may indicate attacker persistence. Uses Windows System Event ID 7045 and correlated process creation from Sysmon.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  windows_event:
+    EventID: 7045
+  sysmon_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'sc create'
+      - 'New-Service'
+      - 'srvany.exe'
+      - 'powershell'
+      - 'service'
+  condition: windows_event or sysmon_process
+fields:
+  - ServiceName
+  - ServiceFileName
+  - CommandLine
+  - Image
+  - User
+  - ComputerName
+falsepositives:
+  - Software installation
+  - Legitimate administrative service setup
+level: high
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1543
+  - attack.t1543.003
+  - windows
+  - sysmon

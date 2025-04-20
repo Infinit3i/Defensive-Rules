@@ -1,0 +1,37 @@
+title: Executable or Script Dropped in Persistence Path
+id: 9e212d9c-028d-4930-a186-19bdfde8ff87
+status: experimental
+description: Detects creation of executables or script files in suspicious persistence paths like AppData or Startup folders using Sysmon Event ID 11.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: sysmon
+  category: file_create
+detection:
+  selection_event:
+    EventID: 11
+  selection_path:
+    TargetFilename|contains:
+      - '\AppData\'
+      - '\Start Menu\Programs\Startup\'
+  selection_extension:
+    TargetFilename|endswith:
+      - '.exe'
+      - '.bat'
+      - '.ps1'
+      - '.vbs'
+  condition: selection_event and selection_path and selection_extension
+fields:
+  - Image
+  - TargetFilename
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Software installations or legitimate automation
+level: high
+tags:
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.001
+  - sysmon

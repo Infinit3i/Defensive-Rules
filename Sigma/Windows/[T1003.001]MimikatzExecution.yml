@@ -1,0 +1,38 @@
+title: Mimikatz LSASS Memory Access or Execution
+id: 2b8f9c1b-7a8e-4f02-9563-7d11fa0df8aa
+status: experimental
+description: Detects access to lsass.exe memory or usage of common Mimikatz commands like sekurlsa or logonpasswords.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_event:
+    EventID:
+      - 1
+      - 10
+  selection_access:
+    TargetImage|endswith: '\lsass.exe'
+  selection_cmdline:
+    CommandLine|contains:
+      - 'sekurlsa'
+      - 'logonpasswords'
+  condition: selection_event and (selection_access or selection_cmdline)
+fields:
+  - Image
+  - TargetImage
+  - CommandLine
+  - EventID
+  - ComputerName
+  - SourceProcessId
+  - TargetProcessId
+falsepositives:
+  - Debugging tools
+  - Antivirus scanners
+level: high
+tags:
+  - attack.credential_access
+  - attack.t1003.001
+  - sysmon

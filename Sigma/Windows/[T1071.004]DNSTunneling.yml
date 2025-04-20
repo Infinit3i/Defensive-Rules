@@ -1,0 +1,36 @@
+title: DNS Tunneling via High Volume or Suspicious Subdomains
+id: 14f932db-1817-4224-9490-bd2b2e0a63a1
+status: experimental
+description: Detects DNS tunneling behavior by identifying high-frequency or unusual DNS queries with long or encoded subdomains. Uses Sysmon Event ID 22.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: sysmon
+  category: dns_query
+detection:
+  selection_event:
+    EventID: 22
+  selection_pattern:
+    QueryName|contains:
+      - '.'
+  selection_anomalous:
+    QueryName|endswith:
+      - '.com'
+      - '.net'
+      - '.org'
+  condition: selection_event and selection_pattern and selection_anomalous
+fields:
+  - QueryName
+  - Image
+  - User
+  - ComputerName
+falsepositives:
+  - Content delivery networks (CDNs)
+  - Misconfigured software
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071
+  - attack.t1071.004
+  - sysmon

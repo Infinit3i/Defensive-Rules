@@ -1,0 +1,41 @@
+title: Suspicious Office-Initiated Scripting or Execution Chain
+id: 6df2e2b1-14db-4fc7-9759-8869c8d3e1d9
+status: experimental
+description: Detects suspicious parent-child chains such as Office apps spawning script interpreters like powershell.exe, mshta.exe, etc., based on Sysmon Event ID 1.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  parent_office:
+    ParentImage|endswith:
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\outlook.exe'
+  child_scripting:
+    Image|endswith:
+      - '\powershell.exe'
+      - '\mshta.exe'
+      - '\cmd.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+  condition: parent_office and child_scripting
+fields:
+  - ParentImage
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentProcessId
+  - ComputerName
+falsepositives:
+  - Automated tools/scripts generating reports or emails
+  - Plugins or add-ins executing scripts legitimately
+level: high
+tags:
+  - attack.execution
+  - attack.t1059
+  - attack.t1059.001
+  - attack.t1218
+  - sysmon

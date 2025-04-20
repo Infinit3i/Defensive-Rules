@@ -1,0 +1,28 @@
+title: Multiple Account Lockouts Detected
+id: 3de5cc64-87fc-41d5-8663-d8cc0d1cb165
+status: experimental
+description: Detects repeated user account lockouts which may suggest password spraying or brute force attacks. Uses Windows Security Event ID 4740.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+  service: security
+  category: account_management
+detection:
+  selection_event:
+    EventID: 4740
+  condition: selection_event
+fields:
+  - TargetUserName
+  - CallerComputerName
+  - ComputerName
+  - _time
+falsepositives:
+  - Forgotten passwords
+  - Misconfigured applications
+level: medium
+tags:
+  - attack.credential_access
+  - attack.t1110
+  - attack.t1110.003
+  - windows

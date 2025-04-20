@@ -1,0 +1,46 @@
+title: Suspicious PowerShell Script Block Execution
+id: 3d487b47-8b1e-47b6-94bb-0e973de14989
+status: experimental
+description: Detects execution of suspicious or obfuscated PowerShell commands, such as AMSI bypasses or encoded payloads, using either Sysmon or PowerShell Operational Logs.
+author: Matthew Iverson
+date: 2025/04/20
+logsource:
+  product: windows
+detection:
+  sysmon_event:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'FromBase64String'
+      - 'amsi'
+      - 'IEX'
+      - 'Invoke-Obfuscation'
+      - 'DownloadString'
+  powershell_event:
+    EventID: 4104
+    Channel: Microsoft-Windows-PowerShell/Operational
+    Message|contains:
+      - 'FromBase64String'
+      - 'amsi'
+      - 'IEX'
+      - 'Invoke-Obfuscation'
+      - 'DownloadString'
+  condition: sysmon_event or powershell_event
+fields:
+  - Image
+  - CommandLine
+  - Message
+  - ComputerName
+  - EventID
+  - ProcessId
+  - ParentImage
+falsepositives:
+  - Legitimate administrative scripts
+  - Red team activity
+level: high
+tags:
+  - attack.execution
+  - attack.t1059
+  - attack.t1059.001
+  - sysmon
+  - windows
