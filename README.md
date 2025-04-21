@@ -9,7 +9,7 @@
     <a title="Hits" target="_blank" href="https://github.com/infinit3i/Defensive-Rules"><img src="https://hits.b3log.org/infinit3i/Defensive-Rules.svg"></a>
     <a title="GitHub Pull Requests" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/pulls"><img src="https://img.shields.io/github/issues-pr-closed/infinit3i/Defensive-Rules.svg?style=flat-square&color=FF9966"></a>
   <br>
-    <a title="GitHub Commits" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/commits/master"><img src="https://img.shields.io/github/commit-activity/m/infinit3i/Defensive-Rules .svg?style=flat-square"></a>
+    <a title="GitHub Commits" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/commits/master"><img src="https://img.shields.io/github/commit-activity/m/infinit3i/Defensive-Rules.svg?style=flat-square"></a>
     <a title="Last Commit" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/commits/master"><img src="https://img.shields.io/github/last-commit/infinit3i/Defensive-Rules.svg?style=flat-square&color=FF9900"></a>
   <br><br>
     <a title="Twitter" target="_blank" href="https://x.com/infinit3i"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/b3logos?label=Follow&style=social"></a>
