@@ -30,3 +30,6 @@ This repository is a curated collection of detection rules authored by Matthew I
     - zeek
 
 **NONE OF THESE ARE TESTED YET**
+
+**Splunk**
+- *Change index to match your index*
