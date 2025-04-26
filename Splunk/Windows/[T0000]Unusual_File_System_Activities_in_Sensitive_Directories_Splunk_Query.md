@@ -1,7 +1,6 @@
 # [T0000] Unusual File System Activities in Sensitive Directories
 
-## Mitre Tactic  
-**Defense Evasion**  
+## Mitre Tactic  **Defense Evasion**  
 
 ---
 
