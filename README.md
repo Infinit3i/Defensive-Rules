@@ -7,7 +7,6 @@
 <p align="center">
   <br><br>
     <a title="Hits" target="_blank" href="https://github.com/infinit3i/Defensive-Rules"><img src="https://hits.b3log.org/infinit3i/Defensive-Rules.svg"></a>
-    <a href="https://github.com/infinit3i/Defensive-Rules/releases"><img src="https://img.shields.io/github/downloads/infinit3i/Defensive-Rules/total.svg"></a>
     <a title="GitHub Pull Requests" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/pulls"><img src="https://img.shields.io/github/issues-pr-closed/infinit3i/Defensive-Rules.svg?style=flat-square&color=FF9966"></a>
   <br>
     <a title="GitHub Commits" target="_blank" href="https://github.com/infinit3i/Defensive-Rules/commits/master"><img src="https://img.shields.io/github/commit-activity/m/infinit3i/Defensive-Rules.svg?style=flat-square"></a>
