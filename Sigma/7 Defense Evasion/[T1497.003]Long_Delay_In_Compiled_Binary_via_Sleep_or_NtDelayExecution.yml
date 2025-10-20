@@ -1,0 +1,34 @@
+title: Long delay in compiled binaries via Sleep or NtDelayExecution
+id: 9c2e5a4d-6f7b-4g8h-0i1j-3k4l5m6n7o8p
+status: experimental
+description: Detect process creations of binaries whose commandline, scriptblock, or loaded modules contain Sleep calls, NtDelayExecution, or suspicious long-wait logic often used to evade sandbox runtime limits.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1497/003/
+tags:
+  - attack.t1497.003
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1497.003
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_proc:
+    EventID: 1
+    CommandLine|contains:
+      - "sleep("
+      - "Sleep("
+      - "NtDelayExecution"
+      - "NtDelayExecution("
+  selection_image_load:
+    EventID: 7
+    TargetFilename|contains:
+      - "\\Temp\\"
+      - "\\AppData\\"
+  condition: selection_proc or selection_image_load
+falsepositives:
+  - Legitimate software that uses sleep/delay for throttling or retry logic.
+level: high

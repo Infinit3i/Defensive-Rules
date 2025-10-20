@@ -1,0 +1,38 @@
+title: Native API function names observed in scripts or commandlines
+id: 3b8d4f1e-7c2a-4d45-9f6b-0e9a1c2b3d4f
+status: experimental
+description: Detect references to common native NT API function names (Nt*/Zw* like NtQueryInformationProcess, ZwCreateThread) inside script blocks, commandlines, or process creation events indicating direct native API usage.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1106/
+tags:
+  - attack.t1106
+  - tactic.execution
+  - platform:windows
+  - technique:T1106
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_proc:
+    EventID: 1
+    CommandLine|contains:
+      - "NtQueryInformationProcess"
+      - "ZwQueryInformationProcess"
+      - "NtOpenProcess"
+      - "ZwOpenProcess"
+      - "NtCreateThread"
+      - "ZwCreateThread"
+  selection_ps:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "NtQueryInformationProcess"
+      - "ZwQueryInformationProcess"
+      - "NtOpenProcess"
+      - "ZwOpenProcess"
+  condition: selection_proc or selection_ps
+falsepositives:
+  - Rare legitimate code samples or admin debugging scripts that embed native names.
+level: high

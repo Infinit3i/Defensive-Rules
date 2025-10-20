@@ -1,0 +1,35 @@
+title: Module loads of debugging libraries from user-writable paths
+id: b5e6f708-1234-5678-9abc-def012345678
+status: experimental
+description: Detect image/module load events where common debug / debugging helper DLLs (dbghelp.dll, dbgcore.dll, vsjitdebugger.exe components) are loaded from user-writable locations (Temp, AppData, Downloads) — suspicious for evasion or illicit debugging helpers.
+references:
+  - https://attack.mitre.org/techniques/T1622/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1622
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1622
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_image_load:
+    EventID: 7
+    TargetFilename|contains:
+      - "dbghelp.dll"
+      - "dbgcore.dll"
+      - "vsjitdebugger.exe"
+  selection_path_user:
+    EventID: 7
+    TargetFilename|contains:
+      - "\\AppData\\"
+      - "\\Local\\Temp\\"
+      - "\\Temp\\"
+      - "\\Downloads\\"
+  condition: selection_image_load and selection_path_user
+falsepositives:
+  - Portable installers or legitimate apps staging debug helpers in Temp during updates (tune with file hashes or parent process).
+level: high

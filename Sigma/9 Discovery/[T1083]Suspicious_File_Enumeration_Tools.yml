@@ -1,0 +1,41 @@
+title: Suspicious_File_Enumeration_Tools
+id: 4d5e6f70-8192-0a1b-2c3d-4e5f6a7b8c9d
+status: experimental
+description: Detect execution of common file-enumeration or bulk-copying utilities and commands that indicate broad file/directory discovery (robocopy, xcopy, tree, dirb/dirsearch) across Windows and Unix telemetry.
+references:
+  - https://attack.mitre.org/techniques/T1083/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1083
+  - tactic.discovery
+  - platform:cross-platform
+  - technique:T1083
+  - mitre_version:16.1
+logsource:
+  product: cross-platform
+  service: sysmon
+detection:
+  selection_windows_tools:
+    EventID: 1
+    CommandLine|contains:
+      - "robocopy"
+      - "xcopy "
+      - "tree "
+      - "dir /s"
+  selection_unix_tools:
+    EventID: 1
+    CommandLine|contains:
+      - "dirb "
+      - "dirsearch"
+      - "find "
+      - "rsync -av"
+  condition: selection_windows_tools or selection_unix_tools
+falsepositives:
+  - Legitimate backup, sync, or inventory operations executed by IT or automated tooling.
+level: medium
+fields:
+  - EventID
+  - TimeCreated
+  - Image
+  - CommandLine

@@ -18,19 +18,52 @@
 </p>
 
 
-This repository is a curated collection of detection rules authored by Matthew Iverson, organized first by rule type (Sigma or Splunk), and then by data source (Windows, Syslog, Zeek). The goal is to provide defenders with a centralized, modular resource for quickly identifying and deploying high-fidelity detections across multiple log types and platforms. While these rules are currently untested, they are based on real-world use cases, mapped to MITRE ATT&CK, and written with clarity and customization in mind.
+This repository is a curated collection of detection rules authored by Matthew Iverson, Sigma Rules by data source (Windows, Syslog, Zeek). The goal is to provide defenders with a centralized, modular resource for quickly identifying and deploying high-fidelity detections across multiple log types and platforms. While these rules are currently untested, they are based on real-world use cases, mapped to MITRE ATT&CK, and written with clarity and customization in mind.
 
 ### Sigma
     - windows
     - syslog
     - zeek
 
-### Splunk
-    - windows
-    - syslog
-    - zeek
-
 **NONE OF THESE ARE TESTED YET**
 
-**Splunk**
-- *Change index to match your index*
+- make all sigma rules (2 of each of the top 30, 5 for each on top 10)
+- All rules to sigma only, connect to uncoder and Andy github
+- ADD malware and apt data enrichment
+
+
+
+- [5] 1	T1082	System Information Discovery
+- [5] 2	T1106	Native API
+- [5] 3	T1489	Service Stop
+- [5] 4	T1497.003	Virtualization/Sandbox Evasion: Time Based Evasion
+- [5] 5	T1622	Debugger Evasion
+- [ ] 6	T1083	File and Directory Discovery
+- [ ] 7	T1124	System Time Discovery
+- [ ] 8	T1057	Process Discovery
+- [ ] 9	T1105	Ingress Tool Transfer
+- [4] 10	T1071.001	Application Layer Protocol: Web Protocols
+
+11	T1078	Cloud Accounts
+12	T1059	Command and Scripting Interpreter
+13	T1218.011	Rundll32
+14	T1047	Windows Management Instrumentation
+15	T1086	PowerShell
+16	T1059.003	Windows Command Shell
+17	T1003	Credential Dumping
+18	T1027	Obfuscated Files or Information
+19	T1055	Process Injection
+20	T1566.001	Ingress Tool Transfer (Phishing/Download)
+21	T1053	Scheduled Task
+22	T1035	Service Execution
+23	T1216	MSHTA
+24	T1112	Modify Registry
+25	T1118	Regsvr32
+26	T1562.001	Disable or Modify Tools
+27	T1220	XSL Script Processing / JavaScript Execution
+28	T1021.002	SMB/Proxy Access (Remote Services)
+29	T1552.001	LSASS Memory
+30	T1553.002	Masquerading
+
+Create windows start up process tree
+Detect typical malware

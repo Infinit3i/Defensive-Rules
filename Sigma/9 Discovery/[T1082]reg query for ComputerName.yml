@@ -1,0 +1,31 @@
+title: System Information Discovery - reg query for ComputerName / Hardware info
+id: 7f1a4d50-6a9c-4b8d-9a2f-0b3e2c4d5e6f
+status: experimental
+description: Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName, SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host metadata.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1082/
+tags:
+  - attack.t1082
+  - tactic.discovery
+  - platform:windows
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_reg_image:
+    EventID: 1
+    Image|endswith: '\reg.exe'
+  selection_reg_keys:
+    EventID: 1
+    CommandLine|contains:
+      - "HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName"
+      - "HKLM\\HARDWARE\\DESCRIPTION\\System"
+      - "HKLM\\HARDWARE\\DESCRIPTION\\System\\BIOS"
+      - "ComputerName"
+  condition: selection_reg_image and selection_reg_keys
+falsepositives:
+  - Admin scripts and configuration checks.
+  - Some software installers or asset collection tooling that query registry for inventory.
+level: medium

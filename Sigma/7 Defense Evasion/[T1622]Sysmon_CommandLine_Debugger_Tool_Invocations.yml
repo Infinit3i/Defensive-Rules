@@ -1,0 +1,41 @@
+title: CommandLine contains common debugger tool names (ollydbg, x64dbg, windbg)
+id: e2b3c4d5-6f70-8123-4567-fedcba987654
+status: experimental
+description: Detect process creations where command line or image indicate execution of common debugger tools or utilities used for reversing/debugging (e.g., ollydbg, x64dbg, windbg, IDA). Useful to identify local debugging or adversary tooling.
+references:
+  - https://attack.mitre.org/techniques/T1622/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1622
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1622
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_proc_create:
+    EventID: 1
+    CommandLine|contains:
+      - "ollydbg"
+      - "x64dbg"
+      - "windbg"
+      - "idaq"
+      - "ida64"
+      - "scylla"
+      - "scylla_x64"
+      - "dbgview"
+  selection_image:
+    EventID: 1
+    Image|endswith:
+      - '\ollydbg.exe'
+      - '\x64dbg.exe'
+      - '\windbg.exe'
+      - '\idaq.exe'
+      - '\ida64.exe'
+  condition: selection_proc_create or selection_image
+falsepositives:
+  - Legitimate reverse-engineering or debugging performed by developers and security researchers.
+level: medium

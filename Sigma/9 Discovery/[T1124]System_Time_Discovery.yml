@@ -1,0 +1,48 @@
+title: System Time Discovery via tzutil, w32tm, date/time, or Get-Date
+id: e4f0cd3e-9a8d-4c2a-a5d0-b2b1c3d4e5f6
+status: experimental
+description: Detect commands that query local system time or timezone, often used prior to time-based evasion or scheduling.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1124/
+tags:
+  - attack.t1124
+  - tactic.discovery
+  - platform:windows
+  - technique:T1124
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  tzutil:
+    EventID: 1
+    Image|endswith: '\tzutil.exe'
+    CommandLine|contains:
+      - " /g"
+      - " /s "
+  w32tm:
+    EventID: 1
+    Image|endswith: '\w32tm.exe'
+    CommandLine|contains:
+      - "/query"
+      - "/status"
+      - "/configuration"
+  date_time_cmd:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - " time /t"
+      - " date /t"
+  ps_getdate:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Get-Date"
+  condition: tzutil or w32tm or date_time_cmd or ps_getdate
+falsepositives:
+  - Normal administrative checks, scripts querying time or timezone.
+level: low

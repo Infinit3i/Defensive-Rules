@@ -1,0 +1,29 @@
+title: Syscall strings or inline syscall opcodes in scriptblocks
+id: 5d0f6b3c-8e4a-4f67-9c8d-2b3f4e5d6c7b
+status: experimental
+description: Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke native syscalls directly.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1106/
+tags:
+  - attack.t1106
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1106
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: powershell
+detection:
+  selection:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "syscall"
+      - "mov r10"
+      - "mov eax"
+      - "0x"
+  condition: selection
+falsepositives:
+  - Developers embedding assembly snippets or legitimate security tools including inline assembly for testing.
+level: high

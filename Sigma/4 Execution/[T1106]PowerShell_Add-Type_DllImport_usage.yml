@@ -1,0 +1,31 @@
+title: PowerShell Add-Type and DllImport usage
+id: 2a7c3d8e-5b4f-4c1a-9e2d-1f0e2d3c4b5a
+status: experimental
+description: Detect PowerShell using Add-Type / DllImport / System.Runtime.InteropServices to import native DLLs (ntdll/kernel32). This is commonly used to call native APIs from scripts.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1106/
+tags:
+  - attack.t1106
+  - tactic.execution
+  - platform:windows
+  - technique:T1106
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: powershell
+detection:
+  selection_addtype:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "Add-Type"
+      - "[DllImport"
+      - "System.Runtime.InteropServices"
+      - "DllImport("
+      - "kernel32.dll"
+      - "ntdll.dll"
+  condition: selection_addtype
+falsepositives:
+  - Legitimate signed tooling or internal scripts that embed native interop for performance or functionality.
+level: high

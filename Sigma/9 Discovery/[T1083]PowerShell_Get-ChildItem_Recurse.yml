@@ -1,0 +1,41 @@
+title: PowerShell_Get-ChildItem_Recurse
+id: 1a2b3c4d-5e6f-7081-9a0b-1c2d3e4f5a6b
+status: experimental
+description: Detect PowerShell recursive file and directory enumeration (Get-ChildItem -Recurse, gci -Recurse, Get-ChildItem -File) commonly used by attackers to locate sensitive files.
+references:
+  - https://attack.mitre.org/techniques/T1083/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1083
+  - tactic.discovery
+  - platform:windows
+  - technique:T1083
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: powershell
+detection:
+  selection_scriptblock:
+    EventID: 4104
+    ScriptBlockText|contains|all:
+      - "Get-ChildItem"
+      - "-Recurse"
+  selection_cmdline:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Get-ChildItem -Recurse"
+      - "gci -Recurse"
+      - "Get-ChildItem -Path * -Recurse"
+  condition: selection_scriptblock or selection_cmdline
+falsepositives:
+  - Backup scripts, file indexing, search and inventory tools used by IT teams.
+level: high
+fields:
+  - EventID
+  - ScriptBlockText
+  - Image
+  - CommandLine

@@ -1,0 +1,42 @@
+title: Debugger Evasion Indicators in Command Line or ScriptBlock
+id: 2f8adbb1-1331-4c13-9d90-0e6a4a2bd1c1
+status: experimental
+description: Detect common anti-debug techniques including IsDebuggerPresent/CheckRemoteDebuggerPresent strings, anti-debug flags, or tooling checks.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1622/
+tags:
+  - attack.t1622
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1622
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  api_strings:
+    EventID: 1
+    CommandLine|contains:
+      - "IsDebuggerPresent"
+      - "CheckRemoteDebuggerPresent"
+      - "NtQueryInformationProcess"
+      - "OutputDebugString"
+  tool_checks:
+    EventID: 1
+    CommandLine|contains:
+      - "ollydbg"
+      - "x64dbg"
+      - "windbg"
+      - "scylla_hide"
+      - "procmon"
+  powershell_blocks:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "IsDebuggerPresent"
+      - "CheckRemoteDebuggerPresent"
+  condition: api_strings or tool_checks or powershell_blocks
+falsepositives:
+  - Developers and reverse engineers testing applications; security research hosts.
+level: high

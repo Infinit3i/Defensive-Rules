@@ -1,0 +1,45 @@
+title: File and Directory Discovery Commands (dir /s, where /r, Get-ChildItem -Recurse)
+id: 7b6f2a40-9c9f-4a4b-92ad-8f13a0d7c1a2
+status: experimental
+description: Detect enumeration of files/folders using recursive or wide-scope discovery commands that adversaries use to locate data of interest.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1083/
+tags:
+  - attack.t1083
+  - tactic.discovery
+  - platform:windows
+  - technique:T1083
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  cmd_dir:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - " dir "
+      - " dir /s"
+      - " dir /b"
+  where_cmd:
+    EventID: 1
+    Image|endswith:
+      - '\cmd.exe'
+      - '\where.exe'
+    CommandLine|contains:
+      - "where /r "
+  powershell_gci:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Get-ChildItem -Recurse"
+      - "gci -Recurse"
+      - "Get-ChildItem -Path"
+  condition: cmd_dir or where_cmd or powershell_gci
+falsepositives:
+  - Routine admin scripts, inventory tools, backup/indexing utilities.
+level: medium

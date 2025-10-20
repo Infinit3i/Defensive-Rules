@@ -1,0 +1,37 @@
+title: System Information Discovery - PowerShell Get-CimInstance / Get-WmiObject / Get-ComputerInfo
+id: e0b6b3a7-3a72-49e4-9dce-4f5f2a6c9b3c
+status: experimental
+description: Detect PowerShell commands invoking Get-CimInstance, Get-WmiObject, Get-ComputerInfo or common WMI/Win32 class queries used to enumerate system information.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1082/
+tags:
+  - attack.t1082
+  - tactic.discovery
+  - platform:windows
+logsource:
+  product: windows
+  service: powershell
+detection:
+  selection_powershell_cmdline:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "Get-CimInstance"
+      - "Get-WmiObject"
+      - "Get-ComputerInfo"
+      - "Win32_OperatingSystem"
+      - "Win32_ComputerSystem"
+      - "Win32_BIOS"
+  selection_sysmon_proc:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - "Get-CimInstance"
+      - "Get-WmiObject"
+      - "Get-ComputerInfo"
+  condition: selection_powershell_cmdline or selection_sysmon_proc
+falsepositives:
+  - Legitimate admin scripts and monitoring/orchestration tooling.
+  - Configuration management/CMDB scanning activities.
+level: high

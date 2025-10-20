@@ -1,0 +1,35 @@
+title: High uptime checks and conditional long delays
+id: 8b1d4f3c-5e6a-4f7b-9c8d-2e3f4a5b6c7d
+status: experimental
+description: Detect attempts to check system uptime or tick counts and then delay execution for long periods (indicates time-based sandbox evasion logic).
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1497/003/
+tags:
+  - attack.t1497.003
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1497.003
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_uptime_check_ps:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "Get-Uptime"
+      - "Get-CimInstance Win32_OperatingSystem"
+      - "LastBootUpTime"
+      - "GetTickCount"
+      - "GetTickCount64"
+  selection_then_sleep:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "Start-Sleep -Seconds 600"
+      - "Start-Sleep -Seconds 900"
+  condition: selection_uptime_check_ps and selection_then_sleep
+falsepositives:
+  - Monitoring or inventory scripts that evaluate uptime for maintenance scheduling.
+level: high

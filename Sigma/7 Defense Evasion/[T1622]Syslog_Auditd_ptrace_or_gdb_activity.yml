@@ -1,0 +1,35 @@
+title: ptrace/syscall or gdb invocation detected in syslog/auditd
+id: f3c4d5e6-7f01-2345-6789-0abcdef12345
+status: experimental
+description: Detect Linux host events indicating ptrace usage, gdb invocation, or auditd syscall logs for ptrace (possible debugger detection/evasion behavior). Monitors syslog/auditd messages for ptrace/gdb/strace/gcore related activity.
+references:
+  - https://attack.mitre.org/techniques/T1622/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1622
+  - tactic.defense-evasion
+  - platform:linux
+  - technique:T1622
+  - mitre_version:16.1
+logsource:
+  product: linux
+  service: syslog
+detection:
+  selection_ptrace_syscall:
+    Message|contains:
+      - "syscall=101"       # common ptrace syscall number on x86_64 (auditd formatting may vary)
+      - "ptrace("
+      - "PTRACE_ATTACH"
+  selection_gdb_invocation:
+    Message|contains:
+      - "gdb"
+      - "gdbserver"
+      - "gcore"
+  selection_strace:
+    Message|contains:
+      - "strace"
+  condition: selection_ptrace_syscall or selection_gdb_invocation or selection_strace
+falsepositives:
+  - Legitimate debugging/diagnostic activity by developers or operators; scheduled crash-dumps (gcore) during troubleshooting.
+level: high

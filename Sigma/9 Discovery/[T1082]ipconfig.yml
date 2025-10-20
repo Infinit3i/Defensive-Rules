@@ -1,0 +1,35 @@
+title: System Information Discovery - ipconfig / hostname / net config executions
+id: 4b2c1f8e-d5a4-426f-bf7c-c1d2e3f4a5b6
+status: experimental
+description: Detect execution of common network/host discovery commands such as ipconfig, hostname or net config which can be used to enumerate host and network configuration.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1082/
+tags:
+  - attack.t1082
+  - tactic.discovery
+  - platform:windows
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_network_commands:
+    EventID: 1
+    CommandLine|contains:
+      - "ipconfig"
+      - "ipconfig /all"
+      - "hostname"
+      - "net config"
+      - "net view"
+  selection_images:
+    EventID: 1
+    Image|endswith:
+      - '\ipconfig.exe'
+      - '\hostname.exe'
+      - '\net.exe'
+  condition: selection_images or selection_network_commands
+falsepositives:
+  - Normal admin and user operations (e.g., troubleshooting, support sessions).
+  - DHCP/client configuration tooling.
+level: low

@@ -1,0 +1,43 @@
+title: Cmd_dir_and_where_recursive
+id: 0f1a2b3c-4d5e-6f70-8a9b-0c1d2e3f4a5b
+status: experimental
+description: Detect Windows cmd.exe or where.exe usage with recursive file/directory enumeration flags (e.g., dir /s, where /r) often used for wide file discovery.
+references:
+  - https://attack.mitre.org/techniques/T1083/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1083
+  - tactic.discovery
+  - platform:windows
+  - technique:T1083
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_dir_cmd:
+    EventID: 1
+    Image|endswith:
+      - '\cmd.exe'
+    CommandLine|contains:
+      - " dir /s"
+      - " dir /b /s"
+      - " dir /s /b"
+      - " dir /a /s"
+  selection_where:
+    EventID: 1
+    Image|endswith:
+      - '\where.exe'
+    CommandLine|contains:
+      - "where /r"
+      - "where /R"
+  condition: selection_dir_cmd or selection_where
+falsepositives:
+  - Automated inventory scripts, installers, or support sessions run by administrators.
+level: medium
+fields:
+  - EventID
+  - TimeCreated
+  - Image
+  - CommandLine

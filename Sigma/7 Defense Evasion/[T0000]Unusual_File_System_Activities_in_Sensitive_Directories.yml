@@ -8,6 +8,8 @@ date: 2025-04-08
 tags:
   - file.activity
   - custom.t0000
+  - attack.t1562
+  - attack.defense-evasion
 logsource:
   product: windows
   service: sysmon

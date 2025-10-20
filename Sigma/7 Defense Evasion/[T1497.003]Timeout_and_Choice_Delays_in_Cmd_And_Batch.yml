@@ -1,0 +1,36 @@
+title: Timeout / choice based long delays in cmd/batch
+id: 7a0c3e2b-4d5f-4e6a-8b9c-1d2e3f4a5b6c
+status: experimental
+description: Detect use of `timeout`, `choice` or other cmd-based delay constructs with long durations frequently used to bypass sandbox time windows.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1497/003/
+tags:
+  - attack.t1497.003
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1497.003
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_timeout:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - "timeout /t 60"
+      - "timeout /t 300"
+      - "choice /t 60"
+      - "choice /t 300"
+  selection_ping_delay:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - "ping -n 60 127.0.0.1"
+      - "ping -n 300 127.0.0.1"
+  condition: selection_timeout or selection_ping_delay
+falsepositives:
+  - Long-running deployment or maintenance batch scripts.
+level: medium

@@ -1,0 +1,27 @@
+title: System Information Discovery - systeminfo.exe Execution
+id: a8f3f9d6-9b2b-4f0d-8f2c-1c2e0a9b7f01
+status: experimental
+description: Detect execution of systeminfo.exe which is often used by attackers to enumerate OS and patch-level information.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1082/
+tags:
+  - attack.t1082
+  - tactic.discovery
+  - platform:windows
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    Image|endswith: '\systeminfo.exe'
+  commandline_indicators:
+    EventID: 1
+    CommandLine|contains:
+      - "systeminfo"
+  condition: selection or commandline_indicators
+falsepositives:
+  - Routine admin or support activities (inventory scripts, helpdesk, patch management).
+level: medium

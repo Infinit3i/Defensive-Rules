@@ -1,0 +1,34 @@
+title: Suspicious native module load from non-standard path
+id: 4c9e5a2b-6d3f-4e56-8a7b-1f2e3d4c5b6a
+status: experimental
+description: Detect processes loading native modules (DLLs) from unexpected or user-writable locations (AppData, Temp, user profile paths) which may indicate custom native API usage or dropped native helpers.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1106/
+tags:
+  - attack.t1106
+  - tactic.persistence
+  - platform:windows
+  - technique:T1106
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 7
+    Image|endswith:
+      - '\rundll32.exe'
+      - '\svchost.exe'
+      - '\explorer.exe'
+    TargetFilename|contains:
+      - "\\AppData\\"
+      - "\\Local\\Temp\\"
+      - "\\Temp\\"
+      - "\\Users\\"
+  condition: selection
+falsepositives:
+  - Legitimate applications that extract native helpers to user profile locations (rare).
+  - Some installers that stage DLLs to Temp during updates.
+level: high

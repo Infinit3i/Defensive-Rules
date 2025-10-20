@@ -1,0 +1,34 @@
+title: Managed code P/Invoke or runtime interop usage detected
+id: 6e1a7c4d-9f5b-4g78-0h9i-3c4d5e6f7a8b
+status: experimental
+description: Detect managed (.NET) applications or scripts that declare P/Invoke signatures, use Runtime.InteropServices or Marshal methods to call native APIs (indicative of Native API usage).
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1106/
+tags:
+  - attack.t1106
+  - tactic.execution
+  - platform:windows
+  - technique:T1106
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - "Add-Type"
+      - "System.Runtime.InteropServices"
+      - "PInvoke"
+  selection_dotnet:
+    EventID: 1
+    Image|endswith: '\dotnet.exe'
+    CommandLine|contains:
+      - "DllImport"
+      - "Marshal."
+  condition: selection or selection_dotnet
+falsepositives:
+  - Legitimate .NET interop libraries and internal tools using P/Invoke.
+level: high

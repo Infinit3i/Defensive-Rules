@@ -1,0 +1,30 @@
+title: System Information Discovery - WMIC Queries for OS and BIOS
+id: 2c9d2b34-5ba8-4c35-8f08-5f0e3d9ea8b2
+status: experimental
+description: Detect WMIC usage that queries OS, BIOS, or computer system information (e.g., wmic os get / wmic bios get / wmic computersystem). WMIC is commonly used by attackers for host enumeration.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1082/
+tags:
+  - attack.t1082
+  - tactic.discovery
+  - platform:windows
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_wmic_image:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+  selection_wmic_cmd:
+    EventID: 1
+    CommandLine|contains:
+      - "wmic os get"
+      - "wmic bios get"
+      - "wmic computersystem get"
+      - "wmic csproduct get"
+  condition: selection_wmic_image and selection_wmic_cmd
+falsepositives:
+  - Administrative discovery and asset inventory scripts that use WMIC.
+level: high

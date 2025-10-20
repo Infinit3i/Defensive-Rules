@@ -1,0 +1,49 @@
+title: Time-Based Evasion via Sleep, Ping-Delay, or Timeout
+id: 9d1e7b44-2e65-4e5d-bc2f-1e1b2a3c4d5e
+status: experimental
+description: Detect long execution delays often used to evade sandboxes, including Start-Sleep, timeout, and ping loops as timers.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1497/003/
+tags:
+  - attack.t1497.003
+  - tactic.defense-evasion
+  - platform:windows
+  - technique:T1497.003
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  ps_sleep:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Start-Sleep"
+      - "Start-Sleep -s"
+      - "Start-Sleep -Seconds"
+  cmd_timeout:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - "timeout /t "
+      - "choice /t "
+  ping_delay:
+    EventID: 1
+    CommandLine|contains:
+      - "ping -n "
+      - "ping -w "
+  high_delay_hint:
+    EventID: 1
+    CommandLine|contains:
+      - "300"
+      - "600"
+      - "900"
+      - "1200"
+  condition: (ps_sleep or cmd_timeout or ping_delay) and high_delay_hint
+falsepositives:
+  - Scripts legitimately pausing for maintenance windows or sequencing.
+level: medium

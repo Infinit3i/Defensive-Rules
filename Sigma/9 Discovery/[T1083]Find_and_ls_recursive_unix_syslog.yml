@@ -1,0 +1,40 @@
+title: Find_and_ls_recursive_unix_syslog
+id: 2b3c4d5e-6f70-8192-0a1b-2c3d4e5f6a7b
+status: experimental
+description: Detect Unix/Linux file and directory discovery via auditd/syslog commands such as find / -type f, ls -R, tree or recursive locate usage recorded in syslog/audit.
+references:
+  - https://attack.mitre.org/techniques/T1083/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1083
+  - tactic.discovery
+  - platform:linux
+  - technique:T1083
+  - mitre_version:16.1
+logsource:
+  product: linux
+  service: syslog
+detection:
+  selection_find:
+    Message|contains:
+      - "find / -type f"
+      - "find / -name"
+      - "find . -type f -name"
+  selection_ls:
+    Message|contains:
+      - "ls -R"
+      - "ls -laR"
+      - "tree "
+  selection_locate_updatedb:
+    Message|contains:
+      - "updatedb"
+      - "locate "
+  condition: selection_find or selection_ls or selection_locate_updatedb
+falsepositives:
+  - System administration tasks, backup validation, or sysadmin inventory commands.
+level: medium
+fields:
+  - Message
+  - Time
+  - Hostname

@@ -1,0 +1,49 @@
+title: Service Stop via sc.exe, net, Stop-Service, or WMIC
+id: 6a5d9c1e-b2b3-4f71-a6b5-8f9a7a1c2d11
+status: experimental
+description: Detect attempts to stop Windows services using sc.exe stop, net stop, PowerShell Stop-Service, or WMIC service calls.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1489/
+tags:
+  - attack.t1489
+  - tactic.impact
+  - platform:windows
+  - technique:T1489
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  proc_sc:
+    EventID: 1
+    Image|endswith: '\sc.exe'
+    CommandLine|contains|all:
+      - " stop "
+  proc_net:
+    EventID: 1
+    Image|endswith: '\net.exe'
+    CommandLine|contains:
+      - " net stop "
+      - " net  stop "
+      - " net  stop"
+  proc_ps:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Stop-Service"
+      - "Set-Service -Status Stopped"
+  proc_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - "service"
+      - "call stopservice"
+      - " where "
+  condition: proc_sc or proc_net or proc_ps or proc_wmic
+falsepositives:
+  - Legitimate administration, software installs/uninstalls, EDR actions.
+level: medium
