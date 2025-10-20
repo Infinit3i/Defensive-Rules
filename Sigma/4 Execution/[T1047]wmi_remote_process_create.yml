@@ -1,0 +1,43 @@
+title: WMI Win32_Process.Create Executed Remotely (WMI-Activity)
+id: 6f2e9b12-3a0a-4b7a-9b31-0000aaaawmi2
+status: experimental
+description: Flags remote WMI method execution of Win32_Process.Create via WMI-Activity Operational log (commonly used for lateral movement).
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1047/
+logsource:
+  product: windows
+  service: Microsoft-Windows-WMI-Activity/Operational
+detection:
+  selection_5858:
+    EventID: 5858
+  selection_method:
+    Message|contains|all:
+      - 'Win32_Process.Create'
+      - 'Execute Method'
+  filter_localhost:
+    Message|contains:
+      - 'ClientMachine=localhost'
+      - 'ClientMachine=127.0.0.1'
+  condition: selection_5858 and selection_method and not filter_localhost
+fields:
+  - EventID
+  - User
+  - Computer
+  - Message
+  - CorrelationActivityID
+  - Operation
+  - NamespaceName
+  - ClientProcessId
+falsepositives:
+  - Approved admin tools that orchestrate software installs or updates via WMI
+level: critical
+tags:
+  - attack.T1047
+  - execution
+  - windows
+  - wmi-activity
+  - lateral-movement
+  - APT32
+  - TrickBot

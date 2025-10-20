@@ -1,0 +1,38 @@
+title: Cloud Account Credential Use from Unregistered or Inactive Devices
+id: 9b3d5d64-b1f2-48f8-bb12-2222bbbb2222
+status: experimental
+description: Detects successful logins using valid cloud credentials from unregistered, unmanaged, or inactive devices — potentially indicating credential theft or reuse.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1078/
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection:
+    eventName: "ConsoleLogin"
+    additionalEventData.MFAUsed: "No"
+    userIdentity.type: "IAMUser"
+  filter_known_devices:
+    sourceIPAddress:
+      - '10.*'
+      - '192.168.*'
+  condition: selection and not filter_known_devices
+fields:
+  - userIdentity.userName
+  - sourceIPAddress
+  - eventTime
+  - awsRegion
+falsepositives:
+  - Legacy API scripts
+  - Administrator troubleshooting sessions
+level: critical
+tags:
+  - attack.T1078
+  - attack.T1078.004
+  - credential-access
+  - aws
+  - cloud
+  - APT28
+  - UNC2452

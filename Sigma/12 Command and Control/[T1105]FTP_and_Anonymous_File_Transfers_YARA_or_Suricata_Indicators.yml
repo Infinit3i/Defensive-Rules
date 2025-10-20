@@ -1,0 +1,41 @@
+title: FTP or anonymous file transfer indicators (ftp, ftps, smb file transfer)
+id: d1105a01-0005-4c11-8a05-000000000005
+status: experimental
+description: Detect FTP activity, SMB file copy events, or anonymous uploads/downloads that indicate tools being brought into the environment via legacy protocols (ftp/ftps, smb put/get).
+references:
+  - https://attack.mitre.org/techniques/T1105/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1105
+  - tactic.command-and-control
+  - platform:network
+  - technique:T1105
+  - mitre_version:16.1
+  - Metasploit
+associated_groups: []
+associated_malware:
+  - Metasploit
+logsource:
+  product: network
+  service: zeek
+detection:
+  selection_ftp:
+    zeek.ftp.request|exists: true
+  selection_smb:
+    zeek.smb.command|contains:
+      - "NT_CREATE_ANDX"
+      - "SMB_COM_WRITE"
+  selection_anonymous_upload:
+    zeek.ftp.request|contains:
+      - "STOR"
+      - "PUT"
+      - "anonymous"
+  condition: selection_ftp or selection_smb or selection_anonymous_upload
+falsepositives:
+  - Legitimate file transfer systems and anonymous FTP servers used for business processes.
+level: medium
+fields:
+  - zeek.ftp.request
+  - zeek.smb.command
+  - zeek.orig_h

@@ -1,0 +1,37 @@
+title: Zeek NTP or UDP 123 traffic indicating external time queries
+id: 4c5d6e7f-8012-3456-7890-abcdef123456
+status: experimental
+description: Detects NTP (UDP/123) requests or responses observed in Zeek logs which may indicate a host querying external time sources for time discovery or sync changes.
+references:
+  - https://attack.mitre.org/techniques/T1124/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1124
+  - tactic.discovery
+  - platform:network
+  - technique:T1124
+  - mitre_version:16.1
+logsource:
+  product: network
+  service: zeek
+detection:
+  selection_ntp_port:
+    zeek.conn.service|contains: "ntp"
+  selection_udp123:
+    zeek.udp.dport:
+      - 123
+    zeek.udp.sport:
+      - 123
+  selection_ntp_req:
+    zeek.ntp.request|exists: true
+  condition: selection_ntp_port or selection_udp123 or selection_ntp_req
+falsepositives:
+  - Legitimate NTP synchronization with corporate or public NTP servers (domain controllers, NTP pools).
+level: low
+fields:
+  - zeek.id
+  - zeek.orig_h
+  - zeek.resp_h
+  - zeek.udp.sport
+  - zeek.udp.dport

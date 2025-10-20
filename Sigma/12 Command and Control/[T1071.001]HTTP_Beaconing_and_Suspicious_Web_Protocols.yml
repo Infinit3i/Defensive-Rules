@@ -1,0 +1,114 @@
+title: HTTP Beaconing and Suspicious Web Protocols
+id: e1071001-9b2c-4d5e-af01-1234567890ab
+status: experimental
+description: >
+  Detects suspicious use of web protocols for C2, data staging, or tooling ingress
+  (unusual HTTP/HTTPS POSTs, uncommon user-agents, periodic beaconing, and HTTP downloads
+  of executables). Covers network (Zeek/Proxy), endpoint (Sysmon NetworkConnect), and web server logs.
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1071.001
+  - tactic.command-and-control
+  - platform:cross-platform
+  - technique:T1071.001
+  - mitre_version:16.1
+  - HTTP
+  - Cobalt_Strike
+  - Metasploit
+  - Bazar
+associated_groups: []
+associated_malware:
+  - Cobalt Strike
+  - Metasploit
+  - Bazar
+
+# Note: multiple log sources shown in detection selections to cover different telemetry types.
+logsource:
+  product: cross-platform
+  service: network
+
+detection:
+  # Zeek / HTTP proxy indicators: uncommon UA, suspicious URIs, frequent small POSTs
+  zeek_http_ua_uri:
+    zeek.http.user_agent|contains:
+      - "curl"
+      - "Wget"
+      - "python-requests"
+      - "Go-http-client"
+      - "libwww-perl"
+    zeek.http.uri|contains:
+      - "/api/"
+      - "/upload"
+      - "/ws/"
+      - "/update"
+  zeek_http_small_post:
+    zeek.http.method|contains: "POST"
+    zeek.http.content_length|lt: 200
+    zeek.http.uri|matches:
+      - "^/.{1,50}$"
+  zeek_http_download_exec:
+    zeek.http.uri|contains:
+      - ".exe"
+      - ".dll"
+      - ".zip"
+      - ".ps1"
+      - ".jar"
+
+  # Sysmon NetworkConnect (EventID 3) to web ports from non-browser parents or suspicious processes
+  sysmon_net_connect:
+    EventID: 3
+    DestinationPort:
+      - 80
+      - 443
+    ParentImage|not_endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+      - '\iexplore.exe'
+    Image|not_endswith:
+      - '\pwsh.exe'
+      - '\powershell.exe'   # exclude legitimate PS when allowedlist exists; adjust for your environment
+
+  # Web server logs: unusual user-agent + POST to endpoints returning 200 and executable content-type
+  webserver_post_exec:
+    http.method: "POST"
+    http.status: 200
+    http.user_agent|contains:
+      - "python-requests"
+      - "curl"
+    http.content_type|contains:
+      - "application/octet-stream"
+      - "application/x-msdownload"
+
+  # Time-based / periodic beaconing: repeated small POSTs to same host/path
+  beaconing_pattern:
+    zeek.conn.count|gt: 5
+    zeek.http.uri|contains: "/api/"
+    zeek.http.content_length|lt: 300
+
+  condition: (zeek_http_ua_uri and (zeek_http_small_post or zeek_http_download_exec))
+             or sysmon_net_connect
+             or webserver_post_exec
+             or beaconing_pattern
+
+falsepositives:
+  - Automated software update checks, configuration management tooling (e.g., Puppet, Chef, SCCM, Intune) and legitimate backup/upload utilities.
+  - Developer or CI systems (curl/Wget/python-requests) used for legitimate automation.
+  - Tune with allowlists for known update servers, CDNs, and management endpoints.
+
+level: high
+
+fields:
+  - zeek.http.uri
+  - zeek.http.user_agent
+  - zeek.http.content_length
+  - EventID
+  - Image
+  - ParentImage
+  - DestinationPort
+  - http.method
+  - http.status
+  - http.content_type

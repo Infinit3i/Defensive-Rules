@@ -1,0 +1,52 @@
+title: HTTP file downloads — Zeek detection by URI/user-agent/filename
+id: d1105a01-0003-4c11-8a05-000000000003
+status: experimental
+description: Detect HTTP file downloads (common tool installers, payload names) via Zeek by matching URIs, filenames, or suspicious User-Agent strings often used when retrieving adversary tools.
+references:
+  - https://attack.mitre.org/techniques/T1105/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1105
+  - tactic.command-and-control
+  - platform:network
+  - technique:T1105
+  - mitre_version:16.1
+  - Metasploit
+  - Cobalt_Strike
+associated_groups: []
+associated_malware:
+  - Metasploit
+  - Cobalt Strike
+logsource:
+  product: network
+  service: zeek
+detection:
+  selection_uri:
+    zeek.http.uri|contains:
+      - ".exe"
+      - ".dll"
+      - ".zip"
+      - ".tar.gz"
+      - "download"
+      - "installer"
+  selection_filename:
+    zeek.file.name|contains:
+      - "meterpreter"
+      - "cobalt"
+      - "beacon"
+      - "agent"
+  selection_useragent:
+    zeek.http.user_agent|contains:
+      - "curl"
+      - "Wget"
+      - "python-requests"
+  condition: selection_uri or selection_filename or selection_useragent
+falsepositives:
+  - Legitimate software downloads, package updates, and developer downloads. Correlate with endpoint execution to improve fidelity.
+level: medium
+fields:
+  - zeek.http.uri
+  - zeek.http.user_agent
+  - zeek.file.name
+  - zeek.orig_h

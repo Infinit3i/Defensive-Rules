@@ -1,0 +1,44 @@
+title: Linux curl/wget/scp/rsync downloads in syslog
+id: d1105a01-0004-4c11-8a05-000000000004
+status: experimental
+description: Detect use of curl, wget, scp, sftp or rsync to retrieve files from remote hosts recorded in syslog/audit — common ingress tool transfer on Linux hosts.
+references:
+  - https://attack.mitre.org/techniques/T1105/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1105
+  - tactic.command-and-control
+  - platform:linux
+  - technique:T1105
+  - mitre_version:16.1
+  - Lazarus
+associated_groups:
+  - Lazarus
+associated_malware: []
+logsource:
+  product: linux
+  service: syslog
+detection:
+  selection_curl_wget:
+    Message|contains:
+      - "curl -O"
+      - "curl -o"
+      - "wget "
+      - "scp "
+      - "sftp "
+      - "rsync "
+  selection_target_path:
+    Message|contains:
+      - "/tmp/"
+      - "/var/tmp/"
+      - "/home/"
+      - "/dev/shm/"
+  condition: selection_curl_wget and selection_target_path
+falsepositives:
+  - Admins or automation using curl/wget/rsync for legitimate package retrieval or configuration management. Tune allowlists for repo servers and configuration management hosts.
+level: high
+fields:
+  - Message
+  - Time
+  - Hostname

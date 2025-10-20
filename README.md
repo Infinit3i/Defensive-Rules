@@ -20,35 +20,29 @@
 
 This repository is a curated collection of detection rules authored by Matthew Iverson, Sigma Rules by data source (Windows, Syslog, Zeek). The goal is to provide defenders with a centralized, modular resource for quickly identifying and deploying high-fidelity detections across multiple log types and platforms. While these rules are currently untested, they are based on real-world use cases, mapped to MITRE ATT&CK, and written with clarity and customization in mind.
 
-### Sigma
-    - windows
-    - syslog
-    - zeek
-
 **NONE OF THESE ARE TESTED YET**
 
-- make all sigma rules (2 of each of the top 30, 5 for each on top 10)
-- All rules to sigma only, connect to uncoder and Andy github
-- ADD malware and apt data enrichment
+[Uncoder](https://uncoder.io/)
 
 
-
+## Most Command Techniques
 - [5] 1	T1082	System Information Discovery
 - [5] 2	T1106	Native API
 - [5] 3	T1489	Service Stop
 - [5] 4	T1497.003	Virtualization/Sandbox Evasion: Time Based Evasion
 - [5] 5	T1622	Debugger Evasion
-- [ ] 6	T1083	File and Directory Discovery
-- [ ] 7	T1124	System Time Discovery
-- [ ] 8	T1057	Process Discovery
-- [ ] 9	T1105	Ingress Tool Transfer
-- [4] 10	T1071.001	Application Layer Protocol: Web Protocols
+- [5] 6	T1083	File and Directory Discovery
+- [5] 7	T1124	System Time Discovery
+- [5] 8	T1057	Process Discovery
+- [5] 9	T1105	Ingress Tool Transfer
+- [5] 10	T1071.001	Application Layer Protocol: Web Protocols
 
-11	T1078	Cloud Accounts
-12	T1059	Command and Scripting Interpreter
-13	T1218.011	Rundll32
-14	T1047	Windows Management Instrumentation
-15	T1086	PowerShell
+### Next most common Techniques
+- [2] 11	T1078	Cloud Accounts
+- [2] 12	T1059	Command and Scripting Interpreter
+- [2] 13	T1218.011	Rundll32
+- [2] 14	T1047	Windows Management Instrumentation
+- [2] 15	T1086	PowerShell
 16	T1059.003	Windows Command Shell
 17	T1003	Credential Dumping
 18	T1027	Obfuscated Files or Information
@@ -65,5 +59,19 @@ This repository is a curated collection of detection rules authored by Matthew I
 29	T1552.001	LSASS Memory
 30	T1553.002	Masquerading
 
+
+
+
+
+
+
+
+
+#### TODO
+
+
+
+
 Create windows start up process tree
 Detect typical malware
+- add template

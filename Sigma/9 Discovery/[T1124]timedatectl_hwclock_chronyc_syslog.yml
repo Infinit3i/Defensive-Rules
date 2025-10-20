@@ -1,0 +1,39 @@
+title: timedatectl hwclock or chronyc usage on Linux
+id: 5d6e7f80-9123-4567-89ab-cdef01234567
+status: experimental
+description: Detects Linux commands that query or set system time and NTP clients (timedatectl, hwclock, chronyc, ntpq) recorded in syslog or audit logs indicating system time discovery or manipulation.
+references:
+  - https://attack.mitre.org/techniques/T1124/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1124
+  - tactic.discovery
+  - platform:linux
+  - technique:T1124
+  - mitre_version:16.1
+logsource:
+  product: linux
+  service: syslog
+detection:
+  selection_timedatectl:
+    Message|contains:
+      - "timedatectl"
+      - "timedatectl status"
+  selection_hwclock:
+    Message|contains:
+      - "hwclock"
+      - "hwclock --show"
+  selection_chronyc_ntpq:
+    Message|contains:
+      - "chronyc"
+      - "ntpq"
+      - "chronyc tracking"
+  condition: selection_timedatectl or selection_hwclock or selection_chronyc_ntpq
+falsepositives:
+  - System administration and NTP troubleshooting or scheduled sync checks.
+level: low
+fields:
+  - Message
+  - Time
+  - Hostname

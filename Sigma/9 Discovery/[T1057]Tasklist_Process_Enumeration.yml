@@ -1,0 +1,39 @@
+title: Tasklist Process Enumeration
+id: a1057a01-1111-4c11-8a57-000000000001
+status: experimental
+description: Detects cmd-based process discovery using tasklist with common enumeration flags (e.g., /v, /svc, /fo, /m).
+references:
+  - https://attack.mitre.org/techniques/T1057/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1057
+  - tactic.discovery
+  - platform:windows
+  - technique:T1057
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_tasklist:
+    EventID: 1
+    Image|endswith: '\tasklist.exe'
+  selection_cmdline:
+    EventID: 1
+    CommandLine|contains:
+      - "tasklist"
+      - "tasklist /v"
+      - "tasklist /svc"
+      - "tasklist /fo"
+      - "tasklist /m"
+  condition: selection_tasklist or selection_cmdline
+falsepositives:
+  - Administrator troubleshooting or inventory scripts.
+level: medium
+fields:
+  - EventID
+  - Image
+  - CommandLine
+  - ParentImage
+  - User

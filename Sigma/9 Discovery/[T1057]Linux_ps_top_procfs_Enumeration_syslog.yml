@@ -1,0 +1,41 @@
+title: Linux ps/top or /proc Enumeration (syslog/audit)
+id: a1057a01-1111-4c11-8a57-000000000005
+status: experimental
+description: Detects process discovery on Linux via ps, top in batch mode, pgrep, or reading /proc to list running processes as seen in syslog/audit logs.
+references:
+  - https://attack.mitre.org/techniques/T1057/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1057
+  - tactic.discovery
+  - platform:linux
+  - technique:T1057
+  - mitre_version:16.1
+logsource:
+  product: linux
+  service: syslog
+detection:
+  sel_ps:
+    Message|contains:
+      - " ps -ef"
+      - " ps aux"
+      - " ps -eo"
+  sel_top_batch:
+    Message|contains:
+      - " top -b"
+      - " top -n "
+  sel_procfs:
+    Message|contains:
+      - "/proc/*/cmdline"
+      - "/proc/*/status"
+      - "pgrep "
+  condition: sel_ps or sel_top_batch or sel_procfs
+falsepositives:
+  - Routine admin diagnostics, monitoring scripts, or health checks.
+level: medium
+fields:
+  - Message
+  - Hostname
+  - Time
+  - Program

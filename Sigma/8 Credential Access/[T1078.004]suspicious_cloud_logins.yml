@@ -1,0 +1,39 @@
+title: Suspicious Cloud Account Logins from New Geolocations
+id: 7b5c7b43-fd62-4f6d-91a8-1111aaaa1111
+status: stable
+description: Detects cloud logins from unusual geolocations or impossible travel patterns, possibly indicating stolen credentials or compromised cloud accounts.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1078/
+logsource:
+  product: azure
+  service: signinlogs
+detection:
+  selection:
+    ResultType: 0
+    Location:
+      - '*'
+  filter_known_locations:
+    Location:
+      - 'United States'
+      - 'Canada'
+  condition: selection and not filter_known_locations
+fields:
+  - UserPrincipalName
+  - IPAddress
+  - Location
+  - DeviceDetail
+  - AppDisplayName
+falsepositives:
+  - New employee traveling
+  - VPN usage
+level: high
+tags:
+  - attack.T1078
+  - attack.T1078.004
+  - azure
+  - cloud
+  - credential.access
+  - APT29
+  - APT33

@@ -1,0 +1,38 @@
+title: w32tm query or status checks
+id: 2a3b4c5d-6e7f-8901-2345-6789abcdef01
+status: experimental
+description: Detects w32tm queries and status commands used to inspect Windows time service configuration and synchronization state.
+references:
+  - https://attack.mitre.org/techniques/T1124/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1124
+  - tactic.discovery
+  - platform:windows
+  - technique:T1124
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_w32tm:
+    EventID: 1
+    Image|endswith: '\w32tm.exe'
+    CommandLine|contains:
+      - "/query"
+      - "/status"
+      - "/stripchart"
+  selection_cmdline:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - "w32tm /query"
+  condition: selection_w32tm or selection_cmdline
+falsepositives:
+  - Time synchronization troubleshooting or monitoring by administrators.
+level: medium
+fields:
+  - EventID
+  - Image
+  - CommandLine

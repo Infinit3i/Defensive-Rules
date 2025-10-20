@@ -1,0 +1,34 @@
+title: tzutil query timezone
+id: 1f2e3d4c-5b6a-7890-ab12-cdef34567890
+status: experimental
+description: Detects use of tzutil to query or set the system timezone which may indicate system time discovery or manipulation.
+references:
+  - https://attack.mitre.org/techniques/T1124/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1124
+  - tactic.discovery
+  - platform:windows
+  - technique:T1124
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    Image|endswith: '\tzutil.exe'
+    CommandLine|contains:
+      - " /g"
+      - " /s "
+      - " /l"
+  condition: selection
+falsepositives:
+  - Legitimate admin scripts or processes checking timezone for configuration or troubleshooting.
+level: low
+fields:
+  - EventID
+  - TimeCreated
+  - Image
+  - CommandLine

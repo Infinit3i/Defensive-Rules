@@ -1,0 +1,36 @@
+title: WMI Activity - Win32_Process Query
+id: a1057a01-1111-4c11-8a57-000000000004
+status: experimental
+description: Detects WMI queries against Win32_Process in the WMI-Activity Operational log (remote or local process discovery).
+references:
+  - https://attack.mitre.org/techniques/T1057/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1057
+  - tactic.discovery
+  - platform:windows
+  - technique:T1057
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: wmi
+detection:
+  sel_query:
+    EventID: 5857
+    Query|contains:
+      - "Select * from Win32_Process"
+      - "select Name,ProcessId from Win32_Process"
+  sel_consumer:
+    EventID: 5858
+    Consumer|contains: "Win32_Process"
+  condition: sel_query or sel_consumer
+falsepositives:
+  - Enterprise management tooling performing inventory via WMI.
+level: high
+fields:
+  - EventID
+  - User
+  - Computer
+  - Query
+  - Operation

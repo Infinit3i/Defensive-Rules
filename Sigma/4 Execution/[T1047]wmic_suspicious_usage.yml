@@ -1,0 +1,47 @@
+title: Suspicious WMIC Usage for Remote Process Execution
+id: 3c1a1c4b-7c6c-4f5d-bb77-0000aaaawmi1
+status: stable
+description: Detects suspicious use of wmic.exe to spawn processes (e.g., cmd.exe/powershell.exe) locally or on remote hosts using 'process call create'.
+author: Matthew Iverson
+date: 2025-10-19
+references:
+  - https://attack.mitre.org/techniques/T1047/
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_parent_wmic:
+    ParentImage|endswith: '\wmic.exe'
+  selection_image_wmic:
+    Image|endswith: '\wmic.exe'
+  selection_params:
+    CommandLine|contains:
+      - 'process call create'
+      - '/node:'
+      - '/user:'
+  selection_spawned:
+    CommandLine|contains:
+      - 'cmd.exe /c'
+      - 'powershell.exe'
+      - 'pwsh.exe'
+  condition: (selection_parent_wmic or selection_image_wmic) and selection_params and selection_spawned
+fields:
+  - UtcTime
+  - Image
+  - ParentImage
+  - CommandLine
+  - ParentCommandLine
+  - User
+  - CurrentDirectory
+falsepositives:
+  - Legitimate remote admin or software deployment using WMIC
+level: high
+tags:
+  - attack.T1047
+  - execution
+  - windows
+  - sysmon
+  - lolbin
+  - APT29
+  - FIN7

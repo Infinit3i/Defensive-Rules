@@ -1,0 +1,37 @@
+title: WMIC Process List or Get
+id: a1057a01-1111-4c11-8a57-000000000002
+status: experimental
+description: Detects WMIC usage to enumerate processes (e.g., 'wmic process list', 'wmic process get').
+references:
+  - https://attack.mitre.org/techniques/T1057/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1057
+  - tactic.discovery
+  - platform:windows
+  - technique:T1057
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  sel_image:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+  sel_cmd:
+    EventID: 1
+    CommandLine|contains:
+      - "wmic process list"
+      - "wmic process get"
+      - "wmic /node:"
+  condition: sel_image and sel_cmd
+falsepositives:
+  - Asset inventory or remote administration scripts using WMIC.
+level: high
+fields:
+  - EventID
+  - Image
+  - CommandLine
+  - ParentImage
+  - User

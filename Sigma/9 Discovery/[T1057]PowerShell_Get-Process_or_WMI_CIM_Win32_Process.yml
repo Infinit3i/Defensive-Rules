@@ -1,0 +1,44 @@
+title: PowerShell Get-Process or WMI/CIM Win32_Process Discovery
+id: a1057a01-1111-4c11-8a57-000000000003
+status: experimental
+description: Detects PowerShell-based process discovery via Get-Process, Get-WmiObject Win32_Process, or Get-CimInstance Win32_Process.
+references:
+  - https://attack.mitre.org/techniques/T1057/
+author: Matthew Iverson
+date: 2025-10-19
+tags:
+  - attack.t1057
+  - tactic.discovery
+  - platform:windows
+  - technique:T1057
+  - mitre_version:16.1
+logsource:
+  product: windows
+  service: powershell
+detection:
+  sel_scriptblock:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - "Get-Process"
+      - "Get-WmiObject"
+      - "Get-CimInstance"
+      - "Win32_Process"
+  sel_proc_create:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - "Get-Process"
+      - "Get-WmiObject Win32_Process"
+      - "Get-CimInstance Win32_Process"
+  condition: sel_scriptblock or sel_proc_create
+falsepositives:
+  - Legitimate admin and monitoring scripts; Intune/SCCM actions.
+level: medium
+fields:
+  - EventID
+  - ScriptBlockText
+  - Image
+  - CommandLine
+  - ParentImage
