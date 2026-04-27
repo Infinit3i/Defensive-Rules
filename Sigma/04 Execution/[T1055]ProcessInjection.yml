@@ -2,7 +2,9 @@
 title: Suspicious Process Injection into LSASS or Explorer
 id: 57e5e43f-ae10-4db4-88a5-49980d05e7cc
 status: experimental
-description: Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like lsass.exe or explorer.exe are accessed in a privileged manner.
+description: >
+  Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like
+  lsass.exe or explorer.exe are accessed in a privileged manner.
 author: Matthew Iverson
 date: 2025/04/20
 logsource:

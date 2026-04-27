@@ -2,7 +2,9 @@
 title: PowerShell BITSJob or Invoke-WebRequest file downloads
 id: d1105a01-0002-4c11-8a05-000000000002
 status: experimental
-description: Detect PowerShell using BITS (Start-BitsTransfer / BITSJob) or Invoke-WebRequest/Invoke-RestMethod to download executables or archives into user-writable paths — often used for ingress tool transfer.
+description: >
+  Detect PowerShell using BITS (Start-BitsTransfer / BITSJob) or Invoke-WebRequest/Invoke-RestMethod to download executables or archives into
+  user-writable paths — often used for ingress tool transfer.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Matthew Iverson

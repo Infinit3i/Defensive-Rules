@@ -35,7 +35,6 @@ detection:
       - 'pypi.org'
       - 'npmjs.com'
       - 'packagist.org'
-    CommandLine|contains:
       - 'typosquatting'
       - 'similar'
   private_install:

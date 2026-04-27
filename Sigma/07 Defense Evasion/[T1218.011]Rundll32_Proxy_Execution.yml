@@ -40,7 +40,7 @@ detection:
       - 'http://'
       - 'https://'
       - 'ftp://'
-      - '\\\\' # UNC paths
+      - '\\\\'  # UNC paths
   encoded_commands:
     CommandLine|contains:
       - ' -e '

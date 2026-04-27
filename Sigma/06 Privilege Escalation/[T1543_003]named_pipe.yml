@@ -18,8 +18,8 @@ logsource:
   service: system
 detection:
   selection:
-    EventID: 7045        
-# "A service was installed in the system"
+    EventID: 7045
+    # "A service was installed in the system"
     ServiceFileName|contains: '\\.\pipe\'  
   condition: selection
 falsepositives:

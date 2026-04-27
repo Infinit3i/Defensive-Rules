@@ -2,7 +2,9 @@
 title: CertUtil download to suspicious path
 id: d1105a01-0001-4c11-8a05-000000000001
 status: experimental
-description: Detects usage of certutil to download files (usually via URL) into user-writable or suspicious directories (e.g., %TEMP%, AppData, Downloads) — common technique for ingress tool transfer on Windows.
+description: >
+  Detects usage of certutil to download files (usually via URL) into user-writable or suspicious directories (e.g., %TEMP%, AppData, Downloads) —
+  common technique for ingress tool transfer on Windows.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Matthew Iverson

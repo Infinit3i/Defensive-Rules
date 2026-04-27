@@ -8,7 +8,7 @@ description: >
   access systems. This rule searches for process creation events where the command line or
   related fields reference "ADMIN$".
 references:
-    - https://attack.mitre.org/techniques/T1077/ 
+    - https://attack.mitre.org/techniques/T1077/
 author: Matthew Iverson
 date: 2025-04-08
 tags:

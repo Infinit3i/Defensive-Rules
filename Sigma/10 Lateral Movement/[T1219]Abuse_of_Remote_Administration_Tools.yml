@@ -2,7 +2,9 @@
 title: Abuse of Remote Administration Tools
 id: b2cfa123-45de-6789-abcd-ef1234567890
 status: experimental
-description: "Detects potential abuse of remote administration tools (e.g., psexec, winrs, wmic, wmiexec) from process creation events that may indicate lateral movement or unauthorized remote access attempts."
+description: >
+  "Detects potential abuse of remote administration tools (e.g., psexec, winrs, wmic, wmiexec) from process creation events that may indicate lateral
+  movement or unauthorized remote access attempts."
 references:
   - https://attack.mitre.org/techniques/T1219/
 author: Matthew Iverson
