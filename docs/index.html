@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; connect-src 'self' https://api.github.com; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; form-action 'none';">
     <title>Defensive Rules Repository</title>
 
-    <!-- Vue 3 CDN -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue 3 CDN - Pinned version with SRI -->
+    <script src="https://unpkg.com/vue@3.4.21/dist/vue.global.js"
+            integrity="sha384-+VY1zt8jWGhQU34B6bP0+GsYEisDdIQ1a0U4cIUiO7TDh+M8ZdWMR5iLWrEwzTaC"
+            crossorigin="anonymous"></script>
 
-    <!-- Nerd Fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@master/css/nerd-fonts-generated.css">
+    <!-- Nerd Fonts - Pinned commit with SRI -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@2.3.3/css/nerd-fonts-generated.css"
+          integrity="sha384-MFVS82c2GRYRh7/uGwL/R1+zJ9A/V8dZJqG7zD2YWZJ4rTxI+JqJNm//Q0XUQF9/"
+          crossorigin="anonymous">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="assets/style.css">
@@ -207,7 +213,7 @@
                             <strong>References:</strong>
                             <ul>
                                 <li v-for="ref in selectedRule.references" :key="ref">
-                                    <a :href="ref" target="_blank">{{ ref }}</a>
+                                    <a :href="isValidHttpUrl(ref) ? ref : '#'" target="_blank" rel="noopener noreferrer">{{ ref }}</a>
                                 </li>
                             </ul>
                         </div>
