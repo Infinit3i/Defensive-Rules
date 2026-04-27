@@ -1,0 +1,22 @@
+title: Suspicious TLS Certificate Patterns
+id: j1k2l3m4-n5o6-7890-abcd-111111111111
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: ssl
+detection:
+  selection:
+    certificate_subject|contains:
+      - 'Self-Signed'
+      - 'localhost'
+      - 'test'
+      - 'temp'
+      - '127.0.0.1'
+      - 'example.com'
+      - 'default'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1071.001

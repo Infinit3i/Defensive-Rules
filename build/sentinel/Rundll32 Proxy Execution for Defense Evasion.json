@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Rundll32 Proxy Execution for Defense Evasion",
+    "description": "Detects rundll32.exe being used to proxy execution of malicious code",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\rundll32.exe\" and (CommandLine|contains has \"javascript:\" or CommandLine|contains has \"vbscript:\" or CommandLine|contains has \"mshtml\" or CommandLine|contains has \"shell32.dll,ShellExec_RunDLL\" or CommandLine|contains has \"advpack.dll\" or CommandLine|contains has \"ieframe.dll\" or CommandLine|contains has \"shdocvw.dll\" or CommandLine|contains has \"urlmon.dll\" or CommandLine|contains has \"ieadvpack.dll\" or CommandLine|contains has \"setupapi.dll\" or CommandLine|contains has \"ieframe.dll\") and (CommandLine|contains has \"DllCanUnloadNow\" or CommandLine|contains has \"DllGetVersion\" or CommandLine|contains has \"DllInstall\" or CommandLine|contains has \"DllRegisterServer\" or CommandLine|contains has \"DllUnregisterServer\" or CommandLine|contains has \"OpenURL\" or CommandLine|contains has \"RouteTheCall\" or CommandLine|contains has \"LaunchApplication\") and (CommandLine|contains has \"http://\" or CommandLine|contains has \"https://\" or CommandLine|contains has \"ftp://\" or CommandLine|contains has \"\\\\\\\\\") and (CommandLine|contains has \" -e \" or CommandLine|contains has \" -en \" or CommandLine|contains has \" -enc \" or CommandLine|contains has \" -encoded \" or CommandLine|contains has \"FromBase64String\") and (CommandLine|contains has \"%TEMP%\" or CommandLine|contains has \"%TMP%\" or CommandLine|contains has \"C:\\Users\\*\\AppData\\Local\\Temp\" or CommandLine|contains has \"C:\\Windows\\Temp\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "o5p6q7r8-s9t0-1234-5678-901234opqrst",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T011"
+    ]
+  }
+}

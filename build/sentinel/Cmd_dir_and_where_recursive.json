@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Cmd_dir_and_where_recursive",
+    "description": "Detect Windows cmd.exe or where.exe usage with recursive file/directory enumeration flags (e.g., dir /s, where /r) often used for wide file discovery.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (Image|endswith has \"\\cmd.exe\") and (CommandLine|contains has \" dir /s\" or CommandLine|contains has \" dir /b /s\" or CommandLine|contains has \" dir /s /b\" or CommandLine|contains has \" dir /a /s\") and (Image|endswith has \"\\where.exe\") and (CommandLine|contains has \"where /r\" or CommandLine|contains has \"where /R\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "0f1a2b3c-4d5e-6f70-8a9b-0c1d2e3f4a5b",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1083"
+    ]
+  }
+}

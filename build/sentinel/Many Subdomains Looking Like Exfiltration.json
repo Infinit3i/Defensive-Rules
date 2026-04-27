@@ -1,0 +1,66 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Many Subdomains Looking Like Exfiltration",
+    "description": "Detects large volumes of unique subdomain queries to the same root domain, which may indicate DNS-based data exfiltration using tunneling or encoding schemes.",
+    "severity": "High",
+    "enabled": false,
+    "query": "DnsEvents\n| where TimeGenerated > ago(24h)\n| where query matches regex \"([a-zA-Z0-9]{10,}\\.){3,}\"",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "f4e1c7a2-8d9b-4d11-bcde-123456abcdef",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/08"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T004",
+      "T003"
+    ]
+  }
+}

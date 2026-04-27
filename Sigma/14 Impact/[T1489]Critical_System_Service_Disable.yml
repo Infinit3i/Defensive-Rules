@@ -1,0 +1,60 @@
+title: Critical System Service Disable
+id: c1d2e3f4-g5h6-7890-abcd-111111111111
+status: experimental
+description: Detects disabling of critical system services
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_sc:
+    EventID: 1
+    Image|endswith: '\sc.exe'
+    CommandLine|contains:
+      - 'config'
+      - 'start= disabled'
+      - 'stop'
+  critical_services:
+    CommandLine|contains:
+      - 'Themes'
+      - 'AudioSrv'
+      - 'Browser'
+      - 'Dhcp'
+      - 'Dnscache'
+      - 'LanmanWorkstation'
+      - 'Netlogon'
+      - 'PlugPlay'
+      - 'PolicyAgent'
+      - 'RpcSs'
+      - 'Schedule'
+      - 'Spooler'
+      - 'TrkWks'
+      - 'UxSms'
+      - 'W32Time'
+      - 'Workstation'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Set-Service'
+      - 'Stop-Service'
+      - '-StartupType Disabled'
+      - '-Status Stopped'
+  condition: (selection_sc or selection_powershell) and critical_services
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+  - ParentImage
+falsepositives:
+  - System maintenance
+  - Service troubleshooting
+  - System hardening
+level: high
+tags:
+  - attack.impact
+  - attack.t1489
+  - sysmon
+  - windows

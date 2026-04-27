@@ -1,0 +1,58 @@
+title: Suspicious Native API Function Calls
+id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
+status: experimental
+description: Detects potentially malicious native API function calls often used by malware
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtCreateSection'
+      - 'NtMapViewOfSection'
+      - 'NtUnmapViewOfSection'
+      - 'NtAllocateVirtualMemory'
+      - 'NtProtectVirtualMemory'
+      - 'NtWriteVirtualMemory'
+      - 'NtReadVirtualMemory'
+      - 'NtCreateThreadEx'
+      - 'NtResumeThread'
+      - 'NtSuspendThread'
+      - 'NtTerminateProcess'
+      - 'NtOpenProcess'
+      - 'NtQueryInformationProcess'
+      - 'LdrLoadDll'
+      - 'RtlCreateUserThread'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - '[DllImport("ntdll")]'
+      - 'VirtualAlloc'
+      - 'VirtualProtect'
+      - 'CreateRemoteThread'
+      - 'WriteProcessMemory'
+      - 'ReadProcessMemory'
+      - 'OpenProcess'
+      - 'GetProcAddress'
+      - 'LoadLibrary'
+  condition: selection_process or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - Legitimate system utilities
+  - Development tools
+  - Security software
+level: medium
+tags:
+  - attack.execution
+  - attack.t1106
+  - sysmon
+  - windows

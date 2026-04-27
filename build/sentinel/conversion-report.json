@@ -1,0 +1,1991 @@
+{
+  "success": [
+    {
+      "file": "Sigma/04 Execution/[T1059.001]ScriptBlockLoggingWithSuspiciousContent.yml",
+      "name": "Suspicious PowerShell Script Block Execution",
+      "techniques": [
+        "T1059",
+        "T001"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1106]Managed_Code_PInvoke_or_Runtime_Interop_usage.yml",
+      "name": "Managed code PInvoke or runtime interop usage detected",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1047]WMI_Remote_Command_Execution.yml",
+      "name": "WMI Remote Command Execution",
+      "techniques": [
+        "T1047"
+      ],
+      "tactics": [
+        "execution",
+        "lateral-movement",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1218.011]rundll32_remote_dll_load.yml",
+      "name": "Rundll32 Loading Remote or Non-System DLLs",
+      "techniques": [
+        "T1218",
+        "T011"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1047]WMIPersistence.yml",
+      "name": "Suspicious WMI-Based Execution Wmiprvse Spawning Scripting Engines",
+      "techniques": [
+        "T1047"
+      ],
+      "tactics": [
+        "execution",
+        "persistence",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1218]Utility_Abuse.yml",
+      "name": "Utility Abuse Regsvr32 Rundll32 etc",
+      "techniques": [
+        "T011"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1218.011]rundll32_suspicious_parameters.yml",
+      "name": "Suspicious Rundll32 Execution with Unusual Parameters",
+      "techniques": [
+        "T1218",
+        "T011"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1059]SuspiciousParentChildChain.yml",
+      "name": "Suspicious Office-Initiated Scripting or Execution Chain",
+      "techniques": [
+        "T1059",
+        "T001",
+        "T1218"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1086]powershell_remote_download.yml",
+      "name": "PowerShell Download and Execution from Remote Source",
+      "techniques": [
+        "T1086"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1106]Suspicious_Native_API_Calls.yml",
+      "name": "Suspicious Native API Function Calls",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1086]powershell_encoded_command.yml",
+      "name": "PowerShell Encoded Command Execution",
+      "techniques": [
+        "T1086"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1047]wmic_suspicious_usage.yml",
+      "name": "Suspicious WMIC Usage for Remote Process Execution",
+      "techniques": [
+        "T1047"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1059.001]PowerShell_Download_and_Execute.yml",
+      "name": "PowerShell Download and Execute Patterns",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1106]Native_API_Function_Names_in_Script.yml",
+      "name": "Native API function names observed in scripts or commandlines",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1047]wmiexec.yml",
+      "name": "Suspicious Execution of wmiexec",
+      "techniques": [
+        "T1047"
+      ],
+      "tactics": [
+        "execution",
+        "lateral-movement",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1106]PowerShell_Add-Type_DllImport_usage.yml",
+      "name": "PowerShell Add-Type and DllImport usage",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1059.003]Windows_CT1059.003_Windows_CommandShell_EncodedCmd.yml",
+      "name": "Suspicious Command Shell Activity Encoded or Obfuscated Commands",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1047]wmi_remote_process_create.yml",
+      "name": "WMI Win32_ProcessCreate Executed Remotely WMI-Activity",
+      "techniques": [
+        "T1047"
+      ],
+      "tactics": [
+        "Execution"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1055]ProcessInjection.yml",
+      "name": "Suspicious Process Injection into LSASS or Explorer",
+      "techniques": [
+        "T1055",
+        "T001"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "Execution"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1055]Process_Injection_Techniques.yml",
+      "name": "Process Injection Techniques",
+      "techniques": [
+        "T1055"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/04 Execution/[T1059.003]Windows_CommandShell_SuspiciousParent.yml",
+      "name": "CMD Launched From Suspicious Parent Process",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "execution",
+        "Execution"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/06 Privilege Escalation/[T0000]Suspicious_Sudo_Command_Usage.yml",
+      "name": "Suspicious Sudo Command Usage",
+      "techniques": [],
+      "tactics": [
+        "privilege-escalation",
+        "PrivilegeEscalation"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/06 Privilege Escalation/[T1134]token_theft.yml",
+      "name": "Suspicious Domain Token Theft or Impersonation",
+      "techniques": [
+        "T1134"
+      ],
+      "tactics": [
+        "privilege-escalation",
+        "credential-access",
+        "PrivilegeEscalation"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/06 Privilege Escalation/[T1543_003]named_pipe.yml",
+      "name": "Service Creation Using a Named Pipe",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "privilege-escalation",
+        "persistence",
+        "PrivilegeEscalation"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/06 Privilege Escalation/[T1548]Privilege_Escalation_Attempts.yml",
+      "name": "Privilege Escalation Attempts",
+      "techniques": [
+        "T1548"
+      ],
+      "tactics": [
+        "privilege-escalation",
+        "PrivilegeEscalation"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/14 Impact/[T1489]Service_Stop.yml",
+      "name": "Service Stop via scexe net Stop-Service or WMIC",
+      "techniques": [
+        "T1489"
+      ],
+      "tactics": [
+        "Impact"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/14 Impact/[T0000]Browser_Automation_Click_Fraud.yml",
+      "name": "Browser Automation Tools for Click Fraud",
+      "techniques": [
+        "T0000"
+      ],
+      "tactics": [
+        "impact",
+        "Impact"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/14 Impact/[T1489]Security_Service_Termination.yml",
+      "name": "Security Service Termination",
+      "techniques": [
+        "T1489"
+      ],
+      "tactics": [
+        "impact",
+        "Impact"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/14 Impact/[T0000]Click_Fraud_Detection.yml",
+      "name": "Click Fraud and Automated Clicking Detection",
+      "techniques": [
+        "T0000"
+      ],
+      "tactics": [
+        "impact",
+        "Impact"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1136.001]NewUserCreated.yml",
+      "name": "New User Account Created",
+      "techniques": [
+        "T1136",
+        "T001"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1542.007]Abnormal_Kernel_Module_Loading.yml",
+      "name": "Abnormal Kernel Module Loading",
+      "techniques": [
+        "T007"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1574.002]ImageLoadFromNonStandardDirectories.yml",
+      "name": "DLL Loaded from Non-standard Directory",
+      "techniques": [
+        "T1574",
+        "T002"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1547.001]FileCreationsInSuspiciousPaths.yml",
+      "name": "Executable or Script Dropped in Persistence Path",
+      "techniques": [
+        "T1547",
+        "T001"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1543.003]Suspicious_Driver_Installations_or_Modifications.yml",
+      "name": "Suspicious Driver Installations or Modifications",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1053]Unauthorized_Cron_Job_Creation.yml",
+      "name": "Unauthorized Cron Job Creation",
+      "techniques": [
+        "T1053"
+      ],
+      "tactics": [
+        "Persistence"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1543.003]Service_Creation.yml",
+      "name": "Suspicious Service Creation",
+      "techniques": [
+        "T1543",
+        "T003"
+      ],
+      "tactics": [
+        "persistence",
+        "privilege-escalation",
+        "Persistence"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1098]Abnormal_User_Account_Modifications.yml",
+      "name": "Abnormal User Account Modifications",
+      "techniques": [
+        "T1098"
+      ],
+      "tactics": [
+        "account-manipulation",
+        "Persistence"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1098]UserAddedToDomainAdmins.yml",
+      "name": "User Added to Domain Admins Group",
+      "techniques": [
+        "T1098"
+      ],
+      "tactics": [
+        "persistence",
+        "privilege-escalation",
+        "Persistence"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1053.005]Malicious_Scheduled_Task_Creation.yml",
+      "name": "Malicious Scheduled Task Creation",
+      "techniques": [
+        "T005"
+      ],
+      "tactics": [
+        "persistence",
+        "Persistence"
+      ],
+      "tables": [
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1106]Suspicious_Module_Load_From_NonStandard_Path.yml",
+      "name": "Suspicious native module load from non-standard path",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "Persistence"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1053.005]ScheduledTaskCreation.yml",
+      "name": "Scheduled Task Creation",
+      "techniques": [
+        "T1053",
+        "T005"
+      ],
+      "tactics": [
+        "persistence",
+        "execution",
+        "Persistence"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1021]Lateral_Movement_Activity_Analysis.yml",
+      "name": "Lateral Movement Activity Analysis",
+      "techniques": [
+        "T1021"
+      ],
+      "tactics": [
+        "lateral-movement",
+        "LateralMovement"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1077]admin_share.yml",
+      "name": "Suspicious Use of ADMIN Administrative Share",
+      "techniques": [
+        "T1077"
+      ],
+      "tactics": [
+        "lateral-movement",
+        "LateralMovement"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1219]Abuse_of_Remote_Administration_Tools.yml",
+      "name": "Abuse of Remote Administration Tools",
+      "techniques": [
+        "T1219"
+      ],
+      "tactics": [
+        "lateral-movement",
+        "LateralMovement"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1219]meterpreter.yml",
+      "name": "Potential Meterpreter Execution Detected",
+      "techniques": [
+        "T1219"
+      ],
+      "tactics": [
+        "execution",
+        "LateralMovement"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1021]Abnormal_Host_to_Host_Communication_Patterns.yml",
+      "name": "Abnormal Host-to-Host Communication Patterns",
+      "techniques": [
+        "T1021",
+        "T1049"
+      ],
+      "tactics": [
+        "lateral-movement",
+        "discovery",
+        "LateralMovement"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1003.001]MimikatzExecution.yml",
+      "name": "Mimikatz LSASS Memory Access or Execution",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1110]Repeated_Failed_Login_Attempts.yml",
+      "name": "Repeated Failed Login Attempts",
+      "techniques": [
+        "T1110"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1110.003]AccountLockouts.yml",
+      "name": "Multiple Account Lockouts Detected",
+      "techniques": [
+        "T1110",
+        "T003"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1110]SSH_Brute-Force_Attack_Detection.yml",
+      "name": "SSH Brute-Force Attack Detection",
+      "techniques": [
+        "T1110"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1550.002]Pass_the_Hash.yml",
+      "name": "Pass_the_Hash",
+      "techniques": [
+        "T002"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1078.004]unregistered_device_logins.yml",
+      "name": "Cloud Account Credential Use from Unregistered or Inactive Devices",
+      "techniques": [
+        "T1078",
+        "T004"
+      ],
+      "tactics": [
+        "CredentialAccess"
+      ],
+      "tables": [
+        "AWSCloudTrail"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1078.004]suspicious_cloud_logins.yml",
+      "name": "Suspicious Cloud Account Logins from New Geolocations",
+      "techniques": [
+        "T1078",
+        "T004"
+      ],
+      "tactics": [
+        "CredentialAccess"
+      ],
+      "tables": [
+        "SigninLogs"
+      ]
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1110.001]Brute-Force_SSH_Attempts.yml",
+      "name": "Brute-Force SSH Attempts",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "credential-access",
+        "CredentialAccess"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/02 Resource Development/[T1587.003]Abnormal_TLS_SSL_Certificate_Anomalies.yml",
+      "name": "Abnormal TLSSSL Certificate Anomalies",
+      "techniques": [
+        "T003",
+        "T1557"
+      ],
+      "tactics": [
+        "ResourceDevelopment"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/03 Initial Access/[T1195]Unauthorized_Package_Manager_Activity_Networking.yml",
+      "name": "Unauthorized Package Manager Activity on Networking Equipment",
+      "techniques": [
+        "T1195"
+      ],
+      "tactics": [
+        "supply-chain-compromise",
+        "InitialAccess"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/13 Exfiltration/[T1048]Unusual_File_Transfer_Activity.yml",
+      "name": "Unusual File Transfer Activity",
+      "techniques": [
+        "T1048"
+      ],
+      "tactics": [
+        "exfiltration",
+        "Exfiltration"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/13 Exfiltration/[T1041]Large_Volume_of_HTTP_POST_Traffic.yml",
+      "name": "Large Volume of HTTP POST Traffic",
+      "techniques": [
+        "T1041",
+        "T001"
+      ],
+      "tactics": [
+        "exfiltration",
+        "command-and-control",
+        "Exfiltration"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]Tasklist_Process_Enumeration.yml",
+      "name": "Tasklist Process Enumeration",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]PowerShell_Get-Date_GetTimeZone_GetUtcTime.yml",
+      "name": "PowerShell Get-Date or Get-TimeZone usage",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]Cmd_dir_and_where_recursive.yml",
+      "name": "Cmd_dir_and_where_recursive",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]ipconfig.yml",
+      "name": "System Information Discovery - ipconfig  hostname  net config executions",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]WebDAV_PROPFIND_Directory_Enumeration_Zeek.yml",
+      "name": "WebDAV_PROPFIND_Directory_Enumeration_Zeek",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]File_and_Directory_Discovery.yml",
+      "name": "File and Directory Discovery Commands dir s where r Get-ChildItem -Recurse",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]System_Info_Systeminfo.yml",
+      "name": "System Information Discovery - systeminfoexe Execution",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]Suspicious_File_Search_Commands.yml",
+      "name": "Suspicious File and Directory Search Commands",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "discovery",
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]Find_and_ls_recursive_unix_syslog.yml",
+      "name": "Find_and_ls_recursive_unix_syslog",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]reg query for ComputerName.yml",
+      "name": "System Information Discovery - reg query for ComputerName  Hardware info",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]WMI-Activity_Win32_Process_Query.yml",
+      "name": "WMI Activity - Win32_Process Query",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]timedatectl_hwclock_chronyc_syslog.yml",
+      "name": "timedatectl hwclock or chronyc usage on Linux",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]Linux_ps_top_procfs_Enumeration_syslog.yml",
+      "name": "Linux pstop or proc Enumeration syslogaudit",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]PowerShell_Get-Process_or_WMI_CIM_Win32_Process.yml",
+      "name": "PowerShell Get-Process or WMICIM Win32_Process Discovery",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]w32tm_query_status.yml",
+      "name": "w32tm query or status checks",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]whoami_and_hostname_enumeration.yml",
+      "name": "System Information Discovery via whoami and hostname",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "discovery",
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]WMIC Queries for OS and BIOS.yml",
+      "name": "System Information Discovery - WMIC Queries for OS and BIOS",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]Advanced_Process_Enumeration.yml",
+      "name": "Advanced Process Enumeration and Discovery",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "discovery",
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]Time_Zone_and_Date_Discovery.yml",
+      "name": "System Time and Timezone Discovery Commands",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "discovery",
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]tzutil_query_timezone.yml",
+      "name": "tzutil query timezone",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1082]PowerShell Get-CimInstance Get-WmiObject Get-ComputerInfo.yml",
+      "name": "System Information Discovery - PowerShell Get-CimInstance  Get-WmiObject  Get-ComputerInfo",
+      "techniques": [
+        "T1082"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]Suspicious_File_Enumeration_Tools.yml",
+      "name": "Suspicious_File_Enumeration_Tools",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]System_Time_Discovery.yml",
+      "name": "System Time Discovery via tzutil w32tm datetime or Get-Date",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1057]WMIC_Process_List_or_Get.yml",
+      "name": "WMIC Process List or Get",
+      "techniques": [
+        "T1057"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1124]Zeek_NTP_or_UDP123_queries.yml",
+      "name": "Zeek NTP or UDP 123 traffic indicating external time queries",
+      "techniques": [
+        "T1124"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1046]NonPrivate_Port500_Scan_Detection.yml",
+      "name": "Detect Scanning or IPsec Probing via Public IPs or Port 500",
+      "techniques": [
+        "T1046"
+      ],
+      "tactics": [
+        "discovery",
+        "Discovery"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/09 Discovery/[T1083]PowerShell_Get-ChildItem_Recurse.yml",
+      "name": "PowerShell_Get-ChildItem_Recurse",
+      "techniques": [
+        "T1083"
+      ],
+      "tactics": [
+        "Discovery"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Module_Loads_Debug_DLLs_from_UserPaths.yml",
+      "name": "Module loads of debugging libraries from user-writable paths",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]PowerShell_IsDebuggerPresent_and_Debug_API_checks.yml",
+      "name": "PowerShell IsDebuggerPresent or Debug API checks in ScriptBlock",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Sysmon_CommandLine_Debugger_Tool_Invocations.yml",
+      "name": "CommandLine contains common debugger tool names ollydbg x64dbg windbg",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1562.002]AuditPolicyChanges.yml",
+      "name": "Audit Policy Change or Clearing Attempt",
+      "techniques": [
+        "T1562",
+        "T002"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event",
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1070.004]Unusual_File_Access_or_Modification.yml",
+      "name": "Unusual File Access or Modification",
+      "techniques": [
+        "T004"
+      ],
+      "tactics": [
+        "indicator-removal",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1562]rdp.yml",
+      "name": "Enabling RDP Through Firewall Modification Detected",
+      "techniques": [
+        "T1562"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "SecurityEvent"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Long_Delay_In_Compiled_Binary_via_Sleep_or_NtDelayExecution.yml",
+      "name": "Long delay in compiled binaries via Sleep or NtDelayExecution",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1070]Log_Tampering_or_Deletion.yml",
+      "name": "Log Tampering or Deletion",
+      "techniques": [
+        "T1070"
+      ],
+      "tactics": [
+        "indicator-removal",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]High_Uptime_Checks_and_Delays.yml",
+      "name": "High uptime checks and conditional long delays",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Timeout_and_Choice_Delays_in_Cmd_And_Batch.yml",
+      "name": "Timeout  choice based long delays in cmdbatch",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1106]Syscall_Indicators_In_Scripts.yml",
+      "name": "Syscall strings or inline syscall opcodes in scriptblocks",
+      "techniques": [
+        "T1106"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Zeek_HTTP_Debugger_Downloads_or_UserAgent.yml",
+      "name": "Zeek HTTP logs - download or user-agent indicative of debugger tools",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Debugger_Evasion.yml",
+      "name": "Debugger Evasion Indicators in Command Line or ScriptBlock",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Anti_Debug_API_Calls.yml",
+      "name": "Anti-Debug API Calls and Techniques",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Start-Sleep_Long_Duration_PowerShell.yml",
+      "name": "Start-Sleep long duration in PowerShell",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1218.011]Rundll32_Proxy_Execution.yml",
+      "name": "Rundll32 Proxy Execution for Defense Evasion",
+      "techniques": [
+        "T011"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Virtualization_Sandbox_Evasion_Time_Based_Evasion.yml",
+      "name": "Time-Based Evasion via Sleep Ping-Delay or Timeout",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1622]Syslog_Auditd_ptrace_or_gdb_activity.yml",
+      "name": "ptracesyscall or gdb invocation detected in syslogauditd",
+      "techniques": [
+        "T1622"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Extended_Sleep_and_Delay_Commands.yml",
+      "name": "Extended Sleep and Delay Commands for Evasion",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "defense-evasion",
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T1497.003]Stepped_Timer_Loops_and_Exponential_Backoff_patterns.yml",
+      "name": "Stepped timer loops or exponential backoff used as long delay",
+      "techniques": [
+        "T003"
+      ],
+      "tactics": [
+        "DefenseEvasion"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]Linux_curl_wget_scp_rsync_downloads_syslog.yml",
+      "name": "Linux curlwgetscprsync downloads in syslog",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Syslog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]CertUtil_Downloads_To_Suspicious_Path.yml",
+      "name": "CertUtil download to suspicious path",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]Unencrypted_Traffic_on_TCP_443.yml",
+      "name": "Unencrypted Traffic on TCP 443",
+      "techniques": [
+        "T001",
+        "T1041"
+      ],
+      "tactics": [
+        "command-and-control",
+        "exfiltration",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]Suspicious_Web_C2_Patterns.yml",
+      "name": "Suspicious Web-based Command and Control Patterns",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]HTTP_File_Downloads_Zeek_USERAGENT_URI_FILENAME.yml",
+      "name": "HTTP file downloads  Zeek detection by URIuser-agentfilename",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]Suspicious_HTTP_User-Agent_Strings.yml",
+      "name": "Suspicious HTTP User-Agent Strings",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071]FRPC_Designated_Ports_Detection.yml",
+      "name": "Detect FRPC Communication on Designated Ports",
+      "techniques": [
+        "T1071"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1048.003]Many_Subdomains_Looking_Like_Exfiltration.yml",
+      "name": "Many Subdomains Looking Like Exfiltration",
+      "techniques": [
+        "T004",
+        "T003"
+      ],
+      "tactics": [
+        "exfiltration",
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "DnsEvents"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.004]DNS_Tunneling_Detection.yml",
+      "name": "DNS Tunneling Detection",
+      "techniques": [
+        "T004"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "DnsEvents"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.004]DNSTunneling.yml",
+      "name": "DNS Tunneling via High Volume or Suspicious Subdomains",
+      "techniques": [
+        "T1071",
+        "T004"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1095]FRPC_ICMP_Tunnel_Detection.yml",
+      "name": "Detect ICMP-Based FRPC Communication",
+      "techniques": [
+        "T1095"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]HTTP_Beaconing_and_Suspicious_Web_Protocols.yml",
+      "name": "HTTP Beaconing and Suspicious Web Protocols",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]NetworkConnectionsFromUnusualProcesses.yml",
+      "name": "Unusual Process Making Network Connection",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]PowerShell_BitsTransfer_And_Invoke-WebRequest_Downloads.yml",
+      "name": "PowerShell BITSJob or Invoke-WebRequest file downloads",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]FTP_and_Anonymous_File_Transfers_YARA_or_Suricata_Indicators.yml",
+      "name": "FTP or anonymous file transfer indicators ftp ftps smb file transfer",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "CommandAndControl"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]Anomalous_Network_Traffic_or_C2_Beaconing.yml",
+      "name": "Anomalous Network Traffic  C2 Beaconing",
+      "techniques": [
+        "T001"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "SecurityEvent",
+        "Event"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.001]Anomalous_Connection_Volume_and_Duration.yml",
+      "name": "Anomalous Connection Volume and Duration",
+      "techniques": [
+        "T001",
+        "T1041"
+      ],
+      "tactics": [
+        "command-and-control",
+        "exfiltration",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "CommonSecurityLog"
+      ]
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1105]Suspicious_Download_Tools.yml",
+      "name": "Suspicious Download Tools and Methods",
+      "techniques": [
+        "T1105"
+      ],
+      "tactics": [
+        "command-and-control",
+        "CommandAndControl"
+      ],
+      "tables": [
+        "Event"
+      ]
+    }
+  ],
+  "failures": [
+    {
+      "file": "Sigma/04 Execution/[T1059.001]Abnormal_PowerShell_Activity.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 21:\n        Image|endswith: \"\\powershell.exe\"\n                        ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 20, column 23:\n        Image|endswith: \"\\powershell.exe\"\n                          ^",
+      "type": "ScannerError"
+    },
+    {
+      "file": "Sigma/05 Persistence/[T1574.002]DLL_Hijacking_or_Side-Loading.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 9:\n          - \":\\Temp\\\"\n            ^\nfound unknown escape character 'T'\n  in \"<unicode string>\", line 20, column 12:\n          - \":\\Temp\\\"\n               ^",
+      "type": "ScannerError"
+    },
+    {
+      "file": "Sigma/10 Lateral Movement/[T1219]psexec.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n                - \"\\psexec.exe\"\n                  ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 21, column 17:\n                - \"\\psexec.exe\"\n                    ^",
+      "type": "ScannerError"
+    },
+    {
+      "file": "Sigma/08 Credential Access/[T1055.003]LSASS_Process_Access_or_Injection.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 27:\n        TargetImage|endswith: \"\\lsass.exe\"\n                              ^\nfound unknown escape character 'l'\n  in \"<unicode string>\", line 20, column 29:\n        TargetImage|endswith: \"\\lsass.exe\"\n                                ^",
+      "type": "ScannerError"
+    },
+    {
+      "file": "Sigma/07 Defense Evasion/[T0000]Unusual_File_System_Activities_in_Sensitive_Directories.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 4, column 14:\n    description: \"Detects suspicious file system  ... \n                 ^\nfound unknown escape character 'W'\n  in \"<unicode string>\", line 4, column 90:\n     ... sensitive directories (e.g., C:\\Windows\\System32, C:\\Windows\\Tem ... \n                                         ^",
+      "type": "ScannerError"
+    },
+    {
+      "file": "Sigma/12 Command and Control/[T1071.004]Anomalous_DNS_Query_Patterns.yml",
+      "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                  ^\nfound unknown escape character '.'\n  in \"<unicode string>\", line 21, column 34:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                                     ^",
+      "type": "ScannerError"
+    }
+  ],
+  "mitre_coverage": {
+    "T1059": [
+      "Suspicious PowerShell Script Block Execution",
+      "Suspicious Office-Initiated Scripting or Execution Chain"
+    ],
+    "T001": [
+      "Suspicious PowerShell Script Block Execution",
+      "Suspicious Office-Initiated Scripting or Execution Chain",
+      "PowerShell Download and Execute Patterns",
+      "Suspicious Process Injection into LSASS or Explorer",
+      "New User Account Created",
+      "Executable or Script Dropped in Persistence Path",
+      "Mimikatz LSASS Memory Access or Execution",
+      "Brute-Force SSH Attempts",
+      "Large Volume of HTTP POST Traffic",
+      "Unencrypted Traffic on TCP 443",
+      "Suspicious Web-based Command and Control Patterns",
+      "Suspicious HTTP User-Agent Strings",
+      "HTTP Beaconing and Suspicious Web Protocols",
+      "Anomalous Network Traffic  C2 Beaconing",
+      "Anomalous Connection Volume and Duration"
+    ],
+    "T1106": [
+      "Managed code PInvoke or runtime interop usage detected",
+      "Suspicious Native API Function Calls",
+      "Native API function names observed in scripts or commandlines",
+      "PowerShell Add-Type and DllImport usage",
+      "Suspicious native module load from non-standard path",
+      "Syscall strings or inline syscall opcodes in scriptblocks"
+    ],
+    "T1047": [
+      "WMI Remote Command Execution",
+      "Suspicious WMI-Based Execution Wmiprvse Spawning Scripting Engines",
+      "Suspicious WMIC Usage for Remote Process Execution",
+      "Suspicious Execution of wmiexec",
+      "WMI Win32_ProcessCreate Executed Remotely WMI-Activity"
+    ],
+    "T1218": [
+      "Rundll32 Loading Remote or Non-System DLLs",
+      "Suspicious Rundll32 Execution with Unusual Parameters",
+      "Suspicious Office-Initiated Scripting or Execution Chain"
+    ],
+    "T011": [
+      "Rundll32 Loading Remote or Non-System DLLs",
+      "Utility Abuse Regsvr32 Rundll32 etc",
+      "Suspicious Rundll32 Execution with Unusual Parameters",
+      "Rundll32 Proxy Execution for Defense Evasion"
+    ],
+    "T1086": [
+      "PowerShell Download and Execution from Remote Source",
+      "PowerShell Encoded Command Execution"
+    ],
+    "T003": [
+      "Suspicious Command Shell Activity Encoded or Obfuscated Commands",
+      "CMD Launched From Suspicious Parent Process",
+      "Service Creation Using a Named Pipe",
+      "Suspicious Driver Installations or Modifications",
+      "Suspicious Service Creation",
+      "Multiple Account Lockouts Detected",
+      "Abnormal TLSSSL Certificate Anomalies",
+      "Long delay in compiled binaries via Sleep or NtDelayExecution",
+      "High uptime checks and conditional long delays",
+      "Timeout  choice based long delays in cmdbatch",
+      "Start-Sleep long duration in PowerShell",
+      "Time-Based Evasion via Sleep Ping-Delay or Timeout",
+      "Extended Sleep and Delay Commands for Evasion",
+      "Stepped timer loops or exponential backoff used as long delay",
+      "Many Subdomains Looking Like Exfiltration"
+    ],
+    "T1055": [
+      "Suspicious Process Injection into LSASS or Explorer",
+      "Process Injection Techniques"
+    ],
+    "T1134": [
+      "Suspicious Domain Token Theft or Impersonation"
+    ],
+    "T1548": [
+      "Privilege Escalation Attempts"
+    ],
+    "T1489": [
+      "Service Stop via scexe net Stop-Service or WMIC",
+      "Security Service Termination"
+    ],
+    "T0000": [
+      "Browser Automation Tools for Click Fraud",
+      "Click Fraud and Automated Clicking Detection"
+    ],
+    "T1136": [
+      "New User Account Created"
+    ],
+    "T007": [
+      "Abnormal Kernel Module Loading"
+    ],
+    "T1574": [
+      "DLL Loaded from Non-standard Directory"
+    ],
+    "T002": [
+      "DLL Loaded from Non-standard Directory",
+      "Pass_the_Hash",
+      "Audit Policy Change or Clearing Attempt"
+    ],
+    "T1547": [
+      "Executable or Script Dropped in Persistence Path"
+    ],
+    "T1053": [
+      "Unauthorized Cron Job Creation",
+      "Scheduled Task Creation"
+    ],
+    "T1543": [
+      "Suspicious Service Creation"
+    ],
+    "T1098": [
+      "Abnormal User Account Modifications",
+      "User Added to Domain Admins Group"
+    ],
+    "T005": [
+      "Malicious Scheduled Task Creation",
+      "Scheduled Task Creation"
+    ],
+    "T1021": [
+      "Lateral Movement Activity Analysis",
+      "Abnormal Host-to-Host Communication Patterns"
+    ],
+    "T1077": [
+      "Suspicious Use of ADMIN Administrative Share"
+    ],
+    "T1219": [
+      "Abuse of Remote Administration Tools",
+      "Potential Meterpreter Execution Detected"
+    ],
+    "T1049": [
+      "Abnormal Host-to-Host Communication Patterns"
+    ],
+    "T1110": [
+      "Repeated Failed Login Attempts",
+      "Multiple Account Lockouts Detected",
+      "SSH Brute-Force Attack Detection"
+    ],
+    "T1078": [
+      "Cloud Account Credential Use from Unregistered or Inactive Devices",
+      "Suspicious Cloud Account Logins from New Geolocations"
+    ],
+    "T004": [
+      "Cloud Account Credential Use from Unregistered or Inactive Devices",
+      "Suspicious Cloud Account Logins from New Geolocations",
+      "Unusual File Access or Modification",
+      "Many Subdomains Looking Like Exfiltration",
+      "DNS Tunneling Detection",
+      "DNS Tunneling via High Volume or Suspicious Subdomains"
+    ],
+    "T1557": [
+      "Abnormal TLSSSL Certificate Anomalies"
+    ],
+    "T1195": [
+      "Unauthorized Package Manager Activity on Networking Equipment"
+    ],
+    "T1048": [
+      "Unusual File Transfer Activity"
+    ],
+    "T1041": [
+      "Large Volume of HTTP POST Traffic",
+      "Unencrypted Traffic on TCP 443",
+      "Anomalous Connection Volume and Duration"
+    ],
+    "T1057": [
+      "Tasklist Process Enumeration",
+      "WMI Activity - Win32_Process Query",
+      "Linux pstop or proc Enumeration syslogaudit",
+      "PowerShell Get-Process or WMICIM Win32_Process Discovery",
+      "Advanced Process Enumeration and Discovery",
+      "WMIC Process List or Get"
+    ],
+    "T1124": [
+      "PowerShell Get-Date or Get-TimeZone usage",
+      "timedatectl hwclock or chronyc usage on Linux",
+      "w32tm query or status checks",
+      "System Time and Timezone Discovery Commands",
+      "tzutil query timezone",
+      "System Time Discovery via tzutil w32tm datetime or Get-Date",
+      "Zeek NTP or UDP 123 traffic indicating external time queries"
+    ],
+    "T1083": [
+      "Cmd_dir_and_where_recursive",
+      "WebDAV_PROPFIND_Directory_Enumeration_Zeek",
+      "File and Directory Discovery Commands dir s where r Get-ChildItem -Recurse",
+      "Suspicious File and Directory Search Commands",
+      "Find_and_ls_recursive_unix_syslog",
+      "Suspicious_File_Enumeration_Tools",
+      "PowerShell_Get-ChildItem_Recurse"
+    ],
+    "T1082": [
+      "System Information Discovery - ipconfig  hostname  net config executions",
+      "System Information Discovery - systeminfoexe Execution",
+      "System Information Discovery - reg query for ComputerName  Hardware info",
+      "System Information Discovery via whoami and hostname",
+      "System Information Discovery - WMIC Queries for OS and BIOS",
+      "System Information Discovery - PowerShell Get-CimInstance  Get-WmiObject  Get-ComputerInfo"
+    ],
+    "T1046": [
+      "Detect Scanning or IPsec Probing via Public IPs or Port 500"
+    ],
+    "T1622": [
+      "Module loads of debugging libraries from user-writable paths",
+      "PowerShell IsDebuggerPresent or Debug API checks in ScriptBlock",
+      "CommandLine contains common debugger tool names ollydbg x64dbg windbg",
+      "Zeek HTTP logs - download or user-agent indicative of debugger tools",
+      "Debugger Evasion Indicators in Command Line or ScriptBlock",
+      "Anti-Debug API Calls and Techniques",
+      "ptracesyscall or gdb invocation detected in syslogauditd"
+    ],
+    "T1562": [
+      "Audit Policy Change or Clearing Attempt",
+      "Enabling RDP Through Firewall Modification Detected"
+    ],
+    "T1070": [
+      "Log Tampering or Deletion"
+    ],
+    "T1105": [
+      "Linux curlwgetscprsync downloads in syslog",
+      "CertUtil download to suspicious path",
+      "HTTP file downloads  Zeek detection by URIuser-agentfilename",
+      "Unusual Process Making Network Connection",
+      "PowerShell BITSJob or Invoke-WebRequest file downloads",
+      "FTP or anonymous file transfer indicators ftp ftps smb file transfer",
+      "Suspicious Download Tools and Methods"
+    ],
+    "T1071": [
+      "Detect FRPC Communication on Designated Ports",
+      "DNS Tunneling via High Volume or Suspicious Subdomains"
+    ],
+    "T1095": [
+      "Detect ICMP-Based FRPC Communication"
+    ]
+  },
+  "timestamp": "2026-04-27T15:18:06.548262"
+}

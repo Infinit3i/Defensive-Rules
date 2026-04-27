@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious Download Tools and Methods",
+    "description": "Detects suspicious file download methods and tools used for ingress tool transfer",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\certutil.exe\" and (CommandLine|contains has \"-urlcache\" or CommandLine|contains has \"-split\" or CommandLine|contains has \"-f\" or CommandLine|contains has \"http\") and Image endswith \"\\powershell.exe\" and (CommandLine|contains has \"Invoke-WebRequest\" or CommandLine|contains has \"iwr\" or CommandLine|contains has \"wget\" or CommandLine|contains has \"curl\" or CommandLine|contains has \"DownloadFile\" or CommandLine|contains has \"DownloadString\" or CommandLine|contains has \"WebClient\" or CommandLine|contains has \"Net.WebClient\" or CommandLine|contains has \"Start-BitsTransfer\") and Image endswith \"\\bitsadmin.exe\" and (CommandLine|contains has \"/transfer\" or CommandLine|contains has \"/download\" or CommandLine|contains has \"/addfile\") and Image endswith \"\\hh.exe\" and (CommandLine|contains has \"http\" or CommandLine|contains has \"https\" or CommandLine|contains has \".chm\") and Image endswith \"\\mshta.exe\" and (CommandLine|contains has \"http\" or CommandLine|contains has \"https\" or CommandLine|contains has \"javascript\" or CommandLine|contains has \"vbscript\") and (CommandLine|contains has \"raw.githubusercontent\" or CommandLine|contains has \"pastebin.com\" or CommandLine|contains has \"bit.ly\" or CommandLine|contains has \"tinyurl\" or CommandLine|contains has \"shortened\" or CommandLine|contains has \".tk\" or CommandLine|contains has \".ml\" or CommandLine|contains has \".ga\" or CommandLine|contains has \".cf\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "i9j0k1l2-m3n4-5678-9012-345678ijklmn",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "CommandAndControl"
+    ],
+    "techniques": [
+      "T1105"
+    ]
+  }
+}

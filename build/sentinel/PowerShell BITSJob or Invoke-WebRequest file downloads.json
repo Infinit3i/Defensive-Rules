@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "PowerShell BITSJob or Invoke-WebRequest file downloads",
+    "description": "Detect PowerShell using BITS (Start-BitsTransfer / BITSJob) or Invoke-WebRequest/Invoke-RestMethod to download executables or archives into user-writable paths \u2014 often used for ingress tool transfer.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (ScriptBlockText|contains has \"Start-BitsTransfer\" or ScriptBlockText|contains has \"Add-BitsFile\" or ScriptBlockText|contains has \"Complete-BitsTransfer\") and (ScriptBlockText|contains has \"Invoke-WebRequest\" or ScriptBlockText|contains has \"Invoke-RestMethod\" or ScriptBlockText|contains has \"-OutFile\") and (Image|endswith has \"\\powershell.exe\") and (CommandLine|contains has \"-OutFile\" or CommandLine|contains has \".exe\" or CommandLine|contains has \".zip\" or CommandLine|contains has \".ps1\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "d1105a01-0002-4c11-8a05-000000000002",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "CommandAndControl"
+    ],
+    "techniques": [
+      "T1105"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Anomalous Connection Volume and Duration",
+    "description": "Detects hosts with a high number of connections or abnormally long connection durations using Zeek conn logs. These may indicate beaconing, data exfiltration, or scanning behavior.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where history contains \"S\"",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "b231fa84-6789-4cde-9abc-def123456789",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/08"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T001",
+      "T1041"
+    ]
+  }
+}

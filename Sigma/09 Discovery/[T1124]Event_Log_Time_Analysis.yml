@@ -1,0 +1,22 @@
+title: Event Log Time Analysis
+id: g1h2i3j4-k5l6-7890-abcd-444444444444
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'wevtutil qe'
+      - 'Get-WinEvent | Sort TimeCreated'
+      - 'Get-EventLog | Sort TimeGenerated'
+      - 'journalctl --since'
+      - 'tail -f /var/log'
+      - 'grep -i "$(date"'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1124

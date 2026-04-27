@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "timedatectl hwclock or chronyc usage on Linux",
+    "description": "Detects Linux commands that query or set system time and NTP clients (timedatectl, hwclock, chronyc, ntpq) recorded in syslog or audit logs indicating system time discovery or manipulation.",
+    "severity": "Low",
+    "enabled": false,
+    "query": "Syslog\n| where TimeGenerated > ago(24h)\n| where (Message|contains has \"timedatectl\" or Message|contains has \"timedatectl status\") and (Message|contains has \"hwclock\" or Message|contains has \"hwclock --show\") and (Message|contains has \"chronyc\" or Message|contains has \"ntpq\" or Message|contains has \"chronyc tracking\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "5d6e7f80-9123-4567-89ab-cdef01234567",
+      "SigmaLevel": "low",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1124"
+    ]
+  }
+}

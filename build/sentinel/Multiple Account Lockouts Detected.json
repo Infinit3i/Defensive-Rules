@@ -1,0 +1,66 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Multiple Account Lockouts Detected",
+    "description": "Detects repeated user account lockouts which may suggest password spraying or brute force attacks. Uses Windows Security Event ID 4740.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "SecurityEvent\n| where TimeGenerated > ago(24h)",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "3de5cc64-87fc-41d5-8663-d8cc0d1cb165",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/20"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1110",
+      "T003"
+    ]
+  }
+}

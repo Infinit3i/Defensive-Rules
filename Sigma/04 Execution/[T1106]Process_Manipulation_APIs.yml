@@ -1,0 +1,53 @@
+title: Process Manipulation Native API Calls
+id: b1c2d3e4-f5g6-7890-abcd-111111111111
+status: experimental
+description: Detects native API calls for process manipulation and injection
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_injection:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtCreateProcess'
+      - 'NtCreateProcessEx'
+      - 'NtCreateUserProcess'
+      - 'RtlCreateUserProcess'
+      - 'ZwCreateProcess'
+      - 'CreateRemoteProcess'
+  selection_memory:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtAllocateVirtualMemory'
+      - 'NtFreeVirtualMemory'
+      - 'NtProtectVirtualMemory'
+      - 'VirtualAllocEx'
+      - 'VirtualProtectEx'
+      - 'NtMapViewOfSection'
+  selection_threads:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtCreateThreadEx'
+      - 'RtlCreateUserThread'
+      - 'CreateRemoteThreadEx'
+      - 'NtQueueApcThread'
+      - 'NtAlertResumeThread'
+  condition: selection_injection or selection_memory or selection_threads
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - Legitimate debugging tools
+  - Security software
+  - System utilities
+level: medium
+tags:
+  - attack.execution
+  - attack.t1106
+  - sysmon
+  - windows

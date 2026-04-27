@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Click Fraud and Automated Clicking Detection",
+    "description": "Detects automated clicking patterns and click fraud activities",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "CommonSecurityLog\n| where TimeGenerated > ago(24h)\n| where method == \"GET\" and (uri|contains has \"click\" or uri|contains has \"ad\" or uri|contains has \"banner\" or uri|contains has \"impression\" or uri|contains has \"cpc\" or uri|contains has \"cpm\" or uri|contains has \"adsense\" or uri|contains has \"doubleclick\") and (user_agent|contains has \"bot\" or user_agent|contains has \"crawler\" or user_agent|contains has \"spider\" or user_agent|contains has \"automated\" or user_agent|contains has \"phantom\" or user_agent|contains has \"selenium\" or user_agent|contains has \"headless\" or user_agent|contains has \"chrome/99\" or user_agent|contains has \"firefox/99\") and (referrer|contains has \"google.com/search?q=click\" or referrer|contains has \"bing.com/search?q=click\" or referrer|contains has \"clickfarm\" or referrer|contains has \"autoclick\" or referrer|contains has \"botclick\") and src_ip == \"*\"",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "k1l2m3n4-o5p6-7890-1234-567890klmnop",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T0000"
+    ]
+  }
+}

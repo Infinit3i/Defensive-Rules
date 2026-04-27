@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious Execution of wmiexec",
+    "description": "Detects potential malicious usage of wmiexec, a tool often employed by adversaries for lateral movement and remote command execution. The rule looks for process creation events where the CommandLine field contains \"wmiexec\". Legitimate administrative use may trigger this, so further investigation is recommended.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (CommandLine|contains has \"wmiexec\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "f07d8d74-1234-5678-9abc-def123456789",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/08"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1047"
+    ]
+  }
+}

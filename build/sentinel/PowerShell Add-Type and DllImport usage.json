@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "PowerShell Add-Type and DllImport usage",
+    "description": "Detect PowerShell using Add-Type / DllImport / System.Runtime.InteropServices to import native DLLs (ntdll/kernel32). This is commonly used to call native APIs from scripts.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (ScriptBlockText|contains has \"Add-Type\" or ScriptBlockText|contains has \"[DllImport\" or ScriptBlockText|contains has \"System.Runtime.InteropServices\" or ScriptBlockText|contains has \"DllImport(\" or ScriptBlockText|contains has \"kernel32.dll\" or ScriptBlockText|contains has \"ntdll.dll\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "2a7c3d8e-5b4f-4c1a-9e2d-1f0e2d3c4b5a",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Execution"
+    ],
+    "techniques": [
+      "T1106"
+    ]
+  }
+}

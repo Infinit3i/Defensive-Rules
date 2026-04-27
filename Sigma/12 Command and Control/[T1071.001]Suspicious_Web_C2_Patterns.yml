@@ -1,0 +1,62 @@
+title: Suspicious Web-based Command and Control Patterns
+id: j0k1l2m3-n4o5-6789-0123-456789jklmno
+status: experimental
+description: Detects suspicious web-based command and control communication patterns
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection_user_agents:
+    user_agent|contains:
+      - 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)'
+      - 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+      - 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)'
+      - 'python-requests'
+      - 'python-urllib'
+      - 'curl'
+      - 'wget'
+      - 'PowerShell'
+      - 'WinHTTP'
+      - ''  # Empty user agent
+  selection_post_patterns:
+    method: 'POST'
+    request_body_len: '>1024'  # Large POST requests
+  selection_suspicious_paths:
+    uri|contains:
+      - '/admin'
+      - '/panel'
+      - '/gate'
+      - '/log'
+      - '/upload'
+      - '/download'
+      - '/data'
+      - '.php?id='
+      - '.aspx?id='
+      - '.jsp?id='
+  selection_beaconing:
+    request_body_len: '<100'  # Small consistent requests
+    status_code: '200'
+  timing_patterns:
+    # This would need custom logic for beaconing detection
+    # Looking for regular intervals
+  condition: (selection_user_agents or selection_suspicious_paths) and (selection_post_patterns or selection_beaconing)
+fields:
+  - src_ip
+  - dst_ip
+  - host
+  - uri
+  - method
+  - user_agent
+  - status_code
+falsepositives:
+  - Legacy applications
+  - Automated tools
+  - API clients
+level: medium
+tags:
+  - attack.command-and-control
+  - attack.t1071.001
+  - zeek
+  - network

@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "PowerShell Download and Execution from Remote Source",
+    "description": "Detects PowerShell commands that download and execute scripts or payloads directly from remote URLs or network shares.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\powershell.exe\" and (CommandLine|contains has \"Invoke-WebRequest\" or CommandLine|contains has \"Start-BitsTransfer\" or CommandLine|contains has \"DownloadString\" or CommandLine|contains has \"DownloadFile\" or CommandLine|contains has \"Net.WebClient\" or CommandLine|contains has \"IEX\") and (CommandLine|contains has \"http://\" or CommandLine|contains has \"https://\" or CommandLine|contains has \"\\\\\\\\\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "9e2c3f5a-8f88-4b77-bd29-2222bbbapsh2",
+      "SigmaLevel": "critical",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1086"
+    ]
+  }
+}

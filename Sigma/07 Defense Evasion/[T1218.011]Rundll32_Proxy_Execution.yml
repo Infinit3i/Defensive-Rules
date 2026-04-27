@@ -1,0 +1,73 @@
+title: Rundll32 Proxy Execution for Defense Evasion
+id: o5p6q7r8-s9t0-1234-5678-901234opqrst
+status: experimental
+description: Detects rundll32.exe being used to proxy execution of malicious code
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_base:
+    EventID: 1
+    Image|endswith: '\rundll32.exe'
+  suspicious_dlls:
+    CommandLine|contains:
+      - 'javascript:'
+      - 'vbscript:'
+      - 'mshtml'
+      - 'shell32.dll,ShellExec_RunDLL'
+      - 'advpack.dll'
+      - 'ieframe.dll'
+      - 'shdocvw.dll'
+      - 'urlmon.dll'
+      - 'ieadvpack.dll'
+      - 'setupapi.dll'
+      - 'ieframe.dll'
+  suspicious_functions:
+    CommandLine|contains:
+      - 'DllCanUnloadNow'
+      - 'DllGetVersion'
+      - 'DllInstall'
+      - 'DllRegisterServer'
+      - 'DllUnregisterServer'
+      - 'OpenURL'
+      - 'RouteTheCall'
+      - 'LaunchApplication'
+  remote_sources:
+    CommandLine|contains:
+      - 'http://'
+      - 'https://'
+      - 'ftp://'
+      - '\\\\' # UNC paths
+  encoded_commands:
+    CommandLine|contains:
+      - ' -e '
+      - ' -en '
+      - ' -enc '
+      - ' -encoded '
+      - 'FromBase64String'
+  temp_paths:
+    CommandLine|contains:
+      - '%TEMP%'
+      - '%TMP%'
+      - 'C:\Users\*\AppData\Local\Temp'
+      - 'C:\Windows\Temp'
+  condition: selection_base and (suspicious_dlls or suspicious_functions or remote_sources or encoded_commands or temp_paths)
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+  - CurrentDirectory
+falsepositives:
+  - Legitimate software installation
+  - Windows built-in functions
+  - System administration
+level: medium
+tags:
+  - attack.defense-evasion
+  - attack.t1218.011
+  - sysmon
+  - windows

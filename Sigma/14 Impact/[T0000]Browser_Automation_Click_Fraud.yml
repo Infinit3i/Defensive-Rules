@@ -1,0 +1,83 @@
+title: Browser Automation Tools for Click Fraud
+id: l2m3n4o5-p6q7-8901-2345-678901lmnopq
+status: experimental
+description: Detects browser automation tools commonly used for click fraud
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_automation_tools:
+    EventID: 1
+    Image|endswith:
+      - '\chromedriver.exe'
+      - '\geckodriver.exe'
+      - '\selenium-server.exe'
+      - '\phantom.exe'
+      - '\phantomjs.exe'
+    CommandLine|contains:
+      - '--headless'
+      - '--no-sandbox'
+      - '--disable-gpu'
+      - '--remote-debugging'
+      - '--user-data-dir'
+  selection_suspicious_scripts:
+    EventID: 1
+    Image|endswith:
+      - '\python.exe'
+      - '\node.exe'
+      - '\powershell.exe'
+    CommandLine|contains:
+      - 'selenium'
+      - 'webdriver'
+      - 'puppeteer'
+      - 'playwright'
+      - 'autoclick'
+      - 'clickbot'
+      - 'adclick'
+  selection_browser_args:
+    EventID: 1
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+    CommandLine|contains:
+      - '--disable-blink-features=AutomationControlled'
+      - '--disable-web-security'
+      - '--allow-running-insecure-content'
+      - '--disable-features=VizDisplayCompositor'
+      - '--remote-debugging-port'
+      - '--enable-automation'
+  selection_click_scripts:
+    EventID: 11  # File creation
+    TargetFilename|endswith:
+      - '.py'
+      - '.js'
+      - '.ps1'
+      - '.vbs'
+    TargetFilename|contains:
+      - 'click'
+      - 'auto'
+      - 'bot'
+      - 'farm'
+      - 'ad'
+  condition: selection_automation_tools or selection_suspicious_scripts or selection_browser_args or selection_click_scripts
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+  - TargetFilename
+falsepositives:
+  - Legitimate web testing
+  - Development environments
+  - QA automation
+level: medium
+tags:
+  - attack.impact
+  - attack.t0000
+  - sysmon
+  - windows
+  - click-fraud

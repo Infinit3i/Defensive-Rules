@@ -1,0 +1,65 @@
+title: Email Service Disruption
+id: c1d2e3f4-g5h6-7890-abcd-444444444444
+status: experimental
+description: Detects attempts to stop email services
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'stop'
+      - 'delete'
+      - 'config'
+      - 'disable'
+  email_services:
+    CommandLine|contains:
+      - 'MSExchangeTransport'
+      - 'MSExchangeIS'
+      - 'MSExchangeMailboxAssistants'
+      - 'MSExchangeRPC'
+      - 'MSExchangeServiceHost'
+      - 'MSExchangeADTopology'
+      - 'MSExchangeAntispamUpdate'
+      - 'MSExchangeDelivery'
+      - 'MSExchangeDiagnostics'
+      - 'MSExchangeEdgeSync'
+      - 'MSExchangeFDS'
+      - 'MSExchangeFastSearch'
+      - 'MSExchangeHM'
+      - 'MSExchangeHMHost'
+      - 'MSExchangeHMRecovery'
+      - 'MSExchangeHMWorker'
+      - 'MSExchangeImap4'
+      - 'MSExchangeMailboxReplication'
+      - 'MSExchangeMonitoring'
+      - 'MSExchangePop3'
+      - 'MSExchangeProtectedServiceHost'
+      - 'MSExchangeRepl'
+      - 'MSExchangeSearch'
+      - 'MSExchangeSearchHost'
+      - 'MSExchangeSubmission'
+      - 'MSExchangeThrottling'
+      - 'MSExchangeUM'
+      - 'MSExchangeUMCR'
+      - 'W3SVC'
+      - 'IISADMIN'
+  condition: selection and email_services
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+falsepositives:
+  - Exchange maintenance
+  - Service updates
+  - Planned maintenance
+level: high
+tags:
+  - attack.impact
+  - attack.t1489
+  - sysmon
+  - windows

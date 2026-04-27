@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious WMIC Usage for Remote Process Execution",
+    "description": "Detects suspicious use of wmic.exe to spawn processes (e.g., cmd.exe/powershell.exe) locally or on remote hosts using 'process call create'.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where ParentImage endswith \"\\wmic.exe\" and Image endswith \"\\wmic.exe\" and (CommandLine|contains has \"process call create\" or CommandLine|contains has \"/node:\" or CommandLine|contains has \"/user:\") and (CommandLine|contains has \"cmd.exe /c\" or CommandLine|contains has \"powershell.exe\" or CommandLine|contains has \"pwsh.exe\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "3c1a1c4b-7c6c-4f5d-bb77-0000aaaawmi1",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1047"
+    ]
+  }
+}

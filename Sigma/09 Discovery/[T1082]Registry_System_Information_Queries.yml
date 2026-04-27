@@ -1,0 +1,44 @@
+title: Registry System Information Queries
+id: a1b2c3d4-e5f6-7890-abcd-222222222222
+status: experimental
+description: Detects registry queries for system information discovery
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_reg:
+    EventID: 1
+    Image|endswith: '\reg.exe'
+    CommandLine|contains:
+      - 'query'
+      - 'HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
+      - 'HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName'
+      - 'HKLM\\HARDWARE\\DESCRIPTION\\System'
+      - 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-ItemProperty'
+      - 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
+      - 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\ComputerName'
+      - 'Get-ComputerInfo'
+      - 'Get-WmiObject Win32_OperatingSystem'
+  condition: selection_reg or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+falsepositives:
+  - System administration
+  - Software inventory tools
+  - System monitoring
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Zeek HTTP logs - download or user-agent indicative of debugger tools",
+    "description": "Detect HTTP downloads or user-agents that reference common debugger or reverse-engineering tool names (x64dbg, ollydbg, ida, windbg). Network detection of tooling acquisition can indicate active analysis or adversary tooling movement.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "union SecurityEvent, Event\n| where TimeGenerated > ago(24h)\n| where (zeek.http.uri|contains has \"x64dbg\" or zeek.http.uri|contains has \"ollydbg\" or zeek.http.uri|contains has \"ida\" or zeek.http.uri|contains has \"idaq\" or zeek.http.uri|contains has \"windbg\" or zeek.http.uri|contains has \"scylla\") and (zeek.http.user_agent|contains has \"x64dbg\" or zeek.http.user_agent|contains has \"ollydbg\" or zeek.http.user_agent|contains has \"ida\") and (zeek.file.name|contains has \"x64dbg\" or zeek.file.name|contains has \"ollydbg\" or zeek.file.name|contains has \"ida\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "a4d5e6f7-0123-4567-89ab-cdef01234567",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1622"
+    ]
+  }
+}

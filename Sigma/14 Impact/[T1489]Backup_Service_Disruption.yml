@@ -1,0 +1,52 @@
+title: Backup Service Disruption
+id: c1d2e3f4-g5h6-7890-abcd-222222222222
+status: experimental
+description: Detects attempts to stop or disable backup services
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'stop'
+      - 'delete'
+      - 'config'
+      - 'disable'
+  backup_services:
+    CommandLine|contains:
+      - 'VSS'
+      - 'VssVC'
+      - 'swprv'
+      - 'MSSQL$VEEAMSQL'
+      - 'VeeamDeploymentService'
+      - 'VeeamNFSSvc'
+      - 'AcronisSyncAgent'
+      - 'BackupExecVSSProvider'
+      - 'BackupExecAgentAccelerator'
+      - 'BackupExecAgentBrowser'
+      - 'BackupExecDeviceMediaService'
+      - 'BackupExecJobEngine'
+      - 'BackupExecManagementService'
+      - 'BackupExecRPCService'
+      - 'AcronisAgent'
+      - 'CASAD2DWebSvc'
+      - 'CAARCUpdateSvc'
+  condition: selection and backup_services
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+falsepositives:
+  - Backup maintenance
+  - Service updates
+  - System troubleshooting
+level: high
+tags:
+  - attack.impact
+  - attack.t1489
+  - sysmon
+  - windows

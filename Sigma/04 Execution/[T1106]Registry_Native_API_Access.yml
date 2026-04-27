@@ -1,0 +1,43 @@
+title: Registry Native API Access
+id: b1c2d3e4-f5g6-7890-abcd-222222222222
+status: experimental
+description: Detects suspicious registry access via native APIs
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtCreateKey'
+      - 'NtOpenKey'
+      - 'NtDeleteKey'
+      - 'NtSetValueKey'
+      - 'NtQueryValueKey'
+      - 'NtEnumerateKey'
+      - 'ZwCreateKey'
+      - 'ZwOpenKey'
+      - 'ZwDeleteKey'
+      - 'RegCreateKeyEx'
+      - 'RegOpenKeyEx'
+      - 'RegDeleteKey'
+      - 'RegSetValueEx'
+      - 'RegQueryValueEx'
+  condition: selection
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - User
+falsepositives:
+  - System administration tools
+  - Software installation
+  - Registry monitoring tools
+level: medium
+tags:
+  - attack.execution
+  - attack.t1106
+  - sysmon
+  - windows

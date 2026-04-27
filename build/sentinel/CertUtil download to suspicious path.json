@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "CertUtil download to suspicious path",
+    "description": "Detects usage of certutil to download files (usually via URL) into user-writable or suspicious directories (e.g., %TEMP%, AppData, Downloads) \u2014 common technique for ingress tool transfer on Windows.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\certutil.exe\" and (CommandLine|contains has \"-urlcache\" or CommandLine|contains has \"-f\" or CommandLine|contains has \"http://\" or CommandLine|contains has \"https://\") and (TargetFilename|contains has \"\\AppData\\\" or TargetFilename|contains has \"\\Local\\Temp\\\" or TargetFilename|contains has \"\\Temp\\\" or TargetFilename|contains has \"\\Downloads\\\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "d1105a01-0001-4c11-8a05-000000000001",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "CommandAndControl"
+    ],
+    "techniques": [
+      "T1105"
+    ]
+  }
+}

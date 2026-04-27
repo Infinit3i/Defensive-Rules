@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "System Information Discovery - WMIC Queries for OS and BIOS",
+    "description": "Detect WMIC usage that queries OS, BIOS, or computer system information (e.g., wmic os get / wmic bios get / wmic computersystem). WMIC is commonly used by attackers for host enumeration.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\wmic.exe\" and (CommandLine|contains has \"wmic os get\" or CommandLine|contains has \"wmic bios get\" or CommandLine|contains has \"wmic computersystem get\" or CommandLine|contains has \"wmic csproduct get\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "2c9d2b34-5ba8-4c35-8f08-5f0e3d9ea8b2",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Discovery"
+    ],
+    "techniques": [
+      "T1082"
+    ]
+  }
+}

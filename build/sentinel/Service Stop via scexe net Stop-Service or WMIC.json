@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Service Stop via scexe net Stop-Service or WMIC",
+    "description": "Detect attempts to stop Windows services using sc.exe stop, net stop, PowerShell Stop-Service, or WMIC service calls.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\sc.exe\" and (CommandLine|contains|all has \" stop \") and Image endswith \"\\net.exe\" and (CommandLine|contains has \" net stop \" or CommandLine|contains has \" net  stop \" or CommandLine|contains has \" net  stop\") and (Image|endswith has \"\\powershell.exe\" or Image|endswith has \"\\pwsh.exe\") and (CommandLine|contains has \"Stop-Service\" or CommandLine|contains has \"Set-Service -Status Stopped\") and Image endswith \"\\wmic.exe\" and (CommandLine|contains has \"service\" or CommandLine|contains has \"call stopservice\" or CommandLine|contains has \" where \")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "6a5d9c1e-b2b3-4f71-a6b5-8f9a7a1c2d11",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Impact"
+    ],
+    "techniques": [
+      "T1489"
+    ]
+  }
+}

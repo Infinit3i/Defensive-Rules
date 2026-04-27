@@ -1,0 +1,23 @@
+title: System Boot Time Discovery
+id: g1h2i3j4-k5l6-7890-abcd-555555555555
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'systeminfo | findstr /i "boot time"'
+      - 'Get-CimInstance Win32_OperatingSystem | Select LastBootUpTime'
+      - 'uptime'
+      - 'who -b'
+      - 'last reboot'
+      - '/proc/uptime'
+      - 'sysctl kern.boottime'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1124

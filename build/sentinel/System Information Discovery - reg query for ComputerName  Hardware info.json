@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "System Information Discovery - reg query for ComputerName  Hardware info",
+    "description": "Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName, SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host metadata.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\reg.exe\" and (CommandLine|contains has \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName\" or CommandLine|contains has \"HKLM\\HARDWARE\\DESCRIPTION\\System\" or CommandLine|contains has \"HKLM\\HARDWARE\\DESCRIPTION\\System\\BIOS\" or CommandLine|contains has \"ComputerName\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "7f1a4d50-6a9c-4b8d-9a2f-0b3e2c4d5e6f",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Discovery"
+    ],
+    "techniques": [
+      "T1082"
+    ]
+  }
+}

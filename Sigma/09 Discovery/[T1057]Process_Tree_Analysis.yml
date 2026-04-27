@@ -1,0 +1,22 @@
+title: Process Tree Analysis
+id: h1i2j3k4-l5m6-7890-abcd-222222222222
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'pstree'
+      - 'Get-Process | Select ProcessName,Id,Parent'
+      - 'wmic process get processid,parentprocessid'
+      - 'tasklist /fo tree'
+      - 'ps -ef --forest'
+      - 'ps axjf'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1057

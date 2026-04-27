@@ -1,0 +1,130 @@
+name: Build SIEM Detection Packages
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [ published ]
+
+jobs:
+  build-siem-packages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pysigma pysigma-backend-splunk yamllint
+
+    - name: Validate Sigma rules
+      run: |
+        find Sigma -name "*.yml" -o -name "*.yaml" | while read file; do
+          echo "Validating $file..."
+          yamllint "$file" || echo "Warning: YAML issues in $file"
+        done
+
+    - name: Build Splunk ES package
+      run: |
+        chmod +x scripts/build_es_package.sh
+        ./scripts/build_es_package.sh --version ${GITHUB_REF_NAME:-dev}
+
+    - name: Build Microsoft Sentinel package
+      run: |
+        chmod +x scripts/sigma_to_sentinel.py
+        make sentinel
+
+    - name: Create combined deployment package
+      run: |
+        mkdir -p build/combined-package
+        cp -r build/defensive-rules-es.tar.gz build/combined-package/
+        cp -r build/sentinel/ build/combined-package/
+        cp build/*.json build/combined-package/ 2>/dev/null || true
+        tar -czf build/defensive-rules-all-platforms.tar.gz -C build/combined-package .
+
+    - name: Upload Splunk package
+      uses: actions/upload-artifact@v4
+      with:
+        name: splunk-es-package
+        path: |
+          build/defensive-rules-es.tar.gz
+          build/deployment-info.txt
+          build/conversion-report.json
+          build/mitre-coverage.json
+        retention-days: 30
+
+    - name: Upload Sentinel package
+      uses: actions/upload-artifact@v4
+      with:
+        name: microsoft-sentinel-package
+        path: |
+          build/sentinel/
+        retention-days: 30
+
+    - name: Upload combined package
+      uses: actions/upload-artifact@v4
+      with:
+        name: all-platforms-package
+        path: |
+          build/defensive-rules-all-platforms.tar.gz
+        retention-days: 30
+
+    - name: Upload Splunk to release
+      if: github.event_name == 'release'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/defensive-rules-es.tar.gz
+        asset_name: defensive-rules-splunk-${{ github.event.release.tag_name }}.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Upload combined to release
+      if: github.event_name == 'release'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: build/defensive-rules-all-platforms.tar.gz
+        asset_name: defensive-rules-all-platforms-${{ github.event.release.tag_name }}.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Create deployment summary
+      run: |
+        echo "## Multi-Platform SIEM Package Build Results" >> $GITHUB_STEP_SUMMARY
+        echo "### Splunk Enterprise Security" >> $GITHUB_STEP_SUMMARY
+        echo "- **Package:** defensive-rules-es.tar.gz" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size:** $(du -h build/defensive-rules-es.tar.gz | cut -f1)" >> $GITHUB_STEP_SUMMARY
+        if [ -f build/conversion-report.json ]; then
+          SUCCESS=$(jq '.success | length' build/conversion-report.json)
+          FAILURES=$(jq '.failures | length' build/conversion-report.json)
+          TECHNIQUES=$(jq '.mitre_coverage | keys | length' build/conversion-report.json)
+          echo "- **Rules Converted:** $SUCCESS" >> $GITHUB_STEP_SUMMARY
+          echo "- **Conversion Failures:** $FAILURES" >> $GITHUB_STEP_SUMMARY
+          echo "- **MITRE Techniques:** $TECHNIQUES" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Microsoft Sentinel" >> $GITHUB_STEP_SUMMARY
+        if [ -f build/sentinel/conversion-report.json ]; then
+          SENTINEL_SUCCESS=$(jq '.success | length' build/sentinel/conversion-report.json)
+          SENTINEL_FAILURES=$(jq '.failures | length' build/sentinel/conversion-report.json)
+          SENTINEL_TECHNIQUES=$(jq '.mitre_coverage | keys | length' build/sentinel/conversion-report.json)
+          echo "- **Analytics Rules:** $SENTINEL_SUCCESS" >> $GITHUB_STEP_SUMMARY
+          echo "- **Conversion Failures:** $SENTINEL_FAILURES" >> $GITHUB_STEP_SUMMARY
+          echo "- **MITRE Techniques:** $SENTINEL_TECHNIQUES" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### Combined Package" >> $GITHUB_STEP_SUMMARY
+        echo "- **All Platforms:** defensive-rules-all-platforms.tar.gz" >> $GITHUB_STEP_SUMMARY
+        echo "- **Size:** $(du -h build/defensive-rules-all-platforms.tar.gz | cut -f1)" >> $GITHUB_STEP_SUMMARY

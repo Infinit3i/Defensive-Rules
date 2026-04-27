@@ -1,0 +1,234 @@
+{
+  "T1059": [
+    "Suspicious_PowerShell_Script_Block_Execution",
+    "Suspicious_Office_Initiated_Scripting_or_Execution_Chain"
+  ],
+  "T001": [
+    "Suspicious_PowerShell_Script_Block_Execution",
+    "Suspicious_Office_Initiated_Scripting_or_Execution_Chain",
+    "PowerShell_Download_and_Execute_Patterns",
+    "Suspicious_Process_Injection_into_LSASS_or_Explorer",
+    "New_User_Account_Created",
+    "Executable_or_Script_Dropped_in_Persistence_Path",
+    "Mimikatz_LSASS_Memory_Access_or_Execution",
+    "Brute_Force_SSH_Attempts",
+    "Large_Volume_of_HTTP_POST_Traffic",
+    "Unencrypted_Traffic_on_TCP_443",
+    "Suspicious_Web_based_Command_and_Control_Patterns",
+    "Suspicious_HTTP_User_Agent_Strings",
+    "HTTP_Beaconing_and_Suspicious_Web_Protocols",
+    "Anomalous_Network_Traffic_C2_Beaconing",
+    "Anomalous_Connection_Volume_and_Duration"
+  ],
+  "T1106": [
+    "Managed_code_PInvoke_or_runtime_interop_usage_detected",
+    "Suspicious_Native_API_Function_Calls",
+    "Native_API_function_names_observed_in_scripts_or_commandlines",
+    "PowerShell_Add_Type_and_DllImport_usage",
+    "Suspicious_native_module_load_from_non_standard_path",
+    "Syscall_strings_or_inline_syscall_opcodes_in_scriptblocks"
+  ],
+  "T1047": [
+    "WMI_Remote_Command_Execution",
+    "Suspicious_WMI_Based_Execution_Wmiprvse_Spawning_Scripting_Engines",
+    "Suspicious_WMIC_Usage_for_Remote_Process_Execution",
+    "Suspicious_Execution_of_wmiexec",
+    "WMI_Win32_ProcessCreate_Executed_Remotely_WMI_Activity"
+  ],
+  "T1218": [
+    "Rundll32_Loading_Remote_or_Non_System_DLLs",
+    "Suspicious_Rundll32_Execution_with_Unusual_Parameters",
+    "Suspicious_Office_Initiated_Scripting_or_Execution_Chain"
+  ],
+  "T011": [
+    "Rundll32_Loading_Remote_or_Non_System_DLLs",
+    "Utility_Abuse_Regsvr32_Rundll32_etc",
+    "Suspicious_Rundll32_Execution_with_Unusual_Parameters",
+    "Rundll32_Proxy_Execution_for_Defense_Evasion"
+  ],
+  "T1086": [
+    "PowerShell_Download_and_Execution_from_Remote_Source",
+    "PowerShell_Encoded_Command_Execution"
+  ],
+  "T003": [
+    "Suspicious_Command_Shell_Activity_Encoded_or_Obfuscated_Commands",
+    "CMD_Launched_From_Suspicious_Parent_Process",
+    "Service_Creation_Using_a_Named_Pipe",
+    "Suspicious_Driver_Installations_or_Modifications",
+    "Suspicious_Service_Creation",
+    "Multiple_Account_Lockouts_Detected",
+    "Abnormal_TLSSSL_Certificate_Anomalies",
+    "Long_delay_in_compiled_binaries_via_Sleep_or_NtDelayExecution",
+    "High_uptime_checks_and_conditional_long_delays",
+    "Timeout_choice_based_long_delays_in_cmdbatch",
+    "Start_Sleep_long_duration_in_PowerShell",
+    "Time_Based_Evasion_via_Sleep_Ping_Delay_or_Timeout",
+    "Extended_Sleep_and_Delay_Commands_for_Evasion",
+    "Stepped_timer_loops_or_exponential_backoff_used_as_long_delay",
+    "Many_Subdomains_Looking_Like_Exfiltration"
+  ],
+  "T1055": [
+    "Suspicious_Process_Injection_into_LSASS_or_Explorer",
+    "Process_Injection_Techniques"
+  ],
+  "T1134": [
+    "Suspicious_Domain_Token_Theft_or_Impersonation"
+  ],
+  "T1548": [
+    "Privilege_Escalation_Attempts"
+  ],
+  "T1489": [
+    "Service_Stop_via_scexe_net_Stop_Service_or_WMIC",
+    "Security_Service_Termination"
+  ],
+  "T0000": [
+    "Browser_Automation_Tools_for_Click_Fraud",
+    "Click_Fraud_and_Automated_Clicking_Detection"
+  ],
+  "T1136": [
+    "New_User_Account_Created"
+  ],
+  "T007": [
+    "Abnormal_Kernel_Module_Loading"
+  ],
+  "T1574": [
+    "DLL_Loaded_from_Non_standard_Directory"
+  ],
+  "T002": [
+    "DLL_Loaded_from_Non_standard_Directory",
+    "Pass_the_Hash",
+    "Audit_Policy_Change_or_Clearing_Attempt"
+  ],
+  "T1547": [
+    "Executable_or_Script_Dropped_in_Persistence_Path"
+  ],
+  "T1053": [
+    "Unauthorized_Cron_Job_Creation",
+    "Scheduled_Task_Creation"
+  ],
+  "T1543": [
+    "Suspicious_Service_Creation"
+  ],
+  "T1098": [
+    "Abnormal_User_Account_Modifications",
+    "User_Added_to_Domain_Admins_Group"
+  ],
+  "T005": [
+    "Malicious_Scheduled_Task_Creation",
+    "Scheduled_Task_Creation"
+  ],
+  "T1021": [
+    "Lateral_Movement_Activity_Analysis",
+    "Abnormal_Host_to_Host_Communication_Patterns"
+  ],
+  "T1077": [
+    "Suspicious_Use_of_ADMIN_Administrative_Share"
+  ],
+  "T1219": [
+    "Abuse_of_Remote_Administration_Tools",
+    "Potential_Meterpreter_Execution_Detected"
+  ],
+  "T1049": [
+    "Abnormal_Host_to_Host_Communication_Patterns"
+  ],
+  "T1110": [
+    "Repeated_Failed_Login_Attempts",
+    "Multiple_Account_Lockouts_Detected",
+    "SSH_Brute_Force_Attack_Detection"
+  ],
+  "T1078": [
+    "Cloud_Account_Credential_Use_from_Unregistered_or_Inactive_Devices",
+    "Suspicious_Cloud_Account_Logins_from_New_Geolocations"
+  ],
+  "T004": [
+    "Cloud_Account_Credential_Use_from_Unregistered_or_Inactive_Devices",
+    "Suspicious_Cloud_Account_Logins_from_New_Geolocations",
+    "Unusual_File_Access_or_Modification",
+    "Many_Subdomains_Looking_Like_Exfiltration",
+    "DNS_Tunneling_Detection",
+    "DNS_Tunneling_via_High_Volume_or_Suspicious_Subdomains"
+  ],
+  "T1557": [
+    "Abnormal_TLSSSL_Certificate_Anomalies"
+  ],
+  "T1195": [
+    "Unauthorized_Package_Manager_Activity_on_Networking_Equipment"
+  ],
+  "T1048": [
+    "Unusual_File_Transfer_Activity"
+  ],
+  "T1041": [
+    "Large_Volume_of_HTTP_POST_Traffic",
+    "Unencrypted_Traffic_on_TCP_443",
+    "Anomalous_Connection_Volume_and_Duration"
+  ],
+  "T1057": [
+    "Tasklist_Process_Enumeration",
+    "WMI_Activity___Win32_Process_Query",
+    "Linux_pstop_or_proc_Enumeration_syslogaudit",
+    "PowerShell_Get_Process_or_WMICIM_Win32_Process_Discovery",
+    "Advanced_Process_Enumeration_and_Discovery",
+    "WMIC_Process_List_or_Get"
+  ],
+  "T1124": [
+    "PowerShell_Get_Date_or_Get_TimeZone_usage",
+    "timedatectl_hwclock_or_chronyc_usage_on_Linux",
+    "w32tm_query_or_status_checks",
+    "System_Time_and_Timezone_Discovery_Commands",
+    "tzutil_query_timezone",
+    "System_Time_Discovery_via_tzutil_w32tm_datetime_or_Get_Date",
+    "Zeek_NTP_or_UDP_123_traffic_indicating_external_time_queries"
+  ],
+  "T1083": [
+    "Cmd_dir_and_where_recursive",
+    "WebDAV_PROPFIND_Directory_Enumeration_Zeek",
+    "File_and_Directory_Discovery_Commands_dir_s_where_r_Get_ChildItem__Recurse",
+    "Suspicious_File_and_Directory_Search_Commands",
+    "Find_and_ls_recursive_unix_syslog",
+    "Suspicious_File_Enumeration_Tools",
+    "PowerShell_Get_ChildItem_Recurse"
+  ],
+  "T1082": [
+    "System_Information_Discovery___ipconfig_hostname_net_config_executions",
+    "System_Information_Discovery___systeminfoexe_Execution",
+    "System_Information_Discovery___reg_query_for_ComputerName_Hardware_info",
+    "System_Information_Discovery_via_whoami_and_hostname",
+    "System_Information_Discovery___WMIC_Queries_for_OS_and_BIOS",
+    "System_Information_Discovery___PowerShell_Get_CimInstance_Get_WmiObject_Get_ComputerInfo"
+  ],
+  "T1046": [
+    "Detect_Scanning_or_IPsec_Probing_via_Public_IPs_or_Port_500"
+  ],
+  "T1622": [
+    "Module_loads_of_debugging_libraries_from_user_writable_paths",
+    "PowerShell_IsDebuggerPresent_or_Debug_API_checks_in_ScriptBlock",
+    "CommandLine_contains_common_debugger_tool_names_ollydbg_x64dbg_windbg",
+    "Zeek_HTTP_logs___download_or_user_agent_indicative_of_debugger_tools",
+    "Debugger_Evasion_Indicators_in_Command_Line_or_ScriptBlock",
+    "Anti_Debug_API_Calls_and_Techniques",
+    "ptracesyscall_or_gdb_invocation_detected_in_syslogauditd"
+  ],
+  "T1562": [
+    "Audit_Policy_Change_or_Clearing_Attempt",
+    "Enabling_RDP_Through_Firewall_Modification_Detected"
+  ],
+  "T1070": [
+    "Log_Tampering_or_Deletion"
+  ],
+  "T1105": [
+    "Linux_curlwgetscprsync_downloads_in_syslog",
+    "CertUtil_download_to_suspicious_path",
+    "HTTP_file_downloads_Zeek_detection_by_URIuser_agentfilename",
+    "Unusual_Process_Making_Network_Connection",
+    "PowerShell_BITSJob_or_Invoke_WebRequest_file_downloads",
+    "FTP_or_anonymous_file_transfer_indicators_ftp_ftps_smb_file_transfer",
+    "Suspicious_Download_Tools_and_Methods"
+  ],
+  "T1071": [
+    "Detect_FRPC_Communication_on_Designated_Ports",
+    "DNS_Tunneling_via_High_Volume_or_Suspicious_Subdomains"
+  ],
+  "T1095": [
+    "Detect_ICMP_Based_FRPC_Communication"
+  ]
+}

@@ -1,0 +1,20 @@
+title: Large File Discovery
+id: f1g2h3i4-j5k6-7890-abcd-222222222222
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'forfiles /s /m *.* /c "cmd /c if @fsize gtr 1000000'
+      - 'Get-ChildItem -Recurse | Where-Object {$_.Length -gt'
+      - 'find . -size +'
+      - 'du -h | grep G'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1083

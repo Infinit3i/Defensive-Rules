@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Unusual File Access or Modification",
+    "description": "Detects unusual file access or modification events by monitoring syslog messages for keywords such as 'modified', 'changed', 'deleted', or 'created' in relation to sensitive files or directories (e.g., /etc/passwd, /etc/shadow, /etc/sudoers, /etc/group, /var/log), which may signal potential indicator removal or tampering.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Syslog\n| where TimeGenerated > ago(24h)\n| where (Message|contains has \"/etc/passwd\" or Message|contains has \"/etc/shadow\" or Message|contains has \"/etc/sudoers\" or Message|contains has \"/etc/group\" or Message|contains has \"/var/log\") and (Message|contains has \"modified\" or Message|contains has \"changed\" or Message|contains has \"deleted\" or Message|contains has \"created\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "d4c3b2a1-5678-4def-9abc-abcdef123456",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/08"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T004"
+    ]
+  }
+}

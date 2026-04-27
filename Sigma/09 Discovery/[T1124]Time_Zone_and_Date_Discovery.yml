@@ -1,0 +1,66 @@
+title: System Time and Timezone Discovery Commands
+id: g7h8i9j0-k1l2-3456-7890-123456ghijkl
+status: experimental
+description: Detects commands used to discover system time, timezone, and date information
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_time:
+    EventID: 1
+    Image|endswith:
+      - '\time.exe'
+      - '\date.exe'
+      - '\tzutil.exe'
+      - '\w32tm.exe'
+    CommandLine|contains:
+      - 'time /t'
+      - 'date /t'
+      - 'tzutil /g'
+      - 'tzutil /l'
+      - 'w32tm /query'
+      - 'w32tm /stripchart'
+  selection_net_time:
+    EventID: 1
+    Image|endswith: '\net.exe'
+    CommandLine|contains:
+      - 'net time'
+      - 'net view'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-Date'
+      - 'Get-TimeZone'
+      - '[DateTime]::Now'
+      - '[DateTime]::UtcNow'
+      - '[TimeZone]::CurrentTimeZone'
+      - 'Get-WmiObject Win32_TimeZone'
+      - 'Get-WmiObject Win32_LocalTime'
+      - 'Get-CimInstance Win32_TimeZone'
+  selection_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'wmic timezone'
+      - 'wmic os get localdatetime'
+      - 'wmic os get lastbootuptime'
+  condition: selection_time or selection_net_time or selection_powershell or selection_wmic
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - System administration scripts
+  - Time synchronization tools
+  - Backup and logging scripts
+level: low
+tags:
+  - attack.discovery
+  - attack.t1124
+  - sysmon
+  - windows

@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Time-Based Evasion via Sleep Ping-Delay or Timeout",
+    "description": "Detect long execution delays often used to evade sandboxes, including Start-Sleep, timeout, and ping loops as timers.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (Image|endswith has \"\\powershell.exe\" or Image|endswith has \"\\pwsh.exe\") and (CommandLine|contains has \"Start-Sleep\" or CommandLine|contains has \"Start-Sleep -s\" or CommandLine|contains has \"Start-Sleep -Seconds\") and Image endswith \"\\cmd.exe\" and (CommandLine|contains has \"timeout /t \" or CommandLine|contains has \"choice /t \") and (CommandLine|contains has \"ping -n \" or CommandLine|contains has \"ping -w \") and (CommandLine|contains has \"300\" or CommandLine|contains has \"600\" or CommandLine|contains has \"900\" or CommandLine|contains has \"1200\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "9d1e7b44-2e65-4e5d-bc2f-1e1b2a3c4d5e",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T003"
+    ]
+  }
+}

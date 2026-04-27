@@ -1,0 +1,46 @@
+title: Network Native API Calls
+id: b1c2d3e4-f5g6-7890-abcd-444444444444
+status: experimental
+description: Detects suspicious network operations via native APIs
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'WSAStartup'
+      - 'WSASocket'
+      - 'WSAConnect'
+      - 'WSASend'
+      - 'WSARecv'
+      - 'socket'
+      - 'connect'
+      - 'send'
+      - 'recv'
+      - 'InternetOpen'
+      - 'InternetConnect'
+      - 'HttpOpenRequest'
+      - 'HttpSendRequest'
+      - 'WinHttpOpen'
+      - 'WinHttpConnect'
+      - 'WinHttpOpenRequest'
+      - 'WinHttpSendRequest'
+  condition: selection
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - User
+falsepositives:
+  - Network applications
+  - Web browsers
+  - Download managers
+level: medium
+tags:
+  - attack.execution
+  - attack.t1106
+  - sysmon
+  - windows

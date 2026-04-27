@@ -1,0 +1,26 @@
+title: Uncommon HTTP User Agents
+id: i1j2k3l4-m5n6-7890-abcd-333333333333
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection:
+    user_agent|contains:
+      - 'Cobalt Strike'
+      - 'Metasploit'
+      - 'Empire'
+      - 'PowerShell'
+      - 'curl/7'
+      - 'wget/'
+      - 'python-requests'
+      - 'Go-http-client'
+      - 'Nim httpclient'
+      - 'rust-reqwest'
+      - 'okhttp/'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1071.001

@@ -1,0 +1,50 @@
+title: Network Configuration Discovery
+id: a1b2c3d4-e5f6-7890-abcd-444444444444
+status: experimental
+description: Detects network configuration discovery commands
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_ipconfig:
+    EventID: 1
+    Image|endswith: '\ipconfig.exe'
+    CommandLine|contains:
+      - '/all'
+      - '/displaydns'
+      - '/flushdns'
+  selection_netsh:
+    EventID: 1
+    Image|endswith: '\netsh.exe'
+    CommandLine|contains:
+      - 'interface'
+      - 'profile'
+      - 'wlan'
+      - 'advfirewall'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-NetIPConfiguration'
+      - 'Get-NetAdapter'
+      - 'Get-DnsClientServerAddress'
+      - 'Get-NetRoute'
+      - 'Get-NetFirewallRule'
+  condition: selection_ipconfig or selection_netsh or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ComputerName
+falsepositives:
+  - Network troubleshooting
+  - System administration
+  - Network monitoring tools
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

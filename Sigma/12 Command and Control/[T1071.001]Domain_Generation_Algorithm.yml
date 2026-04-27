@@ -1,0 +1,15 @@
+title: Domain Generation Algorithm Detection
+id: i1j2k3l4-m5n6-7890-abcd-444444444444
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: dns
+detection:
+  selection:
+    query|re: '[a-zA-Z0-9]{8,}\.com|[a-zA-Z0-9]{8,}\.net|[a-zA-Z0-9]{8,}\.org'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1071.004

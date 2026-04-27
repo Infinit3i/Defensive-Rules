@@ -1,0 +1,62 @@
+title: Click Fraud and Automated Clicking Detection
+id: k1l2m3n4-o5p6-7890-1234-567890klmnop
+status: experimental
+description: Detects automated clicking patterns and click fraud activities
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection_rapid_clicks:
+    method: 'GET'
+    uri|contains:
+      - 'click'
+      - 'ad'
+      - 'banner'
+      - 'impression'
+      - 'cpc'
+      - 'cpm'
+      - 'adsense'
+      - 'doubleclick'
+  selection_user_agents:
+    user_agent|contains:
+      - 'bot'
+      - 'crawler'
+      - 'spider'
+      - 'automated'
+      - 'phantom'
+      - 'selenium'
+      - 'headless'
+      - 'chrome/99'  # Suspicious static versions
+      - 'firefox/99'
+  selection_suspicious_referrers:
+    referrer|contains:
+      - 'google.com/search?q=click'
+      - 'bing.com/search?q=click'
+      - 'clickfarm'
+      - 'autoclick'
+      - 'botclick'
+  rapid_requests:
+    # Would need correlation rule for timing
+    src_ip: '*'  # Same source IP
+  condition: (selection_rapid_clicks and selection_user_agents) or selection_suspicious_referrers
+fields:
+  - src_ip
+  - dst_ip
+  - host
+  - uri
+  - method
+  - user_agent
+  - referrer
+falsepositives:
+  - Legitimate web crawlers
+  - Monitoring tools
+  - Load testing
+level: medium
+tags:
+  - attack.impact
+  - attack.t0000
+  - zeek
+  - network
+  - click-fraud

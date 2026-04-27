@@ -1,0 +1,48 @@
+title: Environment Variable Enumeration for System Discovery
+id: a1b2c3d4-e5f6-7890-abcd-111111111111
+status: experimental
+description: Detects enumeration of environment variables for system information discovery
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_set:
+    EventID: 1
+    CommandLine|contains:
+      - 'set'
+      - 'echo %'
+      - '$env:'
+      - 'Get-ChildItem Env:'
+      - 'dir env:'
+      - 'printenv'
+  selection_specific:
+    EventID: 1
+    CommandLine|contains:
+      - '%COMPUTERNAME%'
+      - '%USERNAME%'
+      - '%USERDOMAIN%'
+      - '%PROCESSOR_ARCHITECTURE%'
+      - '%OS%'
+      - '%SYSTEMROOT%'
+      - '%WINDIR%'
+      - '%TEMP%'
+      - '%TMP%'
+      - '%PATH%'
+  condition: selection_set and selection_specific
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ComputerName
+falsepositives:
+  - System administration
+  - Software installation
+  - Batch scripts
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

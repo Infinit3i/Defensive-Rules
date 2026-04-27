@@ -1,0 +1,24 @@
+title: System Uptime Checks for Sandbox Detection
+id: d1e2f3g4-h5i6-7890-abcd-555555555555
+status: experimental
+description: Detects uptime checks for sandbox evasion
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'GetTickCount'
+      - 'timeGetTime'
+      - 'QueryPerformanceCounter'
+      - 'uptime'
+      - 'LastBootUpTime'
+      - '/proc/uptime'
+      - 'sysctl kern.boottime'
+  condition: selection
+tags:
+  - attack.defense-evasion
+  - attack.t1497.003

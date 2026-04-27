@@ -1,0 +1,22 @@
+title: Process Debug Flag Checks
+id: e1f2g3h4-i5j6-7890-abcd-111111111111
+status: experimental
+description: Detects process debug flag checks
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'NtQueryInformationProcess'
+      - 'ProcessDebugPort'
+      - 'ProcessDebugFlags'
+      - 'ProcessDebugObjectHandle'
+      - 'CheckRemoteDebuggerPresent'
+  condition: selection
+tags:
+  - attack.defense-evasion
+  - attack.t1622

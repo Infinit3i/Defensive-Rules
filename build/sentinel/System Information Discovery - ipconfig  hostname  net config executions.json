@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "System Information Discovery - ipconfig  hostname  net config executions",
+    "description": "Detect execution of common network/host discovery commands such as ipconfig, hostname or net config which can be used to enumerate host and network configuration.",
+    "severity": "Low",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (CommandLine|contains has \"ipconfig\" or CommandLine|contains has \"ipconfig /all\" or CommandLine|contains has \"hostname\" or CommandLine|contains has \"net config\" or CommandLine|contains has \"net view\") and (Image|endswith has \"\\ipconfig.exe\" or Image|endswith has \"\\hostname.exe\" or Image|endswith has \"\\net.exe\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "4b2c1f8e-d5a4-426f-bf7c-c1d2e3f4a5b6",
+      "SigmaLevel": "low",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Discovery"
+    ],
+    "techniques": [
+      "T1082"
+    ]
+  }
+}

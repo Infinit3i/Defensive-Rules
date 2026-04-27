@@ -1,0 +1,81 @@
+title: Suspicious Download Tools and Methods
+id: i9j0k1l2-m3n4-5678-9012-345678ijklmn
+status: experimental
+description: Detects suspicious file download methods and tools used for ingress tool transfer
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_certutil:
+    EventID: 1
+    Image|endswith: '\certutil.exe'
+    CommandLine|contains:
+      - '-urlcache'
+      - '-split'
+      - '-f'
+      - 'http'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Invoke-WebRequest'
+      - 'iwr'
+      - 'wget'
+      - 'curl'
+      - 'DownloadFile'
+      - 'DownloadString'
+      - 'WebClient'
+      - 'Net.WebClient'
+      - 'Start-BitsTransfer'
+  selection_bitsadmin:
+    EventID: 1
+    Image|endswith: '\bitsadmin.exe'
+    CommandLine|contains:
+      - '/transfer'
+      - '/download'
+      - '/addfile'
+  selection_hh:
+    EventID: 1
+    Image|endswith: '\hh.exe'
+    CommandLine|contains:
+      - 'http'
+      - 'https'
+      - '.chm'
+  selection_mshta:
+    EventID: 1
+    Image|endswith: '\mshta.exe'
+    CommandLine|contains:
+      - 'http'
+      - 'https'
+      - 'javascript'
+      - 'vbscript'
+  suspicious_urls:
+    CommandLine|contains:
+      - 'raw.githubusercontent'
+      - 'pastebin.com'
+      - 'bit.ly'
+      - 'tinyurl'
+      - 'shortened'
+      - '.tk'
+      - '.ml'
+      - '.ga'
+      - '.cf'
+  condition: (selection_certutil or selection_powershell or selection_bitsadmin or selection_hh or selection_mshta) and suspicious_urls
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - Software updates
+  - Legitimate administrative downloads
+  - Development tools
+level: medium
+tags:
+  - attack.command-and-control
+  - attack.t1105
+  - sysmon
+  - windows

@@ -1,0 +1,45 @@
+title: Virtual Machine Detection Evasion
+id: d1e2f3g4-h5i6-7890-abcd-111111111111
+status: experimental
+description: Detects VM detection evasion techniques
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'SELECT * FROM Win32_ComputerSystem'
+      - 'SELECT * FROM Win32_BIOS'
+      - 'SELECT * FROM Win32_BaseBoard'
+      - 'VMware'
+      - 'VirtualBox'
+      - 'VBOX'
+      - 'Hyper-V'
+      - 'Xen'
+      - 'QEMU'
+      - 'Bochs'
+      - 'Parallels'
+      - 'virt-what'
+      - 'systemd-detect-virt'
+      - 'dmidecode'
+      - 'lscpu'
+      - 'hostnamectl'
+  condition: selection
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - User
+falsepositives:
+  - System administration
+  - Virtualization management
+  - System inventory tools
+level: medium
+tags:
+  - attack.defense-evasion
+  - attack.t1497.003
+  - sysmon
+  - windows

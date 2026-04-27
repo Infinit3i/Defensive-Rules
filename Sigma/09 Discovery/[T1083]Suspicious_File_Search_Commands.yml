@@ -1,0 +1,83 @@
+title: Suspicious File and Directory Search Commands
+id: f6g7h8i9-j0k1-2345-6789-012345fghijk
+status: experimental
+description: Detects suspicious file and directory enumeration commands often used by attackers
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_dir:
+    EventID: 1
+    Image|endswith:
+      - '\cmd.exe'
+      - '\dir.exe'
+    CommandLine|contains:
+      - 'dir /s'
+      - 'dir /a'
+      - 'dir /b'
+      - 'dir *.txt'
+      - 'dir *.doc'
+      - 'dir *.pdf'
+      - 'dir *.xls'
+      - 'dir *.ppt'
+      - 'dir *password*'
+      - 'dir *config*'
+      - 'dir *secret*'
+      - 'dir *backup*'
+  selection_where:
+    EventID: 1
+    Image|endswith: '\where.exe'
+    CommandLine|contains:
+      - 'where /r'
+      - 'where *.exe'
+      - 'where *.bat'
+      - 'where *.ps1'
+  selection_findstr:
+    EventID: 1
+    Image|endswith:
+      - '\findstr.exe'
+      - '\find.exe'
+    CommandLine|contains:
+      - '/s'
+      - '/i password'
+      - '/i admin'
+      - '/i login'
+      - '/i secret'
+      - '/i key'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-ChildItem -Recurse'
+      - 'gci -r'
+      - 'ls -r'
+      - 'dir -r'
+      - 'Select-String'
+      - 'Get-Content | Select-String'
+  sensitive_paths:
+    CommandLine|contains:
+      - 'C:\Users'
+      - 'C:\Windows\System32'
+      - 'C:\Program Files'
+      - 'C:\ProgramData'
+      - '%USERPROFILE%'
+      - '%APPDATA%'
+  condition: (selection_dir or selection_where or selection_findstr or selection_powershell) and sensitive_paths
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - System administration tasks
+  - Software installation
+  - Backup scripts
+level: low
+tags:
+  - attack.discovery
+  - attack.t1083
+  - sysmon
+  - windows

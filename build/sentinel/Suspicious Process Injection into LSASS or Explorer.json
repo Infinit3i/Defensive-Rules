@@ -1,0 +1,66 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious Process Injection into LSASS or Explorer",
+    "description": "Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like lsass.exe or explorer.exe are accessed in a privileged manner.",
+    "severity": "High",
+    "enabled": false,
+    "query": "union Event, SecurityEvent\n| where TimeGenerated > ago(24h)\n| where (EventID == \"8\" or EventID == \"10\") and (TargetImage|endswith has \"\\lsass.exe\" or TargetImage|endswith has \"\\explorer.exe\") and (EventID == \"4673\" or EventID == \"4674\") and (Message|contains has \"lsass.exe\" or Message|contains has \"explorer.exe\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "57e5e43f-ae10-4db4-88a5-49980d05e7cc",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/20"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1055",
+      "T001"
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+title: SMB File Transfer Activities
+id: i1j2k3l4-m5n6-7890-abcd-111111111111
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'copy \\\\*'
+      - 'xcopy \\\\*'
+      - 'robocopy \\\\*'
+      - 'net use \\\\*'
+      - 'New-PSDrive'
+      - 'Copy-Item \\\\*'
+      - 'scp'
+      - 'rsync'
+      - 'smbclient'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1105

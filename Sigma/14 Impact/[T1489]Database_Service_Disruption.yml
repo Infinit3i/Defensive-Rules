@@ -1,0 +1,49 @@
+title: Database Service Disruption
+id: c1d2e3f4-g5h6-7890-abcd-333333333333
+status: experimental
+description: Detects attempts to stop database services
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'stop'
+      - 'delete'
+      - 'config'
+      - 'disable'
+  database_services:
+    CommandLine|contains:
+      - 'MSSQLSERVER'
+      - 'SQLSERVERAGENT'
+      - 'MSSQLLaunchpad'
+      - 'SQLBrowser'
+      - 'MySQL'
+      - 'OracleService'
+      - 'PostgreSQL'
+      - 'MongoDB'
+      - 'Redis'
+      - 'Cassandra'
+      - 'Neo4j'
+      - 'InfluxDB'
+      - 'CouchDB'
+      - 'RavenDB'
+  condition: selection and database_services
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+falsepositives:
+  - Database maintenance
+  - Service updates
+  - Planned downtime
+level: high
+tags:
+  - attack.impact
+  - attack.t1489
+  - sysmon
+  - windows

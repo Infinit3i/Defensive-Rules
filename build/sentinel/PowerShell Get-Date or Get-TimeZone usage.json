@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "PowerShell Get-Date or Get-TimeZone usage",
+    "description": "Detects PowerShell usage that queries system time, timezone, or UTC time (Get-Date, Get-TimeZone, Get-Culture) which may be used for time discovery or time-based evasion.",
+    "severity": "Low",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (ScriptBlockText|contains has \"Get-Date\" or ScriptBlockText|contains has \"Get-TimeZone\" or ScriptBlockText|contains has \"Get-Culture\" or ScriptBlockText|contains has \"Get-Uptime\" or ScriptBlockText|contains has \"Get-Date -UFormat\") and (Image|endswith has \"\\powershell.exe\" or Image|endswith has \"\\pwsh.exe\") and (CommandLine|contains has \"Get-Date\" or CommandLine|contains has \"Get-TimeZone\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "3b4c5d6e-7f80-9012-3456-7890abcdef12",
+      "SigmaLevel": "low",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1124"
+    ]
+  }
+}

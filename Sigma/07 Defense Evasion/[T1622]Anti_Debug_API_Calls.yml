@@ -1,0 +1,69 @@
+title: Anti-Debug API Calls and Techniques
+id: e5f6g7h8-i9j0-1234-5678-901234efghij
+status: experimental
+description: Detects anti-debugging techniques and API calls used to evade debugger detection
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_apis:
+    EventID: 1
+    CommandLine|contains:
+      - 'IsDebuggerPresent'
+      - 'CheckRemoteDebuggerPresent'
+      - 'NtQueryInformationProcess'
+      - 'OutputDebugString'
+      - 'GetTickCount'
+      - 'QueryPerformanceCounter'
+      - 'timeGetTime'
+      - 'SetUnhandledExceptionFilter'
+      - 'UnhandledExceptionFilter'
+      - 'NtSetInformationThread'
+      - 'ThreadHideFromDebugger'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-Process | Where Name -like "*debug*"'
+      - 'Get-WmiObject Win32_Process | Where Name -like "*debug*"'
+      - 'Test-Path "*debug*"'
+      - '[Environment]::TickCount'
+      - 'Stopwatch'
+  selection_processes:
+    EventID: 1
+    CommandLine|contains:
+      - 'tasklist | findstr debug'
+      - 'wmic process get name | findstr debug'
+      - 'query process'
+      - 'tlist'
+  debugger_names:
+    CommandLine|contains:
+      - 'windbg'
+      - 'x64dbg'
+      - 'ollydbg'
+      - 'ida'
+      - 'ghidra'
+      - 'cheat engine'
+      - 'processhacker'
+      - 'process monitor'
+      - 'regmon'
+      - 'filemon'
+  condition: (selection_apis or selection_powershell or selection_processes) and debugger_names
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - Legitimate debugging sessions
+  - Development tools
+  - System monitoring utilities
+level: medium
+tags:
+  - attack.defense-evasion
+  - attack.t1622
+  - sysmon
+  - windows

@@ -1,0 +1,47 @@
+title: Hardware Information Discovery Commands
+id: a1b2c3d4-e5f6-7890-abcd-333333333333
+status: experimental
+description: Detects commands used to discover hardware information
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'baseboard'
+      - 'bios'
+      - 'cpu'
+      - 'diskdrive'
+      - 'memorychip'
+      - 'computersystem'
+      - 'systemenclosure'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-WmiObject Win32_BaseBoard'
+      - 'Get-WmiObject Win32_BIOS'
+      - 'Get-WmiObject Win32_Processor'
+      - 'Get-WmiObject Win32_DiskDrive'
+      - 'Get-WmiObject Win32_PhysicalMemory'
+      - 'Get-CimInstance Win32_ComputerSystem'
+  condition: selection_wmic or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ComputerName
+falsepositives:
+  - System inventory
+  - Hardware monitoring tools
+  - IT asset management
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

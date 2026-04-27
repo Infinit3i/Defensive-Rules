@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious Command Shell Activity Encoded or Obfuscated Commands",
+    "description": "Detects suspicious use of cmd.exe executing encoded or obfuscated commands often used by attackers to evade detection.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\cmd.exe\" and (CommandLine|contains has \"/c\" or CommandLine|contains has \"&&\" or CommandLine|contains has \"||\" or CommandLine|contains has \"^\" or CommandLine|contains has \"%\" or CommandLine|contains has \"set \" or CommandLine|contains has \"for \" or CommandLine|contains has \"call \" or CommandLine|contains has \"powershell\" or CommandLine|contains has \"certutil\" or CommandLine|contains has \"bitsadmin\" or CommandLine|contains has \"whoami\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "82a7dfe1-59f9-4b2a-bb02-7a2a63f0d002",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/20"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T003"
+    ]
+  }
+}

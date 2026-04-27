@@ -1,0 +1,22 @@
+title: Memory Protection Anti-Debug Checks
+id: e1f2g3h4-i5j6-7890-abcd-555555555555
+status: experimental
+description: Detects memory protection debugger checks
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'VirtualProtect'
+      - 'VirtualQuery'
+      - 'NtProtectVirtualMemory'
+      - 'NtQueryVirtualMemory'
+      - 'PAGE_GUARD'
+  condition: selection
+tags:
+  - attack.defense-evasion
+  - attack.t1622

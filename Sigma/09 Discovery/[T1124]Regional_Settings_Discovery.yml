@@ -1,0 +1,23 @@
+title: Regional Settings and Locale Discovery
+id: g1h2i3j4-k5l6-7890-abcd-333333333333
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'systeminfo | findstr /i "time zone"'
+      - 'Get-WinSystemLocale'
+      - 'Get-Culture'
+      - 'reg query "HKCU\\Control Panel\\International"'
+      - 'locale'
+      - 'timedatectl'
+      - 'localectl'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1124

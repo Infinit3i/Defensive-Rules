@@ -1,0 +1,65 @@
+title: Advanced Process Enumeration and Discovery
+id: h8i9j0k1-l2m3-4567-8901-234567hijklm
+status: experimental
+description: Detects advanced process enumeration techniques beyond basic tasklist
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'process list'
+      - 'process get'
+      - 'process where'
+      - 'process call'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-Process'
+      - 'Get-WmiObject Win32_Process'
+      - 'Get-CimInstance Win32_Process'
+      - 'gwmi Win32_Process'
+      - 'gcim Win32_Process'
+      - 'ps'
+  selection_advanced:
+    EventID: 1
+    CommandLine|contains:
+      - 'tasklist /svc'
+      - 'tasklist /m'
+      - 'tasklist /v'
+      - 'query process'
+      - 'qprocess'
+  selection_suspicious_filters:
+    EventID: 1
+    CommandLine|contains:
+      - 'findstr /i antivirus'
+      - 'findstr /i defender'
+      - 'findstr /i security'
+      - 'findstr /i firewall'
+      - 'findstr /i monitoring'
+      - 'Where-Object.*antivirus'
+      - 'Where-Object.*defender'
+      - 'Where-Object.*security'
+      - 'where.*av'
+  condition: (selection_wmic or selection_powershell or selection_advanced) and selection_suspicious_filters
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+falsepositives:
+  - System administration
+  - Security software
+  - System monitoring tools
+level: medium
+tags:
+  - attack.discovery
+  - attack.t1057
+  - sysmon
+  - windows

@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious_File_Enumeration_Tools",
+    "description": "Detect execution of common file-enumeration or bulk-copying utilities and commands that indicate broad file/directory discovery (robocopy, xcopy, tree, dirb/dirsearch) across Windows and Unix telemetry.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "union SecurityEvent, Event\n| where TimeGenerated > ago(24h)\n| where (CommandLine|contains has \"robocopy\" or CommandLine|contains has \"xcopy \" or CommandLine|contains has \"tree \" or CommandLine|contains has \"dir /s\") and (CommandLine|contains has \"dirb \" or CommandLine|contains has \"dirsearch\" or CommandLine|contains has \"find \" or CommandLine|contains has \"rsync -av\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "4d5e6f70-8192-0a1b-2c3d-4e5f6a7b8c9d",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1083"
+    ]
+  }
+}

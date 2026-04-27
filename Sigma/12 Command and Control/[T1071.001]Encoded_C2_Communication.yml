@@ -1,0 +1,20 @@
+title: Base64 Encoded C2 Communication
+id: j1k2l3m4-n5o6-7890-abcd-333333333333
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection:
+    request_body_len: '>100'
+    uri|contains:
+      - '?data='
+      - '&cmd='
+      - 'payload='
+    post_data|re: '^[A-Za-z0-9+/]{20,}={0,2}$'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1071.001

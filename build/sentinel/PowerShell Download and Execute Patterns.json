@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "PowerShell Download and Execute Patterns",
+    "description": "Detects PowerShell commands that download and execute files or scripts",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (Message|contains has \"DownloadString\" or Message|contains has \"DownloadFile\" or Message|contains has \"Invoke-WebRequest\" or Message|contains has \"iwr\" or Message|contains has \"wget\" or Message|contains has \"curl\" or Message|contains has \"WebClient\" or Message|contains has \"Net.WebClient\" or Message|contains has \"Start-BitsTransfer\") and (Message|contains has \"Invoke-Expression\" or Message|contains has \"iex\" or Message|contains has \"Invoke-Command\" or Message|contains has \"icm\" or Message|contains has \"Start-Process\" or Message|contains has \"saps\" or Message|contains has \"&\" or Message|contains has \"cmd /c\" or Message|contains has \"powershell -c\") and (Message|contains has \"FromBase64String\" or Message|contains has \"EncodedCommand\" or Message|contains has \"Reflection.Assembly\" or Message|contains has \"Load\" or Message|contains has \"GetType\" or Message|contains has \"GetMethod\" or Message|contains has \"Invoke\") and (Message|contains has \"raw.githubusercontent\" or Message|contains has \"pastebin.com\" or Message|contains has \"hastebin\" or Message|contains has \"ghostbin\" or Message|contains has \"bit.ly\" or Message|contains has \"tinyurl\" or Message|contains has \".tk\" or Message|contains has \".ml\" or Message|contains has \".ga\" or Message|contains has \".cf\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "m3n4o5p6-q7r8-9012-3456-789012mnopqr",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T001"
+    ]
+  }
+}

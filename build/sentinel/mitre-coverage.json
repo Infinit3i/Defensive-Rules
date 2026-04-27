@@ -1,0 +1,234 @@
+{
+  "T1059": [
+    "Suspicious PowerShell Script Block Execution",
+    "Suspicious Office-Initiated Scripting or Execution Chain"
+  ],
+  "T001": [
+    "Suspicious PowerShell Script Block Execution",
+    "Suspicious Office-Initiated Scripting or Execution Chain",
+    "PowerShell Download and Execute Patterns",
+    "Suspicious Process Injection into LSASS or Explorer",
+    "New User Account Created",
+    "Executable or Script Dropped in Persistence Path",
+    "Mimikatz LSASS Memory Access or Execution",
+    "Brute-Force SSH Attempts",
+    "Large Volume of HTTP POST Traffic",
+    "Unencrypted Traffic on TCP 443",
+    "Suspicious Web-based Command and Control Patterns",
+    "Suspicious HTTP User-Agent Strings",
+    "HTTP Beaconing and Suspicious Web Protocols",
+    "Anomalous Network Traffic  C2 Beaconing",
+    "Anomalous Connection Volume and Duration"
+  ],
+  "T1106": [
+    "Managed code PInvoke or runtime interop usage detected",
+    "Suspicious Native API Function Calls",
+    "Native API function names observed in scripts or commandlines",
+    "PowerShell Add-Type and DllImport usage",
+    "Suspicious native module load from non-standard path",
+    "Syscall strings or inline syscall opcodes in scriptblocks"
+  ],
+  "T1047": [
+    "WMI Remote Command Execution",
+    "Suspicious WMI-Based Execution Wmiprvse Spawning Scripting Engines",
+    "Suspicious WMIC Usage for Remote Process Execution",
+    "Suspicious Execution of wmiexec",
+    "WMI Win32_ProcessCreate Executed Remotely WMI-Activity"
+  ],
+  "T1218": [
+    "Rundll32 Loading Remote or Non-System DLLs",
+    "Suspicious Rundll32 Execution with Unusual Parameters",
+    "Suspicious Office-Initiated Scripting or Execution Chain"
+  ],
+  "T011": [
+    "Rundll32 Loading Remote or Non-System DLLs",
+    "Utility Abuse Regsvr32 Rundll32 etc",
+    "Suspicious Rundll32 Execution with Unusual Parameters",
+    "Rundll32 Proxy Execution for Defense Evasion"
+  ],
+  "T1086": [
+    "PowerShell Download and Execution from Remote Source",
+    "PowerShell Encoded Command Execution"
+  ],
+  "T003": [
+    "Suspicious Command Shell Activity Encoded or Obfuscated Commands",
+    "CMD Launched From Suspicious Parent Process",
+    "Service Creation Using a Named Pipe",
+    "Suspicious Driver Installations or Modifications",
+    "Suspicious Service Creation",
+    "Multiple Account Lockouts Detected",
+    "Abnormal TLSSSL Certificate Anomalies",
+    "Long delay in compiled binaries via Sleep or NtDelayExecution",
+    "High uptime checks and conditional long delays",
+    "Timeout  choice based long delays in cmdbatch",
+    "Start-Sleep long duration in PowerShell",
+    "Time-Based Evasion via Sleep Ping-Delay or Timeout",
+    "Extended Sleep and Delay Commands for Evasion",
+    "Stepped timer loops or exponential backoff used as long delay",
+    "Many Subdomains Looking Like Exfiltration"
+  ],
+  "T1055": [
+    "Suspicious Process Injection into LSASS or Explorer",
+    "Process Injection Techniques"
+  ],
+  "T1134": [
+    "Suspicious Domain Token Theft or Impersonation"
+  ],
+  "T1548": [
+    "Privilege Escalation Attempts"
+  ],
+  "T1489": [
+    "Service Stop via scexe net Stop-Service or WMIC",
+    "Security Service Termination"
+  ],
+  "T0000": [
+    "Browser Automation Tools for Click Fraud",
+    "Click Fraud and Automated Clicking Detection"
+  ],
+  "T1136": [
+    "New User Account Created"
+  ],
+  "T007": [
+    "Abnormal Kernel Module Loading"
+  ],
+  "T1574": [
+    "DLL Loaded from Non-standard Directory"
+  ],
+  "T002": [
+    "DLL Loaded from Non-standard Directory",
+    "Pass_the_Hash",
+    "Audit Policy Change or Clearing Attempt"
+  ],
+  "T1547": [
+    "Executable or Script Dropped in Persistence Path"
+  ],
+  "T1053": [
+    "Unauthorized Cron Job Creation",
+    "Scheduled Task Creation"
+  ],
+  "T1543": [
+    "Suspicious Service Creation"
+  ],
+  "T1098": [
+    "Abnormal User Account Modifications",
+    "User Added to Domain Admins Group"
+  ],
+  "T005": [
+    "Malicious Scheduled Task Creation",
+    "Scheduled Task Creation"
+  ],
+  "T1021": [
+    "Lateral Movement Activity Analysis",
+    "Abnormal Host-to-Host Communication Patterns"
+  ],
+  "T1077": [
+    "Suspicious Use of ADMIN Administrative Share"
+  ],
+  "T1219": [
+    "Abuse of Remote Administration Tools",
+    "Potential Meterpreter Execution Detected"
+  ],
+  "T1049": [
+    "Abnormal Host-to-Host Communication Patterns"
+  ],
+  "T1110": [
+    "Repeated Failed Login Attempts",
+    "Multiple Account Lockouts Detected",
+    "SSH Brute-Force Attack Detection"
+  ],
+  "T1078": [
+    "Cloud Account Credential Use from Unregistered or Inactive Devices",
+    "Suspicious Cloud Account Logins from New Geolocations"
+  ],
+  "T004": [
+    "Cloud Account Credential Use from Unregistered or Inactive Devices",
+    "Suspicious Cloud Account Logins from New Geolocations",
+    "Unusual File Access or Modification",
+    "Many Subdomains Looking Like Exfiltration",
+    "DNS Tunneling Detection",
+    "DNS Tunneling via High Volume or Suspicious Subdomains"
+  ],
+  "T1557": [
+    "Abnormal TLSSSL Certificate Anomalies"
+  ],
+  "T1195": [
+    "Unauthorized Package Manager Activity on Networking Equipment"
+  ],
+  "T1048": [
+    "Unusual File Transfer Activity"
+  ],
+  "T1041": [
+    "Large Volume of HTTP POST Traffic",
+    "Unencrypted Traffic on TCP 443",
+    "Anomalous Connection Volume and Duration"
+  ],
+  "T1057": [
+    "Tasklist Process Enumeration",
+    "WMI Activity - Win32_Process Query",
+    "Linux pstop or proc Enumeration syslogaudit",
+    "PowerShell Get-Process or WMICIM Win32_Process Discovery",
+    "Advanced Process Enumeration and Discovery",
+    "WMIC Process List or Get"
+  ],
+  "T1124": [
+    "PowerShell Get-Date or Get-TimeZone usage",
+    "timedatectl hwclock or chronyc usage on Linux",
+    "w32tm query or status checks",
+    "System Time and Timezone Discovery Commands",
+    "tzutil query timezone",
+    "System Time Discovery via tzutil w32tm datetime or Get-Date",
+    "Zeek NTP or UDP 123 traffic indicating external time queries"
+  ],
+  "T1083": [
+    "Cmd_dir_and_where_recursive",
+    "WebDAV_PROPFIND_Directory_Enumeration_Zeek",
+    "File and Directory Discovery Commands dir s where r Get-ChildItem -Recurse",
+    "Suspicious File and Directory Search Commands",
+    "Find_and_ls_recursive_unix_syslog",
+    "Suspicious_File_Enumeration_Tools",
+    "PowerShell_Get-ChildItem_Recurse"
+  ],
+  "T1082": [
+    "System Information Discovery - ipconfig  hostname  net config executions",
+    "System Information Discovery - systeminfoexe Execution",
+    "System Information Discovery - reg query for ComputerName  Hardware info",
+    "System Information Discovery via whoami and hostname",
+    "System Information Discovery - WMIC Queries for OS and BIOS",
+    "System Information Discovery - PowerShell Get-CimInstance  Get-WmiObject  Get-ComputerInfo"
+  ],
+  "T1046": [
+    "Detect Scanning or IPsec Probing via Public IPs or Port 500"
+  ],
+  "T1622": [
+    "Module loads of debugging libraries from user-writable paths",
+    "PowerShell IsDebuggerPresent or Debug API checks in ScriptBlock",
+    "CommandLine contains common debugger tool names ollydbg x64dbg windbg",
+    "Zeek HTTP logs - download or user-agent indicative of debugger tools",
+    "Debugger Evasion Indicators in Command Line or ScriptBlock",
+    "Anti-Debug API Calls and Techniques",
+    "ptracesyscall or gdb invocation detected in syslogauditd"
+  ],
+  "T1562": [
+    "Audit Policy Change or Clearing Attempt",
+    "Enabling RDP Through Firewall Modification Detected"
+  ],
+  "T1070": [
+    "Log Tampering or Deletion"
+  ],
+  "T1105": [
+    "Linux curlwgetscprsync downloads in syslog",
+    "CertUtil download to suspicious path",
+    "HTTP file downloads  Zeek detection by URIuser-agentfilename",
+    "Unusual Process Making Network Connection",
+    "PowerShell BITSJob or Invoke-WebRequest file downloads",
+    "FTP or anonymous file transfer indicators ftp ftps smb file transfer",
+    "Suspicious Download Tools and Methods"
+  ],
+  "T1071": [
+    "Detect FRPC Communication on Designated Ports",
+    "DNS Tunneling via High Volume or Suspicious Subdomains"
+  ],
+  "T1095": [
+    "Detect ICMP-Based FRPC Communication"
+  ]
+}

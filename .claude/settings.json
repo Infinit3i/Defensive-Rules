@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "auto": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Edit",
+      "Write"
+    ],
+    "confirm": [
+      "Bash:git *",
+      "Bash:rm *",
+      "Bash:mv *"
+    ]
+  },
+  "hooks": {
+    "pre-commit": "yamllint Sigma/ --format github || echo 'YAML linting found issues - please fix before committing'",
+    "file-save": "echo 'Rule updated: $FILE_PATH' && grep -q 'status: experimental' '$FILE_PATH' && echo 'WARNING: Rule still experimental - requires testing'"
+  },
+  "env": {
+    "SIGMA_RULES_PATH": "Sigma/",
+    "SPLUNK_RULES_PATH": "Splunk/",
+    "YARA_RULES_PATH": "Yara/",
+    "MITRE_VERSION": "v16.1"
+  }
+}

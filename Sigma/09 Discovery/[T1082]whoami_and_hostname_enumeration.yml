@@ -1,0 +1,45 @@
+title: System Information Discovery via whoami and hostname
+id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+status: experimental
+description: Detects system information discovery attempts using whoami, hostname, and similar commands
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_whoami:
+    EventID: 1
+    Image|endswith:
+      - '\whoami.exe'
+      - '\hostname.exe'
+    CommandLine|contains:
+      - 'whoami'
+      - 'hostname'
+      - '/all'
+      - '/groups'
+      - '/priv'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - '$env:username'
+      - '$env:computername'
+      - 'Get-WmiObject Win32_ComputerSystem'
+      - '[Environment]::UserName'
+      - '[Environment]::MachineName'
+  condition: selection_whoami or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate system administration
+  - Software installation scripts
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

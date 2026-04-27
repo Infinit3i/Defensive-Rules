@@ -1,0 +1,23 @@
+title: Email-Based File Exfiltration
+id: j1k2l3m4-n5o6-7890-abcd-222222222222
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'Send-MailMessage'
+      - 'System.Net.Mail.SmtpClient'
+      - 'mutt -a'
+      - 'mail -a'
+      - 'sendmail'
+      - 'swaks'
+      - 'blat.exe'
+  condition: selection
+tags:
+  - attack.exfiltration
+  - attack.t1105

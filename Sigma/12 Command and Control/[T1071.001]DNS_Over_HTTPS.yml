@@ -1,0 +1,22 @@
+title: DNS over HTTPS C2 Channel
+id: j1k2l3m4-n5o6-7890-abcd-555555555555
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: zeek
+  service: http
+detection:
+  selection:
+    uri|contains:
+      - '/dns-query'
+      - '/resolve'
+    host|contains:
+      - 'cloudflare-dns.com'
+      - 'dns.google'
+      - 'dns.quad9.net'
+    method: 'POST'
+  condition: selection
+tags:
+  - attack.command-and-control
+  - attack.t1071.001

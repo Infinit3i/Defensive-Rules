@@ -1,0 +1,27 @@
+title: Configuration File Discovery
+id: f1g2h3i4-j5k6-7890-abcd-444444444444
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - '*.ini'
+      - '*.conf'
+      - '*.config'
+      - '*.xml'
+      - '*.json'
+      - '*.yaml'
+      - '*.yml'
+      - 'web.config'
+      - 'app.config'
+      - '.htaccess'
+      - '.env'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1083

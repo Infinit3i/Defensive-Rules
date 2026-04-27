@@ -1,0 +1,22 @@
+title: Process Handle Analysis
+id: h1i2j3k4-l5m6-7890-abcd-444444444444
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'handle.exe'
+      - 'Get-Process | Select Handles'
+      - 'wmic process get handlecount'
+      - 'lsof'
+      - 'netstat -tulpn'
+      - 'ss -tulpn'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1057

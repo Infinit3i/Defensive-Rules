@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "System Time and Timezone Discovery Commands",
+    "description": "Detects commands used to discover system time, timezone, and date information",
+    "severity": "Low",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (Image|endswith has \"\\time.exe\" or Image|endswith has \"\\date.exe\" or Image|endswith has \"\\tzutil.exe\" or Image|endswith has \"\\w32tm.exe\") and (CommandLine|contains has \"time /t\" or CommandLine|contains has \"date /t\" or CommandLine|contains has \"tzutil /g\" or CommandLine|contains has \"tzutil /l\" or CommandLine|contains has \"w32tm /query\" or CommandLine|contains has \"w32tm /stripchart\") and Image endswith \"\\net.exe\" and (CommandLine|contains has \"net time\" or CommandLine|contains has \"net view\") and Image endswith \"\\powershell.exe\" and (CommandLine|contains has \"Get-Date\" or CommandLine|contains has \"Get-TimeZone\" or CommandLine|contains has \"[DateTime]::Now\" or CommandLine|contains has \"[DateTime]::UtcNow\" or CommandLine|contains has \"[TimeZone]::CurrentTimeZone\" or CommandLine|contains has \"Get-WmiObject Win32_TimeZone\" or CommandLine|contains has \"Get-WmiObject Win32_LocalTime\" or CommandLine|contains has \"Get-CimInstance Win32_TimeZone\") and Image endswith \"\\wmic.exe\" and (CommandLine|contains has \"wmic timezone\" or CommandLine|contains has \"wmic os get localdatetime\" or CommandLine|contains has \"wmic os get lastbootuptime\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "g7h8i9j0-k1l2-3456-7890-123456ghijkl",
+      "SigmaLevel": "low",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1124"
+    ]
+  }
+}

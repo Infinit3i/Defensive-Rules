@@ -21,9 +21,6 @@ This repository is a curated collection of detection rules authored by Matthew I
 
 **NONE OF THESE ARE TESTED YET**
 
-[Uncoder](https://uncoder.io/)
-
-
 ## Most Command Techniques
 - [5] 1	T1082	System Information Discovery
 - [5] 2	T1106	Native API

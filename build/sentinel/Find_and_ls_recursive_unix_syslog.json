@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Find_and_ls_recursive_unix_syslog",
+    "description": "Detect Unix/Linux file and directory discovery via auditd/syslog commands such as find / -type f, ls -R, tree or recursive locate usage recorded in syslog/audit.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Syslog\n| where TimeGenerated > ago(24h)\n| where (Message|contains has \"find / -type f\" or Message|contains has \"find / -name\" or Message|contains has \"find . -type f -name\") and (Message|contains has \"ls -R\" or Message|contains has \"ls -laR\" or Message|contains has \"tree \") and (Message|contains has \"updatedb\" or Message|contains has \"locate \")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "2b3c4d5e-6f70-8192-0a1b-2c3d4e5f6a7b",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1083"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+# default.meta - Permissions for Defensive Rules ES App
+
+[savedsearches]
+export = system
+owner = splunk-system-user
+version = 8.0.0
+modtime = 1234567890.000000000
+
+[correlationsearches]
+export = system
+owner = splunk-system-user
+version = 8.0.0
+modtime = 1234567890.000000000
+
+[macros]
+export = system
+owner = splunk-system-user
+version = 8.0.0
+modtime = 1234567890.000000000
+
+[transforms]
+export = system
+owner = splunk-system-user
+version = 8.0.0
+modtime = 1234567890.000000000
+
+[lookups]
+export = system
+owner = splunk-system-user
+version = 8.0.0
+modtime = 1234567890.000000000
+
+[]
+access = read : [ * ], write : [ admin, power ]
+export = system
+owner = splunk-system-user

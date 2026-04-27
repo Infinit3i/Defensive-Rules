@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "File and Directory Discovery Commands dir s where r Get-ChildItem -Recurse",
+    "description": "Detect enumeration of files/folders using recursive or wide-scope discovery commands that adversaries use to locate data of interest.",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\cmd.exe\" and (CommandLine|contains has \" dir \" or CommandLine|contains has \" dir /s\" or CommandLine|contains has \" dir /b\") and (Image|endswith has \"\\cmd.exe\" or Image|endswith has \"\\where.exe\") and (CommandLine|contains has \"where /r \") and (Image|endswith has \"\\powershell.exe\" or Image|endswith has \"\\pwsh.exe\") and (CommandLine|contains has \"Get-ChildItem -Recurse\" or CommandLine|contains has \"gci -Recurse\" or CommandLine|contains has \"Get-ChildItem -Path\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "7b6f2a40-9c9f-4a4b-92ad-8f13a0d7c1a2",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1083"
+    ]
+  }
+}

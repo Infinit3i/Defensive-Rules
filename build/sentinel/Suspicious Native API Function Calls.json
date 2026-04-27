@@ -1,0 +1,67 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious Native API Function Calls",
+    "description": "Detects potentially malicious native API function calls often used by malware",
+    "severity": "Medium",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (CommandLine|contains has \"NtCreateSection\" or CommandLine|contains has \"NtMapViewOfSection\" or CommandLine|contains has \"NtUnmapViewOfSection\" or CommandLine|contains has \"NtAllocateVirtualMemory\" or CommandLine|contains has \"NtProtectVirtualMemory\" or CommandLine|contains has \"NtWriteVirtualMemory\" or CommandLine|contains has \"NtReadVirtualMemory\" or CommandLine|contains has \"NtCreateThreadEx\" or CommandLine|contains has \"NtResumeThread\" or CommandLine|contains has \"NtSuspendThread\" or CommandLine|contains has \"NtTerminateProcess\" or CommandLine|contains has \"NtOpenProcess\" or CommandLine|contains has \"NtQueryInformationProcess\" or CommandLine|contains has \"LdrLoadDll\" or CommandLine|contains has \"RtlCreateUserThread\") and Image endswith \"\\powershell.exe\" and (CommandLine|contains has \"[DllImport(\"ntdll\")]\" or CommandLine|contains has \"VirtualAlloc\" or CommandLine|contains has \"VirtualProtect\" or CommandLine|contains has \"CreateRemoteThread\" or CommandLine|contains has \"WriteProcessMemory\" or CommandLine|contains has \"ReadProcessMemory\" or CommandLine|contains has \"OpenProcess\" or CommandLine|contains has \"GetProcAddress\" or CommandLine|contains has \"LoadLibrary\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "b2c3d4e5-f6g7-8901-2345-678901bcdefg",
+      "SigmaLevel": "medium",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2026/04/27"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Execution"
+    ],
+    "techniques": [
+      "T1106"
+    ]
+  }
+}

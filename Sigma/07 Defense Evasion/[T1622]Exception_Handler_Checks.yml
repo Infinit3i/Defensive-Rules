@@ -1,0 +1,21 @@
+title: Exception Handler Anti-Debug Checks
+id: e1f2g3h4-i5j6-7890-abcd-444444444444
+status: experimental
+description: Detects exception handler debugger checks
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'SetUnhandledExceptionFilter'
+      - 'AddVectoredExceptionHandler'
+      - 'RaiseException'
+      - 'UnhandledExceptionFilter'
+  condition: selection
+tags:
+  - attack.defense-evasion
+  - attack.t1622

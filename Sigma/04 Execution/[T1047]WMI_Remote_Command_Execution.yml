@@ -1,0 +1,64 @@
+title: WMI Remote Command Execution
+id: n4o5p6q7-r8s9-0123-4567-890123nopqrs
+status: experimental
+description: Detects WMI being used for remote command execution and lateral movement
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - '/node:'
+      - 'process call create'
+      - '/user:'
+      - '/password:'
+      - 'Win32_Process'
+  selection_powershell_wmi:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Invoke-WmiMethod'
+      - 'Get-WmiObject'
+      - 'gwmi'
+      - 'Win32_Process'
+      - 'Create'
+      - '-ComputerName'
+      - '-Credential'
+  selection_wmiprvse:
+    EventID: 1
+    Image|endswith: '\wmiprvse.exe'
+    ParentImage|endswith: '\svchost.exe'
+  remote_indicators:
+    CommandLine|contains:
+      - 'cmd.exe /c'
+      - 'powershell.exe -c'
+      - 'rundll32.exe'
+      - 'regsvr32.exe'
+      - 'mshta.exe'
+      - 'bitsadmin.exe'
+      - 'certutil.exe'
+  network_indicators:
+    CommandLine|re: '.*\\\\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.*'
+  condition: (selection_wmic or selection_powershell_wmi) and (remote_indicators or network_indicators) or selection_wmiprvse
+fields:
+  - Image
+  - CommandLine
+  - ProcessId
+  - ParentImage
+  - User
+  - LogonId
+falsepositives:
+  - System administration
+  - Remote management tools
+  - Monitoring software
+level: medium
+tags:
+  - attack.execution
+  - attack.lateral-movement
+  - attack.t1047
+  - sysmon
+  - windows

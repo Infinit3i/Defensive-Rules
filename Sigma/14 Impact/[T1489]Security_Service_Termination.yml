@@ -1,0 +1,63 @@
+title: Security Service Termination
+id: c3d4e5f6-g7h8-9012-3456-789012cdefgh
+status: experimental
+description: Detects attempts to stop or disable security-related services
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: system
+detection:
+  selection_sc:
+    EventID: 1
+    Image|endswith:
+      - '\sc.exe'
+      - '\net.exe'
+    CommandLine|contains:
+      - 'stop'
+      - 'delete'
+      - 'config'
+      - 'disable'
+  service_names:
+    CommandLine|contains:
+      - 'WinDefend'          # Windows Defender
+      - 'MsMpSvc'           # Windows Defender Antimalware
+      - 'WdNisSvc'          # Windows Defender Network Inspection
+      - 'Sense'             # Windows Defender ATP
+      - 'SamSs'             # Security Account Manager
+      - 'LanmanServer'      # Server service
+      - 'EventLog'          # Windows Event Log
+      - 'Winmgmt'           # WMI
+      - 'BITS'              # Background Transfer
+      - 'wuauserv'          # Windows Update
+      - 'CryptSvc'          # Cryptographic Services
+      - 'VSS'               # Volume Shadow Copy
+      - 'swprv'             # Shadow Copy Provider
+      - 'Fax'               # Fax service
+      - 'TermService'       # Terminal Services
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Stop-Service'
+      - 'Set-Service'
+      - 'Remove-Service'
+      - 'Disable-Service'
+      - 'Get-Service | Stop'
+  condition: (selection_sc or selection_powershell) and service_names
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ProcessId
+  - ParentImage
+falsepositives:
+  - Legitimate system administration
+  - Software updates
+  - Maintenance scripts
+level: high
+tags:
+  - attack.impact
+  - attack.t1489
+  - sysmon
+  - windows

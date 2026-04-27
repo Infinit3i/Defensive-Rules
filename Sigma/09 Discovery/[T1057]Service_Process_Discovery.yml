@@ -1,0 +1,23 @@
+title: Service Process Discovery
+id: h1i2j3k4-l5m6-7890-abcd-111111111111
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'sc query'
+      - 'Get-Service'
+      - 'wmic service list'
+      - 'net start'
+      - 'systemctl list-units'
+      - 'service --status-all'
+      - 'chkconfig --list'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1057

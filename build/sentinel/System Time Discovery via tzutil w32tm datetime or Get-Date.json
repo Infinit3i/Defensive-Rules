@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "System Time Discovery via tzutil w32tm datetime or Get-Date",
+    "description": "Detect commands that query local system time or timezone, often used prior to time-based evasion or scheduling.",
+    "severity": "Low",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\tzutil.exe\" and (CommandLine|contains has \" /g\" or CommandLine|contains has \" /s \") and Image endswith \"\\w32tm.exe\" and (CommandLine|contains has \"/query\" or CommandLine|contains has \"/status\" or CommandLine|contains has \"/configuration\") and Image endswith \"\\cmd.exe\" and (CommandLine|contains has \" time /t\" or CommandLine|contains has \" date /t\") and (Image|endswith has \"\\powershell.exe\" or Image|endswith has \"\\pwsh.exe\") and (CommandLine|contains has \"Get-Date\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "e4f0cd3e-9a8d-4c2a-a5d0-b2b1c3d4e5f6",
+      "SigmaLevel": "low",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1124"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+title: Network Process Correlation Analysis
+id: h1i2j3k4-l5m6-7890-abcd-555555555555
+status: experimental
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'netstat -ano'
+      - 'Get-NetTCPConnection'
+      - 'ss -tulpn'
+      - 'lsof -i'
+      - 'netstat -tulpn'
+      - 'nmap -sT -O localhost'
+  condition: selection
+tags:
+  - attack.discovery
+  - attack.t1057

@@ -1,0 +1,65 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Module loads of debugging libraries from user-writable paths",
+    "description": "Detect image/module load events where common debug / debugging helper DLLs (dbghelp.dll, dbgcore.dll, vsjitdebugger.exe components) are loaded from user-writable locations (Temp, AppData, Downloads) \u2014 suspicious for evasion or illicit debugging helpers.",
+    "severity": "High",
+    "enabled": false,
+    "query": "Event\n| where TimeGenerated > ago(24h)\n| where (TargetFilename|contains has \"dbghelp.dll\" or TargetFilename|contains has \"dbgcore.dll\" or TargetFilename|contains has \"vsjitdebugger.exe\") and (TargetFilename|contains has \"\\AppData\\\" or TargetFilename|contains has \"\\Local\\Temp\\\" or TargetFilename|contains has \"\\Temp\\\" or TargetFilename|contains has \"\\Downloads\\\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "b5e6f708-1234-5678-9abc-def012345678",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/10/19"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [],
+    "techniques": [
+      "T1622"
+    ]
+  }
+}

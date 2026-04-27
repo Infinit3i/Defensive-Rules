@@ -1,0 +1,28 @@
+title: CPU Count Checks for Sandbox Detection
+id: d1e2f3g4-h5i6-7890-abcd-333333333333
+status: experimental
+description: Detects CPU core count checks for sandbox evasion
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'NUMBER_OF_PROCESSORS'
+      - 'Win32_Processor'
+      - 'Get-WmiObject.*Processor'
+      - 'nproc'
+      - '/proc/cpuinfo'
+      - 'lscpu'
+      - 'sysctl hw.ncpu'
+  condition: selection
+falsepositives:
+  - System monitoring
+  - Performance tools
+level: low
+tags:
+  - attack.defense-evasion
+  - attack.t1497.003

@@ -1,0 +1,25 @@
+title: Hardware Breakpoint Detection
+id: e1f2g3h4-i5j6-7890-abcd-222222222222
+status: experimental
+description: Detects hardware breakpoint detection techniques
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 1
+    CommandLine|contains:
+      - 'GetThreadContext'
+      - 'SetThreadContext'
+      - 'Dr0'
+      - 'Dr1'
+      - 'Dr2'
+      - 'Dr3'
+      - 'Dr6'
+      - 'Dr7'
+  condition: selection
+tags:
+  - attack.defense-evasion
+  - attack.t1622

@@ -1,0 +1,45 @@
+title: System Version and Patch Level Discovery
+id: a1b2c3d4-e5f6-7890-abcd-555555555555
+status: experimental
+description: Detects discovery of system version and installed patches
+author: Matthew Iverson
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_systeminfo:
+    EventID: 1
+    Image|endswith: '\systeminfo.exe'
+  selection_wmic_qfe:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'qfe'
+      - 'os get'
+      - 'computersystem get'
+  selection_powershell:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-HotFix'
+      - 'Get-WmiObject Win32_QuickFixEngineering'
+      - 'Get-ComputerInfo'
+      - 'Get-ItemProperty.*CurrentVersion'
+      - '[System.Environment]::OSVersion'
+  condition: selection_systeminfo or selection_wmic_qfe or selection_powershell
+fields:
+  - Image
+  - CommandLine
+  - User
+  - ComputerName
+falsepositives:
+  - System administration
+  - Patch management tools
+  - Security assessment tools
+level: low
+tags:
+  - attack.discovery
+  - attack.t1082
+  - sysmon
+  - windows

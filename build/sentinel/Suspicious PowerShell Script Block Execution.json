@@ -1,0 +1,68 @@
+{
+  "kind": "Scheduled",
+  "properties": {
+    "displayName": "Suspicious PowerShell Script Block Execution",
+    "description": "Detects execution of suspicious or obfuscated PowerShell commands, such as AMSI bypasses or encoded payloads, using either Sysmon or PowerShell Operational Logs.",
+    "severity": "High",
+    "enabled": false,
+    "query": "union Event, SecurityEvent\n| where TimeGenerated > ago(24h)\n| where Image endswith \"\\powershell.exe\" and (CommandLine|contains has \"FromBase64String\" or CommandLine|contains has \"amsi\" or CommandLine|contains has \"IEX\" or CommandLine|contains has \"Invoke-Obfuscation\" or CommandLine|contains has \"DownloadString\") and Channel == \"Microsoft-Windows-PowerShell/Operational\" and (Message|contains has \"FromBase64String\" or Message|contains has \"amsi\" or Message|contains has \"IEX\" or Message|contains has \"Invoke-Obfuscation\" or Message|contains has \"DownloadString\")",
+    "queryFrequency": "PT15M",
+    "queryPeriod": "PT24H",
+    "triggerOperator": "GreaterThan",
+    "triggerThreshold": 0,
+    "suppressionDuration": "PT1H",
+    "suppressionEnabled": false,
+    "alertRuleTemplateName": null,
+    "incidentConfiguration": {
+      "createIncident": true,
+      "groupingConfiguration": {
+        "enabled": false,
+        "reopenClosedIncident": false,
+        "lookbackDuration": "PT5H",
+        "matchingMethod": "AllEntities",
+        "groupByEntities": [],
+        "groupByAlertDetails": [],
+        "groupByCustomDetails": []
+      }
+    },
+    "eventGroupingSettings": {
+      "aggregationKind": "SingleAlert"
+    },
+    "alertDetailsOverride": null,
+    "customDetails": {
+      "SigmaRuleId": "3d487b47-8b1e-47b6-94bb-0e973de14989",
+      "SigmaLevel": "high",
+      "SigmaAuthor": "Matthew Iverson",
+      "SigmaDate": "2025/04/20"
+    },
+    "entityMappings": [
+      {
+        "entityType": "Account",
+        "fieldMappings": [
+          {
+            "identifier": "Name",
+            "columnName": "Account"
+          }
+        ]
+      },
+      {
+        "entityType": "Host",
+        "fieldMappings": [
+          {
+            "identifier": "HostName",
+            "columnName": "Computer"
+          }
+        ]
+      }
+    ],
+    "sentinelEntitiesMappings": null,
+    "templateVersion": null,
+    "tactics": [
+      "Execution"
+    ],
+    "techniques": [
+      "T1059",
+      "T001"
+    ]
+  }
+}
