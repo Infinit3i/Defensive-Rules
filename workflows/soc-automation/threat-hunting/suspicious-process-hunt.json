@@ -1,0 +1,90 @@
+{
+  "workflow_name": "Suspicious Process Hunting",
+  "description": "Automated threat hunting for suspicious process behaviors",
+  "version": "1.0",
+  "trigger": {
+    "type": "scheduled",
+    "schedule": "0 */4 * * *",
+    "description": "Run every 4 hours"
+  },
+  "hunt_queries": [
+    {
+      "name": "unsigned_processes_from_temp",
+      "platform": "windows",
+      "query": "EventCode=1 Image=\"*\\\\Temp\\\\*\" Signed=false | stats count by Image, ParentImage, CommandLine",
+      "severity": "medium",
+      "description": "Unsigned processes running from temp directories"
+    },
+    {
+      "name": "suspicious_parent_child_chains",
+      "platform": "windows",
+      "query": "EventCode=1 (ParentImage=\"*\\\\winword.exe\" OR ParentImage=\"*\\\\excel.exe\") (Image=\"*\\\\powershell.exe\" OR Image=\"*\\\\cmd.exe\")",
+      "severity": "high",
+      "description": "Office applications spawning command interpreters"
+    },
+    {
+      "name": "living_off_land_techniques",
+      "platform": "windows",
+      "query": "EventCode=1 (Image=\"*\\\\certutil.exe\" CommandLine=\"*-urlcache*\") OR (Image=\"*\\\\bitsadmin.exe\" CommandLine=\"*/transfer*\")",
+      "severity": "high",
+      "description": "Living off the land binary abuse"
+    },
+    {
+      "name": "privilege_escalation_attempts",
+      "platform": "linux",
+      "query": "type=EXECVE exe=/usr/bin/sudo (a2=su OR a2=passwd OR a2=usermod)",
+      "severity": "medium",
+      "description": "Potential privilege escalation attempts"
+    }
+  ],
+  "analysis_steps": [
+    {
+      "step": 1,
+      "name": "execute_hunt_queries",
+      "action_type": "query_execution",
+      "parameters": {
+        "time_range": "4h",
+        "max_results": 1000
+      }
+    },
+    {
+      "step": 2,
+      "name": "filter_known_good",
+      "action_type": "whitelist_filter",
+      "parameters": {
+        "whitelist_sources": ["approved_software_list", "baseline_processes"],
+        "match_fields": ["Image", "CommandLine", "ParentImage"]
+      }
+    },
+    {
+      "step": 3,
+      "name": "risk_scoring",
+      "action_type": "scoring",
+      "parameters": {
+        "factors": {
+          "unsigned_binary": 25,
+          "temp_directory": 20,
+          "suspicious_parent": 30,
+          "network_activity": 15,
+          "privilege_escalation": 35
+        },
+        "threshold": 50
+      }
+    },
+    {
+      "step": 4,
+      "name": "generate_leads",
+      "action_type": "lead_generation",
+      "parameters": {
+        "min_score": 50,
+        "group_by": ["src_host", "user", "process_tree"],
+        "output_format": "hunting_report"
+      }
+    }
+  ],
+  "output": {
+    "report_location": "/hunt-reports/suspicious-processes-{timestamp}.json",
+    "notify_on_findings": true,
+    "notification_threshold": 3
+  }
+}

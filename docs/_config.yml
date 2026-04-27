@@ -1,0 +1,28 @@
+# GitHub Pages configuration for Defensive Rules frontend
+title: Defensive Rules Repository
+description: Cybersecurity Detection Rules - Sigma & YARA
+author: Defensive Rules Project
+url: https://infinit3i.github.io
+baseurl: /Defensive-Rules
+
+# Jekyll settings
+markdown: kramdown
+highlighter: rouge
+
+# Include/exclude files
+include:
+  - data/
+  - assets/
+  - src/
+
+exclude:
+  - node_modules/
+  - package*.json
+  - README.md
+
+# Theme (optional)
+# theme: minima
+
+# Build settings
+safe: true
+incremental: false

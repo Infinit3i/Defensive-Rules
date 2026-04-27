@@ -1,0 +1,80 @@
+{
+  "workflow_name": "High Severity Alert Response",
+  "description": "Automated response workflow for high/critical severity alerts",
+  "version": "1.0",
+  "trigger": {
+    "type": "alert",
+    "conditions": {
+      "severity": ["high", "critical"],
+      "confidence": ">70"
+    }
+  },
+  "actions": [
+    {
+      "step": 1,
+      "name": "immediate_notification",
+      "action_type": "notification",
+      "parameters": {
+        "channels": ["teams", "slack", "email"],
+        "recipients": ["soc-lead", "incident-response-team"],
+        "message_template": "🚨 HIGH SEVERITY ALERT\nRule: {alert.rule_name}\nAsset: {alert.affected_systems}\nTechnique: {alert.mitre_technique}\nTime: {alert.timestamp}"
+      },
+      "timeout": "30s"
+    },
+    {
+      "step": 2,
+      "name": "create_incident",
+      "action_type": "ticket_creation",
+      "parameters": {
+        "system": "servicenow",
+        "priority": "P1",
+        "assignment_group": "SOC_L2",
+        "description": "Auto-generated incident from alert {alert.id}"
+      },
+      "timeout": "60s"
+    },
+    {
+      "step": 3,
+      "name": "evidence_collection",
+      "action_type": "data_collection",
+      "parameters": {
+        "collect": [
+          "process_list",
+          "network_connections",
+          "file_hashes",
+          "registry_changes"
+        ],
+        "retention_days": 90
+      },
+      "timeout": "5m"
+    },
+    {
+      "step": 4,
+      "name": "threat_intel_enrichment",
+      "action_type": "enrichment",
+      "parameters": {
+        "sources": ["virustotal", "misp", "threatfox"],
+        "indicators": ["{alert.src_ip}", "{alert.file_hash}", "{alert.domain}"]
+      },
+      "timeout": "2m"
+    },
+    {
+      "step": 5,
+      "name": "containment_assessment",
+      "action_type": "decision",
+      "parameters": {
+        "criteria": {
+          "malware_confirmed": "auto_contain",
+          "lateral_movement": "auto_contain",
+          "data_exfiltration": "manual_review"
+        }
+      },
+      "timeout": "1m"
+    }
+  ],
+  "escalation": {
+    "conditions": ["timeout", "manual_escalation"],
+    "notify": ["ciso", "security-manager"],
+    "sla_breach_time": "15m"
+  }
+}

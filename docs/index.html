@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defensive Rules Repository</title>
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Nerd Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@master/css/nerd-fonts-generated.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <div class="container">
+                <h1 class="title">
+                    <i class="nf nf-fa-shield"></i>
+                    Defensive Rules Repository
+                </h1>
+                <p class="subtitle">Cybersecurity Detection Rules - Sigma & YARA</p>
+            </div>
+        </header>
+
+        <nav class="nav">
+            <div class="container">
+                <div class="nav-tabs">
+                    <button
+                        class="nav-tab"
+                        :class="{ active: activeTab === 'sigma' }"
+                        @click="activeTab = 'sigma'"
+                    >
+                        <i class="nf nf-fa-search"></i>
+                        Sigma Rules ({{ sigmaRules.length }})
+                    </button>
+                    <button
+                        class="nav-tab"
+                        :class="{ active: activeTab === 'yara' }"
+                        @click="activeTab = 'yara'"
+                    >
+                        <i class="nf nf-fa-bug"></i>
+                        YARA Rules ({{ yaraRules.length }})
+                    </button>
+                    <button
+                        class="nav-tab"
+                        :class="{ active: activeTab === 'stats' }"
+                        @click="activeTab = 'stats'"
+                    >
+                        <i class="nf nf-fa-bar_chart"></i>
+                        Statistics
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main">
+            <div class="container">
+                <!-- Search and Filter -->
+                <div class="search-section" v-if="activeTab !== 'stats'">
+                    <div class="search-bar">
+                        <i class="nf nf-fa-search search-icon"></i>
+                        <input
+                            v-model="searchQuery"
+                            type="text"
+                            placeholder="Search rules..."
+                            class="search-input"
+                        >
+                    </div>
+
+                    <div class="filters" v-if="activeTab === 'sigma'">
+                        <select v-model="selectedTactic" class="filter-select">
+                            <option value="">All Tactics</option>
+                            <option v-for="tactic in tactics" :key="tactic" :value="tactic">
+                                {{ tactic }}
+                            </option>
+                        </select>
+
+                        <select v-model="selectedSeverity" class="filter-select">
+                            <option value="">All Severities</option>
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Sigma Rules Tab -->
+                <div v-if="activeTab === 'sigma'" class="rules-grid">
+                    <div
+                        v-for="rule in filteredSigmaRules"
+                        :key="rule.id"
+                        class="rule-card"
+                        @click="selectedRule = rule"
+                    >
+                        <div class="rule-header">
+                            <h3 class="rule-title">{{ rule.title }}</h3>
+                            <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
+                        </div>
+                        <div class="rule-meta">
+                            <span class="rule-tactic">
+                                <i class="nf nf-fa-crosshairs"></i>
+                                {{ rule.tactic }}
+                            </span>
+                            <span class="rule-technique">
+                                <i class="nf nf-fa-tag"></i>
+                                {{ rule.technique }}
+                            </span>
+                        </div>
+                        <p class="rule-description">{{ rule.description }}</p>
+                    </div>
+                </div>
+
+                <!-- YARA Rules Tab -->
+                <div v-if="activeTab === 'yara'" class="rules-grid">
+                    <div
+                        v-for="rule in filteredYaraRules"
+                        :key="rule.name"
+                        class="rule-card"
+                        @click="selectedRule = rule"
+                    >
+                        <div class="rule-header">
+                            <h3 class="rule-title">{{ rule.name }}</h3>
+                            <span class="rule-severity" :class="rule.severity">{{ rule.severity }}</span>
+                        </div>
+                        <div class="rule-meta">
+                            <span class="rule-technique">
+                                <i class="nf nf-fa-tag"></i>
+                                {{ rule.mitre_attack }}
+                            </span>
+                        </div>
+                        <p class="rule-description">{{ rule.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div v-if="activeTab === 'stats'" class="stats-grid">
+                    <div class="stat-card">
+                        <h3>
+                            <i class="nf nf-fa-shield"></i>
+                            Total Rules
+                        </h3>
+                        <div class="stat-value">{{ totalRules }}</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>
+                            <i class="nf nf-fa-crosshairs"></i>
+                            MITRE Techniques
+                        </h3>
+                        <div class="stat-value">{{ uniqueTechniques.length }}</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>
+                            <i class="nf nf-fa-bullseye"></i>
+                            MITRE Tactics
+                        </h3>
+                        <div class="stat-value">{{ tactics.length }}</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>
+                            <i class="nf nf-fa-percentage"></i>
+                            Coverage
+                        </h3>
+                        <div class="stat-value">{{ coveragePercentage }}%</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Rule Detail Modal -->
+        <div v-if="selectedRule" class="modal-overlay" @click="selectedRule = null">
+            <div class="modal" @click.stop>
+                <div class="modal-header">
+                    <h2>{{ selectedRule.title || selectedRule.name }}</h2>
+                    <button class="close-btn" @click="selectedRule = null">
+                        <i class="nf nf-fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-content">
+                    <div v-if="selectedRule.title" class="rule-details">
+                        <div class="detail-row">
+                            <strong>ID:</strong> {{ selectedRule.id }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Status:</strong> {{ selectedRule.status }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Level:</strong> {{ selectedRule.level }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Author:</strong> {{ selectedRule.author }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Technique:</strong> {{ selectedRule.technique }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Description:</strong> {{ selectedRule.description }}
+                        </div>
+                        <div v-if="selectedRule.references" class="detail-row">
+                            <strong>References:</strong>
+                            <ul>
+                                <li v-for="ref in selectedRule.references" :key="ref">
+                                    <a :href="ref" target="_blank">{{ ref }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div v-else class="rule-details">
+                        <div class="detail-row">
+                            <strong>Name:</strong> {{ selectedRule.name }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>MITRE:</strong> {{ selectedRule.mitre_attack }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Severity:</strong> {{ selectedRule.severity }}
+                        </div>
+                        <div class="detail-row">
+                            <strong>Description:</strong> {{ selectedRule.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "workflow_name": "Automated Alert Triage",
+  "description": "Automated classification and prioritization of security alerts",
+  "version": "1.0",
+  "trigger": {
+    "type": "alert",
+    "conditions": {
+      "status": "new",
+      "source": ["siem", "edr", "ids"]
+    }
+  },
+  "triage_rules": [
+    {
+      "rule_name": "malware_confirmed",
+      "conditions": {
+        "indicators": ["malware_signature", "known_bad_hash", "av_detection"],
+        "confidence": ">90"
+      },
+      "classification": "true_positive",
+      "priority": "critical",
+      "auto_actions": ["contain_host", "notify_ir_team"]
+    },
+    {
+      "rule_name": "lateral_movement",
+      "conditions": {
+        "mitre_techniques": ["T1021.*", "T1570", "T1563"],
+        "cross_host_activity": true
+      },
+      "classification": "likely_positive",
+      "priority": "high",
+      "auto_actions": ["isolate_affected_hosts", "escalate_l2"]
+    },
+    {
+      "rule_name": "data_exfiltration",
+      "conditions": {
+        "mitre_techniques": ["T1041", "T1048.*", "T1567.*"],
+        "data_volume": ">100MB"
+      },
+      "classification": "likely_positive",
+      "priority": "high",
+      "auto_actions": ["block_destination", "notify_dpo"]
+    },
+    {
+      "rule_name": "known_false_positive",
+      "conditions": {
+        "source_process": ["known_admin_tools"],
+        "user_context": ["service_account", "admin_user"],
+        "time_pattern": "business_hours"
+      },
+      "classification": "false_positive",
+      "priority": "low",
+      "auto_actions": ["auto_close", "update_whitelist"]
+    }
+  ],
+  "enrichment_steps": [
+    {
+      "step": 1,
+      "name": "asset_context",
+      "data_sources": ["cmdb", "ad", "vulnerability_scanner"],
+      "fields": ["asset_criticality", "user_privileges", "patch_level"]
+    },
+    {
+      "step": 2,
+      "name": "threat_intelligence",
+      "data_sources": ["virustotal", "misp", "reputation_feeds"],
+      "fields": ["reputation_score", "malware_family", "campaign_attribution"]
+    },
+    {
+      "step": 3,
+      "name": "historical_context",
+      "data_sources": ["siem_historical", "case_management"],
+      "fields": ["previous_incidents", "baseline_behavior", "user_risk_score"]
+    }
+  ],
+  "scoring_model": {
+    "base_factors": {
+      "mitre_technique_severity": "weight: 0.25",
+      "asset_criticality": "weight: 0.20",
+      "confidence_level": "weight: 0.20",
+      "threat_intel_score": "weight: 0.15",
+      "deviation_from_baseline": "weight: 0.20"
+    },
+    "score_ranges": {
+      "0-25": "informational",
+      "26-50": "low",
+      "51-75": "medium",
+      "76-90": "high",
+      "91-100": "critical"
+    }
+  },
+  "output_actions": [
+    {
+      "classification": "true_positive",
+      "actions": ["create_incident", "assign_analyst", "start_containment"]
+    },
+    {
+      "classification": "likely_positive",
+      "actions": ["create_case", "queue_l2_review", "collect_evidence"]
+    },
+    {
+      "classification": "false_positive",
+      "actions": ["auto_close", "add_to_whitelist", "update_tuning"]
+    },
+    {
+      "classification": "needs_review",
+      "actions": ["queue_manual_triage", "assign_l1_analyst"]
+    }
+  ]
+}
