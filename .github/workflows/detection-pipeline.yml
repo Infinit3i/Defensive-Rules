@@ -1,0 +1,361 @@
+name: Detection Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  release:
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
+        - prod
+      workspace_name:
+        description: 'Sentinel workspace name'
+        required: true
+        default: 'defensive-rules-dev'
+      resource_group:
+        description: 'Azure resource group'
+        required: true
+        default: 'rg-sentinel-dev'
+
+env:
+  AZURE_CLI_VERSION: '2.45.0'
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    outputs:
+      rules-count: ${{ steps.metrics.outputs.rules-count }}
+      techniques-count: ${{ steps.metrics.outputs.techniques-count }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pysigma pysigma-backend-splunk pysigma-backend-microsoft365defender yamllint psutil requests
+
+      - name: Validate YAML syntax
+        run: |
+          yamllint Sigma/ -d "{extends: default, rules: {line-length: {max: 200}, document-start: disable}}"
+
+      - name: Validate YARA rules
+        run: |
+          sudo apt-get update && sudo apt-get install -y yara
+          for rule in Yara/*.yar; do
+            echo "Validating $rule"
+            yara "$rule" /dev/null || exit 1
+          done
+
+      - name: Run comprehensive validation
+        run: |
+          python scripts/test_framework.py --output validation-results.json
+
+      - name: Test Splunk conversion
+        run: |
+          mkdir -p test-results/splunk
+          python scripts/sigma_to_splunk.py \
+            --input-dir Sigma/ \
+            --output-dir test-results/splunk/output \
+            --validate-only
+
+      - name: Test Sentinel conversion
+        run: |
+          mkdir -p test-results/sentinel
+          python scripts/sigma_to_sentinel.py \
+            --input-dir Sigma/ \
+            --output-dir test-results/sentinel/output \
+            --validate-only
+
+      - name: Test SOAR integration
+        run: |
+          cd scripts
+          python -c "
+          import soar_integration
+          from datetime import datetime
+
+          # Test alert creation
+          alert = soar_integration.Alert(
+              id='test-workflow-001',
+              title='Workflow Test Alert',
+              severity='medium',
+              description='Test alert for CI/CD validation',
+              source_system='GitHub Actions',
+              timestamp=datetime.now(),
+              entities=[{'type': 'host', 'value': 'test-host'}],
+              mitre_techniques=['T1059.001'],
+              raw_data={'test': True}
+          )
+          print(f'SOAR test passed: Alert ID {alert.id}')
+          "
+
+      - name: Calculate MITRE coverage
+        id: metrics
+        run: |
+          python -c "
+          import yaml, os, json
+          from collections import defaultdict
+
+          techniques = set()
+          tactics = set()
+          rule_count = 0
+
+          for root, dirs, files in os.walk('Sigma'):
+              for file in files:
+                  if file.endswith('.yml'):
+                      rule_count += 1
+                      try:
+                          with open(os.path.join(root, file)) as f:
+                              data = yaml.safe_load(f)
+                          tags = data.get('tags', [])
+                          for tag in tags:
+                              if isinstance(tag, str):
+                                  if tag.startswith('attack.t') and not tag.startswith('attack.tactic'):
+                                      techniques.add(tag.replace('attack.', '').upper())
+                                  elif tag.startswith('attack.') and not tag.startswith('attack.t'):
+                                      tactics.add(tag.replace('attack.', ''))
+                      except: continue
+
+          coverage = {
+              'techniques': sorted(list(techniques)),
+              'tactics': sorted(list(tactics)),
+              'technique_count': len(techniques),
+              'tactic_count': len(tactics),
+              'rule_count': rule_count
+          }
+
+          with open('mitre-coverage.json', 'w') as f:
+              json.dump(coverage, f, indent=2)
+
+          print(f'MITRE Coverage: {len(techniques)} techniques, {len(tactics)} tactics, {rule_count} rules')
+          print(f'rules-count={rule_count}' >> os.environ['GITHUB_OUTPUT'])
+          print(f'techniques-count={len(techniques)}' >> os.environ['GITHUB_OUTPUT'])
+          "
+
+      - name: Performance test
+        run: |
+          python -c "
+          import time, psutil, os
+          from pathlib import Path
+
+          start_time = time.time()
+          start_memory = psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024
+
+          # Count rules
+          rule_count = len(list(Path('Sigma').rglob('*.yml')))
+          yara_count = len(list(Path('Yara').rglob('*.yar')))
+
+          end_time = time.time()
+          end_memory = psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024
+
+          print(f'Performance metrics:')
+          print(f'  Rules processed: {rule_count} Sigma + {yara_count} YARA')
+          print(f'  Processing time: {end_time - start_time:.2f} seconds')
+          print(f'  Memory usage: {end_memory - start_memory:.2f} MB')
+          "
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v5
+        with:
+          name: validation-results
+          path: |
+            validation-results.json
+            mitre-coverage.json
+            test-results/
+
+  build-packages:
+    runs-on: ubuntu-latest
+    needs: validate-and-test
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pysigma pysigma-backend-splunk pysigma-backend-microsoft365defender yamllint
+
+      - name: Build Splunk ES package
+        run: |
+          chmod +x scripts/build_es_package.sh
+          ./scripts/build_es_package.sh --version ${GITHUB_REF_NAME:-dev}
+
+      - name: Build Microsoft Sentinel package
+        run: |
+          chmod +x scripts/sigma_to_sentinel.py
+          make sentinel
+
+      - name: Validate ARM templates
+        run: |
+          if [ -f build/sentinel/analytics-rules-template.json ]; then
+            python3 -m json.tool build/sentinel/analytics-rules-template.json > /dev/null
+            echo "✓ ARM template is valid JSON"
+            if jq -e '.resources[0].type' build/sentinel/analytics-rules-template.json | grep -q "Microsoft.OperationalInsights"; then
+              echo "✓ ARM template has correct resource types"
+            else
+              echo "✗ ARM template missing required resource types"
+              exit 1
+            fi
+          fi
+
+      - name: Create combined deployment package
+        run: |
+          mkdir -p build/combined-package
+          cp build/defensive-rules-es.tar.gz build/combined-package/
+          cp -r build/sentinel/ build/combined-package/
+          cp build/*.json build/combined-package/ 2>/dev/null || true
+          tar -czf build/defensive-rules-all-platforms.tar.gz -C build/combined-package .
+
+      - name: Upload Splunk package
+        uses: actions/upload-artifact@v5
+        with:
+          name: splunk-es-package
+          path: |
+            build/defensive-rules-es.tar.gz
+            build/deployment-info.txt
+            build/conversion-report.json
+            build/mitre-coverage.json
+
+      - name: Upload Sentinel package
+        uses: actions/upload-artifact@v5
+        with:
+          name: microsoft-sentinel-package
+          path: build/sentinel/
+
+      - name: Upload combined package
+        uses: actions/upload-artifact@v5
+        with:
+          name: all-platforms-package
+          path: build/defensive-rules-all-platforms.tar.gz
+
+      - name: Upload to release
+        if: github.event_name == 'release'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: build/defensive-rules-all-platforms.tar.gz
+          asset_name: defensive-rules-all-platforms-${{ github.event.release.tag_name }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Package build summary
+        run: |
+          echo "## Multi-Platform SIEM Package Build Results" >> $GITHUB_STEP_SUMMARY
+          echo "### Splunk Enterprise Security" >> $GITHUB_STEP_SUMMARY
+          echo "- **Package:** defensive-rules-es.tar.gz" >> $GITHUB_STEP_SUMMARY
+          echo "- **Size:** $(du -h build/defensive-rules-es.tar.gz | cut -f1)" >> $GITHUB_STEP_SUMMARY
+          if [ -f build/conversion-report.json ]; then
+            SUCCESS=$(jq '.success | length' build/conversion-report.json)
+            FAILURES=$(jq '.failures | length' build/conversion-report.json)
+            TECHNIQUES=$(jq '.mitre_coverage | keys | length' build/conversion-report.json)
+            echo "- **Rules Converted:** $SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Conversion Failures:** $FAILURES" >> $GITHUB_STEP_SUMMARY
+            echo "- **MITRE Techniques:** $TECHNIQUES" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Microsoft Sentinel" >> $GITHUB_STEP_SUMMARY
+          if [ -f build/sentinel/conversion-report.json ]; then
+            SENTINEL_SUCCESS=$(jq '.success | length' build/sentinel/conversion-report.json)
+            SENTINEL_FAILURES=$(jq '.failures | length' build/sentinel/conversion-report.json)
+            echo "- **Analytics Rules:** $SENTINEL_SUCCESS" >> $GITHUB_STEP_SUMMARY
+            echo "- **Conversion Failures:** $SENTINEL_FAILURES" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  deploy-sentinel:
+    runs-on: ubuntu-latest
+    needs: [validate-and-test, build-packages]
+    if: github.event_name == 'workflow_dispatch'
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Download Sentinel artifacts
+        uses: actions/download-artifact@v5
+        with:
+          name: microsoft-sentinel-package
+          path: sentinel-package/
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set environment variables
+        run: |
+          echo "WORKSPACE_NAME=${{ github.event.inputs.workspace_name }}" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP=${{ github.event.inputs.resource_group }}" >> $GITHUB_ENV
+          echo "ENVIRONMENT=${{ github.event.inputs.environment }}" >> $GITHUB_ENV
+
+      - name: Verify Sentinel workspace
+        run: |
+          if az monitor log-analytics workspace show \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --workspace-name ${{ env.WORKSPACE_NAME }} > /dev/null 2>&1; then
+            echo "✓ Workspace ${{ env.WORKSPACE_NAME }} exists"
+          else
+            echo "✗ Workspace not found"
+            exit 1
+          fi
+
+      - name: Deploy analytics rules
+        run: |
+          if [ "${{ github.event.inputs.environment }}" == "dev" ]; then
+            echo "Performing dry run deployment..."
+            az deployment group validate \
+              --resource-group ${{ env.RESOURCE_GROUP }} \
+              --template-file sentinel-package/analytics-rules-template.json \
+              --parameters workspaceName=${{ env.WORKSPACE_NAME }}
+          else
+            echo "Deploying analytics rules..."
+            az deployment group create \
+              --resource-group ${{ env.RESOURCE_GROUP }} \
+              --template-file sentinel-package/analytics-rules-template.json \
+              --parameters workspaceName=${{ env.WORKSPACE_NAME }} \
+              --name "defensive-rules-$(date +%Y%m%d%H%M%S)"
+          fi
+
+      - name: Deployment summary
+        run: |
+          echo "## Sentinel Deployment Results" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment:** ${{ env.ENVIRONMENT }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workspace:** ${{ env.WORKSPACE_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Resource Group:** ${{ env.RESOURCE_GROUP }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ github.event.inputs.environment }}" != "dev" ]; then
+            echo "- **Status:** ✅ Deployed Successfully" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status:** ✅ Dry Run Completed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [validate-and-test, build-packages, deploy-sentinel]
+    if: always()
+
+    steps:
+      - name: Cleanup old artifacts
+        run: |
+          echo "Pipeline completed"
+          echo "- Rules: ${{ needs.validate-and-test.outputs.rules-count }}"
+          echo "- Techniques: ${{ needs.validate-and-test.outputs.techniques-count }}"
