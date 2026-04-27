@@ -1,7 +1,7 @@
 title: Serverless Function Abuse for Initial Access
 id: f20d37b8-6789-9012-3456-789abcdef012
 status: experimental
-description: Detects potential abuse of serverless functions for initial access through analysis of suspicious Lambda function executions, including functions with excessive permissions, unusual invocation patterns, functions accessing sensitive resources, and potential code injection attacks.
+description: Detects abuse of serverless functions for initial access through suspicious Lambda executions and code injection.
 references:
     - https://attack.mitre.org/techniques/T1609/
     - https://docs.aws.amazon.com/lambda/latest/dg/security.html
