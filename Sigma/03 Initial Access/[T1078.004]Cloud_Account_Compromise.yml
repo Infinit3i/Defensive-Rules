@@ -12,21 +12,21 @@ detection:
     selection_impossible_travel:
         EventName: 'SigninLogs'
         ResultType: 0
-        # Login from geographic locations impossible to reach in timeframe
+    # Login from geographic locations impossible to reach in timeframe
     selection_multiple_failed_then_success:
         EventName: 'SigninLogs'
         UserPrincipalName: '*'
-        # Pattern: multiple failed attempts followed by successful login
+    # Pattern: multiple failed attempts followed by successful login
     selection_off_hours_access:
         EventName: 'SigninLogs'
         ResultType: 0
-        # Access outside typical business hours for user's timezone
+    # Access outside typical business hours for user's timezone
     selection_new_device_access:
         EventName: 'SigninLogs'
         ResultType: 0
         DeviceDetail.isCompliant: false
         DeviceDetail.isManaged: false
-        # Access from unmanaged/non-compliant devices
+    # Access from unmanaged/non-compliant devices
     selection_privilege_changes:
         EventName: 'AuditLogs'
         ActivityDisplayName:
@@ -34,7 +34,7 @@ detection:
             - 'Remove member from role'
             - 'Update role'
         TargetResources.userPrincipalName: '*'
-        # Unexpected privilege changes
+    # Unexpected privilege changes
     selection_resource_enumeration:
         EventName: 'AuditLogs'
         ActivityDisplayName:
@@ -42,7 +42,7 @@ detection:
             - 'List service principals'
             - 'List users'
             - 'List groups'
-        # Rapid enumeration activities post-login
+    # Rapid enumeration activities post-login
     selection_suspicious_app_access:
         EventName: 'SigninLogs'
         ResultType: 0
@@ -51,13 +51,13 @@ detection:
             - 'Exchange'
             - 'SharePoint'
             - 'PowerBI'
-        # Access to high-value applications
+    # Access to high-value applications
     selection_api_abuse:
         EventName: 'AuditLogs'
         ActivityDisplayName|contains:
             - 'API'
             - 'Graph'
-        # Unusual API usage patterns
+    # Unusual API usage patterns
     condition: selection_impossible_travel or selection_multiple_failed_then_success or selection_off_hours_access or selection_new_device_access or selection_privilege_changes or selection_resource_enumeration or selection_suspicious_app_access or selection_api_abuse
 falsepositives:
     - Legitimate users traveling or working from new locations

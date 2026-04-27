@@ -96,4 +96,3 @@ falsepositives:
     - Legitimate infrastructure cleanup operations
     - Automated cloud resource management scripts
     - Scheduled maintenance and decommissioning activities
-
