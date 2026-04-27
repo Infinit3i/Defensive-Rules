@@ -35,7 +35,7 @@ detection:
             - 'breakglass'
             - 'emergency'
             - 'admin'
-        # Emergency access accounts used without MFA
+            # Emergency access accounts used without MFA
     selection_suspicious_auth_flow:
         ActivityDisplayName: 'Sign-in activity'
         AuthenticationDetails.succeeded: true
@@ -52,7 +52,7 @@ detection:
         InitiatedBy.user.userPrincipalName|endswith:
             - '@external.com'
             - '@guest.com'
-        # External users performing MFA-related admin actions
+            # External users performing MFA-related admin actions
     selection_token_replay:
         ActivityDisplayName: 'Sign-in activity'
         AuthenticationDetails.succeeded: true

@@ -21,19 +21,19 @@ detection:
             - 'UpdateDetector'
             - 'DeleteIPSet'
             - 'DeleteThreatIntelSet'
-        # GuardDuty security service tampering
+            # GuardDuty security service tampering
     selection_security_hub_disable:
         eventName:
             - 'DisableSecurityHub'
             - 'DeleteInsight'
             - 'BatchDisableStandards'
-        # Security Hub disabling
+            # Security Hub disabling
     selection_config_disable:
         eventName:
             - 'StopConfigurationRecorder'
             - 'DeleteConfigurationRecorder'
             - 'DeleteDeliveryChannel'
-        # AWS Config service disabling
+            # AWS Config service disabling
     selection_vpc_flow_logs_disable:
         eventName:
             - 'DeleteFlowLogs'
@@ -44,7 +44,7 @@ detection:
             - 'DeleteLogGroup'
             - 'DeleteLogStream'
             - 'DeleteMetricAlarm'
-        # CloudWatch monitoring disabling
+            # CloudWatch monitoring disabling
     selection_iam_logging_disable:
         eventName:
             - 'DeleteAccessKey'

@@ -1,7 +1,7 @@
 title: Modern Wiper Malware Targeting Cloud Storage
 id: 6e4f7a8b-9c2d-5e3f-7a6e-4f8b2c5d9a3e
 status: experimental
-description: Detects modern wiper malware specifically targeting cloud storage services including OneDrive, Google Drive, Dropbox, Box, and S3 buckets. Monitors for mass file deletion, sync manipulation, and storage API abuse.
+description: Detects modern wiper malware targeting cloud storage services. Monitors mass file deletion and storage API abuse.
 author: Cybersecurity Detection Engineering
 date: 2024-12-01
 modified: 2026-04-27
@@ -69,7 +69,6 @@ detection:
             - 'Clear-Content'
             - 'Set-Content'
             - 'Out-File'
-        ScriptBlockText|contains:
             - 'OneDrive'
             - 'Google Drive'
             - 'Dropbox'

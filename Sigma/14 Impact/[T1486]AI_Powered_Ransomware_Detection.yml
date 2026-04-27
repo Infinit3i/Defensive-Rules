@@ -1,7 +1,7 @@
 title: AI-Powered Ransomware with Adaptive Encryption
 id: 4c8a3f2e-5b1d-4e6f-9c2a-8d7e5f3a9b1c
 status: experimental
-description: Detects AI-powered ransomware that uses adaptive encryption algorithms and machine learning for evasion. Targets behavioral patterns including rapid file encryption, neural network model loading, and dynamic encryption key generation.
+description: Detects AI-powered ransomware using adaptive encryption. Monitors neural network loading and dynamic key generation.
 author: Cybersecurity Detection Engineering
 date: 2024-12-01
 modified: 2026-04-27

@@ -33,7 +33,7 @@ detection:
             - 3306  # MySQL
             - 5432  # PostgreSQL
             - 1521  # Oracle
-            - 27017 # MongoDB
+            - 27017  # MongoDB
         Image|contains:
             - 'python'
             - 'ml_'

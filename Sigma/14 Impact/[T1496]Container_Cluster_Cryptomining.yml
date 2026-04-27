@@ -1,7 +1,7 @@
 title: Container Cluster Compromise and Cryptocurrency Mining
 id: 9b4e6f2a-7c8d-3e5f-1a9b-4d6e8f2c5a7b
 status: experimental
-description: Detects compromise of container clusters (Kubernetes, Docker) for cryptocurrency mining operations. Monitors for unauthorized container deployments, resource hijacking, and mining software execution.
+description: Detects container cluster compromise for cryptocurrency mining. Monitors unauthorized deployments and resource hijacking.
 author: Cybersecurity Detection Engineering
 date: 2024-12-01
 modified: 2026-04-27
@@ -75,8 +75,10 @@ detection:
     selection_network_mining:
         type: SYSCALL
         syscall: 42  # connect
-        success: yes
-    condition: (selection_container_tools and selection_mining_software) or (selection_kubernetes_deployments and selection_container_images) or (selection_container_tools and selection_resource_requests and selection_network_mining)
+        success: true
+    condition: (selection_container_tools and selection_mining_software) or
+               (selection_kubernetes_deployments and selection_container_images) or
+               (selection_container_tools and selection_resource_requests and selection_network_mining)
 level: critical
 tags:
     - attack.impact

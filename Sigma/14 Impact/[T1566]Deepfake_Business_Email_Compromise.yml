@@ -95,7 +95,9 @@ detection:
             - 'synthetic_'
             - 'generated_'
             - 'cloned_'
-    condition: (selection_ai_tools and selection_media_generation) or (selection_email_clients and selection_suspicious_files) or (selection_recording_tools and selection_browser_activity and selection_network_upload)
+    condition: (selection_ai_tools and selection_media_generation) or
+               (selection_email_clients and selection_suspicious_files) or
+               (selection_recording_tools and selection_browser_activity and selection_network_upload)
 level: critical
 tags:
     - attack.impact
