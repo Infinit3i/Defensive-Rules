@@ -1,0 +1,90 @@
+title: Cloud API Key Compromise Detection
+id: 031e48c9-789a-0123-4567-89abcdef0123
+status: experimental
+description: Detects potential compromise of cloud API keys through analysis of suspicious API usage patterns, including API calls from unusual geographic locations, rapid enumeration activities, access to sensitive resources, and API key usage from multiple distinct sources simultaneously.
+references:
+    - https://attack.mitre.org/techniques/T1552/001/
+    - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection_api_geographic_anomaly:
+        userIdentity.type: 'IAMUser'
+        # API calls from countries not typical for the user
+        awsRegion|contains:
+            - 'ap-'
+            - 'eu-'
+            - 'sa-'
+        # Focus on cross-region activities
+    selection_rapid_enumeration:
+        userIdentity.type: 'IAMUser'
+        eventName:
+            - 'ListUsers'
+            - 'ListRoles'
+            - 'ListPolicies'
+            - 'ListBuckets'
+            - 'DescribeInstances'
+            - 'DescribeSecurityGroups'
+            - 'GetCallerIdentity'
+        # Multiple enumeration calls within short timeframe
+    selection_sensitive_access:
+        userIdentity.type: 'IAMUser'
+        eventName:
+            - 'GetSecretValue'
+            - 'GetParameter'
+            - 'DescribeDBInstances'
+            - 'GetObject'
+            - 'CreateAccessKey'
+            - 'CreateRole'
+        # Access to sensitive resources and credential creation
+    selection_unusual_user_agent:
+        userIdentity.type: 'IAMUser'
+        userAgent|contains:
+            - 'curl'
+            - 'wget'
+            - 'python-requests'
+            - 'aws-cli/1.'
+            - 'boto3'
+            - 'Postman'
+        # Non-standard or programmatic user agents
+    selection_concurrent_geographic_usage:
+        userIdentity.type: 'IAMUser'
+        # Same API key used from multiple geographic locations simultaneously
+    selection_privilege_escalation:
+        userIdentity.type: 'IAMUser'
+        eventName:
+            - 'AttachUserPolicy'
+            - 'AttachRolePolicy'
+            - 'PutUserPolicy'
+            - 'PutRolePolicy'
+            - 'CreateRole'
+            - 'AssumeRole'
+        # Attempts to escalate privileges
+    selection_suspicious_ip_ranges:
+        userIdentity.type: 'IAMUser'
+        sourceIPAddress|cidr:
+            - '0.0.0.0/8'
+            - '10.0.0.0/8'
+            - '172.16.0.0/12'
+            - '192.168.0.0/16'
+        # Focus on external and potentially malicious IP ranges
+    condition: selection_api_geographic_anomaly or selection_rapid_enumeration or selection_sensitive_access or selection_unusual_user_agent or selection_concurrent_geographic_usage or selection_privilege_escalation or selection_suspicious_ip_ranges
+falsepositives:
+    - Legitimate users traveling or working remotely
+    - Automated scripts and CI/CD pipelines
+    - Third-party integrations and monitoring tools
+    - Development and testing environments
+    - Service accounts with legitimate automation
+level: high
+tags:
+    - attack.initial_access
+    - attack.t1552.001
+    - attack.credential_access
+    - attack.t1087
+    - attack.discovery
+    - attack.t1526
+    - aws
+    - api_key
+    - compromise
+    - cloudtrail

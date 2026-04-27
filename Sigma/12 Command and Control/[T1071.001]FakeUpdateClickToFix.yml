@@ -1,0 +1,48 @@
+title: Fake Software Update Click-to-Fix Malware Campaign
+id: 5f2a8c91-4b3d-4e7a-9f1c-2d8e6b4a7c9e
+status: experimental
+description: Detects network indicators of fake software update campaigns using "click to fix" social engineering techniques commonly associated with malware distribution
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_fake_update:
+    c-uri|contains:
+      - '/fake-update'
+      - '/software-update'
+      - '/security-patch'
+      - '/urgent-fix'
+      - '/click-to-update'
+      - '/download-fix'
+      - '/install-patch'
+  selection_suspicious_domains:
+    c-uri|contains:
+      - 'update-security'
+      - 'fix-computer'
+      - 'repair-now'
+      - 'install-update'
+      - 'security-alert'
+  selection_fake_installers:
+    c-uri|endswith:
+      - '.exe'
+      - '.msi'
+      - '.bat'
+      - '.scr'
+      - '.com'
+  selection_user_agents:
+    c-useragent|contains:
+      - 'Windows-Update'
+      - 'SecurityUpdate'
+      - 'Microsoft-Patch'
+  condition: (selection_fake_update or selection_suspicious_domains) and selection_fake_installers
+level: high
+tags:
+  - attack.command_and_control
+  - attack.t1071.001
+  - attack.initial_access
+  - attack.t1566.002
+  - social_engineering
+  - fake_update
+references:
+  - https://attack.mitre.org/techniques/T1071/001/
+  - https://attack.mitre.org/techniques/T1566/002/

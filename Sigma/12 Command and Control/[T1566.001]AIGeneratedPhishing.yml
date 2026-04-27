@@ -1,0 +1,57 @@
+title: AI-Generated Phishing Content Detection
+id: 4e7f8c2a-9b3d-4f1e-8a6c-5d7b9e4f2a8c
+status: experimental
+description: Detects network indicators of AI-generated phishing campaigns with modern language model characteristics
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_phishing_domains:
+    c-uri|contains:
+      - 'phish'
+      - 'secure-'
+      - 'verify-'
+      - 'update-'
+      - 'confirm-'
+      - 'account-'
+  selection_ai_indicators:
+    c-uri|contains:
+      - 'chatgpt'
+      - 'claude'
+      - 'gemini'
+      - 'copilot'
+      - 'ai-assist'
+  selection_fake_auth:
+    c-uri|contains:
+      - '/login'
+      - '/signin'
+      - '/auth'
+      - '/verify'
+      - '/confirm'
+  selection_typosquatting:
+    c-uri|re: '.*(microsoft|google|amazon|apple|meta|paypal|bank)[0-9-].*'
+  selection_suspicious_tlds:
+    c-uri|contains:
+      - '.tk'
+      - '.ml'
+      - '.ga'
+      - '.cf'
+      - '.top'
+      - '.click'
+  selection_post_data:
+    cs-method: 'POST'
+    cs-bytes|gt: 100
+  condition: (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1566.001
+  - attack.t1566.002
+  - attack.command_and_control
+  - attack.t1071.001
+  - ai_generated
+  - phishing
+  - social_engineering
+references:
+  - https://attack.mitre.org/techniques/T1566/001/
+  - https://attack.mitre.org/techniques/T1566/002/

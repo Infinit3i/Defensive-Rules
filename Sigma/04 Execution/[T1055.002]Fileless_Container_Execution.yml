@@ -1,0 +1,83 @@
+title: Fileless Code Execution in Container Environments
+id: f8c1d4e7-a3b6-4f9c-8e2a-1d5b3c7f9a2e
+status: experimental
+description: Detects fileless malware execution techniques within containerized environments using memory-resident payloads
+author: matthewiver@protonmail.com
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1055/002/
+  - https://www.crowdstrike.com/blog/fileless-malware-in-containers/
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_memfd_create:
+    type: 'SYSCALL'
+    syscall: 'memfd_create'
+    success: 'yes'
+  selection_proc_self_mem:
+    type: 'PATH'
+    name|contains:
+      - '/proc/self/mem'
+      - '/proc/*/mem'
+      - '/dev/shm'
+  selection_ptrace_injection:
+    type: 'SYSCALL'
+    syscall: 'ptrace'
+    a0|contains:
+      - 'PTRACE_POKETEXT'
+      - 'PTRACE_POKEDATA'
+      - 'PTRACE_SETREGS'
+      - 'PTRACE_ATTACH'
+    success: 'yes'
+  selection_mmap_execution:
+    type: 'SYSCALL'
+    syscall: 'mmap'
+    a2|contains:
+      - 'PROT_EXEC'
+      - 'PROT_READ|PROT_WRITE|PROT_EXEC'
+    success: 'yes'
+  selection_execve_memfd:
+    type: 'SYSCALL'
+    syscall: 'execve'
+    a0|startswith:
+      - '/proc/self/fd/'
+      - '/dev/fd/'
+    success: 'yes'
+  selection_container_escape:
+    type: 'PATH'
+    name|contains:
+      - '/var/lib/docker'
+      - '/var/run/docker.sock'
+      - '/proc/1/root'
+      - '/host'
+  selection_shared_memory:
+    type: 'SYSCALL'
+    syscall:
+      - 'shmget'
+      - 'shmat'
+      - 'shmctl'
+    success: 'yes'
+  selection_process_injection:
+    type: 'SYSCALL'
+    syscall: 'process_vm_writev'
+    success: 'yes'
+  selection_ld_preload:
+    type: 'EXECVE'
+    a2|contains: 'LD_PRELOAD='
+  condition: 1 of selection_*
+falsepositives:
+  - Legitimate container runtime operations
+  - Dynamic linking and library loading
+  - Performance optimization tools
+  - Container orchestration platforms
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1055
+  - attack.t1055.002
+  - fileless_execution
+  - container_security
+  - memory_injection
+  - linux
+  - auditd

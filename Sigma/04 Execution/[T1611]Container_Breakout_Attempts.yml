@@ -1,0 +1,79 @@
+title: Container Escape and Breakout Attempts
+id: b4e9c3d2-f6a8-4b1c-9d7e-2f3a5c8b1e4f
+status: experimental
+description: Detects attempts to escape from containerized environments and break out to the host system
+author: matthewiver@protonmail.com
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1611/
+  - https://kubernetes.io/docs/concepts/security/pod-security-standards/
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_privileged_container:
+    type: 'SYSCALL'
+    syscall:
+      - 'mount'
+      - 'umount'
+      - 'pivot_root'
+      - 'chroot'
+      - 'unshare'
+      - 'clone'
+    success: 'yes'
+  selection_proc_filesystem:
+    type: 'PATH'
+    name|contains:
+      - '/proc/1/root'
+      - '/proc/self/root'
+      - '/proc/*/root'
+      - '/host'
+      - '/var/lib/docker'
+      - '/var/run/docker.sock'
+  selection_device_access:
+    type: 'PATH'
+    name|startswith:
+      - '/dev/disk'
+      - '/dev/sd'
+      - '/dev/nvme'
+      - '/dev/loop'
+      - '/dev/dm-'
+      - '/dev/mapper'
+  selection_kernel_modules:
+    type: 'SYSCALL'
+    syscall:
+      - 'init_module'
+      - 'finit_module'
+      - 'delete_module'
+    success: 'yes'
+  selection_namespace_escape:
+    type: 'SYSCALL'
+    syscall: 'setns'
+    a0|contains:
+      - '/proc/1/ns'
+      - '/proc/self/ns'
+    success: 'yes'
+  selection_cgroup_manipulation:
+    type: 'PATH'
+    name|contains:
+      - '/sys/fs/cgroup'
+      - '/proc/cgroups'
+      - '/proc/self/cgroup'
+  selection_capabilities:
+    type: 'SYSCALL'
+    syscall: 'capset'
+    success: 'yes'
+  condition: 1 of selection_*
+falsepositives:
+  - Legitimate container orchestration operations
+  - System administration tasks
+  - Container runtime operations
+level: critical
+tags:
+  - attack.privilege_escalation
+  - attack.t1611
+  - container_escape
+  - linux
+  - auditd
+  - kubernetes
+  - docker

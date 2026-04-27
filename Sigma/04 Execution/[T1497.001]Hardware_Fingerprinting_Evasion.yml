@@ -1,0 +1,101 @@
+title: Hardware Fingerprinting and System Artifact Evasion
+id: e7b4c5d8-f2a9-4e1c-8d6b-2a3f5e1c4b7d
+status: experimental
+description: Detects attempts to evade detection by manipulating or checking hardware fingerprints and system artifacts
+author: matthewiver@protonmail.com
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1497/001/
+  - https://www.sans.org/white-papers/37821/
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_bios_checks:
+    EventID: 13  # Registry value set
+    TargetObject|contains:
+      - '\HARDWARE\DESCRIPTION\System\BIOS'
+      - '\HARDWARE\DESCRIPTION\System\SystemBiosVersion'
+      - '\HARDWARE\DESCRIPTION\System\SystemManufacturer'
+      - '\HARDWARE\DESCRIPTION\System\SystemProductName'
+      - '\HARDWARE\DESCRIPTION\System\SystemFamily'
+  selection_cpu_info:
+    EventID: 13
+    TargetObject|contains:
+      - '\HARDWARE\DESCRIPTION\System\CentralProcessor'
+      - '\HARDWARE\DESCRIPTION\System\ProcessorNameString'
+      - '\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PROCESSOR_'
+  selection_disk_enumeration:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Services\Disk\Enum'
+      - '\SYSTEM\ControlSet001\Services\Disk\Enum'
+      - '\HARDWARE\DEVICEMAP\Scsi'
+  selection_mac_address:
+    EventID: 1
+    CommandLine|contains:
+      - 'getmac'
+      - 'ipconfig /all'
+      - 'wmic nic'
+      - 'Get-NetAdapter'
+      - 'NetworkInterface'
+  selection_system_info:
+    EventID: 1
+    CommandLine|contains:
+      - 'systeminfo'
+      - 'wmic computersystem'
+      - 'wmic bios'
+      - 'Get-ComputerInfo'
+      - 'Get-WmiObject Win32_'
+  selection_vm_services:
+    EventID: 1
+    CommandLine|contains:
+      - 'sc query'
+      - 'Get-Service'
+      - 'tasklist'
+    CommandLine|contains:
+      - 'vmware'
+      - 'vbox'
+      - 'virtualbox'
+      - 'qemu'
+      - 'xen'
+      - 'parallels'
+  selection_memory_info:
+    EventID: 1
+    CommandLine|contains:
+      - 'GlobalMemoryStatusEx'
+      - 'GetPhysicallyInstalledSystemMemory'
+      - 'wmic memorychip'
+      - 'Get-WmiObject Win32_PhysicalMemory'
+  selection_gpu_detection:
+    EventID: 1
+    CommandLine|contains:
+      - 'wmic path win32_VideoController'
+      - 'Get-WmiObject Win32_VideoController'
+      - 'dxdiag'
+      - 'DirectX'
+  selection_hypervisor_detection:
+    EventID: 1
+    CommandLine|contains|all:
+      - 'cpuid'
+      - 'leaf'
+    CommandLine|contains:
+      - '0x40000000'
+      - '0x40000001'
+      - 'hypervisor'
+      - 'vm_vendor'
+  condition: 2 of selection_*
+falsepositives:
+  - System inventory and asset management tools
+  - Hardware diagnostic utilities
+  - Legitimate system administration scripts
+  - Performance monitoring applications
+level: medium
+tags:
+  - attack.defense_evasion
+  - attack.t1497
+  - attack.t1497.001
+  - hardware_fingerprinting
+  - vm_detection
+  - sysmon
+  - windows

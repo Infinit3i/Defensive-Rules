@@ -1,0 +1,86 @@
+title: Multi-Factor Authentication Bypass Detection
+id: 142f59da-890b-1234-5678-9abcdef01234
+status: experimental
+description: Detects potential multi-factor authentication bypass techniques through analysis of suspicious authentication patterns, including MFA disable events, authentication policy modifications, emergency access usage, and suspicious authentication flows that circumvent MFA requirements.
+references:
+    - https://attack.mitre.org/techniques/T1556/006/
+    - https://docs.microsoft.com/en-us/azure/active-directory/authentication/
+logsource:
+    product: azure
+    service: auditlogs
+detection:
+    selection_mfa_disable:
+        ActivityDisplayName:
+            - 'Disable Strong Authentication'
+            - 'User disabled'
+            - 'Update user'
+        TargetResources.modifiedProperties.displayName|contains:
+            - 'StrongAuthenticationMethods'
+            - 'StrongAuthenticationRequirements'
+        TargetResources.modifiedProperties.newValue: '[]'
+    selection_mfa_policy_changes:
+        ActivityDisplayName:
+            - 'Update conditional access policy'
+            - 'Delete conditional access policy'
+            - 'Update authentication methods policy'
+        TargetResources.displayName|contains:
+            - 'MFA'
+            - 'Multi-Factor'
+            - 'Strong Authentication'
+    selection_emergency_access:
+        ActivityDisplayName: 'Sign-in activity'
+        AuthenticationRequirement: 'singleFactorAuthentication'
+        ConditionalAccessStatus: 'notApplied'
+        UserPrincipalName|contains:
+            - 'breakglass'
+            - 'emergency'
+            - 'admin'
+        # Emergency access accounts used without MFA
+    selection_suspicious_auth_flow:
+        ActivityDisplayName: 'Sign-in activity'
+        AuthenticationDetails.succeeded: true
+        AuthenticationMethodsUsed: 'Password'
+        # Successful authentication with only password, no MFA
+        RiskLevelDuringSignIn:
+            - 'high'
+            - 'medium'
+    selection_mfa_reset_abuse:
+        ActivityDisplayName:
+            - 'Reset user password'
+            - 'Admin updated user'
+            - 'User registered security info'
+        InitiatedBy.user.userPrincipalName|endswith:
+            - '@external.com'
+            - '@guest.com'
+        # External users performing MFA-related admin actions
+    selection_token_replay:
+        ActivityDisplayName: 'Sign-in activity'
+        AuthenticationDetails.succeeded: true
+        # Multiple sign-ins with identical authentication tokens
+        TokenIssuerType: 'AzureAD'
+    selection_device_registration_bypass:
+        ActivityDisplayName:
+            - 'Add registered users'
+            - 'Update device'
+            - 'Register device'
+        TargetResources.modifiedProperties.displayName: 'TrustedForDelegation'
+        TargetResources.modifiedProperties.newValue: 'True'
+    condition: selection_mfa_disable or selection_mfa_policy_changes or selection_emergency_access or selection_suspicious_auth_flow or selection_mfa_reset_abuse or selection_token_replay or selection_device_registration_bypass
+falsepositives:
+    - Legitimate MFA policy updates by administrators
+    - Authorized emergency access during incidents
+    - Service accounts with approved MFA exemptions
+    - Legitimate device registration and management
+    - Password reset flows for legitimate users
+level: critical
+tags:
+    - attack.initial_access
+    - attack.t1556.006
+    - attack.credential_access
+    - attack.t1556
+    - attack.defense_evasion
+    - attack.t1621
+    - azure
+    - mfa
+    - authentication
+    - bypass

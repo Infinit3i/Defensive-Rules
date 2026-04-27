@@ -1,0 +1,74 @@
+title: AMSI Bypass Technique Detection
+id: f7a9c4d2-8e3b-4f1a-9c5d-6b7e8a2f4c9d
+status: experimental
+description: Detects attempts to bypass Anti-Malware Scan Interface (AMSI) through various techniques including memory patching, COM hijacking, and reflection
+logsource:
+  product: windows
+  service: powershell-classic
+detection:
+  selection_powershell_amsi:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - '[Ref].Assembly.GetType'
+      - 'System.Management.Automation.AmsiUtils'
+      - 'amsiInitFailed'
+      - 'amsiContext'
+      - 'AmsiScanBuffer'
+      - 'amsiSession'
+  selection_amsi_bypass_strings:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'Add-Type -TypeDefinition'
+      - '[Runtime.InteropServices.Marshal]::Copy'
+      - 'VirtualProtect'
+      - 'GetProcAddress'
+      - 'LoadLibrary'
+      - 'amsi.dll'
+  selection_obfuscation:
+    EventID: 4104
+    ScriptBlockText|re:
+      - '.*[aA][mM][sS][iI].*'
+      - '.*\$[a-zA-Z0-9_]+\s*=\s*"[aAmMsS][mMsS][iI].*'
+      - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
+  selection_reflection:
+    EventID: 4104
+    ScriptBlockText|contains|all:
+      - '[System.Reflection.BindingFlags]'
+      - 'NonPublic'
+      - 'Static'
+      - 'GetField'
+  selection_com_hijack:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'New-Object -ComObject'
+      - 'WScript.Shell'
+      - 'HKEY_CURRENT_USER\Software\Classes\CLSID'
+  selection_memory_patch:
+    EventID: 4104
+    ScriptBlockText|contains|all:
+      - 'System.Runtime.InteropServices.Marshal'
+      - 'PtrToStructure'
+      - 'StructureToPtr'
+      - 'amsi'
+  filter_legitimate:
+    ScriptBlockText|contains:
+      - 'Get-Help about_*'
+      - 'Import-Module'
+      - 'Test-Path'
+  condition: (selection_powershell_amsi or selection_amsi_bypass_strings or selection_obfuscation or selection_reflection or selection_com_hijack or selection_memory_patch) and not filter_legitimate
+falsepositives:
+  - Security research and educational content
+  - Penetration testing frameworks
+  - Red team exercises
+level: critical
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+  - attack.execution
+  - attack.t1059.001
+  - powershell
+  - windows
+  - amsi_bypass
+references:
+  - https://attack.mitre.org/techniques/T1562/001/
+  - https://blog.f-secure.com/hunting-for-amsi-bypasses/

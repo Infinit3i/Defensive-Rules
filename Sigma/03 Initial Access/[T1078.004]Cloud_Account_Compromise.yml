@@ -1,40 +1,78 @@
----
-title: Suspicious Cloud Account Activity
-id: c4f8b2e1-5a9d-4e3c-b7f2-9e6a1d4c8b7f
+title: Cloud Account Compromise Detection
+id: 364h71fc-a12d-3456-7890-bcdef0123456
 status: experimental
-description: >-
-  Detects potentially compromised cloud accounts by monitoring for unusual
-  login patterns, geographic anomalies, and suspicious administrative actions
-  that may indicate account takeover.
+description: Detects potential cloud account compromise through analysis of suspicious account activities, including unusual login patterns, privilege escalation attempts, resource enumeration, and activities inconsistent with user's normal behavior patterns.
 references:
-  - https://attack.mitre.org/techniques/T1078/004/
-author: Matthew Iverson
-date: 2026-04-27
-tags:
-  - attack.initial_access
-  - attack.privilege_escalation
-  - attack.t1078.004
-  - cloud
-  - azure
-  - aws
+    - https://attack.mitre.org/techniques/T1078/004/
+    - https://docs.microsoft.com/en-us/azure/security/fundamentals/
 logsource:
-  product: azure
-  service: auditlogs
+    product: azure
+    service: signinlogs
 detection:
-  suspicious_login:
-    Category: 'SignInLogs'
-    ResultType: 0
-    Location|contains:
-      - 'Unknown'
-      - 'Anonymous'
-  admin_actions:
-    OperationName|contains:
-      - 'Add member to role'
-      - 'Create application'
-      - 'Update application'
-      - 'Delete user'
-  condition: suspicious_login or admin_actions
+    selection_impossible_travel:
+        EventName: 'SigninLogs'
+        ResultType: 0
+        # Login from geographic locations impossible to reach in timeframe
+    selection_multiple_failed_then_success:
+        EventName: 'SigninLogs'
+        UserPrincipalName: '*'
+        # Pattern: multiple failed attempts followed by successful login
+    selection_off_hours_access:
+        EventName: 'SigninLogs'
+        ResultType: 0
+        # Access outside typical business hours for user's timezone
+    selection_new_device_access:
+        EventName: 'SigninLogs'
+        ResultType: 0
+        DeviceDetail.isCompliant: false
+        DeviceDetail.isManaged: false
+        # Access from unmanaged/non-compliant devices
+    selection_privilege_changes:
+        EventName: 'AuditLogs'
+        ActivityDisplayName:
+            - 'Add member to role'
+            - 'Remove member from role'
+            - 'Update role'
+        TargetResources.userPrincipalName: '*'
+        # Unexpected privilege changes
+    selection_resource_enumeration:
+        EventName: 'AuditLogs'
+        ActivityDisplayName:
+            - 'List applications'
+            - 'List service principals'
+            - 'List users'
+            - 'List groups'
+        # Rapid enumeration activities post-login
+    selection_suspicious_app_access:
+        EventName: 'SigninLogs'
+        ResultType: 0
+        AppDisplayName|contains:
+            - 'Graph'
+            - 'Exchange'
+            - 'SharePoint'
+            - 'PowerBI'
+        # Access to high-value applications
+    selection_api_abuse:
+        EventName: 'AuditLogs'
+        ActivityDisplayName|contains:
+            - 'API'
+            - 'Graph'
+        # Unusual API usage patterns
+    condition: selection_impossible_travel or selection_multiple_failed_then_success or selection_off_hours_access or selection_new_device_access or selection_privilege_changes or selection_resource_enumeration or selection_suspicious_app_access or selection_api_abuse
 falsepositives:
-  - Legitimate travel or remote work scenarios
-  - Authorized administrative activities
-level: medium
+    - Legitimate users traveling or working from new locations
+    - Authorized administrative activities
+    - New device enrollment and legitimate device access
+    - Legitimate after-hours work and different timezone access
+    - Authorized application integrations and API usage
+level: high
+tags:
+    - attack.initial_access
+    - attack.t1078.004
+    - attack.privilege_escalation
+    - attack.t1484
+    - attack.discovery
+    - attack.t1087
+    - azure
+    - account_compromise
+    - cloud

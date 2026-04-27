@@ -1,0 +1,50 @@
+title: Domain Fronting and CDN Abuse for Command and Control
+id: 2c8f5a3e-7b9d-4e2a-9f6c-3d1a8b7e5c9f
+status: experimental
+description: Detects domain fronting techniques using CDN services to hide command and control communication
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_cdn_providers:
+    c-uri|contains:
+      - 'cloudfront.net'
+      - 'fastly.com'
+      - 'cloudflare.com'
+      - 'akamai.com'
+      - 'azure.com'
+      - 'amazonaws.com'
+  selection_host_mismatch:
+    c-uri|contains:
+      - 'amazonaws.com'
+    cs-host|contains:
+      - 'cloudfront.net'
+  selection_suspicious_paths:
+    c-uri|contains:
+      - '/api/v1/'
+      - '/endpoint/'
+      - '/gateway/'
+      - '/proxy/'
+      - '/tunnel/'
+  selection_encrypted_traffic:
+    cs-method: 'POST'
+    sc-bytes|gt: 512
+    cs-bytes|gt: 256
+  selection_https_tunnel:
+    cs-method: 'CONNECT'
+    cs-uri-port:
+      - 443
+      - 8443
+      - 9443
+  condition: (selection_cdn_providers and selection_suspicious_paths and selection_encrypted_traffic) or (selection_host_mismatch) or (selection_https_tunnel and selection_cdn_providers)
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1090.004
+  - attack.t1071.001
+  - domain_fronting
+  - cdn_abuse
+  - traffic_tunneling
+references:
+  - https://attack.mitre.org/techniques/T1090/004/
+  - https://attack.mitre.org/techniques/T1071/001/

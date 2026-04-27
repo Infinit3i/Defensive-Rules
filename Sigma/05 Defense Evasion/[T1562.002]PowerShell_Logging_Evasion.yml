@@ -1,0 +1,88 @@
+title: PowerShell Logging Evasion Detection
+id: e8b7f9a2-4c5d-3e1a-9f6b-7d8a2c4e9f1b
+status: experimental
+description: Detects attempts to disable or evade PowerShell script block logging and transcription logging to hide malicious activity
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_registry_policy:
+    EventID: 13
+    TargetObject|contains:
+      - 'HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell'
+      - 'HKLM\SOFTWARE\WOW6432Node\Policies\Microsoft\Windows\PowerShell'
+      - 'HKCU\SOFTWARE\Policies\Microsoft\Windows\PowerShell'
+    TargetObject|endswith:
+      - '\ScriptBlockLogging\EnableScriptBlockLogging'
+      - '\ScriptBlockLogging\EnableScriptBlockInvocationLogging'
+      - '\Transcription\EnableTranscripting'
+      - '\Transcription\EnableInvocationHeader'
+      - '\ModuleLogging\EnableModuleLogging'
+    Details:
+      - 'DWORD (0x00000000)'
+      - '0'
+  selection_registry_direct:
+    EventID: 13
+    TargetObject|contains:
+      - 'HKLM\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell'
+      - 'HKLM\SOFTWARE\Microsoft\PowerShell\3\ShellIds\Microsoft.PowerShell'
+    TargetObject|endswith:
+      - '\ExecutionPolicy'
+    Details|contains:
+      - 'Bypass'
+      - 'Unrestricted'
+  selection_powershell_commands:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Set-ExecutionPolicy Bypass'
+      - 'Set-ExecutionPolicy Unrestricted'
+      - '-ExecutionPolicy Bypass'
+      - '-ep bypass'
+      - '-exec bypass'
+      - 'Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell"'
+      - '$env:PSModulePath'
+      - 'Get-WinEvent -FilterHashtable'
+      - 'Clear-EventLog'
+      - 'wevtutil cl'
+  selection_process_manipulation:
+    EventID: 10
+    TargetImage|endswith: '\powershell.exe'
+    CallTrace|contains:
+      - 'ntdll.dll+NtWriteVirtualMemory'
+      - 'kernel32.dll+WriteProcessMemory'
+    GrantedAccess:
+      - '0x1F3FFF'
+      - '0x1FFFFF'
+  selection_etw_tampering:
+    EventID: 1
+    CommandLine|contains:
+      - '[System.Diagnostics.Eventing.EventProvider]'
+      - 'System.Management.Automation.Tracing.PSEtwLogProvider'
+      - 'Disable-PSTrace'
+      - 'Set-EtwTraceProvider'
+  selection_assembly_loading:
+    EventID: 7
+    Image|endswith: '\powershell.exe'
+    ImageLoaded|contains:
+      - 'System.Management.Automation'
+      - 'Microsoft.PowerShell'
+    ProcessId: 'ProcessId'
+  condition: selection_registry_policy or selection_registry_direct or selection_powershell_commands or (selection_process_manipulation and selection_assembly_loading) or selection_etw_tampering
+falsepositives:
+  - Administrative scripts requiring execution policy changes
+  - Legitimate system administration tasks
+  - Software installation requiring PowerShell policy modifications
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1562.002
+  - attack.execution
+  - attack.t1059.001
+  - sysmon
+  - powershell
+  - windows
+  - logging_evasion
+references:
+  - https://attack.mitre.org/techniques/T1562/002/
+  - https://blog.palantir.com/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63

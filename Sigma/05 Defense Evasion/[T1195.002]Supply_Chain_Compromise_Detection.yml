@@ -1,0 +1,119 @@
+title: Supply Chain Compromise Indicators Detection
+id: b8a4f6c2-7d9e-4b3a-8f1c-5e7a9b2d4c6f
+status: experimental
+description: Detects indicators of supply chain compromises including suspicious software updates, package managers, and trusted binary modifications
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_suspicious_updates:
+    EventID: 1
+    ParentImage|endswith:
+      - '\Windows\System32\wuauclt.exe'
+      - '\Windows\System32\svchost.exe'
+    Image|contains:
+      - 'update'
+      - 'installer'
+      - 'setup'
+    CommandLine|contains:
+      - 'http://'
+      - 'https://'
+  selection_package_managers:
+    EventID: 1
+    Image|endswith:
+      - '\npm.exe'
+      - '\pip.exe'
+      - '\gem.exe'
+      - '\nuget.exe'
+      - '\yarn.exe'
+      - '\composer.exe'
+      - '\mvn.exe'
+      - '\gradle.exe'
+    CommandLine|contains:
+      - 'install'
+      - 'update'
+      - 'upgrade'
+  selection_trusted_binary_modification:
+    EventID: 11
+    TargetFilename|endswith:
+      - '\Windows\System32\*.exe'
+      - '\Windows\SysWOW64\*.exe'
+      - '\Program Files\*.exe'
+      - '\Program Files (x86)\*.exe'
+  selection_certificate_anomaly:
+    EventID: 7
+    Signed: 'true'
+    Signature|contains:
+      - 'CN=Microsoft'
+      - 'CN=Adobe'
+      - 'CN=Oracle'
+      - 'CN=Apple'
+    SignatureStatus: 'Valid'
+  selection_network_suspicious:
+    EventID: 3
+    Protocol: 'tcp'
+    DestinationPort:
+      - 80
+      - 443
+      - 8080
+    Image|endswith:
+      - '\svchost.exe'
+      - '\explorer.exe'
+      - '\winlogon.exe'
+  selection_registry_persistence:
+    EventID: 13
+    TargetObject|contains:
+      - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
+      - 'HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'
+      - 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
+      - 'HKLM\SYSTEM\CurrentControlSet\Services'
+  selection_file_hash_mismatch:
+    EventID: 15
+    Hash|re: 'MD5=[A-F0-9]{32}'
+    TargetFilename|endswith:
+      - '\System32\*.exe'
+      - '\System32\*.dll'
+      - '\SysWOW64\*.exe'
+      - '\SysWOW64\*.dll'
+  selection_process_creation_trusted:
+    EventID: 1
+    Image|endswith:
+      - '\notepad.exe'
+      - '\calc.exe'
+      - '\mspaint.exe'
+      - '\cmd.exe'
+      - '\powershell.exe'
+    ParentImage|endswith:
+      - '\explorer.exe'
+      - '\winlogon.exe'
+    CommandLine|contains:
+      - 'http'
+      - 'download'
+      - 'curl'
+      - 'wget'
+      - 'invoke-webrequest'
+  selection_dll_sideloading:
+    EventID: 7
+    ImageLoaded|re: '.*\\[a-zA-Z0-9_-]+\.dll$'
+    Signed: 'false'
+    ProcessId: 'ProcessId'
+  condition: selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or (selection_trusted_binary_modification and selection_file_hash_mismatch) or (selection_certificate_anomaly and selection_registry_persistence) or (selection_process_creation_trusted and selection_dll_sideloading)
+falsepositives:
+  - Legitimate software updates and installations
+  - Normal package manager operations
+  - Authorized system maintenance
+  - Development environment activities
+level: high
+tags:
+  - attack.initial_access
+  - attack.t1195.002
+  - attack.defense_evasion
+  - attack.t1027
+  - attack.persistence
+  - attack.t1547
+  - sysmon
+  - windows
+  - supply_chain
+references:
+  - https://attack.mitre.org/techniques/T1195/002/
+  - https://www.crowdstrike.com/blog/supply-chain-strategy-release/

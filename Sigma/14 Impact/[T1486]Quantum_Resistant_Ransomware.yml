@@ -1,0 +1,114 @@
+title: Quantum-Resistant Cryptographic Ransomware
+id: 3d9e7f4a-6b8c-5e2f-9d3e-7f4a8c6b5e2f
+status: experimental
+description: Detects next-generation ransomware using quantum-resistant cryptographic algorithms (post-quantum cryptography) to future-proof encryption against quantum computing threats.
+author: Cybersecurity Detection Engineering
+date: 2024-12-01
+modified: 2026-04-27
+references:
+    - https://attack.mitre.org/techniques/T1486/
+    - https://csrc.nist.gov/projects/post-quantum-cryptography
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_pqc_libraries:
+        EventID: 1
+        Image|endswith:
+            - '\python.exe'
+            - '\openssl.exe'
+        CommandLine|contains:
+            - 'kyber'
+            - 'dilithium'
+            - 'falcon'
+            - 'sphincs'
+            - 'lattice'
+            - 'isogeny'
+            - 'post-quantum'
+            - 'pqc'
+            - 'ntru'
+            - 'rainbow'
+    selection_quantum_encryption:
+        EventID: 11
+        TargetFilename|endswith:
+            - '.qenc'
+            - '.pqc'
+            - '.quantum'
+            - '.kyber'
+            - '.dilithium'
+            - '.falcon'
+            - '.locked'
+        Image|contains:
+            - 'encrypt'
+            - 'crypto'
+            - 'quantum'
+    selection_crypto_process:
+        EventID: 1
+        CommandLine|contains:
+            - 'CRYSTALS-Kyber'
+            - 'CRYSTALS-Dilithium'
+            - 'FALCON'
+            - 'SPHINCS+'
+            - 'SIKE'
+            - 'BIKE'
+            - 'HQC'
+    selection_ransom_note:
+        EventID: 11
+        TargetFilename|endswith:
+            - '.txt'
+            - '.html'
+            - '.md'
+        TargetFilename|contains:
+            - 'RANSOM'
+            - 'DECRYPT'
+            - 'QUANTUM'
+            - 'PAYMENT'
+            - 'RECOVERY'
+    selection_mass_encryption:
+        EventID: 11
+        Image|contains:
+            - 'encrypt'
+            - 'cipher'
+            - 'crypto'
+            - 'quantum'
+        ProcessId: '*'
+    selection_network_c2:
+        EventID: 3
+        DestinationPort:
+            - 443
+            - 8080
+            - 9050  # Tor
+            - 4444
+        Image|contains:
+            - 'python'
+            - 'powershell'
+            - 'cmd'
+    selection_crypto_apis:
+        EventID: 7  # Image loaded
+        ImageLoaded|endswith:
+            - '\bcrypt.dll'
+            - '\ncrypt.dll'
+            - '\crypt32.dll'
+        ProcessName|contains:
+            - 'encrypt'
+            - 'crypto'
+            - 'quantum'
+    condition: (selection_pqc_libraries and selection_quantum_encryption) or (selection_crypto_process and selection_mass_encryption) or (selection_ransom_note and selection_crypto_apis and selection_network_c2)
+level: critical
+tags:
+    - attack.impact
+    - attack.t1486
+    - attack.persistence
+    - attack.t1547
+    - attack.command_and_control
+    - attack.t1071.001
+    - sysmon
+    - windows
+    - ransomware
+    - quantum_cryptography
+    - post_quantum
+    - advanced_encryption
+falsepositives:
+    - Legitimate post-quantum cryptography research and testing
+    - Security software implementing quantum-resistant algorithms
+    - Cryptographic library updates and implementations

@@ -1,0 +1,63 @@
+title: Process Doppelganging Attack Detection
+id: c9e2f4a8-7b5d-4a1c-8e9f-3c7a6b2d4f8e
+status: experimental
+description: Detects Process Doppelganging technique where attackers use NTFS transactions to replace legitimate process images with malicious code during process creation
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process_create:
+    EventID: 1
+  selection_file_create:
+    EventID: 11
+    TargetFilename|contains: '\*.tmp'
+  selection_file_transaction:
+    EventID: 15
+    Hash|contains: '*'
+  selection_process_access:
+    EventID: 10
+    GrantedAccess:
+      - '0x1F3FFF'
+      - '0x1FFFFF'
+    CallTrace|contains:
+      - 'ntdll.dll+NtCreateTransaction'
+      - 'ntdll.dll+NtCreateSection'
+      - 'ntdll.dll+NtCreateProcessEx'
+      - 'ntdll.dll+RtlSetCurrentTransaction'
+  suspicious_process_characteristics:
+    - ParentImage|endswith:
+        - '\explorer.exe'
+        - '\winlogon.exe'
+    - Image|endswith:
+        - '\svchost.exe'
+        - '\lsass.exe'
+        - '\csrss.exe'
+        - '\winlogon.exe'
+        - '\dwm.exe'
+    - IntegrityLevel: 'High'
+  selection_registry_transaction:
+    EventID: 13
+    TargetObject|contains:
+      - 'HKLM\SYSTEM\CurrentControlSet\Services'
+      - 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options'
+  network_callback:
+    EventID: 3
+    Initiated: 'true'
+    Protocol: 'tcp'
+  condition: (selection_process_create and selection_file_create and selection_file_transaction) or (selection_process_access and suspicious_process_characteristics) or (selection_registry_transaction and network_callback)
+falsepositives:
+  - Legitimate software using NTFS transactions
+  - System recovery operations
+  - Backup and restore utilities
+level: critical
+tags:
+  - attack.defense_evasion
+  - attack.t1055.013
+  - attack.execution
+  - attack.t1055
+  - sysmon
+  - windows
+  - process_doppelganging
+references:
+  - https://attack.mitre.org/techniques/T1055/013/
+  - https://www.blackhat.com/docs/eu-17/materials/eu-17-Liberman-Lost-In-Transaction-Process-Doppelganging.pdf

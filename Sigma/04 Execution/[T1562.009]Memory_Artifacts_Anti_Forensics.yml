@@ -1,0 +1,116 @@
+title: Memory Artifacts Anti-Forensics and Evidence Destruction
+id: b5d3c7f1-e8a4-4f2b-9c6d-1a5e3b7c9f2a
+status: experimental
+description: Detects attempts to destroy or obfuscate memory artifacts to evade forensic analysis and incident response
+author: matthewiver@protonmail.com
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1562/009/
+  - https://www.volexity.com/blog/2021/12/09/one-more-on-the-roof/
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_memory_dump:
+    EventID: 1
+    CommandLine|contains:
+      - 'procdump'
+      - 'dumpit'
+      - 'winpmem'
+      - 'volatility'
+      - 'rekall'
+      - 'comae'
+  selection_memory_manipulation:
+    EventID: 10  # Process access
+    GrantedAccess:
+      - '0x1F0FFF'  # PROCESS_ALL_ACCESS
+      - '0x1FFFFF'  # PROCESS_ALL_ACCESS (extended)
+      - '0x0010'    # PROCESS_VM_READ
+      - '0x0020'    # PROCESS_VM_WRITE
+    CallTrace|contains:
+      - 'VirtualAllocEx'
+      - 'VirtualFreeEx'
+      - 'WriteProcessMemory'
+      - 'ReadProcessMemory'
+      - 'VirtualProtectEx'
+  selection_heap_spray:
+    EventID: 1
+    CommandLine|contains:
+      - 'HeapAlloc'
+      - 'HeapFree'
+      - 'RtlAllocateHeap'
+      - 'RtlFreeHeap'
+      - 'LocalAlloc'
+      - 'GlobalAlloc'
+  selection_code_cave:
+    EventID: 7  # Image loaded
+    ImageLoaded|endswith:
+      - '\ntdll.dll'
+      - '\kernel32.dll'
+      - '\kernelbase.dll'
+    Signed: 'false'
+  selection_process_overwrite:
+    EventID: 1
+    ParentImage|endswith:
+      - '\explorer.exe'
+      - '\winlogon.exe'
+      - '\services.exe'
+    Image|endswith:
+      - '\svchost.exe'
+      - '\rundll32.exe'
+      - '\dllhost.exe'
+    CommandLine: ''  # Empty command line may indicate hollowing
+  selection_memory_clearing:
+    EventID: 1
+    CommandLine|contains:
+      - 'RtlZeroMemory'
+      - 'SecureZeroMemory'
+      - 'memset'
+      - 'ZeroMemory'
+      - 'RtlSecureZeroMemory'
+  selection_debugger_evasion:
+    EventID: 1
+    CommandLine|contains:
+      - 'IsDebuggerPresent'
+      - 'CheckRemoteDebuggerPresent'
+      - 'NtQueryInformationProcess'
+      - 'OutputDebugString'
+      - 'FindWindow'
+    CommandLine|contains:
+      - 'ollydbg'
+      - 'windbg'
+      - 'x64dbg'
+      - 'immunity'
+      - 'ida'
+  selection_vm_memory_detection:
+    EventID: 1
+    CommandLine|contains:
+      - 'GlobalMemoryStatusEx'
+      - 'GetPhysicallyInstalledSystemMemory'
+      - 'GetSystemInfo'
+    CommandLine|contains|all:
+      - 'memory'
+      - 'size'
+  selection_hook_removal:
+    EventID: 1
+    CommandLine|contains:
+      - 'SetWindowsHookEx'
+      - 'UnhookWindowsHookEx'
+      - 'CallNextHookEx'
+      - 'NtSetWindowsHookEx'
+  condition: 2 of selection_*
+falsepositives:
+  - Legitimate memory analysis tools
+  - Debugging and development activities
+  - System performance monitoring
+  - Antivirus memory scanning
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1562
+  - attack.t1562.009
+  - memory_manipulation
+  - anti_forensics
+  - evidence_destruction
+  - sysmon
+  - windows

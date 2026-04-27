@@ -1,0 +1,115 @@
+title: AI-Powered Data Manipulation and Integrity Attacks
+id: 1a5e8f2b-7c9d-4e6f-8a1e-5f2b9c7d4e6f
+status: experimental
+description: Detects AI-powered data manipulation attacks that use machine learning to alter data integrity, modify records subtly, and perform intelligent data poisoning while avoiding detection.
+author: Cybersecurity Detection Engineering
+date: 2024-12-01
+modified: 2026-04-27
+references:
+    - https://attack.mitre.org/techniques/T1565/
+    - https://attack.mitre.org/techniques/T1565.001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_ai_frameworks:
+        EventID: 1
+        Image|endswith:
+            - '\python.exe'
+            - '\R.exe'
+            - '\julia.exe'
+        CommandLine|contains:
+            - 'pandas'
+            - 'numpy'
+            - 'scikit-learn'
+            - 'tensorflow'
+            - 'pytorch'
+            - 'data_manipulation'
+            - 'integrity_attack'
+    selection_database_access:
+        EventID: 3
+        DestinationPort:
+            - 1433  # SQL Server
+            - 3306  # MySQL
+            - 5432  # PostgreSQL
+            - 1521  # Oracle
+            - 27017 # MongoDB
+        Image|contains:
+            - 'python'
+            - 'ml_'
+            - 'ai_'
+    selection_data_modification:
+        EventID: 11
+        TargetFilename|endswith:
+            - '.csv'
+            - '.xlsx'
+            - '.json'
+            - '.xml'
+            - '.db'
+            - '.sqlite'
+        Image|contains:
+            - 'modify'
+            - 'alter'
+            - 'manipulate'
+            - 'poison'
+    selection_steganography:
+        EventID: 1
+        CommandLine|contains:
+            - 'steghide'
+            - 'outguess'
+            - 'openstego'
+            - 'hide_data'
+            - 'embed_payload'
+            - 'lsb_'  # Least Significant Bit
+    selection_ml_models:
+        EventID: 11
+        TargetFilename|endswith:
+            - '.pkl'
+            - '.joblib'
+            - '.h5'
+            - '.pb'
+            - '.onnx'
+            - '.pt'
+            - '.pth'
+        TargetFilename|contains:
+            - 'poison'
+            - 'backdoor'
+            - 'manipulate'
+            - 'adversarial'
+    selection_network_exfil:
+        EventID: 3
+        DestinationPort: 443
+        Initiated: true
+        Image|contains:
+            - 'python'
+            - 'curl'
+            - 'wget'
+    selection_registry_persistence:
+        EventID: 13
+        TargetObject|contains:
+            - '\Software\Microsoft\Windows\CurrentVersion\Run'
+            - '\Software\Policies\'
+        Details|contains:
+            - 'python'
+            - 'ml_'
+            - 'ai_'
+            - 'data_proc'
+    condition: (selection_ai_frameworks and selection_database_access) or (selection_data_modification and selection_ml_models) or (selection_steganography and selection_network_exfil) or selection_registry_persistence
+level: critical
+tags:
+    - attack.impact
+    - attack.t1565
+    - attack.t1565.001
+    - attack.t1565.002
+    - attack.persistence
+    - attack.t1547.001
+    - sysmon
+    - windows
+    - artificial_intelligence
+    - data_manipulation
+    - integrity_attack
+    - steganography
+falsepositives:
+    - Legitimate data science and analytics workflows
+    - Database maintenance and ETL processes
+    - Research and development activities with ML models

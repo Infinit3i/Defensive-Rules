@@ -1,0 +1,47 @@
+title: DNS-over-HTTPS Command and Control Communication
+id: 7d3e9b2f-4c8a-4f1e-8d7b-6a5c9e3f2d8a
+status: experimental
+description: Detects potential command and control communication through DNS-over-HTTPS channels with suspicious query patterns
+logsource:
+  product: dns
+  service: dns
+detection:
+  selection_doh_providers:
+    query|contains:
+      - 'cloudflare-dns.com'
+      - 'dns.google'
+      - 'dns.quad9.net'
+      - 'dns.adguard.com'
+      - '1.1.1.1'
+      - '8.8.8.8'
+      - '9.9.9.9'
+  selection_suspicious_queries:
+    query|contains:
+      - '.tk'
+      - '.ml'
+      - '.ga'
+      - '.cf'
+      - 'dyndns'
+      - 'no-ip'
+      - 'ddns'
+  selection_encoded_subdomains:
+    query|re: '[a-f0-9]{32,}\..*'
+  selection_long_queries:
+    query|length|gt: 100
+  selection_txt_records:
+    record_type: 'TXT'
+  frequency_condition:
+    - count() by src_ip > 100
+    - timeframe: 10m
+  condition: selection_doh_providers and (selection_suspicious_queries or selection_encoded_subdomains or selection_long_queries or selection_txt_records)
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1071.004
+  - attack.t1568.002
+  - dns_over_https
+  - dns_tunneling
+  - c2_channel
+references:
+  - https://attack.mitre.org/techniques/T1071/004/
+  - https://attack.mitre.org/techniques/T1568/002/

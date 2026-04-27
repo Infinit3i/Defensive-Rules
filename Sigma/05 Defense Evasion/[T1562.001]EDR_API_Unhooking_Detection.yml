@@ -1,0 +1,81 @@
+title: EDR/AV API Unhooking Detection
+id: d4f8a7e2-9c1b-4f5e-8a3d-7b6c9e2f4a8d
+status: experimental
+description: Detects attempts to unhook EDR/AV API monitoring by restoring original API function code from disk or memory, commonly used to evade security monitoring
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process_access:
+    EventID: 10
+    CallTrace|contains:
+      - 'ntdll.dll+NtProtectVirtualMemory'
+      - 'ntdll.dll+NtWriteVirtualMemory'
+      - 'kernel32.dll+VirtualProtect'
+      - 'kernel32.dll+WriteProcessMemory'
+    GrantedAccess:
+      - '0x1F3FFF'  # PROCESS_ALL_ACCESS
+      - '0x1FFFFF'
+      - '0x143A'    # PROCESS_VM_WRITE | PROCESS_VM_OPERATION
+  selection_api_modules:
+    EventID: 7
+    ImageLoaded|endswith:
+      - '\ntdll.dll'
+      - '\kernel32.dll'
+      - '\kernelbase.dll'
+      - '\advapi32.dll'
+      - '\user32.dll'
+  selection_suspicious_calls:
+    EventID: 1
+    CommandLine|contains:
+      - 'VirtualProtect'
+      - 'NtProtectVirtualMemory'
+      - 'WriteProcessMemory'
+      - 'SetWindowsHookEx'
+      - 'UnhookWindowsHookEx'
+      - 'GetProcAddress'
+      - 'LoadLibrary'
+  selection_memory_protection:
+    EventID: 10
+    TargetImage|endswith:
+      - '\ntdll.dll'
+      - '\kernel32.dll'
+    CallTrace|contains:
+      - 'PAGE_EXECUTE_READWRITE'
+      - 'PAGE_READWRITE'
+  selection_file_access:
+    EventID: 11
+    TargetFilename|contains:
+      - '\Windows\System32\ntdll.dll'
+      - '\Windows\SysWOW64\ntdll.dll'
+      - '\Windows\System32\kernel32.dll'
+  edr_processes:
+    Image|contains:
+      - 'cylance'
+      - 'crowdstrike'
+      - 'sentinel'
+      - 'defender'
+      - 'symantec'
+      - 'mcafee'
+      - 'kaspersky'
+      - 'bitdefender'
+      - 'carbon'
+      - 'elastic'
+  condition: (selection_process_access and selection_api_modules) or (selection_suspicious_calls and selection_memory_protection) or (selection_file_access and edr_processes)
+falsepositives:
+  - Legitimate debugging and development tools
+  - Security research tools
+  - Some penetration testing frameworks
+level: critical
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+  - attack.privilege_escalation
+  - attack.t1055
+  - sysmon
+  - windows
+  - api_unhooking
+  - edr_evasion
+references:
+  - https://attack.mitre.org/techniques/T1562/001/
+  - https://blog.malwarebytes.com/threat-analysis/2021/02/lazyscripter-from-empire-to-double-rat/

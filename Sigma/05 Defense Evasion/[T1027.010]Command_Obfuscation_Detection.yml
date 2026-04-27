@@ -1,0 +1,96 @@
+title: Command and Script Obfuscation Detection
+id: c4a9d7e2-8f3b-4e1a-9c5d-6b8e7a3f4c2d
+status: experimental
+description: Detects various command and script obfuscation techniques used to evade detection by security tools and analysts
+logsource:
+  product: windows
+  service: powershell-classic
+detection:
+  selection_powershell_obfuscation:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'iex('
+      - 'invoke-expression'
+      - '&('
+      - '.('
+      - 'ForEach-Object'
+      - '%{'
+  selection_base64_powershell:
+    EventID: 4104
+    ScriptBlockText|re:
+      - '.*[a-zA-Z0-9+/]{50,}={0,2}.*'
+      - '.*\[System\.Convert\]::FromBase64String.*'
+      - '.*\[System\.Text\.Encoding\]::.*\.GetString.*'
+  selection_char_substitution:
+    EventID: 4104
+    ScriptBlockText|re:
+      - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
+      - '.*\[System\.Char\].*'
+      - '.*-join\s*\(\s*\d+.*'
+  selection_string_manipulation:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - '-replace'
+      - '-split'
+      - '-join'
+      - 'substring('
+      - '.reverse()'
+      - 'tolower()'
+      - 'toupper()'
+  selection_format_operators:
+    EventID: 4104
+    ScriptBlockText|re:
+      - '.*"{[0-9]+}".*-f.*'
+      - '.*\$\w+\s*=\s*"{[0-9,]+}".*'
+  selection_compression:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'System.IO.Compression.GzipStream'
+      - 'System.IO.Compression.DeflateStream'
+      - 'System.IO.MemoryStream'
+      - 'FromBase64String'
+  selection_cmd_obfuscation:
+    EventID: 1
+    Image|endswith: '\cmd.exe'
+    CommandLine|contains:
+      - '^&'
+      - '""'
+      - "'"
+      - '^^^'
+      - '%ComSpec%'
+      - '%SystemRoot%'
+      - '%windir%'
+  selection_batch_obfuscation:
+    EventID: 1
+    CommandLine|re:
+      - '.*set\s+\w+=[^&]*&.*'
+      - '.*for\s+/[lf]\s+.*'
+      - '.*if\s+.*==.*'
+  selection_wmi_obfuscation:
+    EventID: 1
+    CommandLine|contains:
+      - 'wmic process call create'
+      - 'wmic os get'
+      - 'wmic computersystem get'
+    CommandLine|re:
+      - '.*"[^"]*\^[^"]*".*'
+  condition: selection_powershell_obfuscation or selection_base64_powershell or selection_char_substitution or selection_string_manipulation or selection_format_operators or selection_compression or selection_cmd_obfuscation or selection_batch_obfuscation or selection_wmi_obfuscation
+falsepositives:
+  - Legitimate scripts using advanced PowerShell features
+  - Administrative automation scripts
+  - Software installation scripts
+  - Development and testing activities
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1027.010
+  - attack.execution
+  - attack.t1059.001
+  - attack.t1059.003
+  - powershell
+  - cmd
+  - windows
+  - obfuscation
+references:
+  - https://attack.mitre.org/techniques/T1027/010/
+  - https://www.fireeye.com/blog/threat-research/2017/06/obfuscation-in-the-wild.html

@@ -1,0 +1,54 @@
+title: Steganographic Command and Control in Images and Documents
+id: 9f6e8c4d-3a7b-4e2f-8c5a-7d9e6b3f4a2c
+status: experimental
+description: Detects potential steganographic command and control communication hidden in image and document files
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_image_files:
+    c-uri|endswith:
+      - '.jpg'
+      - '.jpeg'
+      - '.png'
+      - '.gif'
+      - '.bmp'
+      - '.tiff'
+      - '.webp'
+  selection_document_files:
+    c-uri|endswith:
+      - '.pdf'
+      - '.docx'
+      - '.xlsx'
+      - '.pptx'
+      - '.rtf'
+  selection_suspicious_size:
+    sc-bytes|gt: 1048576  # Files larger than 1MB
+  selection_unusual_headers:
+    cs-content-type|contains:
+      - 'application/octet-stream'
+      - 'text/plain'
+  selection_frequent_downloads:
+    cs-method: 'GET'
+  selection_suspicious_paths:
+    c-uri|contains:
+      - '/upload/'
+      - '/share/'
+      - '/temp/'
+      - '/tmp/'
+      - '/cache/'
+  frequency_condition:
+    - count() by src_ip > 10
+    - timeframe: 5m
+  condition: (selection_image_files or selection_document_files) and selection_suspicious_size and selection_frequent_downloads
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1001.002
+  - attack.t1071.001
+  - steganography
+  - data_hiding
+  - c2_channel
+references:
+  - https://attack.mitre.org/techniques/T1001/002/
+  - https://attack.mitre.org/techniques/T1071/001/

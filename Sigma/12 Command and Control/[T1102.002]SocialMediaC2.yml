@@ -1,0 +1,46 @@
+title: Social Media Platform Command and Control Communication
+id: 3a7b9f2e-8d4c-4f1a-b5e7-6c3d9a8b7f2e
+status: experimental
+description: Detects potential command and control communication through social media platforms using suspicious posting patterns and encoded content
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_platforms:
+    c-uri|contains:
+      - 'twitter.com/api'
+      - 'facebook.com/api'
+      - 'instagram.com/api'
+      - 'linkedin.com/api'
+      - 'reddit.com/api'
+      - 'tiktok.com/api'
+      - 'youtube.com/api'
+  selection_suspicious_posts:
+    r-uri|contains:
+      - '/post'
+      - '/comment'
+      - '/message'
+      - '/status'
+  selection_encoded_content:
+    cs-method: 'POST'
+    sc-bytes|gt: 1024
+  selection_automated_patterns:
+    c-useragent|contains:
+      - 'bot'
+      - 'crawler'
+      - 'automation'
+      - 'script'
+  time_condition:
+    - count() by src_ip > 50
+    - timeframe: 10m
+  condition: selection_platforms and selection_suspicious_posts and selection_encoded_content and not selection_automated_patterns
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1102.002
+  - attack.t1071.001
+  - social_media
+  - c2_channel
+references:
+  - https://attack.mitre.org/techniques/T1102/002/
+  - https://attack.mitre.org/techniques/T1071/001/

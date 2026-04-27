@@ -1,0 +1,54 @@
+title: Living-off-the-Land Binary Rundll32 Suspicious Execution
+id: a8f2b8dc-4e7f-4b8a-9c3d-2e1f5a8b9c7d
+status: experimental
+description: Detects suspicious use of rundll32.exe to execute potentially malicious code, commonly used for defense evasion by abusing legitimate Windows binaries
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process:
+    EventID: 1
+    Image|endswith: '\rundll32.exe'
+  selection_suspicious:
+    - CommandLine|contains|all:
+        - 'javascript:'
+        - 'eval('
+    - CommandLine|contains:
+        - 'vbscript:'
+        - 'data:text/html'
+        - '.dat,'
+        - '.tmp,'
+        - 'shell32.dll,Control_RunDLL'
+        - 'advpack.dll,LaunchINFSection'
+        - 'ieadvpack.dll,LaunchINFSection'
+        - 'setupapi.dll,InstallHinfSection'
+        - 'syssetup.dll,SetupInfObjectInstallAction'
+        - 'zipfldr.dll,RouteTheCall'
+        - 'url.dll,OpenURL'
+        - 'url.dll,FileProtocolHandler'
+    - CommandLine|re: '.*rundll32\.exe.*\w+\.\w+,#\d+'
+  selection_network_dll:
+    CommandLine|contains|all:
+      - 'rundll32'
+      - 'http'
+  filter_legitimate:
+    CommandLine|contains:
+      - 'shell32.dll,SHCreateLocalServerRunDll'
+      - 'shell32.dll,OpenAs_RunDLL'
+      - 'shell32.dll,ShellExec_RunDLL'
+  condition: selection_process and (selection_suspicious or selection_network_dll) and not filter_legitimate
+falsepositives:
+  - Legitimate software using rundll32 for specific functions
+  - Administrative tools and scripts
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1218.011
+  - attack.execution
+  - attack.t1059
+  - sysmon
+  - windows
+  - lolbins
+references:
+  - https://attack.mitre.org/techniques/T1218/011/
+  - https://lolbas-project.github.io/lolbas/Binaries/Rundll32/

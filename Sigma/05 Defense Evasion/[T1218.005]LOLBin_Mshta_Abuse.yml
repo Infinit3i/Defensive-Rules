@@ -1,0 +1,70 @@
+title: Living-off-the-Land Binary MSHTA Suspicious Execution
+id: e7f5a9c3-6d2b-4a8e-9f1c-7b5d8a3e6f2a
+status: experimental
+description: Detects suspicious use of mshta.exe to execute JavaScript, VBScript, or download and execute remote content for defense evasion
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_process:
+    EventID: 1
+    Image|endswith: '\mshta.exe'
+  selection_suspicious_args:
+    CommandLine|contains:
+      - 'javascript:'
+      - 'vbscript:'
+      - 'http://'
+      - 'https://'
+      - 'ftp://'
+      - '.hta'
+      - 'about:blank'
+      - 'data:text/html'
+  selection_encoded_content:
+    CommandLine|contains:
+      - 'FromBase64String'
+      - 'MemoryStream'
+      - 'GZipStream'
+      - 'DeflateStream'
+      - 'eval('
+      - 'unescape('
+  selection_network_download:
+    CommandLine|contains|all:
+      - 'mshta'
+      - 'http'
+  selection_parent_suspicious:
+    ParentImage|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\powerpnt.exe'
+      - '\outlook.exe'
+  selection_network_connection:
+    EventID: 3
+    Image|endswith: '\mshta.exe'
+    Protocol: 'tcp'
+    Initiated: 'true'
+  filter_legitimate:
+    CommandLine|contains:
+      - 'res://ieframe.dll'
+      - 'res://mshtml.dll'
+  condition: selection_process and (selection_suspicious_args or selection_encoded_content or selection_network_download or selection_parent_suspicious or selection_network_connection) and not filter_legitimate
+falsepositives:
+  - Legitimate HTML applications
+  - Corporate intranet applications
+  - Administrative tools using HTA files
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1218.005
+  - attack.execution
+  - attack.t1059
+  - sysmon
+  - windows
+  - lolbins
+  - mshta
+references:
+  - https://attack.mitre.org/techniques/T1218/005/
+  - https://lolbas-project.github.io/lolbas/Binaries/Mshta/

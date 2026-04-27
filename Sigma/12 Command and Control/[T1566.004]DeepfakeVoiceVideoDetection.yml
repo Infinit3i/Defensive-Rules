@@ -1,0 +1,59 @@
+title: Deepfake Voice and Video Call Social Engineering Indicators
+id: 6a9e7c3f-8d2b-4f5a-9c7e-3f8a6b4d7e9c
+status: experimental
+description: Detects network indicators of deepfake voice/video-based social engineering attacks through communication platforms
+logsource:
+  product: proxy
+  service: web
+detection:
+  selection_voip_platforms:
+    c-uri|contains:
+      - 'zoom.us'
+      - 'teams.microsoft.com'
+      - 'meet.google.com'
+      - 'webex.com'
+      - 'gotomeeting.com'
+      - 'skype.com'
+      - 'discord.com'
+      - 'slack.com'
+  selection_media_streams:
+    c-uri|contains:
+      - '/media'
+      - '/stream'
+      - '/video'
+      - '/audio'
+      - '/call'
+      - '/conference'
+  selection_high_bandwidth:
+    sc-bytes|gt: 10485760  # > 10MB indicating video/audio streams
+    cs-bytes|gt: 1048576   # > 1MB upload
+  selection_suspicious_patterns:
+    c-useragent|contains:
+      - 'deepfake'
+      - 'voice-clone'
+      - 'synthetic'
+      - 'artificial'
+  selection_ai_services:
+    c-uri|contains:
+      - 'elevenlabs'
+      - 'murf.ai'
+      - 'resemble.ai'
+      - 'replica.ai'
+      - 'speechify'
+  selection_unusual_timing:
+    time|gt: 22:00:00  # Calls outside business hours
+    time|lt: 06:00:00
+  condition: selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
+level: medium
+tags:
+  - attack.initial_access
+  - attack.t1566.004
+  - attack.command_and_control
+  - attack.t1071.001
+  - deepfake
+  - voice_cloning
+  - social_engineering
+  - voip_abuse
+references:
+  - https://attack.mitre.org/techniques/T1566/004/
+  - https://attack.mitre.org/techniques/T1071/001/

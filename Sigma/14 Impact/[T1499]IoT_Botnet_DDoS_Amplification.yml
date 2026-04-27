@@ -1,0 +1,86 @@
+title: IoT Botnet Recruitment and DDoS Amplification
+id: 2f7e9a4b-8c5d-6e3f-4a2f-7e9a5c8d6b3f
+status: experimental
+description: Detects IoT device recruitment into botnets and DDoS amplification attacks targeting DNS, NTP, SSDP, and other UDP-based services for traffic amplification and infrastructure disruption.
+author: Cybersecurity Detection Engineering
+date: 2024-12-01
+modified: 2026-04-27
+references:
+    - https://attack.mitre.org/techniques/T1499/
+    - https://attack.mitre.org/techniques/T1499.004/
+logsource:
+    product: zeek
+    service: conn
+detection:
+    selection_iot_scanning:
+        proto: tcp
+        service: ssh
+        conn_state: REJ
+        resp_h|contains:
+            - '192.168.'
+            - '10.'
+            - '172.16.'
+        orig_bytes: '<100'
+        duration: '<1'
+    selection_telnet_bruteforce:
+        proto: tcp
+        id.resp_p: 23
+        conn_state:
+            - 'SF'
+            - 'REJ'
+        duration: '<5'
+    selection_mirai_payloads:
+        proto: tcp
+        id.resp_p:
+            - 22
+            - 23
+            - 2323
+            - 8080
+            - 8888
+        history|contains:
+            - 'Sh'  # Successful connection
+        orig_bytes: '>100'
+        resp_bytes: '>100'
+    selection_amplification_dns:
+        proto: udp
+        id.resp_p: 53
+        query_type: ANY
+        orig_bytes: '<100'
+        resp_bytes: '>1000'  # Amplification ratio
+    selection_amplification_ntp:
+        proto: udp
+        id.resp_p: 123
+        orig_bytes: '<100'
+        resp_bytes: '>1000'
+    selection_amplification_ssdp:
+        proto: udp
+        id.resp_p: 1900
+        orig_bytes: '<200'
+        resp_bytes: '>1000'
+    selection_mass_targeting:
+        proto:
+            - 'tcp'
+            - 'udp'
+        orig_h: '*'
+        missed_bytes: 0
+        local_orig: false
+        local_resp: false
+    condition: (selection_iot_scanning or selection_telnet_bruteforce or selection_mirai_payloads) or (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
+level: critical
+tags:
+    - attack.impact
+    - attack.t1499
+    - attack.t1499.004
+    - attack.resource_hijacking
+    - attack.t1496
+    - zeek
+    - network
+    - iot
+    - botnet
+    - ddos
+    - amplification
+    - mirai
+falsepositives:
+    - Legitimate network scanning and monitoring tools
+    - DNS resolution spikes during normal operations
+    - NTP synchronization bursts in large networks
