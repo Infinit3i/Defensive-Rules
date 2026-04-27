@@ -65,7 +65,8 @@ detection:
         missed_bytes: 0
         local_orig: false
         local_resp: false
-    condition: (selection_iot_scanning or selection_telnet_bruteforce or selection_mirai_payloads) or (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
+    condition: (selection_iot_scanning or selection_telnet_bruteforce or selection_mirai_payloads) or
+               (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
 level: critical
 tags:
     - attack.impact

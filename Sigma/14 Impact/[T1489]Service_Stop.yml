@@ -48,3 +48,4 @@ detection:
 falsepositives:
   - Legitimate administration, software installs/uninstalls, EDR actions.
 level: medium
+

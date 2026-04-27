@@ -93,7 +93,9 @@ detection:
             - '\GoogleDriveSync.exe'
             - '\Dropbox.exe'
         GrantedAccess: '0x1010'  # PROCESS_VM_READ
-    condition: (selection_mass_deletion and selection_cloud_sync_paths) or (selection_sync_manipulation and selection_api_abuse) or (selection_powershell_destruction and selection_registry_manipulation) or selection_credential_theft
+    condition: (selection_mass_deletion and selection_cloud_sync_paths) or
+               (selection_sync_manipulation and selection_api_abuse) or
+               (selection_powershell_destruction and selection_registry_manipulation) or selection_credential_theft
 level: critical
 tags:
     - attack.impact
@@ -112,3 +114,4 @@ falsepositives:
     - Legitimate cloud storage maintenance and cleanup
     - User-initiated sync resets and account changes
     - Automated backup and archival processes
+

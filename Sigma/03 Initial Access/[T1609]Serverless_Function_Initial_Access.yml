@@ -31,14 +31,14 @@ detection:
     selection_suspicious_invocations:
         eventName: 'Invoke'
         responseElements.statusCode: 200
-        # Functions invoked from unusual geographic locations
+            # Functions invoked from unusual geographic locations
         sourceIPAddress|cidr:
             - '10.0.0.0/8'
             - '172.16.0.0/12'
             - '192.168.0.0/16'
     selection_data_access_functions:
         eventName: 'Invoke'
-        # Functions accessing sensitive AWS services
+            # Functions accessing sensitive AWS services
         requestParameters.functionName|regex: '.*-(s3|rds|secrets|ssm|kms)-.*'
     selection_reverse_shell_indicators:
         eventName: 'Invoke'

@@ -50,7 +50,7 @@ detection:
             - 'DeleteAccessKey'
             - 'DeactivateMFADevice'
             - 'DeleteAccountPasswordPolicy'
-        # IAM security feature disabling
+            # IAM security feature disabling
     selection_network_security_disable:
         eventName:
             - 'DeleteSecurityGroup'

@@ -94,7 +94,9 @@ detection:
             - 'ml_'
             - 'ai_'
             - 'data_proc'
-    condition: (selection_ai_frameworks and selection_database_access) or (selection_data_modification and selection_ml_models) or (selection_steganography and selection_network_exfil) or selection_registry_persistence
+    condition: (selection_ai_frameworks and selection_database_access) or
+               (selection_data_modification and selection_ml_models) or
+               (selection_steganography and selection_network_exfil) or selection_registry_persistence
 level: critical
 tags:
     - attack.impact

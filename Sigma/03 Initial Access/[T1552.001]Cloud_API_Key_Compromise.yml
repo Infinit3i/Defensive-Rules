@@ -11,12 +11,12 @@ logsource:
 detection:
     selection_api_geographic_anomaly:
         userIdentity.type: 'IAMUser'
-        # API calls from countries not typical for the user
+            # API calls from countries not typical for the user
         awsRegion|contains:
             - 'ap-'
             - 'eu-'
             - 'sa-'
-        # Focus on cross-region activities
+            # Focus on cross-region activities
     selection_rapid_enumeration:
         userIdentity.type: 'IAMUser'
         eventName:
@@ -27,7 +27,7 @@ detection:
             - 'DescribeInstances'
             - 'DescribeSecurityGroups'
             - 'GetCallerIdentity'
-        # Multiple enumeration calls within short timeframe
+            # Multiple enumeration calls within short timeframe
     selection_sensitive_access:
         userIdentity.type: 'IAMUser'
         eventName:
@@ -37,7 +37,7 @@ detection:
             - 'GetObject'
             - 'CreateAccessKey'
             - 'CreateRole'
-        # Access to sensitive resources and credential creation
+            # Access to sensitive resources and credential creation
     selection_unusual_user_agent:
         userIdentity.type: 'IAMUser'
         userAgent|contains:
@@ -47,10 +47,10 @@ detection:
             - 'aws-cli/1.'
             - 'boto3'
             - 'Postman'
-        # Non-standard or programmatic user agents
+            # Non-standard or programmatic user agents
     selection_concurrent_geographic_usage:
         userIdentity.type: 'IAMUser'
-        # Same API key used from multiple geographic locations simultaneously
+            # Same API key used from multiple geographic locations simultaneously
     selection_privilege_escalation:
         userIdentity.type: 'IAMUser'
         eventName:
@@ -60,7 +60,7 @@ detection:
             - 'PutRolePolicy'
             - 'CreateRole'
             - 'AssumeRole'
-        # Attempts to escalate privileges
+            # Attempts to escalate privileges
     selection_suspicious_ip_ranges:
         userIdentity.type: 'IAMUser'
         sourceIPAddress|cidr:
@@ -68,7 +68,7 @@ detection:
             - '10.0.0.0/8'
             - '172.16.0.0/12'
             - '192.168.0.0/16'
-        # Focus on external and potentially malicious IP ranges
+            # Focus on external and potentially malicious IP ranges
     condition: selection_api_geographic_anomaly or selection_rapid_enumeration or selection_sensitive_access or selection_unusual_user_agent or selection_concurrent_geographic_usage or selection_privilege_escalation or selection_suspicious_ip_ranges
 falsepositives:
     - Legitimate users traveling or working remotely

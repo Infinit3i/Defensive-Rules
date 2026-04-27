@@ -17,12 +17,12 @@ detection:
             - 'dockerhub.com'
             - 'ghcr.io'
             - 'quay.io'
-        # Images from public registries without organization control
+            # Images from public registries without organization control
         requestObject.spec.containers.image|endswith:
             - ':latest'
             - ':main'
             - ':master'
-        # Using mutable tags instead of specific versions
+            # Using mutable tags instead of specific versions
     selection_privileged_containers:
         verb: 'create'
         objectRef.resource: 'pods'
@@ -50,11 +50,11 @@ detection:
         objectRef.namespace:
             - 'default'
             - 'kube-public'
-        # Deployments in default or public namespaces
+            # Deployments in default or public namespaces
     selection_image_without_digest:
         verb: 'create'
         objectRef.resource: 'pods'
-        # Images without SHA256 digest verification
+            # Images without SHA256 digest verification
     condition: selection_suspicious_image_source or selection_privileged_containers or selection_excessive_capabilities or selection_suspicious_registry or selection_untrusted_namespace or selection_image_without_digest
 falsepositives:
     - Legitimate development and testing environments
