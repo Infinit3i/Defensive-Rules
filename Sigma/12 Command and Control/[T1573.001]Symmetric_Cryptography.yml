@@ -38,3 +38,4 @@ falsepositives:
   - Legitimate encrypted communications
   - Legacy applications
 level: low
+

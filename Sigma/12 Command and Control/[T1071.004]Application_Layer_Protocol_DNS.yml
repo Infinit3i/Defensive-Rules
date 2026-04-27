@@ -40,3 +40,4 @@ falsepositives:
   - Legitimate TXT record queries
   - DNS-based services
 level: medium
+

@@ -25,3 +25,4 @@ detection:
 falsepositives:
   - Backup systems, monitoring agents, or CDN connections.
 level: medium
+

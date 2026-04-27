@@ -37,3 +37,4 @@ falsepositives:
   - Legitimate dynamic DNS usage
   - Home network services
 level: medium
+

@@ -26,7 +26,7 @@ detection:
             - 'ReplyUrls'
             - 'SignOnUrl'
             - 'LogoutUrl'
-    # Modifications to SAML configuration
+        # Modifications to SAML configuration
     selection_identity_sync_attacks:
         ActivityDisplayName:
             - 'Add service principal'
@@ -42,7 +42,7 @@ detection:
             - 'Update application'
             - 'Add service principal credentials'
         TargetResources.modifiedProperties.displayName: 'KeyCredentials'
-    # Certificate-based authentication attacks
+        # Certificate-based authentication attacks
     selection_suspicious_token_signing:
         ActivityDisplayName:
             - 'Update application'
@@ -57,7 +57,7 @@ detection:
             - 'SAML2'
             - 'WS-Fed'
             - 'OAuth2'
-    # Sign-ins through potentially compromised identity providers
+        # Sign-ins through potentially compromised identity providers
         UserPrincipalName|contains: '@federated.'
     selection_privileged_federation_access:
         ActivityDisplayName:
@@ -67,7 +67,7 @@ detection:
             - 'Global Administrator'
             - 'Application Administrator'
             - 'Cloud Application Administrator'
-    # Privilege escalation through federation
+        # Privilege escalation through federation
     selection_adfs_configuration_changes:
         ActivityDisplayName|contains:
             - 'ADFS'
@@ -76,7 +76,10 @@ detection:
             - 'Update'
             - 'Add'
             - 'Delete'
-    condition: selection_federation_changes or selection_saml_manipulation or selection_identity_sync_attacks or selection_certificate_attacks or selection_suspicious_token_signing or selection_identity_provider_abuse or selection_privileged_federation_access or selection_adfs_configuration_changes
+    condition: selection_federation_changes or selection_saml_manipulation or
+               selection_identity_sync_attacks or selection_certificate_attacks or
+               selection_suspicious_token_signing or selection_identity_provider_abuse or
+               selection_privileged_federation_access or selection_adfs_configuration_changes
 falsepositives:
     - Legitimate identity provider configuration changes
     - Planned federation setup and maintenance activities

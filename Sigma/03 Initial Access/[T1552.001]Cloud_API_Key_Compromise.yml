@@ -69,7 +69,10 @@ detection:
             - '172.16.0.0/12'
             - '192.168.0.0/16'
             # Focus on external and potentially malicious IP ranges
-    condition: selection_api_geographic_anomaly or selection_rapid_enumeration or selection_sensitive_access or selection_unusual_user_agent or selection_concurrent_geographic_usage or selection_privilege_escalation or selection_suspicious_ip_ranges
+    condition: selection_api_geographic_anomaly or selection_rapid_enumeration or
+               selection_sensitive_access or selection_unusual_user_agent or
+               selection_concurrent_geographic_usage or selection_privilege_escalation or
+               selection_suspicious_ip_ranges
 falsepositives:
     - Legitimate users traveling or working remotely
     - Automated scripts and CI/CD pipelines

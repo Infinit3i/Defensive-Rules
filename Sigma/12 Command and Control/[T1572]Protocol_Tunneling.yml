@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate SSH usage
   - Network administration
 level: medium
+
