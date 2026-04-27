@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a cybersecurity detection rules repository containing Sigma rules, Splunk queries, and YARA rules for threat detection. Rules are organized by MITRE ATT&CK tactics and techniques, currently in experimental status and requiring validation.
 
+## Working Guidelines
+
+**NEVER PUSH OR COMMIT CODE** - User controls all git operations and repository state
+
 ## Architecture & Organization
 
 ### Directory Structure
