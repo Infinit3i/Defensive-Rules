@@ -1,0 +1,150 @@
+{
+  "description": "SOAR Platform Configuration Template",
+  "version": "1.0",
+  "platforms": {
+    "sentinel": {
+      "enabled": true,
+      "webhook_url": "https://prod-xx.eastus.logic.azure.com:443/workflows/xxx/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=xxx",
+      "subscription_id": "your-azure-subscription-id",
+      "resource_group": "rg-sentinel-soar",
+      "workspace_name": "sentinel-workspace",
+      "authentication": {
+        "type": "managed_identity",
+        "client_id": "your-managed-identity-client-id"
+      },
+      "playbooks": {
+        "incident_response": "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Logic/workflows/incident-response-playbook",
+        "user_compromise": "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Logic/workflows/user-compromise-playbook",
+        "malware_detection": "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Logic/workflows/malware-response-playbook"
+      }
+    },
+    "phantom": {
+      "enabled": false,
+      "base_url": "https://phantom.company.com",
+      "api_key": "your-phantom-api-key",
+      "verify_ssl": true,
+      "playbooks": {
+        "incident_response": "incident_response_playbook",
+        "threat_hunting": "threat_hunting_playbook"
+      }
+    },
+    "xsoar": {
+      "enabled": false,
+      "base_url": "https://xsoar.company.com",
+      "api_key": "your-xsoar-api-key",
+      "verify_ssl": true,
+      "integration_instance": "defensive-rules-integration",
+      "playbooks": {
+        "incident_response": "Defensive Rules - Incident Response",
+        "malware_analysis": "Defensive Rules - Malware Analysis"
+      }
+    },
+    "shuffle": {
+      "enabled": false,
+      "base_url": "https://shuffle.company.com",
+      "api_key": "your-shuffle-api-key",
+      "workflows": {
+        "incident_response": "workflow-id-here"
+      }
+    }
+  },
+  "integrations": {
+    "ticketing": {
+      "servicenow": {
+        "enabled": false,
+        "instance_url": "https://company.service-now.com",
+        "username": "service-account",
+        "password": "service-password",
+        "table": "incident"
+      },
+      "jira": {
+        "enabled": false,
+        "base_url": "https://company.atlassian.net",
+        "username": "service-account",
+        "api_token": "jira-api-token",
+        "project_key": "SEC"
+      }
+    },
+    "communication": {
+      "slack": {
+        "enabled": false,
+        "webhook_url": "https://hooks.slack.com/services/xxx/xxx/xxx",
+        "channel": "#security-alerts",
+        "bot_token": "xoxb-your-bot-token"
+      },
+      "teams": {
+        "enabled": false,
+        "webhook_url": "https://company.webhook.office.com/webhookb2/xxx",
+        "channel_id": "security-team-channel-id"
+      },
+      "email": {
+        "enabled": false,
+        "smtp_server": "smtp.company.com",
+        "smtp_port": 587,
+        "username": "alerts@company.com",
+        "password": "smtp-password",
+        "recipients": ["soc@company.com", "incident-response@company.com"]
+      }
+    },
+    "threat_intelligence": {
+      "virustotal": {
+        "enabled": false,
+        "api_key": "your-vt-api-key"
+      },
+      "misp": {
+        "enabled": false,
+        "base_url": "https://misp.company.com",
+        "api_key": "misp-api-key"
+      },
+      "threatfox": {
+        "enabled": false,
+        "api_key": "threatfox-api-key"
+      }
+    },
+    "identity": {
+      "azure_ad": {
+        "enabled": false,
+        "tenant_id": "your-tenant-id",
+        "client_id": "your-app-id",
+        "client_secret": "your-client-secret"
+      },
+      "okta": {
+        "enabled": false,
+        "domain": "company.okta.com",
+        "api_token": "okta-api-token"
+      }
+    },
+    "edr": {
+      "defender": {
+        "enabled": false,
+        "tenant_id": "your-tenant-id",
+        "client_id": "defender-app-id",
+        "client_secret": "defender-secret"
+      },
+      "crowdstrike": {
+        "enabled": false,
+        "client_id": "crowdstrike-client-id",
+        "client_secret": "crowdstrike-secret",
+        "base_url": "https://api.crowdstrike.com"
+      }
+    }
+  },
+  "rules": {
+    "auto_containment": {
+      "enabled": true,
+      "high_severity_only": true,
+      "require_approval": false,
+      "techniques": ["T1059", "T1055", "T1003"]
+    },
+    "notification": {
+      "severity_threshold": "medium",
+      "business_hours_only": false,
+      "escalation_timeout": 1800
+    },
+    "evidence_collection": {
+      "enabled": true,
+      "auto_collect": true,
+      "retention_days": 90
+    }
+  }
+}

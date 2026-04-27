@@ -1,0 +1,293 @@
+{
+  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+  "contentVersion": "1.0.0.0",
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "actions": {
+      "Parse_Alert": {
+        "inputs": {
+          "content": "@triggerBody()",
+          "schema": {
+            "properties": {
+              "alertId": {"type": "string"},
+              "alertTitle": {"type": "string"},
+              "severity": {"type": "string"},
+              "description": {"type": "string"},
+              "sourceSystem": {"type": "string"},
+              "timestamp": {"type": "string"},
+              "entities": {"type": "array"},
+              "mitreTechniques": {"type": "array"},
+              "rawData": {"type": "object"}
+            },
+            "type": "object"
+          }
+        },
+        "runAfter": {},
+        "type": "ParseJson"
+      },
+      "Check_Severity": {
+        "actions": {
+          "High_Severity_Actions": {
+            "actions": {
+              "Send_Teams_Alert": {
+                "inputs": {
+                  "body": {
+                    "text": "🚨 **HIGH SEVERITY ALERT** 🚨\n\n**Title:** @{body('Parse_Alert')?['alertTitle']}\n**Source:** @{body('Parse_Alert')?['sourceSystem']}\n**Time:** @{body('Parse_Alert')?['timestamp']}\n**MITRE:** @{join(body('Parse_Alert')?['mitreTechniques'], ', ')}\n\n**Description:**\n@{body('Parse_Alert')?['description']}"
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['teams']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/flowbot/actions/notification/recipienttypes/channel"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+              },
+              "Create_ServiceNow_Incident": {
+                "inputs": {
+                  "body": {
+                    "short_description": "@{body('Parse_Alert')?['alertTitle']}",
+                    "description": "@{body('Parse_Alert')?['description']}",
+                    "urgency": "1",
+                    "impact": "1",
+                    "category": "Security",
+                    "work_notes": "Auto-created from SIEM alert: @{body('Parse_Alert')?['alertId']}"
+                  },
+                  "host": {
+                    "connection": {
+                      "name": "@parameters('$connections')['servicenow']['connectionId']"
+                    }
+                  },
+                  "method": "post",
+                  "path": "/api/now/table/incident"
+                },
+                "runAfter": {
+                  "Send_Teams_Alert": ["Succeeded"]
+                },
+                "type": "ApiConnection"
+              }
+            },
+            "expression": {
+              "or": [
+                {"equals": ["@body('Parse_Alert')?['severity']", "high"]},
+                {"equals": ["@body('Parse_Alert')?['severity']", "critical"]}
+              ]
+            },
+            "runAfter": {},
+            "type": "If"
+          }
+        },
+        "runAfter": {
+          "Parse_Alert": ["Succeeded"]
+        },
+        "type": "Scope"
+      },
+      "Enrich_with_Threat_Intel": {
+        "actions": {
+          "Query_VirusTotal": {
+            "inputs": {
+              "headers": {
+                "x-apikey": "@parameters('virustotal_api_key')"
+              },
+              "method": "GET",
+              "uri": "https://www.virustotal.com/api/v3/ip_addresses/@{variables('suspicious_ip')}"
+            },
+            "runAfter": {},
+            "type": "Http"
+          },
+          "Update_Alert_with_TI": {
+            "inputs": {
+              "variables": [
+                {
+                  "name": "enriched_alert",
+                  "type": "object",
+                  "value": {
+                    "original": "@body('Parse_Alert')",
+                    "threat_intel": "@body('Query_VirusTotal')"
+                  }
+                }
+              ]
+            },
+            "runAfter": {
+              "Query_VirusTotal": ["Succeeded"]
+            },
+            "type": "InitializeVariable"
+          }
+        },
+        "runAfter": {
+          "Check_Severity": ["Succeeded"]
+        },
+        "type": "Scope"
+      },
+      "Automated_Containment": {
+        "actions": {
+          "Check_for_Malware_IOCs": {
+            "actions": {
+              "Disable_User_Account": {
+                "inputs": {
+                  "body": {
+                    "accountEnabled": false
+                  },
+                  "headers": {
+                    "Authorization": "Bearer @{parameters('azure_ad_token')}"
+                  },
+                  "method": "PATCH",
+                  "uri": "https://graph.microsoft.com/v1.0/users/@{variables('affected_user')}"
+                },
+                "runAfter": {},
+                "type": "Http"
+              },
+              "Isolate_Device": {
+                "inputs": {
+                  "body": {
+                    "isolation_type": "full",
+                    "reason": "Malware detection - Alert ID: @{body('Parse_Alert')?['alertId']}"
+                  },
+                  "headers": {
+                    "Authorization": "Bearer @{parameters('defender_api_token')}"
+                  },
+                  "method": "POST",
+                  "uri": "https://api.securitycenter.microsoft.com/api/machines/@{variables('machine_id')}/isolate"
+                },
+                "runAfter": {
+                  "Disable_User_Account": ["Succeeded"]
+                },
+                "type": "Http"
+              }
+            },
+            "expression": {
+              "contains": [
+                "@string(body('Parse_Alert')?['mitreTechniques'])",
+                "T1059"
+              ]
+            },
+            "runAfter": {},
+            "type": "If"
+          }
+        },
+        "runAfter": {
+          "Enrich_with_Threat_Intel": ["Succeeded"]
+        },
+        "type": "Scope"
+      },
+      "Evidence_Collection": {
+        "actions": {
+          "Collect_Process_List": {
+            "inputs": {
+              "body": {
+                "command": "Get-Process | Export-Csv -Path C:\\temp\\processes_@{formatDateTime(utcnow(), 'yyyyMMdd_HHmmss')}.csv"
+              },
+              "headers": {
+                "Authorization": "Bearer @{parameters('powershell_api_token')}"
+              },
+              "method": "POST",
+              "uri": "https://api.example.com/remote-execute"
+            },
+            "runAfter": {},
+            "type": "Http"
+          },
+          "Collect_Memory_Dump": {
+            "inputs": {
+              "body": {
+                "target_machine": "@{variables('machine_id')}",
+                "dump_type": "mini"
+              },
+              "headers": {
+                "Authorization": "Bearer @{parameters('forensics_api_token')}"
+              },
+              "method": "POST",
+              "uri": "https://api.forensics.example.com/memory-dump"
+            },
+            "runAfter": {
+              "Collect_Process_List": ["Succeeded"]
+            },
+            "type": "Http"
+          }
+        },
+        "runAfter": {
+          "Automated_Containment": ["Succeeded"]
+        },
+        "type": "Scope"
+      }
+    },
+    "contentVersion": "1.0.0.0",
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      },
+      "virustotal_api_key": {
+        "defaultValue": "",
+        "type": "String"
+      },
+      "azure_ad_token": {
+        "defaultValue": "",
+        "type": "String"
+      },
+      "defender_api_token": {
+        "defaultValue": "",
+        "type": "String"
+      },
+      "powershell_api_token": {
+        "defaultValue": "",
+        "type": "String"
+      },
+      "forensics_api_token": {
+        "defaultValue": "",
+        "type": "String"
+      }
+    },
+    "triggers": {
+      "manual": {
+        "inputs": {
+          "schema": {
+            "properties": {
+              "alertId": {"type": "string"},
+              "alertTitle": {"type": "string"},
+              "severity": {"type": "string"},
+              "description": {"type": "string"},
+              "sourceSystem": {"type": "string"},
+              "timestamp": {"type": "string"},
+              "entities": {"type": "array"},
+              "mitreTechniques": {"type": "array"},
+              "rawData": {"type": "object"}
+            },
+            "type": "object"
+          }
+        },
+        "kind": "Http",
+        "type": "Request"
+      }
+    },
+    "variables": {
+      "suspicious_ip": {
+        "type": "string"
+      },
+      "affected_user": {
+        "type": "string"
+      },
+      "machine_id": {
+        "type": "string"
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "teams": {
+          "connectionId": "/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Web/connections/teams",
+          "connectionName": "teams",
+          "id": "/subscriptions/{subscription-id}/providers/Microsoft.Web/locations/{location}/managedApis/teams"
+        },
+        "servicenow": {
+          "connectionId": "/subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Web/connections/servicenow",
+          "connectionName": "servicenow",
+          "id": "/subscriptions/{subscription-id}/providers/Microsoft.Web/locations/{location}/managedApis/servicenow"
+        }
+      }
+    }
+  }
+}

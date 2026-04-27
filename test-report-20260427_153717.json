@@ -1,0 +1,483 @@
+{
+  "timestamp": "2026-04-27T15:37:16.333407",
+  "sigma_validation": {
+    "yaml_errors": [
+      {
+        "file": "Sigma/04 Execution/[T1059.001]Abnormal_PowerShell_Activity.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 21:\n        Image|endswith: \"\\powershell.exe\"\n                        ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 20, column 23:\n        Image|endswith: \"\\powershell.exe\"\n                          ^",
+        "type": "yaml_syntax"
+      },
+      {
+        "file": "Sigma/05 Persistence/[T1574.002]DLL_Hijacking_or_Side-Loading.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 9:\n          - \":\\Temp\\\"\n            ^\nfound unknown escape character 'T'\n  in \"<unicode string>\", line 20, column 12:\n          - \":\\Temp\\\"\n               ^",
+        "type": "yaml_syntax"
+      },
+      {
+        "file": "Sigma/10 Lateral Movement/[T1219]psexec.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n                - \"\\psexec.exe\"\n                  ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 21, column 17:\n                - \"\\psexec.exe\"\n                    ^",
+        "type": "yaml_syntax"
+      },
+      {
+        "file": "Sigma/08 Credential Access/[T1055.003]LSASS_Process_Access_or_Injection.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 27:\n        TargetImage|endswith: \"\\lsass.exe\"\n                              ^\nfound unknown escape character 'l'\n  in \"<unicode string>\", line 20, column 29:\n        TargetImage|endswith: \"\\lsass.exe\"\n                                ^",
+        "type": "yaml_syntax"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T0000]Unusual_File_System_Activities_in_Sensitive_Directories.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 4, column 14:\n    description: \"Detects suspicious file system  ... \n                 ^\nfound unknown escape character 'W'\n  in \"<unicode string>\", line 4, column 90:\n     ... sensitive directories (e.g., C:\\Windows\\System32, C:\\Windows\\Tem ... \n                                         ^",
+        "type": "yaml_syntax"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.004]Anomalous_DNS_Query_Patterns.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                  ^\nfound unknown escape character '.'\n  in \"<unicode string>\", line 21, column 34:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                                     ^",
+        "type": "yaml_syntax"
+      }
+    ],
+    "field_errors": [
+      {
+        "file": "Sigma/04 Execution/[T1059.001]Abnormal_PowerShell_Activity.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 21:\n        Image|endswith: \"\\powershell.exe\"\n                        ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 20, column 23:\n        Image|endswith: \"\\powershell.exe\"\n                          ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/05 Persistence/[T1574.002]DLL_Hijacking_or_Side-Loading.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 9:\n          - \":\\Temp\\\"\n            ^\nfound unknown escape character 'T'\n  in \"<unicode string>\", line 20, column 12:\n          - \":\\Temp\\\"\n               ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/10 Lateral Movement/[T1219]psexec.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n                - \"\\psexec.exe\"\n                  ^\nfound unknown escape character 'p'\n  in \"<unicode string>\", line 21, column 17:\n                - \"\\psexec.exe\"\n                    ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/08 Credential Access/[T1055.003]LSASS_Process_Access_or_Injection.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 20, column 27:\n        TargetImage|endswith: \"\\lsass.exe\"\n                              ^\nfound unknown escape character 'l'\n  in \"<unicode string>\", line 20, column 29:\n        TargetImage|endswith: \"\\lsass.exe\"\n                                ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Network_Process_Correlation.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Network_Process_Correlation.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Process_Handle_Analysis.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Process_Handle_Analysis.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Service_Process_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Service_Process_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Hidden_File_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Large_File_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Large_File_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Regional_Settings_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Regional_Settings_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Configuration_File_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Configuration_File_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Boot_Time_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Boot_Time_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]System_Clock_Enumeration.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]System_Clock_Enumeration.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]NTP_Configuration_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]NTP_Configuration_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Database_File_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]Database_File_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Memory_Usage_Analysis.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Memory_Usage_Analysis.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Event_Log_Time_Analysis.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1124]Event_Log_Time_Analysis.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Process_Tree_Analysis.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1057]Process_Tree_Analysis.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]File_Extension_Discovery.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/09 Discovery/[T1083]File_Extension_Discovery.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1622]Timing_Attack_Detection.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1497.003]Uptime_Checks.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1622]Memory_Protection_Checks.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1622]Hardware_Breakpoint_Detection.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T0000]Unusual_File_System_Activities_in_Sensitive_Directories.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 4, column 14:\n    description: \"Detects suspicious file system  ... \n                 ^\nfound unknown escape character 'W'\n  in \"<unicode string>\", line 4, column 90:\n     ... sensitive directories (e.g., C:\\Windows\\System32, C:\\Windows\\Tem ... \n                                         ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1497.003]Memory_Size_Checks.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1622]Process_Debug_Flag_Checks.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/07 Defense Evasion/[T1622]Exception_Handler_Checks.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]TLS_Certificate_Anomalies.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]TLS_Certificate_Anomalies.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Domain_Generation_Algorithm.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Domain_Generation_Algorithm.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]HTTP_Tunneling.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]HTTP_Tunneling.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]C2_Framework_Indicators.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]C2_Framework_Indicators.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]FTP_File_Transfer.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]FTP_File_Transfer.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Encoded_C2_Communication.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Encoded_C2_Communication.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.004]Anomalous_DNS_Query_Patterns.yml",
+        "error": "while scanning a double-quoted scalar\n  in \"<unicode string>\", line 21, column 15:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                  ^\nfound unknown escape character '.'\n  in \"<unicode string>\", line 21, column 34:\n        query|re: \"([a-zA-Z0-9]{10,}\\.){3,}\"\n                                     ^",
+        "type": "validation_error"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]DNS_Over_HTTPS.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]DNS_Over_HTTPS.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]SMB_File_Transfer.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]SMB_File_Transfer.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]Email_File_Exfiltration.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1105]Email_File_Exfiltration.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Uncommon_User_Agents.yml",
+        "error": "Missing required field: description",
+        "type": "missing_field"
+      },
+      {
+        "file": "Sigma/12 Command and Control/[T1071.001]Uncommon_User_Agents.yml",
+        "error": "Missing required field: level",
+        "type": "missing_field"
+      }
+    ],
+    "mitre_errors": [],
+    "duplicate_ids": []
+  },
+  "conversion_tests": {
+    "splunk": {
+      "success": false,
+      "stdout": "ERROR: pysigma not installed. Run: pip install pysigma pysigma-backend-splunk\n",
+      "stderr": "",
+      "files_created": []
+    },
+    "sentinel": {
+      "success": true,
+      "stdout": "Converting Sigma rules from build/test-sentinel to build/test-sentinel/output\nFound 3 Sigma rule files\nConverting: [T1057]Tasklist_Process_Enumeration.yml\nConverting: [T1057]Network_Process_Correlation.yml\nConverting: [T1082]System_Version_and_Patch_Discovery.yml\nARM template written to: build/test-sentinel/output/analytics-rules-template.json\nIndividual rules written to: build/test-sentinel/output\n\nConversion complete:\n  \u2705 Success: 3\n  \u274c Failures: 0\n  \ud83d\udcca MITRE Techniques: 2\n  \ud83d\udcc4 ARM Template: build/test-sentinel/output/analytics-rules-template.json\n",
+      "stderr": "",
+      "arm_template_valid": true
+    }
+  },
+  "soar_tests": {
+    "framework": {
+      "success": true,
+      "manager_created": true,
+      "alert_conversion_works": true,
+      "connectors_available": []
+    },
+    "webhook_config": {
+      "success": true,
+      "config_valid": true,
+      "missing_sections": [],
+      "platforms_defined": [
+        "sentinel",
+        "phantom",
+        "xsoar",
+        "shuffle"
+      ]
+    }
+  },
+  "quality_metrics": {
+    "coverage": {
+      "unique_techniques": 56,
+      "unique_tactics": 22,
+      "techniques": [
+        "T0000",
+        "T1003.001",
+        "T1021",
+        "T1041",
+        "T1046",
+        "T1047",
+        "T1048",
+        "T1048.003",
+        "T1049",
+        "T1053",
+        "T1053.005",
+        "T1055",
+        "T1055.001",
+        "T1057",
+        "T1059",
+        "T1059.001",
+        "T1059.003",
+        "T1070",
+        "T1070.004",
+        "T1071",
+        "T1071.001",
+        "T1071.004",
+        "T1077",
+        "T1082",
+        "T1083",
+        "T1095",
+        "T1098",
+        "T1105",
+        "T1106",
+        "T1110",
+        "T1110.001",
+        "T1110.003",
+        "T1124",
+        "T1134",
+        "T1136",
+        "T1136.001",
+        "T1195",
+        "T1218",
+        "T1218.011",
+        "T1219",
+        "T1489",
+        "T1497.003",
+        "T1542.007",
+        "T1543",
+        "T1543.003",
+        "T1547",
+        "T1547.001",
+        "T1548",
+        "T1550.002",
+        "T1557",
+        "T1562",
+        "T1562.002",
+        "T1574",
+        "T1574.002",
+        "T1587.003",
+        "T1622"
+      ],
+      "tactics": [
+        "T1047",
+        "T1078",
+        "T1078.004",
+        "T1086",
+        "T1218",
+        "T1218.011",
+        "account_manipulation",
+        "command-and-control",
+        "command_and_control",
+        "credential_access",
+        "defense-evasion",
+        "defense_evasion",
+        "discovery",
+        "execution",
+        "exfiltration",
+        "impact",
+        "indicator_removal",
+        "lateral-movement",
+        "lateral_movement",
+        "persistence",
+        "privilege_escalation",
+        "supply_chain_compromise"
+      ]
+    },
+    "rules": {
+      "total_rules": 173,
+      "mitre_coverage_percent": 94.79768786127167,
+      "description_coverage_percent": 86.1271676300578,
+      "severity_distribution": {
+        "low": 15,
+        "medium": 88,
+        "high": 66,
+        "critical": 4
+      }
+    }
+  }
+}

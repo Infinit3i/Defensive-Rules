@@ -1,0 +1,27 @@
+title: LSASS Spawned by Suspicious Parent Process
+id: c3d4e5f6-a7b8-9012-cdef-345678901234
+status: experimental
+description: Detects lsass.exe spawned by process other than wininit.exe which may indicate process hollowing or masquerading
+references:
+    - https://attack.mitre.org/techniques/T1055/
+    - https://attack.mitre.org/techniques/T1036/
+author: Defensive Rules Project
+date: 2026/04/27
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\lsass.exe'
+    filter:
+        ParentImage|endswith: '\wininit.exe'
+    condition: selection and not filter
+falsepositives:
+    - None known - LSASS should always be spawned by wininit.exe
+level: critical
+tags:
+    - attack.defense_evasion
+    - attack.t1055
+    - attack.t1036
+    - sysmon
+    - windows

@@ -1,7 +1,11 @@
-# Build artifacts
-build/
-*.tar.gz
-*.zip
+# Build artifacts (keep final packages, exclude temp files)
+build/queries/
+build/test*/
+build/combined-package/
+# Keep these in repo:
+# build/*.tar.gz
+# build/*.json
+# build/sentinel/
 
 # Python
 __pycache__/
