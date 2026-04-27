@@ -23,11 +23,11 @@ detection:
     selection_token_geographic_anomaly:
         ActivityDisplayName: 'Sign-in activity'
         AuthenticationDetails.succeeded: true
-        # Token used from multiple countries within short timeframe
+    # Token used from multiple countries within short timeframe
     selection_rapid_api_calls:
         Category: 'ApplicationManagement'
         Result: 'success'
-        # High volume of API calls within minutes of OAuth consent
+    # High volume of API calls within minutes of OAuth consent
     selection_suspicious_oauth_apps:
         ActivityDisplayName: 'Consent to application'
         TargetResources.displayName|contains:
@@ -35,14 +35,14 @@ detection:
             - 'Office 365'
             - 'OneDrive'
             - 'SharePoint'
-        # Apps mimicking legitimate Microsoft services
+    # Apps mimicking legitimate Microsoft services
         InitiatedBy.app.appId|contains:
-        # Known malicious OAuth app IDs would go here
+    # Known malicious OAuth app IDs would go here
             - '00000000-0000-0000-0000-000000000000'
     selection_session_hijacking:
         ActivityDisplayName: 'Sign-in activity'
         AuthenticationDetails.succeeded: true
-        # Multiple concurrent sessions from different geographic locations
+    # Multiple concurrent sessions from different geographic locations
     condition: selection_oauth_token_abuse or selection_token_geographic_anomaly or selection_rapid_api_calls or selection_suspicious_oauth_apps or selection_session_hijacking
 falsepositives:
     - Legitimate OAuth applications and integrations
