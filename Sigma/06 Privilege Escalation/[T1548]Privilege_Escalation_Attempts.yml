@@ -33,4 +33,3 @@ detection:
 falsepositives:
   - Legitimate authentication errors due to mistyped passwords or configuration issues.
 level: medium
-

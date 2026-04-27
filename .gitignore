@@ -54,6 +54,12 @@ logs/
 .tmp/
 temp/
 
+# Generated scripts
+scripts/fix_*.py
+scripts/quick_*.py
+scripts/cleanup_*.py
+scripts/final_*.py
+
 # Test outputs
 test-output/
 test-results/

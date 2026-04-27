@@ -32,4 +32,3 @@ detection:
 falsepositives:
   - Internal self-signed certs for testing or dev environments.
 level: high
-

@@ -25,4 +25,3 @@ detection:
 falsepositives:
   - Legitimate internal or custom services using named pipes
 level: high
-

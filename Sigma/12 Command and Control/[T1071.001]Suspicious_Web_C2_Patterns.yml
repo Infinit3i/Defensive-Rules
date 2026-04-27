@@ -39,9 +39,7 @@ detection:
   selection_beaconing:
     request_body_len: '<100'  # Small consistent requests
     status_code: '200'
-  timing_patterns:
-    # This would need custom logic for beaconing detection
-    # Looking for regular intervals
+  timing_patterns: {}  # Placeholder for beaconing detection logic
   condition: (selection_user_agents or selection_suspicious_paths) and (selection_post_patterns or selection_beaconing)
 fields:
   - src_ip
@@ -61,4 +59,3 @@ tags:
   - attack.t1071.001
   - zeek
   - network
-

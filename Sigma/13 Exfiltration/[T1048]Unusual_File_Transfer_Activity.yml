@@ -30,4 +30,3 @@ detection:
 falsepositives:
   - Legitimate large file transfers or patching events.
 level: high
-

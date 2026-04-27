@@ -24,4 +24,3 @@ detection:
 falsepositives:
   - Legitimate sudo usage by authorized administrators.
 level: medium
-
