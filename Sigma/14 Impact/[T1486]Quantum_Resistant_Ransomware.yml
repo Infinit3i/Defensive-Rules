@@ -93,7 +93,9 @@ detection:
             - 'encrypt'
             - 'crypto'
             - 'quantum'
-    condition: (selection_pqc_libraries and selection_quantum_encryption) or (selection_crypto_process and selection_mass_encryption) or (selection_ransom_note and selection_crypto_apis and selection_network_c2)
+    condition: (selection_pqc_libraries and selection_quantum_encryption) or
+               (selection_crypto_process and selection_mass_encryption) or
+               (selection_ransom_note and selection_crypto_apis and selection_network_c2)
 level: critical
 tags:
     - attack.impact

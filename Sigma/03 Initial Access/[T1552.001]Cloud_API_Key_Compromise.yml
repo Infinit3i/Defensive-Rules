@@ -11,7 +11,7 @@ logsource:
 detection:
     selection_api_geographic_anomaly:
         userIdentity.type: 'IAMUser'
-            # API calls from countries not typical for the user
+        # API calls from countries not typical for the user
         awsRegion|contains:
             - 'ap-'
             - 'eu-'
@@ -50,7 +50,7 @@ detection:
             # Non-standard or programmatic user agents
     selection_concurrent_geographic_usage:
         userIdentity.type: 'IAMUser'
-            # Same API key used from multiple geographic locations simultaneously
+        # Same API key used from multiple geographic locations simultaneously
     selection_privilege_escalation:
         userIdentity.type: 'IAMUser'
         eventName:

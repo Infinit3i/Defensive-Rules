@@ -1,7 +1,7 @@
 title: Supply Chain Poisoning Through Package Managers
 id: 7f9e2d4c-8b5a-4e3f-9d1c-6a8e5f2b9c4d
 status: experimental
-description: Detects supply chain attacks targeting package managers (npm, pip, gem, nuget) through malicious packages, typosquatting, and dependency confusion attacks. Monitors for suspicious package installations and post-install scripts.
+description: Detects supply chain attacks targeting package managers through malicious packages and dependency confusion attacks.
 author: Cybersecurity Detection Engineering
 date: 2024-12-01
 modified: 2026-04-27
