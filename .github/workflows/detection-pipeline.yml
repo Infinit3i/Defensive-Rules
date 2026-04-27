@@ -144,8 +144,10 @@ jobs:
               json.dump(coverage, f, indent=2)
 
           print(f'MITRE Coverage: {len(techniques)} techniques, {len(tactics)} tactics, {rule_count} rules')
-          print(f'rules-count={rule_count}' >> os.environ['GITHUB_OUTPUT'])
-          print(f'techniques-count={len(techniques)}' >> os.environ['GITHUB_OUTPUT'])
+
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write(f'rules-count={rule_count}\\n')
+              f.write(f'techniques-count={len(techniques)}\\n')
           "
 
       - name: Performance test
