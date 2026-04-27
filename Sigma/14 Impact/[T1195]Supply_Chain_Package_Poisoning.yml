@@ -105,3 +105,4 @@ falsepositives:
     - Legitimate package installations with --force flag
     - Development environments with custom package repositories
     - Automated CI/CD pipeline package updates
+
