@@ -1,0 +1,69 @@
+---
+title: BOF Process Injection and Memory Manipulation
+id: b1c2d3e4-f5a6-7890-cdef-345678901234
+status: experimental
+description: >
+  Detects process injection techniques commonly used by Beacon Object Files (BOFs).
+  BOFs often inject into legitimate processes to evade detection and maintain persistence.
+references:
+  - https://attack.mitre.org/techniques/T1055/
+  - https://www.cobaltstrike.com/help-process-injection
+author: Defensive Rules Project
+date: 2026/04/27
+logsource:
+  category: process_access
+  product: windows
+  service: sysmon
+detection:
+  selection_injection:
+    EventID: 10
+    TargetImage|endswith:
+      - '\explorer.exe'
+      - '\svchost.exe'
+      - '\winlogon.exe'
+      - '\lsass.exe'
+    GrantedAccess:
+      - '0x1F0FFF'
+      - '0x1FFFFF'
+      - '0x143A'
+      - '0x1410'
+      - '0x1038'
+  selection_memory:
+    EventID: 7
+    ImageLoaded|contains: 'UNKNOWN'
+    Signed: 'false'
+  selection_thread:
+    EventID: 8
+    TargetImage|endswith:
+      - '\explorer.exe'
+      - '\svchost.exe'
+      - '\winlogon.exe'
+    StartModule: 'null'
+  selection_hollowing:
+    EventID: 1
+    ParentImage|endswith: '\rundll32.exe'
+    CommandLine|contains:
+      - 'VirtualAlloc'
+      - 'WriteProcessMemory'
+      - 'CreateRemoteThread'
+  filter_legit:
+    Image|startswith:
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - 'C:\Windows\System32\'
+    Signed: 'true'
+  condition: (any of selection_*) and not filter_legit
+falsepositives:
+  - Legitimate security software
+  - System administration tools
+  - Debugging applications
+level: high
+tags:
+  - attack.defense_evasion
+  - attack.t1055
+  - attack.t1055.001
+  - attack.t1055.002
+  - sysmon
+  - windows
+  - cobalt_strike
+  - bof

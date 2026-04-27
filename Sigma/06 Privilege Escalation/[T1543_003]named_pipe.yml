@@ -20,8 +20,9 @@ detection:
   selection:
     EventID: 7045
     # "A service was installed in the system"
-    ServiceFileName|contains: '\\.\pipe\'  
+    ServiceFileName|contains: '\\.\pipe\'
   condition: selection
 falsepositives:
   - Legitimate internal or custom services using named pipes
 level: high
+

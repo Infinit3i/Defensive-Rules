@@ -2,7 +2,9 @@
 title: Unusual File Transfer Activity
 id: b789c2f1-45e6-4d91-abcd-0987654321ef
 status: experimental
-description: "Detects unusual file transfer activity using Zeek logs, such as large file sizes, executable/script MIME types, or transfers over unexpected protocols like FTP or HTTP instead of secure channels."
+description: >
+  "Detects unusual file transfer activity using Zeek logs, such as large file sizes, executable/script MIME types, or transfers over
+  unexpected protocols like FTP or HTTP instead of secure channels."
 references:
   - https://attack.mitre.org/techniques/T1048/
 author: Matthew Iverson
@@ -28,3 +30,4 @@ detection:
 falsepositives:
   - Legitimate large file transfers or patching events.
 level: high
+

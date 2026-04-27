@@ -2,7 +2,9 @@
 title: Abnormal TLS/SSL Certificate Anomalies
 id: a1b2c3d4-e5f6-7890-abcd-1234567890ef
 status: experimental
-description: "Detects suspicious TLS/SSL certificate characteristics from Zeek logs such as self-signed certs, mismatched subject/issuer, or uncommon issuers—potential indicators of malware C2, unauthorized services, or MitM attacks."
+description: >
+  "Detects suspicious TLS/SSL certificate characteristics from Zeek logs such as self-signed certs, mismatched subject/issuer, or uncommon
+  issuers—potential indicators of malware C2, unauthorized services, or MitM attacks."
 references:
   - https://attack.mitre.org/techniques/T1587/003/
   - https://attack.mitre.org/techniques/T1557/
@@ -30,3 +32,4 @@ detection:
 falsepositives:
   - Internal self-signed certs for testing or dev environments.
 level: high
+

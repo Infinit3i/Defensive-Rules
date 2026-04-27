@@ -1,0 +1,60 @@
+---
+title: BOF Command and Control Beaconing Patterns
+id: a1b2c3d4-e5f6-7890-bcde-f23456789012
+status: experimental
+description: >
+  Detects network patterns consistent with Beacon Object File (BOF) command and control communications.
+  BOFs often use HTTP/HTTPS for C2 with specific timing and payload characteristics.
+references:
+  - https://attack.mitre.org/techniques/T1071.001/
+  - https://www.cobaltstrike.com/help-malleable-c2
+author: Defensive Rules Project
+date: 2026/04/27
+logsource:
+  category: network
+  product: zeek
+  service: http
+detection:
+  selection_user_agents:
+    user_agent|contains:
+      - 'Mozilla/5.0 (compatible; MSIE'
+      - 'Mozilla/4.0 (compatible; MSIE'
+      - 'Mozilla/5.0 (Windows NT'
+    user_agent|endswith: 'Trident/7.0; rv:11.0) like Gecko'
+  selection_uri_patterns:
+    uri|contains:
+      - '/jquery-'
+      - '/bootstrap'
+      - '/analytics'
+      - '/visit.js'
+      - '/pixel'
+      - '/ga.js'
+  selection_headers:
+    request_headers|contains:
+      - 'Cookie: __cfduid='
+      - 'Cookie: SESSIONID='
+      - 'Accept-Language: en-US,en'
+      - 'Accept-Encoding: gzip, deflate'
+  selection_timing:
+    status_code: 200
+    response_body_len: '<1000'
+  selection_post_data:
+    method: 'POST'
+    request_body_len: '<500'
+    uri|contains:
+      - '/submit.php'
+      - '/fakeurl.html'
+      - '/updates.rss'
+  condition: (selection_user_agents and selection_uri_patterns) and (selection_headers or selection_timing or selection_post_data)
+falsepositives:
+  - Legitimate web browsing with similar patterns
+  - CDN and analytics traffic
+level: medium
+tags:
+  - attack.command_and_control
+  - attack.t1071.001
+  - network
+  - zeek
+  - cobalt_strike
+  - bof
+  - c2
