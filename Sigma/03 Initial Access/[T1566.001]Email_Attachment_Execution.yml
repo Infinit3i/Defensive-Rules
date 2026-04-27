@@ -38,4 +38,3 @@ detection:
 falsepositives:
   - Legitimate document processing from email clients
 level: medium
-

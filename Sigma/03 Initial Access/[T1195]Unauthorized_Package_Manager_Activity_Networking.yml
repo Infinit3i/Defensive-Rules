@@ -27,4 +27,3 @@ detection:
 falsepositives:
   - Legitimate and scheduled software or firmware updates performed by authorized network administrators.
 level: medium
-

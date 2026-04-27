@@ -47,4 +47,3 @@ falsepositives:
   - Legitimate package installations
   - Internal package repositories
 level: medium
-

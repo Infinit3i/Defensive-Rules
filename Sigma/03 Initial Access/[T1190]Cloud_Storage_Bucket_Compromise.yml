@@ -24,7 +24,7 @@ detection:
             - 'GetObject'
             - 'ListObjects'
             - 'GetBucketLocation'
-        # High volume of object access from single IP
+    # High volume of object access from single IP
         sourceIPAddress|cidr:
             - '0.0.0.0/0'  # Will be filtered for known malicious ranges
     selection_bucket_enumeration:
@@ -33,11 +33,11 @@ detection:
             - 'GetBucketLocation'
             - 'GetBucketAcl'
             - 'GetBucketPolicy'
-        # Rapid enumeration of multiple buckets
+    # Rapid enumeration of multiple buckets
     selection_anonymous_access:
         eventName: 'GetObject'
         userIdentity.type: 'Unknown'
-        # Anonymous access to bucket objects
+    # Anonymous access to bucket objects
     selection_tor_vpn_access:
         eventName:
             - 'GetObject'
@@ -51,8 +51,10 @@ detection:
         eventName:
             - 'GetObject'
             - 'ListObjects'
-        # Access from countries not typical for the organization
-    condition: selection_bucket_policy_changes or selection_suspicious_data_access or selection_bucket_enumeration or selection_anonymous_access or selection_tor_vpn_access or selection_geographic_anomaly
+    # Access from countries not typical for the organization
+    condition: selection_bucket_policy_changes or selection_suspicious_data_access or
+               selection_bucket_enumeration or selection_anonymous_access or
+               selection_tor_vpn_access or selection_geographic_anomaly
 falsepositives:
     - Legitimate administrative changes to bucket policies
     - Content delivery networks and caching services
@@ -71,4 +73,3 @@ tags:
     - s3
     - storage
     - bucket_compromise
-
