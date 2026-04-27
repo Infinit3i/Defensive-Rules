@@ -10,6 +10,8 @@ This is a cybersecurity detection rules repository containing Sigma rules, Splun
 
 **NEVER PUSH OR COMMIT CODE** - User controls all git operations and repository state
 
+**USE /tmp FOR TEMPORARY FILES** - Create all throwaway/temporary files in /tmp directory, not in project scripts/
+
 ## Architecture & Organization
 
 ### Directory Structure

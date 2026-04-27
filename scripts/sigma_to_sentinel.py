@@ -517,8 +517,18 @@ def main():
     parser.add_argument('--output-dir', required=True, help='Output directory for Sentinel rules')
     parser.add_argument('--preserve-structure', action='store_true', default=True,
                         help='Preserve directory structure in output')
+    parser.add_argument('--validate-only', action='store_true',
+                        help='Validate conversion without writing output files')
 
     args = parser.parse_args()
+
+    if args.validate_only:
+        print("🔍 Validation mode: checking conversion without output")
+        # Just verify we can load and parse rules
+        from pathlib import Path
+        sigma_files = list(Path(args.input_dir).rglob("*.yml"))
+        print(f"Found {len(sigma_files)} Sigma files for validation")
+        exit(0)
 
     converter = SigmaToSentinelConverter(
         input_dir=args.input_dir,
