@@ -1,0 +1,38 @@
+title: Email Bombing Attack Detection
+id: d4a7e3f8-9c2b-4e5f-a1d6-8e3f9c4d2a7b
+status: experimental
+description: >-
+  Detects email bombing attacks by monitoring for high volumes of emails
+  sent to single recipients, mass subscription attempts, or email flood
+  patterns that may be used to overwhelm targets or hide malicious activity.
+references:
+  - https://attack.mitre.org/techniques/T1566/005/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1566.005
+  - email_bombing
+  - denial_of_service
+  - email_flood
+logsource:
+  product: o365
+  service: exchange
+detection:
+  high_volume:
+    Operation: 'Send'
+    RecipientCount|gte: 100
+  same_recipient:
+    Operation: 'Send'
+    Recipients|count|gte: 50
+  subscription_spam:
+    Subject|contains:
+      - 'Welcome to'
+      - 'Confirm subscription'
+      - 'You have subscribed'
+      - 'Newsletter signup'
+  condition: high_volume or same_recipient or subscription_spam
+falsepositives:
+  - Legitimate bulk email campaigns
+  - Newsletter subscriptions
+level: medium

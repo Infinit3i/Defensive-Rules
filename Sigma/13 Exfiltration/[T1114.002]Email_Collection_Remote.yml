@@ -1,0 +1,40 @@
+title: Remote Email Collection Detection
+id: a5d8f2e9-6c4b-4e7f-a5d8-2f9e6c4b7a5b
+status: experimental
+description: >-
+  Detects remote email collection activities by monitoring for IMAP/POP3
+  connections, email server API access, or remote mailbox enumeration
+  that may indicate email data harvesting from external sources.
+references:
+  - https://attack.mitre.org/techniques/T1114/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.collection
+  - attack.exfiltration
+  - attack.t1114.002
+  - email
+  - remote_access
+logsource:
+  product: zeek
+  service: conn
+detection:
+  email_ports:
+    id.resp_p|contains:
+      - 993
+      - 995
+      - 143
+      - 110
+  large_download:
+    service: 'ssl'
+    resp_bytes|gte: 100000000
+    id.resp_p: 993
+  api_access:
+    id.resp_p: 443
+    orig_bytes|gte: 10000
+    service: 'ssl'
+  condition: email_ports and (large_download or api_access)
+falsepositives:
+  - Legitimate email client synchronization
+  - Authorized email access
+level: medium

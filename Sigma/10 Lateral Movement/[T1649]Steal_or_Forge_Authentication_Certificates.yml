@@ -1,0 +1,41 @@
+title: Authentication Certificate Theft or Forgery
+id: a8f5c9e4-7b2d-4e6f-a8f5-9c4e7b2d6a8b
+status: experimental
+description: >-
+  Detects theft or forgery of authentication certificates by monitoring for
+  suspicious certificate operations, unauthorized certificate access, or
+  certificate abuse that may be used for lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1649/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.credential_access
+  - attack.t1649
+  - certificates
+  - authentication
+logsource:
+  product: windows
+  service: security
+detection:
+  cert_access:
+    EventID: 5058
+    SubjectUserName|contains:
+      - 'admin'
+      - 'service'
+  cert_export:
+    EventID: 5061
+    KeyName|contains:
+      - 'Certificate'
+      - 'Private Key'
+  cert_install:
+    EventID: 4887
+    CertificateSubjectName|contains:
+      - 'CN='
+      - 'O='
+  condition: cert_access or cert_export or cert_install
+falsepositives:
+  - Legitimate certificate management
+  - PKI operations
+level: medium

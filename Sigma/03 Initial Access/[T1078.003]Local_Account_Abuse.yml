@@ -1,0 +1,47 @@
+title: Local Account Abuse Detection
+id: a1f4c7e8-2d9b-4e6f-b3c5-8a7e9f2d1c6b
+status: experimental
+description: >-
+  Detects abuse of local accounts including privilege escalation attempts,
+  unusual logon patterns, and suspicious activities from local user accounts
+  that may indicate compromise.
+references:
+  - https://attack.mitre.org/techniques/T1078/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.privilege_escalation
+  - attack.t1078.003
+  - windows
+  - local_account
+logsource:
+  product: windows
+  service: security
+detection:
+  local_admin_logon:
+    EventID: 4624
+    LogonType: 2
+    TargetUserName|endswith: '$'
+  service_logon:
+    EventID: 4624
+    LogonType: 5
+    TargetUserName|contains:
+      - 'service'
+      - 'svc'
+  unusual_hours:
+    EventID: 4624
+    TimeGenerated|contains:
+      - 'T22:'
+      - 'T23:'
+      - 'T00:'
+      - 'T01:'
+      - 'T02:'
+      - 'T03:'
+      - 'T04:'
+      - 'T05:'
+  condition: local_admin_logon or service_logon or unusual_hours
+falsepositives:
+  - Scheduled maintenance tasks
+  - Legitimate service accounts
+level: medium

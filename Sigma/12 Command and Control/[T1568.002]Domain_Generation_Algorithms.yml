@@ -1,0 +1,37 @@
+title: Domain Generation Algorithm Detection
+id: b7d4f8e5-9c6a-4e3f-b7d4-8f5e9c6a3b7b
+status: experimental
+description: >-
+  Detects domain generation algorithm (DGA) usage by monitoring for
+  algorithmically generated domains, suspicious domain patterns, or
+  DNS queries to randomly generated domain names.
+references:
+  - https://attack.mitre.org/techniques/T1568/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1568.002
+  - dga
+  - algorithmic_domains
+  - random_domains
+logsource:
+  product: zeek
+  service: dns
+detection:
+  random_domains:
+    query|length|gte: 15
+    query|contains:
+      - 'qwertyuiop'
+      - 'abcdefgh'
+      - 'aaaaaaa'
+  entropy_check:
+    query|regex: '^[a-z]{10,20}\.(com|net|org)$'
+  numeric_domains:
+    query|contains: '[0-9]{5,}'
+    qtype_name: 'A'
+  condition: random_domains or entropy_check or numeric_domains
+falsepositives:
+  - CDN-generated subdomains
+  - Legitimate random identifiers
+level: high

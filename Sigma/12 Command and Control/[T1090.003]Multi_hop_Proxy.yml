@@ -1,0 +1,37 @@
+title: Multi-hop Proxy for Command and Control
+id: e7b4f8c9-5d3a-4e6f-e7b4-8f9c5d3a6e7b
+status: experimental
+description: >-
+  Detects multi-hop proxy usage for command and control by monitoring for
+  chained proxy connections, multiple proxy hops, or complex traffic
+  routing that may be used to obscure C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1090/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1090.003
+  - multi_hop_proxy
+  - proxy_chain
+  - traffic_obfuscation
+logsource:
+  product: zeek
+  service: conn
+detection:
+  proxy_chain:
+    id.orig_h|count|gte: 3
+    service: 'unknown'
+    duration|gte: 300
+  multiple_hops:
+    id.resp_h|count|gte: 2
+    orig_bytes|gte: 1000
+    resp_bytes|gte: 1000
+  tor_indicators:
+    id.resp_p: 9050
+    service: 'unknown'
+  condition: proxy_chain or multiple_hops or tor_indicators
+falsepositives:
+  - Complex network architectures
+  - Legitimate anonymization services
+level: medium

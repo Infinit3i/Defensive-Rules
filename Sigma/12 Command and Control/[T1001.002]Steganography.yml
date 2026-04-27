@@ -1,0 +1,44 @@
+title: Steganography for Data Obfuscation
+id: d9f6e4a2-8c7b-4e5f-d9f6-4e2a8c7b5d9b
+status: experimental
+description: >-
+  Detects steganography usage by monitoring for steganography tools,
+  suspicious image/media file transfers, or data hiding techniques
+  within multimedia files for covert C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1001/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1001.002
+  - steganography
+  - data_hiding
+  - multimedia
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  stego_tools:
+    Image|endswith:
+      - '\steghide.exe'
+      - '\openstego.exe'
+      - '\outguess.exe'
+  image_processing:
+    CommandLine|contains:
+      - '.jpg'
+      - '.png'
+      - '.bmp'
+      - '.wav'
+  embed_extract:
+    CommandLine|contains:
+      - 'embed'
+      - 'extract'
+      - 'hide'
+      - 'reveal'
+  condition: stego_tools or (image_processing and embed_extract)
+falsepositives:
+  - Legitimate image editing
+  - Media processing applications
+level: medium

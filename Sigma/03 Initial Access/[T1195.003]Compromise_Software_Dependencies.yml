@@ -1,0 +1,49 @@
+title: Compromised Software Dependencies Detection
+id: e8f5c2a9-7d4b-4e1f-a6c3-9f2e8d1c5a8b
+status: experimental
+description: >-
+  Detects potential compromise of software dependencies by monitoring for
+  unusual package installations, dependency confusion attacks, or suspicious
+  library downloads that may indicate supply chain attacks.
+references:
+  - https://attack.mitre.org/techniques/T1195/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195.003
+  - supply_chain
+  - dependencies
+  - packages
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  package_managers:
+    Image|endswith:
+      - '\npm.exe'
+      - '\pip.exe'
+      - '\composer.exe'
+      - '\nuget.exe'
+    CommandLine|contains:
+      - 'install'
+      - 'update'
+  suspicious_repos:
+    CommandLine|contains:
+      - 'pypi.org'
+      - 'npmjs.com'
+      - 'packagist.org'
+    CommandLine|contains:
+      - 'typosquatting'
+      - 'similar'
+  private_install:
+    CommandLine|contains:
+      - '--index-url'
+      - '--extra-index-url'
+      - '--registry'
+  condition: package_managers and (suspicious_repos or private_install)
+falsepositives:
+  - Legitimate package installations
+  - Internal package repositories
+level: medium

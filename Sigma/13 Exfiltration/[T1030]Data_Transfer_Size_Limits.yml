@@ -1,0 +1,41 @@
+title: Data Transfer Size Limits Evasion
+id: d4a6f8e2-7c9b-4e5f-d4a6-8f2e7c9b5d4b
+status: experimental
+description: >-
+  Detects attempts to evade data transfer size limits by monitoring for
+  file splitting, chunked transfers, or multiple small transfers that may
+  be used to bypass DLP or network monitoring thresholds.
+references:
+  - https://attack.mitre.org/techniques/T1030/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1030
+  - size_limits
+  - file_splitting
+  - chunked_transfer
+logsource:
+  product: windows
+  service: sysmon
+  category: file_create
+detection:
+  split_files:
+    TargetFilename|endswith:
+      - '.part'
+      - '.001'
+      - '.002'
+      - '.zip'
+  archive_creation:
+    Image|endswith:
+      - '\7z.exe'
+      - '\winrar.exe'
+      - '\zip.exe'
+  multiple_uploads:
+    ProcessName|count|gte: 10
+    TargetFilename|contains: 'upload'
+  condition: split_files or archive_creation or multiple_uploads
+falsepositives:
+  - Legitimate file archiving
+  - Large file management
+level: low

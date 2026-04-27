@@ -1,0 +1,42 @@
+title: SSH Lateral Movement Detection
+id: e9b6f2a8-3d5c-4e7f-a2b6-8f3e9d5c2a8b
+status: experimental
+description: >-
+  Detects lateral movement via SSH by monitoring for SSH connections between
+  internal hosts, suspicious authentication patterns, or unusual SSH session
+  activities that may indicate attacker movement through Linux/Unix systems.
+references:
+  - https://attack.mitre.org/techniques/T1021/004/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1021.004
+  - ssh
+  - linux
+  - unix
+logsource:
+  product: linux
+  service: sshd
+detection:
+  ssh_login:
+    program: 'sshd'
+    message|contains:
+      - 'Accepted password'
+      - 'Accepted publickey'
+  internal_connection:
+    src_ip|startswith:
+      - '10.'
+      - '172.'
+      - '192.168.'
+  suspicious_user:
+    user|contains:
+      - 'root'
+      - 'admin'
+      - 'service'
+      - 'test'
+  condition: ssh_login and internal_connection and suspicious_user
+falsepositives:
+  - Legitimate administrative SSH access
+  - Automated system management
+level: medium

@@ -1,0 +1,45 @@
+title: User Execution of Malicious Files
+id: f4b7e9c6-8a3d-4e5f-a2c7-9f5e8d4c7a9b
+status: experimental
+description: >-
+  Detects user execution of potentially malicious files by monitoring for
+  execution of suspicious file types, files from untrusted locations, or
+  unsigned executables that may indicate malware execution.
+references:
+  - https://attack.mitre.org/techniques/T1204/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.execution
+  - attack.t1204.002
+  - malicious_file
+  - user_execution
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  suspicious_extensions:
+    Image|endswith:
+      - '.scr'
+      - '.pif'
+      - '.com'
+      - '.bat'
+      - '.vbs'
+  temp_execution:
+    Image|startswith:
+      - 'C:\Users\'
+      - 'C:\Temp\'
+      - 'C:\Windows\Temp\'
+    Image|endswith: '.exe'
+  download_execution:
+    Image|contains:
+      - '\Downloads\'
+      - '\Desktop\'
+      - '\Documents\'
+  condition: suspicious_extensions or temp_execution or download_execution
+falsepositives:
+  - Legitimate software installations
+  - User productivity applications
+level: low

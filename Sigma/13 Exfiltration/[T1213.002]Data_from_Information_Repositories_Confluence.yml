@@ -1,0 +1,41 @@
+title: Data Collection from Confluence Repositories
+id: d4a7f9e5-8c2b-4e6f-d4a7-9f5e8c2b6d4b
+status: experimental
+description: >-
+  Detects suspicious data collection from Confluence repositories by
+  monitoring for bulk page exports, unusual API usage, or automated
+  content retrieval that may indicate data harvesting.
+references:
+  - https://attack.mitre.org/techniques/T1213/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.collection
+  - attack.exfiltration
+  - attack.t1213.002
+  - confluence
+  - wiki
+logsource:
+  product: confluence
+  service: audit
+detection:
+  bulk_export:
+    action: 'EXPORT'
+    objectType: 'PAGE'
+    objectName|count|gte: 20
+  api_access:
+    action: 'VIEW'
+    user_agent|contains:
+      - 'curl'
+      - 'wget'
+      - 'python'
+      - 'api'
+  mass_viewing:
+    action: 'VIEW'
+    objectType: 'PAGE'
+    userId|count|gte: 100
+  condition: bulk_export or api_access or mass_viewing
+falsepositives:
+  - Legitimate documentation exports
+  - Authorized API integrations
+level: medium

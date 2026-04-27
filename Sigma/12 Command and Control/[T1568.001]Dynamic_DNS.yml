@@ -1,0 +1,38 @@
+title: Dynamic DNS for Command and Control
+id: a9c6f3e4-7b8d-4e5f-a9c6-3f4e7b8d5a9b
+status: experimental
+description: >-
+  Detects dynamic DNS usage for command and control by monitoring for
+  connections to dynamic DNS providers, frequently changing DNS records,
+  or suspicious domain resolution patterns.
+references:
+  - https://attack.mitre.org/techniques/T1568/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1568.001
+  - dynamic_dns
+  - dns_provider
+  - c2_infrastructure
+logsource:
+  product: zeek
+  service: dns
+detection:
+  ddns_providers:
+    query|endswith:
+      - '.dyndns.org'
+      - '.no-ip.com'
+      - '.ddns.net'
+      - '.freedns.org'
+  short_ttl:
+    TTL|lte: 300
+    qtype_name: 'A'
+  frequent_changes:
+    query|count|gte: 10
+    answers|count|gte: 5
+  condition: ddns_providers or short_ttl or frequent_changes
+falsepositives:
+  - Legitimate dynamic DNS usage
+  - Home network services
+level: medium

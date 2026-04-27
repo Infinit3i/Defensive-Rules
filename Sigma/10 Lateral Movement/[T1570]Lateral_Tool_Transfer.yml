@@ -1,0 +1,47 @@
+title: Lateral Tool Transfer Detection
+id: c3f8e7a6-9d5b-4e2f-a6c3-8f7e9d5c3a6b
+status: experimental
+description: >-
+  Detects lateral tool transfer by monitoring for file transfers between
+  internal hosts, tool deployment activities, or suspicious binary movement
+  that may indicate attacker tool propagation across the network.
+references:
+  - https://attack.mitre.org/techniques/T1570/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1570
+  - tool_transfer
+  - file_transfer
+  - network
+logsource:
+  product: windows
+  service: sysmon
+  category: file_create
+detection:
+  executable_transfer:
+    TargetFilename|endswith:
+      - '.exe'
+      - '.dll'
+      - '.bat'
+      - '.ps1'
+    TargetFilename|startswith:
+      - 'C:\Windows\Temp\'
+      - 'C:\Temp\'
+      - 'C:\Users\Public\'
+  network_tool:
+    TargetFilename|contains:
+      - 'psexec'
+      - 'mimikatz'
+      - 'pwdump'
+      - 'procdump'
+  remote_source:
+    ProcessName|contains:
+      - 'svchost.exe'
+      - 'services.exe'
+  condition: executable_transfer and (network_tool or remote_source)
+falsepositives:
+  - Legitimate software deployment
+  - System administration tools
+level: medium

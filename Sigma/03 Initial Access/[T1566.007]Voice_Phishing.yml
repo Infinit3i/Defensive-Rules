@@ -1,0 +1,41 @@
+title: Voice Phishing (Vishing) Attack Detection
+id: a6e2f9c4-7d8b-4e3f-c1a5-8f2e9c6d4a7b
+status: experimental
+description: >-
+  Detects voice phishing attacks by monitoring for suspicious phone calls,
+  voice message patterns, or social engineering attempts via voice
+  communication that may lead to credential disclosure or system access.
+references:
+  - https://attack.mitre.org/techniques/T1566/007/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1566.007
+  - voice
+  - phishing
+  - social_engineering
+logsource:
+  product: voip
+  service: asterisk
+detection:
+  suspicious_keywords:
+    call_transcript|contains:
+      - 'verify account'
+      - 'urgent security'
+      - 'suspend account'
+      - 'payment issue'
+  impersonation_attempts:
+    caller_id|contains:
+      - 'IT Support'
+      - 'Security Team'
+      - 'Help Desk'
+      - 'Microsoft'
+  high_frequency:
+    source_number|count|gte: 10
+    time_window: '1h'
+  condition: suspicious_keywords or impersonation_attempts or high_frequency
+falsepositives:
+  - Legitimate support calls
+  - Authorized IT communications
+level: medium

@@ -1,0 +1,43 @@
+title: Log Enumeration for Data Collection
+id: f4a7e9c5-8b6d-4e2f-f4a7-9e5c8b6d2f4b
+status: experimental
+description: >-
+  Detects log enumeration activities by monitoring for log file access,
+  event log queries, or log parsing activities that may be used to collect
+  sensitive information from system logs for exfiltration.
+references:
+  - https://attack.mitre.org/techniques/T1654/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.collection
+  - attack.exfiltration
+  - attack.t1654
+  - log_enumeration
+  - log_access
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  log_commands:
+    CommandLine|contains:
+      - 'wevtutil'
+      - 'Get-EventLog'
+      - 'Get-WinEvent'
+      - 'eventvwr'
+  log_file_access:
+    TargetFilename|contains:
+      - '\Windows\System32\winevt\Logs\'
+      - '.evtx'
+      - '.log'
+  log_export:
+    CommandLine|contains:
+      - '/export'
+      - '/query'
+      - '/format'
+  condition: log_commands or log_file_access or log_export
+falsepositives:
+  - Legitimate system administration
+  - Log analysis tools
+level: medium

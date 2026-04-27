@@ -1,0 +1,38 @@
+title: Pass the Hash Attack Detection
+id: d5a8f3e9-6c4b-4e7f-d5a8-9f3e6c4b7d5b
+status: experimental
+description: >-
+  Detects pass the hash attacks by monitoring for NTLM authentication events
+  with suspicious characteristics, unusual logon patterns, or authentication
+  attempts that may indicate hash credential reuse.
+references:
+  - https://attack.mitre.org/techniques/T1550/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1550.002
+  - pass_the_hash
+  - ntlm
+  - credential_theft
+logsource:
+  product: windows
+  service: security
+detection:
+  ntlm_logon:
+    EventID: 4624
+    LogonType: 3
+    AuthenticationPackageName: 'NTLM'
+  unusual_source:
+    WorkstationName|contains:
+      - 'WORKSTATION'
+      - 'UNKNOWN'
+      - 'DESKTOP'
+  no_password:
+    LogonProcessName: 'NtLmSsp'
+    SubStatus: '0x0'
+  condition: ntlm_logon and (unusual_source or no_password)
+falsepositives:
+  - Legacy NTLM applications
+  - Normal network authentication
+level: medium

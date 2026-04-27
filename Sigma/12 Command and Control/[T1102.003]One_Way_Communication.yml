@@ -1,0 +1,41 @@
+title: One-Way Communication via Web Service
+id: f5b8e2a7-6c9d-4e3f-f5b8-2e7a6c9d3f5b
+status: experimental
+description: >-
+  Detects one-way communication via web services by monitoring for
+  data retrieval without response, beacon-like patterns, or unidirectional
+  data flow through web platforms for C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1102/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1102.003
+  - one_way
+  - beacon
+  - data_retrieval
+logsource:
+  product: zeek
+  service: http
+detection:
+  beacon_pattern:
+    method: 'GET'
+    response_code: 200
+    orig_bytes|lte: 500
+    resp_bytes|lte: 1000
+  data_retrieval:
+    method: 'GET'
+    uri|contains:
+      - '/data'
+      - '/config'
+      - '/update'
+  periodic_access:
+    host|count|gte: 10
+    method: 'GET'
+    time_interval: '300'
+  condition: beacon_pattern or data_retrieval or periodic_access
+falsepositives:
+  - Legitimate data synchronization
+  - Application updates
+level: low

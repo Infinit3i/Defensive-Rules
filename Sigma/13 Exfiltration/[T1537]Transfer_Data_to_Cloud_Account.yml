@@ -1,0 +1,37 @@
+title: Transfer Data to Cloud Account
+id: b8e5f2a9-9c6d-4e7f-b8e5-2f9a9c6d7b8b
+status: experimental
+description: >-
+  Detects unauthorized transfer of data to cloud accounts by monitoring for
+  suspicious cloud uploads, account synchronization activities, or data
+  transfers to personal cloud storage from corporate environments.
+references:
+  - https://attack.mitre.org/techniques/T1537/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1537
+  - cloud_account
+  - data_transfer
+  - synchronization
+logsource:
+  product: o365
+  service: sharepoint
+detection:
+  external_sharing:
+    Operation: 'SharingSet'
+    EventSource: 'SharePoint'
+    SharingLevel: 'ExternalUserSharingOnly'
+  large_upload:
+    Operation: 'FileUploaded'
+    ItemType: 'File'
+    ObjectId|contains: 'personal'
+  sync_activity:
+    Operation: 'FileSyncDownloadedFull'
+    UserAgent|contains: 'OneDrive'
+  condition: external_sharing or large_upload or sync_activity
+falsepositives:
+  - Legitimate business cloud sharing
+  - Authorized file synchronization
+level: medium

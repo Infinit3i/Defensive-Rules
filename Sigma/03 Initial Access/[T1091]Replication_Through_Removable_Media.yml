@@ -1,0 +1,47 @@
+title: Malware Replication Through Removable Media
+id: f6a4e8c2-9d7b-4f3e-a1c5-8e2f9c7d4a6b
+status: experimental
+description: >-
+  Detects potential malware replication through removable media by monitoring
+  for automatic execution of suspicious files from USB devices, creation of
+  autorun files, or unusual file activities on removable drives.
+references:
+  - https://attack.mitre.org/techniques/T1091/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1091
+  - usb
+  - removable_media
+  - autorun
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  usb_execution:
+    Image|startswith:
+      - 'E:\'
+      - 'F:\'
+      - 'G:\'
+      - 'H:\'
+    Image|endswith: '.exe'
+  autorun_creation:
+    TargetFilename|endswith:
+      - 'autorun.inf'
+      - 'desktop.ini'
+    TargetFilename|contains: ':'
+  suspicious_files:
+    TargetFilename|contains:
+      - 'USB'
+      - 'removable'
+    TargetFilename|endswith:
+      - '.exe'
+      - '.scr'
+      - '.bat'
+  condition: usb_execution or autorun_creation or suspicious_files
+falsepositives:
+  - Legitimate portable applications
+  - Authorized USB software installations
+level: medium

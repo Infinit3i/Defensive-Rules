@@ -1,0 +1,40 @@
+title: RDP Session Hijacking Detection
+id: e5b8f3a9-6d4c-4e7f-a5e8-8f3e9d4c6a5b
+status: experimental
+description: >-
+  Detects RDP session hijacking by monitoring for suspicious RDP session
+  takeovers, concurrent RDP sessions, or unauthorized access to existing
+  RDP connections that may indicate session hijacking attempts.
+references:
+  - https://attack.mitre.org/techniques/T1563/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1563.002
+  - rdp
+  - session_hijacking
+  - windows
+logsource:
+  product: windows
+  service: security
+detection:
+  rdp_session_start:
+    EventID: 4624
+    LogonType: 10
+  rdp_session_end:
+    EventID: 4634
+    LogonType: 10
+  concurrent_rdp:
+    EventID: 21
+    SessionName|count|gte: 2
+  session_takeover:
+    EventID: 4778
+    AccountName|contains:
+      - 'admin'
+      - 'service'
+  condition: (rdp_session_start and rdp_session_end) or concurrent_rdp or session_takeover
+falsepositives:
+  - Legitimate RDP reconnections
+  - Multiple authorized RDP sessions
+level: medium

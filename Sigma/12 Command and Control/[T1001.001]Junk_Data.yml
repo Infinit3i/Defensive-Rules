@@ -1,0 +1,38 @@
+title: Data Obfuscation with Junk Data
+id: c8e5f3a9-7d6b-4e4f-c8e5-3f9a7d6b4c8b
+status: experimental
+description: >-
+  Detects data obfuscation using junk data by monitoring for padded
+  communications, noise injection, or unnecessary data transmission
+  patterns that may be used to hide C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1001/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1001.001
+  - junk_data
+  - data_padding
+  - obfuscation
+logsource:
+  product: zeek
+  service: http
+detection:
+  large_requests:
+    method: 'POST'
+    request_body_len|gte: 10000
+    response_body_len|lte: 1000
+  padding_patterns:
+    request_body_len: response_body_len
+    ratio|gte: 10
+  repeated_data:
+    uri|contains:
+      - 'AAAAAAA'
+      - '0000000'
+      - 'padding'
+  condition: large_requests or padding_patterns or repeated_data
+falsepositives:
+  - File upload applications
+  - Large form submissions
+level: low

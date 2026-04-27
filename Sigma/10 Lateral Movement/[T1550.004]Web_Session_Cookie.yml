@@ -1,0 +1,41 @@
+title: Web Session Cookie Theft Detection
+id: f7c4e8a3-9d6b-4e5f-f7c4-8e3a9d6b5f7b
+status: experimental
+description: >-
+  Detects web session cookie theft by monitoring for suspicious cookie usage,
+  session hijacking attempts, or unusual web authentication patterns that
+  may indicate stolen session cookies being used for lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1550/004/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1550.004
+  - session_cookie
+  - web_session
+  - cookie_theft
+logsource:
+  product: zeek
+  service: http
+detection:
+  session_cookie:
+    cookie|contains:
+      - 'PHPSESSID'
+      - 'JSESSIONID'
+      - 'ASP.NET_SessionId'
+      - 'session'
+  multiple_ips:
+    cookie|count|gte: 2
+    id.orig_h|count|gte: 2
+  suspicious_ua:
+    user_agent|contains:
+      - 'curl'
+      - 'wget'
+      - 'python'
+      - 'powershell'
+  condition: session_cookie and (multiple_ips or suspicious_ua)
+falsepositives:
+  - Legitimate session management
+  - Load balancer configurations
+level: medium

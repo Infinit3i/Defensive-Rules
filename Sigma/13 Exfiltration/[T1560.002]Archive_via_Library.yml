@@ -1,0 +1,46 @@
+title: Data Archiving via Library
+id: d8e5f9a6-9c7b-4e3f-d8e5-9f6a9c7b3d8b
+status: experimental
+description: >-
+  Detects data archiving via programming libraries by monitoring for
+  archive library usage in scripts, compression API calls, or programmatic
+  file packaging that may be used to prepare data for exfiltration.
+references:
+  - https://attack.mitre.org/techniques/T1560/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.collection
+  - attack.exfiltration
+  - attack.t1560.002
+  - library
+  - scripting
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  script_archiving:
+    Image|endswith:
+      - '\python.exe'
+      - '\powershell.exe'
+      - '\node.exe'
+    CommandLine|contains:
+      - 'zipfile'
+      - 'tarfile'
+      - 'compress-archive'
+  library_usage:
+    CommandLine|contains:
+      - 'System.IO.Compression'
+      - 'SharpZipLib'
+      - 'archiver'
+  bulk_processing:
+    CommandLine|contains:
+      - 'foreach'
+      - 'for file in'
+      - 'glob'
+  condition: script_archiving or library_usage or bulk_processing
+falsepositives:
+  - Legitimate script operations
+  - Development activities
+level: low

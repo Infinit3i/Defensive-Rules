@@ -1,0 +1,44 @@
+title: Protocol Tunneling for Command and Control
+id: b7d4e9f3-8c6a-4e5f-b7d4-9e3f8c6a5b7b
+status: experimental
+description: >-
+  Detects protocol tunneling by monitoring for encapsulated protocols,
+  suspicious tunneling tools, or unusual protocol usage patterns that
+  may be used to hide C2 communications within legitimate traffic.
+references:
+  - https://attack.mitre.org/techniques/T1572/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1572
+  - protocol_tunneling
+  - encapsulation
+  - traffic_hiding
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  tunnel_tools:
+    Image|endswith:
+      - '\ssh.exe'
+      - '\plink.exe'
+      - '\stunnel.exe'
+      - '\chisel.exe'
+  tunnel_args:
+    CommandLine|contains:
+      - '-L '
+      - '-R '
+      - '-D '
+      - 'tunnel'
+  port_forwarding:
+    CommandLine|contains:
+      - 'portproxy'
+      - 'forward'
+      - 'redirect'
+  condition: tunnel_tools or tunnel_args or port_forwarding
+falsepositives:
+  - Legitimate SSH usage
+  - Network administration
+level: medium

@@ -1,0 +1,46 @@
+title: External Remote Services Abuse
+id: a8f3e7c1-5b9d-4e2f-c6a4-7e9f2d1c8b5a
+status: experimental
+description: >-
+  Detects abuse of external remote services by monitoring for suspicious
+  VPN connections, RDP access from external networks, or unauthorized
+  remote service usage that may indicate initial access attempts.
+references:
+  - https://attack.mitre.org/techniques/T1133/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1133
+  - remote_services
+  - vpn
+  - rdp
+logsource:
+  product: windows
+  service: security
+detection:
+  external_rdp:
+    EventID: 4624
+    LogonType: 10
+    IpAddress|startswith:
+      - '10.'
+      - '172.'
+      - '192.168.'
+    not: true
+  vpn_logon:
+    EventID: 4624
+    LogonType: 3
+    AuthenticationPackageName: 'NTLM'
+    WorkstationName|contains:
+      - 'vpn'
+      - 'remote'
+  suspicious_source:
+    EventID: 4625
+    IpAddress|contains:
+      - 'tor-exit'
+      - 'proxy'
+  condition: external_rdp or vpn_logon or suspicious_source
+falsepositives:
+  - Legitimate remote work connections
+  - Authorized VPN usage
+level: medium

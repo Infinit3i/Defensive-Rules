@@ -1,0 +1,41 @@
+title: Application Access Token Abuse
+id: c9f4e7a8-5d6b-4e3f-c9f4-8e7a5d6b4c9b
+status: experimental
+description: >-
+  Detects abuse of application access tokens by monitoring for suspicious
+  token usage, token theft attempts, or unauthorized application access
+  that may indicate lateral movement through application credentials.
+references:
+  - https://attack.mitre.org/techniques/T1550/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1550.001
+  - access_token
+  - application
+  - credential_theft
+logsource:
+  product: azure
+  service: auditlogs
+detection:
+  app_access:
+    Category: 'ApplicationManagement'
+    OperationName|contains:
+      - 'Add application'
+      - 'Update application credentials'
+  token_usage:
+    Category: 'SignInLogs'
+    ClientAppUsed|contains:
+      - 'Exchange Web Services'
+      - 'Other clients'
+  suspicious_scope:
+    ConsentContext.IsAdminConsent: 'true'
+    PermissionDisplayName|contains:
+      - 'Read all'
+      - 'Full access'
+  condition: app_access or token_usage or suspicious_scope
+falsepositives:
+  - Legitimate application integrations
+  - Authorized API access
+level: medium

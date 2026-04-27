@@ -1,0 +1,38 @@
+title: Domain Account Brute Force Attack
+id: d7a3e5f2-8c1b-4f6e-a9d4-2b7c6e3f1a8d
+status: experimental
+description: >-
+  Detects brute force attacks against domain accounts by monitoring for
+  multiple failed authentication attempts followed by successful logins
+  from the same source IP or user account.
+references:
+  - https://attack.mitre.org/techniques/T1078/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.credential_access
+  - attack.t1078.002
+  - windows
+  - authentication
+logsource:
+  product: windows
+  service: security
+detection:
+  failed_logon:
+    EventID: 4625
+    LogonType:
+      - 2
+      - 3
+      - 10
+  success_after_failures:
+    EventID: 4624
+    LogonType:
+      - 2
+      - 3
+      - 10
+  condition: failed_logon and success_after_failures
+falsepositives:
+  - Users with forgotten passwords
+  - System accounts with configuration issues
+level: medium

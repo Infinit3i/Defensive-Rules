@@ -1,0 +1,37 @@
+title: Exfiltration Over Asymmetric Encrypted Non-C2 Protocol
+id: c7a5f9e3-8c6b-4e4f-c7a5-9f3e8c6b4c7b
+status: experimental
+description: >-
+  Detects data exfiltration over asymmetric encrypted non-C2 protocols by
+  monitoring for unusual PKI usage, suspicious certificate exchanges, or
+  large data transfers using asymmetric encryption methods.
+references:
+  - https://attack.mitre.org/techniques/T1048/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1048.002
+  - asymmetric_encryption
+  - pki
+  - certificate
+logsource:
+  product: zeek
+  service: x509
+detection:
+  unusual_cert:
+    certificate.subject|contains:
+      - 'CN=temp'
+      - 'CN=test'
+      - 'CN=localhost'
+  short_lived_cert:
+    certificate.not_valid_before|contains: '2026'
+    certificate.not_valid_after|contains: '2026'
+  suspicious_key:
+    certificate.key_length|gte: 4096
+    certificate.key_type: 'rsa'
+  condition: unusual_cert or short_lived_cert or suspicious_key
+falsepositives:
+  - Legitimate certificate operations
+  - Development environments
+level: low

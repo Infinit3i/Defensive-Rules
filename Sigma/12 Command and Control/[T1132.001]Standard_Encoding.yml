@@ -1,0 +1,39 @@
+title: Standard Encoding for Data Encoding
+id: f5b8e3a6-9c7d-4e2f-f5b8-3e6a9c7d2f5b
+status: experimental
+description: >-
+  Detects standard encoding usage by monitoring for Base64, hex, or other
+  standard encoding patterns in network communications that may be used
+  to encode C2 data and evade detection.
+references:
+  - https://attack.mitre.org/techniques/T1132/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1132.001
+  - standard_encoding
+  - base64
+  - data_encoding
+logsource:
+  product: zeek
+  service: http
+detection:
+  base64_data:
+    uri|contains:
+      - 'base64'
+      - '==='
+      - 'encode'
+  hex_encoding:
+    uri|regex: '[0-9a-fA-F]{20,}'
+    method: 'POST'
+  url_encoding:
+    uri|contains:
+      - '%2F%2F'
+      - '%3A%2F%2F'
+      - '%20%20%20'
+  condition: base64_data or hex_encoding or url_encoding
+falsepositives:
+  - Legitimate data encoding
+  - Web application functionality
+level: low

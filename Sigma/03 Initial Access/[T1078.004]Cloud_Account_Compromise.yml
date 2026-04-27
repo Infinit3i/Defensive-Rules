@@ -1,0 +1,39 @@
+title: Suspicious Cloud Account Activity
+id: c4f8b2e1-5a9d-4e3c-b7f2-9e6a1d4c8b7f
+status: experimental
+description: >-
+  Detects potentially compromised cloud accounts by monitoring for unusual
+  login patterns, geographic anomalies, and suspicious administrative actions
+  that may indicate account takeover.
+references:
+  - https://attack.mitre.org/techniques/T1078/004/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.privilege_escalation
+  - attack.t1078.004
+  - cloud
+  - azure
+  - aws
+logsource:
+  product: azure
+  service: auditlogs
+detection:
+  suspicious_login:
+    Category: 'SignInLogs'
+    ResultType: 0
+    Location|contains:
+      - 'Unknown'
+      - 'Anonymous'
+  admin_actions:
+    OperationName|contains:
+      - 'Add member to role'
+      - 'Create application'
+      - 'Update application'
+      - 'Delete user'
+  condition: suspicious_login or admin_actions
+falsepositives:
+  - Legitimate travel or remote work scenarios
+  - Authorized administrative activities
+level: medium

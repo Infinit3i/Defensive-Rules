@@ -1,0 +1,44 @@
+title: Dead Drop Resolver for Command and Control
+id: d9f6e3a8-5c7b-4e4f-d9f6-3e8a5c7b4d9b
+status: experimental
+description: >-
+  Detects dead drop resolver usage by monitoring for suspicious web service
+  communications, automated content retrieval, or covert channel usage
+  through legitimate web platforms for C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1102/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1102.001
+  - dead_drop
+  - web_service
+  - covert_channel
+logsource:
+  product: zeek
+  service: http
+detection:
+  social_media:
+    host|endswith:
+      - '.twitter.com'
+      - '.facebook.com'
+      - '.reddit.com'
+      - '.telegram.org'
+  automated_access:
+    user_agent|contains:
+      - 'curl'
+      - 'wget'
+      - 'python'
+      - 'bot'
+  api_endpoints:
+    uri|contains:
+      - '/api/'
+      - '/v1/'
+      - '/v2/'
+      - '/rest/'
+  condition: social_media and (automated_access or api_endpoints)
+falsepositives:
+  - Legitimate API usage
+  - Social media automation
+level: low

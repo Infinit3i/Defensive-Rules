@@ -1,0 +1,37 @@
+title: Command and Control with Asymmetric Cryptography
+id: f5c8e9a6-4b7d-4e3f-f5c8-9e6a4b7d3f5b
+status: experimental
+description: >-
+  Detects command and control communications using asymmetric cryptography
+  by monitoring for RSA/ECC key exchanges, certificate anomalies, or
+  public key cryptography patterns in C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1573/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1573.002
+  - asymmetric_cryptography
+  - public_key
+  - certificate
+logsource:
+  product: zeek
+  service: x509
+detection:
+  unusual_key_size:
+    certificate.key_length|gte: 4096
+    certificate.key_type: 'rsa'
+  short_validity:
+    certificate.not_valid_before: certificate.not_valid_after
+    validity_period|lte: 30
+  suspicious_subject:
+    certificate.subject|contains:
+      - 'CN=temp'
+      - 'CN=test'
+      - 'CN=localhost'
+  condition: unusual_key_size or short_validity or suspicious_subject
+falsepositives:
+  - High-security applications
+  - Development environments
+level: low

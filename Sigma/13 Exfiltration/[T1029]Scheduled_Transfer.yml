@@ -1,0 +1,45 @@
+title: Scheduled Data Transfer Detection
+id: c9f5e3a7-8d6b-4e2f-c9f5-3e7a8d6b2c9b
+status: experimental
+description: >-
+  Detects scheduled data transfers by monitoring for automated file transfers,
+  recurring upload patterns, or scheduled tasks that may be used to
+  systematically exfiltrate data over time.
+references:
+  - https://attack.mitre.org/techniques/T1029/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1029
+  - scheduled_transfer
+  - automation
+  - data_transfer
+logsource:
+  product: windows
+  service: taskscheduler
+detection:
+  scheduled_upload:
+    EventID: 129
+    TaskName|contains:
+      - 'upload'
+      - 'sync'
+      - 'backup'
+      - 'transfer'
+  recurring_task:
+    EventID: 200
+    ActionName|contains:
+      - 'curl'
+      - 'wget'
+      - 'powershell'
+  network_task:
+    EventID: 201
+    TaskName|contains:
+      - 'ftp'
+      - 'http'
+      - 'sftp'
+  condition: scheduled_upload or recurring_task or network_task
+falsepositives:
+  - Legitimate backup operations
+  - Authorized file synchronization
+level: medium

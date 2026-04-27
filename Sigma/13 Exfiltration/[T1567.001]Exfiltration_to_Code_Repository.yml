@@ -1,0 +1,42 @@
+title: Exfiltration to Code Repository
+id: f4a8e6c9-3b5d-4e7f-f4a8-6e9c3b5d7f4b
+status: experimental
+description: >-
+  Detects data exfiltration to code repositories by monitoring for suspicious
+  uploads to GitHub, GitLab, or other version control platforms that may
+  be used to exfiltrate sensitive data disguised as code commits.
+references:
+  - https://attack.mitre.org/techniques/T1567/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1567.001
+  - code_repository
+  - git
+  - version_control
+logsource:
+  product: zeek
+  service: http
+detection:
+  git_hosts:
+    host|endswith:
+      - '.github.com'
+      - '.gitlab.com'
+      - '.bitbucket.org'
+      - '.sourceforge.net'
+  large_push:
+    method: 'POST'
+    request_body_len|gte: 10000000
+    uri|contains: 'git'
+  suspicious_commit:
+    method: 'POST'
+    uri|contains:
+      - '/upload'
+      - '/commit'
+      - '/push'
+  condition: git_hosts and (large_push or suspicious_commit)
+falsepositives:
+  - Legitimate code development
+  - Normal repository operations
+level: low

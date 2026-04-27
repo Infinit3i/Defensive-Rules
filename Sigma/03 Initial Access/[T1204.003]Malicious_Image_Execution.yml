@@ -1,0 +1,45 @@
+title: Malicious Image File Execution
+id: a3f6e8c9-7b4d-4e2f-c5a8-9f6e8d5c8a4b
+status: experimental
+description: >-
+  Detects execution of malicious code embedded in image files by monitoring
+  for steganography tools, image parsing vulnerabilities, or suspicious
+  processes launched from image file interactions.
+references:
+  - https://attack.mitre.org/techniques/T1204/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.execution
+  - attack.t1204.003
+  - steganography
+  - image_file
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  image_viewers:
+    ParentImage|endswith:
+      - '\mspaint.exe'
+      - '\PhotoViewer.exe'
+      - '\Photos.exe'
+    Image|endswith: '.exe'
+  steganography_tools:
+    Image|contains:
+      - 'steghide'
+      - 'openstego'
+      - 'outguess'
+  suspicious_image_process:
+    CommandLine|contains:
+      - '.jpg'
+      - '.png'
+      - '.bmp'
+      - '.gif'
+    Image|endswith: '.exe'
+  condition: image_viewers or steganography_tools or suspicious_image_process
+falsepositives:
+  - Legitimate image processing applications
+  - Photo editing software
+level: medium

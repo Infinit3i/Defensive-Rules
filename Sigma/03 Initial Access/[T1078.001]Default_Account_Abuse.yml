@@ -1,0 +1,42 @@
+title: Default Account Abuse Detection
+id: d3a8e5f1-4c7b-4e2f-b6a9-8e1c3f7d2a5b
+status: experimental
+description: >-
+  Detects abuse of default accounts by monitoring for authentication attempts
+  using common default usernames, unchanged default passwords, or suspicious
+  activities from well-known default service accounts.
+references:
+  - https://attack.mitre.org/techniques/T1078/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1078.001
+  - default_account
+  - authentication
+  - weak_credentials
+logsource:
+  product: windows
+  service: security
+detection:
+  default_users:
+    EventID: 4624
+    TargetUserName|contains:
+      - 'admin'
+      - 'administrator'
+      - 'guest'
+      - 'test'
+      - 'user'
+      - 'default'
+      - 'sa'
+  service_accounts:
+    EventID: 4624
+    TargetUserName|startswith:
+      - 'svc'
+      - 'service'
+    LogonType: 3
+  condition: default_users or service_accounts
+falsepositives:
+  - Legitimate use of administrative accounts
+  - Authorized service account activities
+level: medium

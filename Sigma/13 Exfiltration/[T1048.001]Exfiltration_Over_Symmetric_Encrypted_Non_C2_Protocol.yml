@@ -1,0 +1,39 @@
+title: Exfiltration Over Symmetric Encrypted Non-C2 Protocol
+id: b6f4e8c2-9d7a-4e3f-b6f4-8e2c9d7a3b6b
+status: experimental
+description: >-
+  Detects data exfiltration over symmetric encrypted non-C2 protocols by
+  monitoring for unusual encrypted communications, suspicious protocol usage,
+  or large data transfers over encrypted channels.
+references:
+  - https://attack.mitre.org/techniques/T1048/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1048.001
+  - encrypted_protocol
+  - symmetric_encryption
+  - data_transfer
+logsource:
+  product: zeek
+  service: ssl
+detection:
+  unusual_ssl:
+    cipher|contains:
+      - 'AES'
+      - 'ChaCha'
+    cert_subject|contains: 'self-signed'
+  large_encrypted:
+    orig_bytes|gte: 5000000
+    duration|gte: 300
+  suspicious_cert:
+    cert_subject|contains:
+      - 'localhost'
+      - 'test'
+      - 'temp'
+  condition: unusual_ssl or large_encrypted or suspicious_cert
+falsepositives:
+  - Legitimate encrypted communications
+  - Normal HTTPS traffic
+level: low

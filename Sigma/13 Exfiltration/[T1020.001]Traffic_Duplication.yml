@@ -1,0 +1,35 @@
+title: Traffic Duplication for Exfiltration
+id: e9c7f5a8-2d4b-4e6f-e9c7-5f8a2d4b6e9b
+status: experimental
+description: >-
+  Detects traffic duplication techniques used for data exfiltration by
+  monitoring for network mirroring, packet duplication, or suspicious
+  network redirection that may indicate data interception.
+references:
+  - https://attack.mitre.org/techniques/T1020/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1020.001
+  - traffic_duplication
+  - network_mirroring
+  - packet_capture
+logsource:
+  product: zeek
+  service: conn
+detection:
+  mirrored_traffic:
+    id.orig_h: id.resp_h
+    duration|lte: 1
+  duplicate_connections:
+    id.orig_h|count|gte: 2
+    id.resp_h|count|gte: 2
+  span_port_activity:
+    service: 'unknown'
+    orig_bytes|gte: 1000000
+  condition: mirrored_traffic or duplicate_connections or span_port_activity
+falsepositives:
+  - Network monitoring tools
+  - Legitimate traffic analysis
+level: medium

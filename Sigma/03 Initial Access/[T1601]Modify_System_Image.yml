@@ -1,0 +1,44 @@
+title: System Image Modification Detection
+id: b9f4e7c8-3a5d-4e2f-c6a1-9e3f8c5d2a7b
+status: experimental
+description: >-
+  Detects unauthorized modification of system images including firmware,
+  BIOS updates, bootloader changes, or operating system image tampering
+  that may indicate persistent compromise or rootkit installation.
+references:
+  - https://attack.mitre.org/techniques/T1601/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.persistence
+  - attack.t1601
+  - firmware
+  - bios
+  - bootloader
+logsource:
+  product: windows
+  service: system
+detection:
+  firmware_update:
+    EventID: 6
+    DriverName|contains:
+      - 'bios'
+      - 'firmware'
+      - 'uefi'
+  boot_modification:
+    EventID: 12
+    RegistryKey|contains:
+      - 'HKLM\SYSTEM\CurrentControlSet\Control\Boot'
+      - 'HKLM\BCD'
+  system_image:
+    EventID: 7045
+    ServiceName|contains:
+      - 'boot'
+      - 'image'
+      - 'recovery'
+  condition: firmware_update or boot_modification or system_image
+falsepositives:
+  - Legitimate firmware updates
+  - Authorized system maintenance
+level: high

@@ -1,0 +1,37 @@
+title: DNS Calculation for Command and Control
+id: c8e5f2a9-4d7b-4e6f-c8e5-2f9a4d7b6c8b
+status: experimental
+description: >-
+  Detects DNS calculation techniques by monitoring for DNS queries with
+  mathematical patterns, calculated domain names, or algorithmic DNS
+  resolution patterns used for C2 communication.
+references:
+  - https://attack.mitre.org/techniques/T1568/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1568.003
+  - dns_calculation
+  - algorithmic_dns
+  - calculated_domains
+logsource:
+  product: zeek
+  service: dns
+detection:
+  calculated_pattern:
+    query|contains:
+      - 'calc'
+      - 'math'
+      - 'sum'
+      - 'hash'
+  time_based:
+    query|contains: '202[0-9]'
+    qtype_name: 'A'
+  hex_patterns:
+    query|regex: '^[a-f0-9]{8,16}\.(com|net|org)$'
+  condition: calculated_pattern or time_based or hex_patterns
+falsepositives:
+  - Timestamp-based services
+  - Legitimate calculated identifiers
+level: medium

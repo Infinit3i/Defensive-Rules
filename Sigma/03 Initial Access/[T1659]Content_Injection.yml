@@ -1,0 +1,43 @@
+title: Content Injection Attack Detection
+id: c7e4f9a3-8d2b-4e5f-a1c6-9f3e8d2c5a7b
+status: experimental
+description: >-
+  Detects content injection attacks by monitoring for malicious script
+  injection, HTML manipulation, or content spoofing attempts that may
+  be used to compromise users or deliver malicious payloads.
+references:
+  - https://attack.mitre.org/techniques/T1659/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1659
+  - content_injection
+  - xss
+  - html_injection
+logsource:
+  product: zeek
+  service: http
+detection:
+  script_injection:
+    uri|contains:
+      - '<script>'
+      - 'javascript:'
+      - 'eval('
+      - 'document.write'
+  html_injection:
+    uri|contains:
+      - '<iframe>'
+      - '<object>'
+      - '<embed>'
+      - '<form>'
+  parameter_injection:
+    uri|contains:
+      - '%3Cscript%3E'
+      - '%22%3E%3Cscript%3E'
+      - 'javascript%3A'
+  condition: script_injection or html_injection or parameter_injection
+falsepositives:
+  - Legitimate web application functionality
+  - Dynamic content generation
+level: medium

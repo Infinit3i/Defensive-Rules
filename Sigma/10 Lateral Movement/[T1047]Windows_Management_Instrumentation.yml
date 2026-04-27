@@ -1,0 +1,43 @@
+title: WMI Lateral Movement Detection
+id: b9f6e4a3-7d8c-4e5f-a4b9-9f6e8d8c5a4b
+status: experimental
+description: >-
+  Detects lateral movement via Windows Management Instrumentation (WMI) by
+  monitoring for remote WMI execution, suspicious WMI process creation, or
+  WMI event subscriptions that may indicate attacker lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1047/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.execution
+  - attack.t1047
+  - wmi
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  wmi_execution:
+    ParentImage|endswith: '\wmiprvse.exe'
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\wmic.exe'
+  remote_wmi:
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - '/node:'
+      - 'process call create'
+  wmi_provider:
+    Image|endswith: '\wmiprvse.exe'
+    CommandLine|contains:
+      - '-Embedding'
+      - '-secured'
+  condition: wmi_execution or remote_wmi or wmi_provider
+falsepositives:
+  - Legitimate WMI administration
+  - System management tools
+level: medium

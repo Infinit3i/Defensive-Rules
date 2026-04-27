@@ -1,0 +1,43 @@
+title: Email Server Compromise Detection
+id: c5f8e2a9-1d4b-4e7c-a6f3-2b8e9c1d5a7e
+status: experimental
+description: >-
+  Detects compromise of email servers by monitoring for unauthorized access,
+  configuration changes, suspicious email forwarding rules, or unexpected
+  administrative activities on email infrastructure.
+references:
+  - https://attack.mitre.org/techniques/T1566/004/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1566.004
+  - email_server
+  - exchange
+  - compromise
+logsource:
+  product: windows
+  service: msexchange-management
+detection:
+  mailbox_rules:
+    EventID: 1
+    OperationName|contains:
+      - 'New-InboxRule'
+      - 'Set-InboxRule'
+      - 'New-MailboxRule'
+  admin_changes:
+    OperationName|contains:
+      - 'Add-RoleGroupMember'
+      - 'New-ManagementRoleAssignment'
+      - 'Set-OrganizationConfig'
+  suspicious_forwarding:
+    OperationName|contains:
+      - 'Set-Mailbox'
+    Parameters|contains:
+      - 'ForwardingAddress'
+      - 'ForwardingSmtpAddress'
+  condition: mailbox_rules or admin_changes or suspicious_forwarding
+falsepositives:
+  - Legitimate administrative changes
+  - Authorized email forwarding configurations
+level: high

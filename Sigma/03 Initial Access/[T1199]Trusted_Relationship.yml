@@ -1,0 +1,47 @@
+title: Trusted Relationship Abuse Detection
+id: c9e4f7a2-6b8d-4f1e-a5c3-8f2e9d1c7a6b
+status: experimental
+description: >-
+  Detects abuse of trusted relationships by monitoring for suspicious access
+  from partner networks, third-party connections, or trusted domain accounts
+  that may indicate compromise of trusted entities.
+references:
+  - https://attack.mitre.org/techniques/T1199/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1199
+  - trusted_relationship
+  - third_party
+  - partner
+logsource:
+  product: windows
+  service: security
+detection:
+  external_domain:
+    EventID: 4624
+    TargetDomainName|endswith:
+      - '.partner.com'
+      - '.vendor.com'
+      - '.contractor.com'
+  service_account:
+    EventID: 4624
+    TargetUserName|startswith:
+      - 'svc-'
+      - 'service-'
+    LogonType: 3
+  unusual_hours:
+    EventID: 4624
+    TimeGenerated|contains:
+      - 'T20:'
+      - 'T21:'
+      - 'T22:'
+      - 'T23:'
+      - 'T00:'
+      - 'T01:'
+  condition: external_domain or (service_account and unusual_hours)
+falsepositives:
+  - Legitimate partner access
+  - Authorized third-party services
+level: medium

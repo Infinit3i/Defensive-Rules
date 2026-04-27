@@ -1,0 +1,43 @@
+title: Internal Proxy for Command and Control
+id: c5f8e6a3-9b7d-4e2f-c5f8-6e3a9b7d2c5b
+status: experimental
+description: >-
+  Detects internal proxy usage for command and control by monitoring for
+  proxy server establishment, traffic redirection, or internal traffic
+  forwarding that may be used to hide C2 communications.
+references:
+  - https://attack.mitre.org/techniques/T1090/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1090.001
+  - internal_proxy
+  - traffic_forwarding
+  - c2_evasion
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  proxy_tools:
+    Image|endswith:
+      - '\netsh.exe'
+      - '\socat.exe'
+      - '\stunnel.exe'
+  port_forwarding:
+    CommandLine|contains:
+      - 'portproxy'
+      - 'interface'
+      - 'forward'
+      - 'tunnel'
+  proxy_setup:
+    CommandLine|contains:
+      - 'add v4tov4'
+      - 'connectaddress'
+      - 'listenaddress'
+  condition: proxy_tools and (port_forwarding or proxy_setup)
+falsepositives:
+  - Legitimate network administration
+  - VPN configurations
+level: medium

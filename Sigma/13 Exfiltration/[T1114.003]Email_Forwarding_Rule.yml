@@ -1,0 +1,42 @@
+title: Email Forwarding Rule Creation
+id: b6e9f3c7-7d5a-4e8f-b6e9-3f7c7d5a8b6b
+status: experimental
+description: >-
+  Detects creation of email forwarding rules by monitoring for new inbox
+  rules, mail flow rules, or forwarding configurations that may be used
+  to automatically exfiltrate email communications.
+references:
+  - https://attack.mitre.org/techniques/T1114/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.collection
+  - attack.exfiltration
+  - attack.t1114.003
+  - email_forwarding
+  - inbox_rules
+logsource:
+  product: o365
+  service: exchange
+detection:
+  forwarding_rule:
+    Operation: 'New-InboxRule'
+    Parameters|contains:
+      - 'ForwardTo'
+      - 'ForwardAsAttachmentTo'
+      - 'RedirectTo'
+  transport_rule:
+    Operation: 'New-TransportRule'
+    Parameters|contains:
+      - 'BlindCopyTo'
+      - 'RedirectMessageTo'
+  mailbox_forwarding:
+    Operation: 'Set-Mailbox'
+    Parameters|contains:
+      - 'ForwardingAddress'
+      - 'ForwardingSmtpAddress'
+  condition: forwarding_rule or transport_rule or mailbox_forwarding
+falsepositives:
+  - Legitimate email delegation
+  - Authorized forwarding configurations
+level: high

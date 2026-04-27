@@ -1,0 +1,43 @@
+title: Bidirectional Communication via Web Service
+id: e4a7f9c6-8d5b-4e2f-e4a7-9f6c8d5b2e4b
+status: experimental
+description: >-
+  Detects bidirectional communication via web services by monitoring for
+  two-way data exchange through web platforms, interactive web sessions, or
+  command execution through web service interfaces.
+references:
+  - https://attack.mitre.org/techniques/T1102/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1102.002
+  - bidirectional
+  - web_service
+  - interactive_session
+logsource:
+  product: zeek
+  service: http
+detection:
+  interactive_session:
+    method: 'POST'
+    response_code: 200
+    orig_bytes|gte: 100
+    resp_bytes|gte: 100
+  web_shell:
+    uri|contains:
+      - '/shell'
+      - '/cmd'
+      - '/exec'
+      - '/webshell'
+  command_execution:
+    method: 'POST'
+    uri|contains:
+      - 'cmd='
+      - 'execute='
+      - 'run='
+  condition: interactive_session or web_shell or command_execution
+falsepositives:
+  - Legitimate web applications
+  - Administrative interfaces
+level: medium

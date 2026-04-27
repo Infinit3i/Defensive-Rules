@@ -1,0 +1,44 @@
+title: Malicious Link Click from Email
+id: a8d3f7e2-9c4b-41f5-b2e8-7d6c3a9f1e4b
+status: experimental
+description: >-
+  Detects potential malicious link clicks by monitoring browser process creation
+  with suspicious URLs or domains that may originate from phishing emails.
+references:
+  - https://attack.mitre.org/techniques/T1566/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+  - windows
+  - browser
+  - phishing
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+      - '\iexplore.exe'
+    CommandLine|contains:
+      - 'bit.ly'
+      - 'tinyurl.com'
+      - 'goo.gl'
+      - 't.co'
+      - 'short.link'
+  suspicious_tld:
+    CommandLine|contains:
+      - '.tk'
+      - '.ml'
+      - '.cf'
+      - '.ga'
+  condition: selection or suspicious_tld
+falsepositives:
+  - Legitimate URL shortener usage
+  - Social media link clicks
+level: medium

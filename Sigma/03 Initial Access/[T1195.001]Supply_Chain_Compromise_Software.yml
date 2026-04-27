@@ -1,0 +1,43 @@
+title: Supply Chain Compromise Software Installation
+id: f2c8e4a1-9b7d-4e6c-a3f8-5d2b9e1c7a4f
+status: experimental
+description: >-
+  Detects potential supply chain compromises by monitoring for installation
+  or execution of software from unexpected sources, unsigned binaries, or
+  processes with suspicious digital signatures.
+references:
+  - https://attack.mitre.org/techniques/T1195/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195.001
+  - supply_chain
+  - software
+  - signature
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  unsigned_process:
+    Signed: 'false'
+    Image|endswith:
+      - '.exe'
+      - '.dll'
+  suspicious_signer:
+    SignatureStatus: 'Valid'
+    Signature|contains:
+      - 'Test Certificate'
+      - 'Self-signed'
+      - 'Expired'
+  unexpected_location:
+    Image|startswith:
+      - 'C:\Users\Public\'
+      - 'C:\Temp\'
+      - 'C:\Windows\Temp\'
+  condition: unsigned_process or suspicious_signer or unexpected_location
+falsepositives:
+  - Internal development tools
+  - Legitimate unsigned utilities
+level: high

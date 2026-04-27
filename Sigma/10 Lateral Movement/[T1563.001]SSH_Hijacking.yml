@@ -1,0 +1,40 @@
+title: SSH Session Hijacking Detection
+id: d4a9f6e8-2c7b-4e5f-a7d4-9f6e8c7b5a4b
+status: experimental
+description: >-
+  Detects SSH session hijacking by monitoring for suspicious SSH session
+  activities, connection takeovers, or unauthorized access to existing
+  SSH sessions that may indicate session hijacking attempts.
+references:
+  - https://attack.mitre.org/techniques/T1563/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1563.001
+  - ssh
+  - session_hijacking
+  - linux
+logsource:
+  product: linux
+  service: sshd
+detection:
+  concurrent_sessions:
+    program: 'sshd'
+    message|contains: 'Accepted'
+    user|count|gte: 2
+  session_reuse:
+    program: 'sshd'
+    message|contains:
+      - 'session opened'
+      - 'session closed'
+  pty_allocation:
+    program: 'sshd'
+    message|contains:
+      - 'Allocated pty'
+      - 'Released pty'
+  condition: concurrent_sessions or (session_reuse and pty_allocation)
+falsepositives:
+  - Legitimate multiple SSH sessions
+  - Normal SSH reconnections
+level: medium

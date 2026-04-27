@@ -1,0 +1,44 @@
+title: Email Service Abuse for Initial Access
+id: e6b9c4f7-3a8e-4d2c-b1f5-7e4a9c2d8f6b
+status: experimental
+description: >-
+  Detects abuse of legitimate email services for malicious purposes including
+  mass email sending, suspicious attachments, or phishing campaigns using
+  compromised or newly created accounts.
+references:
+  - https://attack.mitre.org/techniques/T1566/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1566.003
+  - email
+  - phishing
+  - service_abuse
+logsource:
+  product: o365
+  service: exchange
+detection:
+  mass_email:
+    Operation: 'Send'
+    RecipientCount|gte: 50
+  suspicious_attachment:
+    Operation: 'Send'
+    AttachmentExtension|contains:
+      - '.exe'
+      - '.scr'
+      - '.bat'
+      - '.ps1'
+      - '.vbs'
+  external_sender:
+    Operation: 'Send'
+    SenderDomain|contains:
+      - 'gmail.com'
+      - 'yahoo.com'
+      - 'hotmail.com'
+      - 'outlook.com'
+  condition: mass_email or (suspicious_attachment and external_sender)
+falsepositives:
+  - Legitimate marketing campaigns
+  - Authorized bulk email operations
+level: medium

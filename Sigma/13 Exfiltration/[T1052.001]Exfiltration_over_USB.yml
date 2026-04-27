@@ -1,0 +1,44 @@
+title: Data Exfiltration over USB Device
+id: e5b7f9c3-8a4d-4e6f-e5b7-9f3c8a4d6e5b
+status: experimental
+description: >-
+  Detects data exfiltration over USB devices by monitoring for large file
+  transfers to removable media, suspicious USB activity, or unauthorized
+  data copying to external storage devices.
+references:
+  - https://attack.mitre.org/techniques/T1052/001/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1052.001
+  - usb
+  - removable_media
+  - data_transfer
+logsource:
+  product: windows
+  service: sysmon
+  category: file_create
+detection:
+  usb_drive:
+    TargetFilename|startswith:
+      - 'E:\'
+      - 'F:\'
+      - 'G:\'
+      - 'H:\'
+  large_files:
+    Image|endswith: '\explorer.exe'
+    TargetFilename|contains: ':'
+    FileSize|gte: 10000000
+  sensitive_data:
+    TargetFilename|endswith:
+      - '.xlsx'
+      - '.docx'
+      - '.pdf'
+      - '.txt'
+      - '.csv'
+  condition: usb_drive and (large_files or sensitive_data)
+falsepositives:
+  - Legitimate USB file transfers
+  - Authorized data backup
+level: medium

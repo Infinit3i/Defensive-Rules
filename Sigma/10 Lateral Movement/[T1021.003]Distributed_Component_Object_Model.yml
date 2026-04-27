@@ -1,0 +1,40 @@
+title: DCOM Lateral Movement Detection
+id: d7a4f8e2-6c9b-4e3f-a5d1-9f4e8d3c6a7b
+status: experimental
+description: >-
+  Detects lateral movement via Distributed Component Object Model (DCOM) by
+  monitoring for suspicious DCOM object creation, remote DCOM execution, or
+  unusual DCOM service activities that may indicate attacker abuse.
+references:
+  - https://attack.mitre.org/techniques/T1021/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.t1021.003
+  - dcom
+  - com
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  dcom_execution:
+    Image|endswith: '\svchost.exe'
+    CommandLine|contains:
+      - '-k DcomLaunch'
+      - 'rpcss'
+  wmi_dcom:
+    Image|endswith: '\wmiprvse.exe'
+    ParentImage|endswith: '\svchost.exe'
+  remote_dcom:
+    Image|endswith: '\dllhost.exe'
+    CommandLine|contains:
+      - '/Processid:'
+      - 'CLSID'
+  condition: dcom_execution or wmi_dcom or remote_dcom
+falsepositives:
+  - Normal DCOM service operations
+  - Legitimate remote management tools
+level: medium

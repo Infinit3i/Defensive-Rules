@@ -1,0 +1,42 @@
+title: Exfiltration to Cloud Storage
+id: a3f7e9c5-8b4d-4e6f-a3f7-9e5c8b4d6a3b
+status: experimental
+description: >-
+  Detects data exfiltration to cloud storage services by monitoring for
+  large uploads to Dropbox, Google Drive, OneDrive, or other cloud platforms
+  that may be used to exfiltrate sensitive organizational data.
+references:
+  - https://attack.mitre.org/techniques/T1567/002/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1567.002
+  - cloud_storage
+  - file_upload
+  - data_transfer
+logsource:
+  product: zeek
+  service: http
+detection:
+  cloud_services:
+    host|endswith:
+      - '.dropbox.com'
+      - '.googledrive.com'
+      - '.onedrive.com'
+      - '.box.com'
+      - '.mega.nz'
+  large_upload:
+    method: 'POST'
+    request_body_len|gte: 50000000
+  file_sync:
+    uri|contains:
+      - '/upload'
+      - '/sync'
+      - '/files'
+    method: 'PUT'
+  condition: cloud_services and (large_upload or file_sync)
+falsepositives:
+  - Legitimate cloud storage usage
+  - Business file synchronization
+level: low

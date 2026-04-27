@@ -1,0 +1,40 @@
+title: Command and Control via Mail Protocols
+id: c8f5e3a6-7b9d-4e4f-c8f5-3e6a7b9d4c8b
+status: experimental
+description: >-
+  Detects command and control communications via mail protocols by monitoring
+  for suspicious SMTP, IMAP, or POP3 activities that may be used for
+  email-based C2 communications or data staging.
+references:
+  - https://attack.mitre.org/techniques/T1071/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.command_and_control
+  - attack.t1071.003
+  - mail_protocols
+  - smtp
+  - imap
+logsource:
+  product: zeek
+  service: conn
+detection:
+  mail_ports:
+    id.resp_p|contains:
+      - 25
+      - 587
+      - 993
+      - 995
+  unusual_traffic:
+    service: 'ssl'
+    orig_bytes|gte: 10000
+    duration|gte: 300
+  automated_mail:
+    id.orig_h|count|lte: 5
+    id.resp_p: 25
+    orig_bytes|gte: 1000
+  condition: mail_ports and (unusual_traffic or automated_mail)
+falsepositives:
+  - Legitimate email communications
+  - Email server operations
+level: low

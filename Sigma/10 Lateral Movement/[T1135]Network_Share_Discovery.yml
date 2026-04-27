@@ -1,0 +1,43 @@
+title: Network Share Discovery for Lateral Movement
+id: e9f6c4a8-7d3b-4e5f-e9f6-4c8a7d3b5e9b
+status: experimental
+description: >-
+  Detects network share discovery activities by monitoring for share
+  enumeration commands, network scanning for SMB services, or reconnaissance
+  activities that may precede lateral movement attempts.
+references:
+  - https://attack.mitre.org/techniques/T1135/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.lateral_movement
+  - attack.discovery
+  - attack.t1135
+  - network_shares
+  - enumeration
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  share_enum:
+    CommandLine|contains:
+      - 'net share'
+      - 'net view'
+      - 'dir \\'
+  smb_tools:
+    Image|endswith:
+      - '\smbclient.exe'
+      - '\enum4linux.exe'
+      - '\nbtscan.exe'
+  powershell_enum:
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'Get-WmiObject'
+      - 'Win32_Share'
+      - 'Get-SmbShare'
+  condition: share_enum or smb_tools or powershell_enum
+falsepositives:
+  - Legitimate network administration
+  - System inventory tools
+level: medium

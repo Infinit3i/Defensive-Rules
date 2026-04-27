@@ -1,0 +1,40 @@
+title: Exfiltration to Text Storage Sites
+id: b8e4f2a6-9c7d-4e5f-b8e4-2f6a9c7d5b8b
+status: experimental
+description: >-
+  Detects data exfiltration to text storage sites by monitoring for uploads
+  to Pastebin, GitHub Gists, or other text sharing platforms that may be
+  used to exfiltrate sensitive text-based data.
+references:
+  - https://attack.mitre.org/techniques/T1567/003/
+author: Matthew Iverson
+date: 2026-04-27
+tags:
+  - attack.exfiltration
+  - attack.t1567.003
+  - text_storage
+  - pastebin
+  - data_sharing
+logsource:
+  product: zeek
+  service: http
+detection:
+  text_sites:
+    host|endswith:
+      - '.pastebin.com'
+      - '.hastebin.com'
+      - '.ghostbin.com'
+      - '.dpaste.org'
+      - 'gist.github.com'
+  text_upload:
+    method: 'POST'
+    content_type|contains: 'text/plain'
+  large_text:
+    method: 'POST'
+    request_body_len|gte: 100000
+    uri|contains: 'paste'
+  condition: text_sites and (text_upload or large_text)
+falsepositives:
+  - Legitimate code sharing
+  - Technical support activities
+level: medium
