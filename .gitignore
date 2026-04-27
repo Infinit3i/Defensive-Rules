@@ -1,0 +1,84 @@
+# Build artifacts
+build/
+*.tar.gz
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+temp/
+
+# Test outputs
+test-output/
+test-results/
+
+# Splunk packages (will be generated)
+defensive-rules-es/
+defensive-rules-es.tar.gz
+defensive-rules-all-platforms.tar.gz
+
+# Conversion outputs (will be generated)
+queries/
+sentinel/
+conversion-report.json
+mitre-coverage.json
+deployment-info.txt
+
+# Backup files
+*.bak
+*.backup
+
+# Node modules (if using any JS tools)
+node_modules/
+
+# Secrets and credentials
+.env.local
+.env.*.local
+secrets/
+credentials/
+*.key
+*.pem
+*.p12
+*.pfx
