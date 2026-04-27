@@ -2,7 +2,9 @@
 title: Zeek HTTP logs - download or user-agent indicative of debugger tools
 id: a4d5e6f7-0123-4567-89ab-cdef01234567
 status: experimental
-description: Detect HTTP downloads or user-agents that reference common debugger or reverse-engineering tool names (x64dbg, ollydbg, ida, windbg). Network detection of tooling acquisition can indicate active analysis or adversary tooling movement.
+description: >
+  Detect HTTP downloads or user-agents that reference common debugger or reverse-engineering tool names (x64dbg, ollydbg, ida, windbg).
+  Network detection of tooling acquisition can indicate active analysis or adversary tooling movement.
 references:
   - https://attack.mitre.org/techniques/T1622/
 author: Matthew Iverson

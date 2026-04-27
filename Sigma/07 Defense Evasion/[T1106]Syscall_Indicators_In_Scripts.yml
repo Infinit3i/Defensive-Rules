@@ -2,7 +2,9 @@
 title: Syscall strings or inline syscall opcodes in scriptblocks
 id: 5d0f6b3c-8e4a-4f67-9c8d-2b3f4e5d6c7b
 status: experimental
-description: Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke native syscalls directly.
+description: >
+  Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke
+  native syscalls directly.
 author: Matthew Iverson
 date: 2025-10-19
 references:
