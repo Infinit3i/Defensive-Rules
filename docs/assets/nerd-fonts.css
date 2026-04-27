@@ -1,0 +1,38 @@
+/* Nerd Fonts - FontAwesome Icons */
+@font-face {
+  font-family: 'NerdFontsSymbols';
+  src: url('./fonts/NerdFontsSymbols-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* FontAwesome icon classes */
+.nf {
+  font-family: 'NerdFontsSymbols', monospace;
+  font-weight: normal;
+  font-style: normal;
+  speak: never;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* FontAwesome icons used in the app */
+.nf-fa-shield:before { content: "\f132"; }
+.nf-fa-search:before { content: "\f002"; }
+.nf-fa-bug:before { content: "\f188"; }
+.nf-fa-bar_chart:before { content: "\f080"; }
+.nf-fa-crosshairs:before { content: "\f05b"; }
+.nf-fa-tag:before { content: "\f02b"; }
+.nf-fa-times:before { content: "\f00d"; }
+.nf-fa-bullseye:before { content: "\f140"; }
+.nf-fa-percentage:before { content: "\f295"; }

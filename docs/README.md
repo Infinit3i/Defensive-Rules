@@ -35,12 +35,14 @@ docs/
 ## Local Development
 
 ```bash
-# Serve locally (any HTTP server)
-cd docs
-python3 -m http.server 8000
+# No server needed! Just open in browser
+open docs/index.html
 
-# Access at http://localhost:8000
-# Rules are loaded dynamically from Sigma/ and Yara/ directories
+# Or use any simple server (optional)
+cd docs && python3 -m http.server 8000
+# Then visit: http://localhost:8000
+
+# Rules are loaded dynamically via GitHub API
 ```
 
 ## Dynamic Rule Loading
@@ -135,3 +137,23 @@ git add Sigma/ Yara/
 git commit -m "Add new detection rules"
 git push
 ```
+
+## Troubleshooting
+
+### Frontend Shows 0 Rules
+- **Check internet connection**: Rules load via GitHub API
+- **Check browser console**: Look for API failures or JavaScript errors
+- **GitHub rate limiting**: API allows 60 requests/hour for unauthenticated users
+- **File browser access**: Can open docs/index.html directly (no server needed)
+
+### Rule Loading Issues
+- **Network tab**: Check browser developer tools for failed GitHub API calls
+- **CORS issues**: Some local file:// URLs may block GitHub API
+- **YAML syntax**: Validate rule files have correct YAML formatting
+- **Repository access**: Ensure repository is public and accessible
+
+### Common Error Messages
+- **"GitHub API failed"**: Check internet connection or rate limits
+- **"No rule files discovered"**: Directory empty or files don't match pattern  
+- **"HTTP 403"**: GitHub rate limit exceeded (wait 1 hour)
+- **"CORS error"**: Use http:// server instead of file:// URL
