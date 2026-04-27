@@ -2,7 +2,7 @@
 title: Voice Phishing (Vishing) Attack Detection
 id: a6e2f9c4-7d8b-4e3f-c1a5-8f2e9c6d4a7b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects voice phishing attacks by monitoring for suspicious phone calls,
   voice message patterns, or social engineering attempts via voice
   communication that may lead to credential disclosure or system access.
@@ -40,3 +40,4 @@ falsepositives:
   - Legitimate support calls
   - Authorized IT communications
 level: medium
+

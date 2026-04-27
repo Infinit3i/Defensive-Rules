@@ -2,7 +2,7 @@
 title: Trusted Relationship Abuse Detection
 id: c9e4f7a2-6b8d-4f1e-a5c3-8f2e9d1c7a6b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects abuse of trusted relationships by monitoring for suspicious access
   from partner networks, third-party connections, or trusted domain accounts
   that may indicate compromise of trusted entities.
@@ -46,3 +46,4 @@ falsepositives:
   - Legitimate partner access
   - Authorized third-party services
 level: medium
+

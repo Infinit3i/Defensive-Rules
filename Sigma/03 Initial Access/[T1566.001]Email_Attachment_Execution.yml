@@ -2,7 +2,7 @@
 title: Suspicious Email Attachment Execution
 id: f4c2e8a7-1b39-4df2-8c5e-3a7b9c4d6f8e
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects execution of potentially malicious email attachments by monitoring
   process creation events for common attachment file types executed from
   temporary directories or email client locations.
@@ -38,3 +38,4 @@ detection:
 falsepositives:
   - Legitimate document processing from email clients
 level: medium
+

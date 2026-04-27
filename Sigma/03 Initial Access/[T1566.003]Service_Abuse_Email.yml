@@ -2,7 +2,7 @@
 title: Email Service Abuse for Initial Access
 id: e6b9c4f7-3a8e-4d2c-b1f5-7e4a9c2d8f6b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects abuse of legitimate email services for malicious purposes including
   mass email sending, suspicious attachments, or phishing campaigns using
   compromised or newly created accounts.
@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate marketing campaigns
   - Authorized bulk email operations
 level: medium
+

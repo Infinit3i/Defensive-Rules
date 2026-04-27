@@ -2,7 +2,7 @@
 title: Malware Replication Through Removable Media
 id: f6a4e8c2-9d7b-4f3e-a1c5-8e2f9c7d4a6b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects potential malware replication through removable media by monitoring
   for automatic execution of suspicious files from USB devices, creation of
   autorun files, or unusual file activities on removable drives.
@@ -46,3 +46,4 @@ falsepositives:
   - Legitimate portable applications
   - Authorized USB software installations
 level: medium
+

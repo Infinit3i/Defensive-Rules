@@ -1,7 +1,7 @@
 title: Cloud Account Compromise Detection
 id: 364h71fc-a12d-3456-7890-bcdef0123456
 status: experimental
-description: Detects potential cloud account compromise through analysis of suspicious account activities, including unusual login patterns, privilege escalation attempts, resource enumeration, and activities inconsistent with user's normal behavior patterns.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1078/004/
     - https://docs.microsoft.com/en-us/azure/security/fundamentals/
@@ -58,7 +58,10 @@ detection:
             - 'API'
             - 'Graph'
     # Unusual API usage patterns
-    condition: selection_impossible_travel or selection_multiple_failed_then_success or selection_off_hours_access or selection_new_device_access or selection_privilege_changes or selection_resource_enumeration or selection_suspicious_app_access or selection_api_abuse
+    condition: selection_impossible_travel or selection_multiple_failed_then_success or
+               selection_off_hours_access or selection_new_device_access or
+               selection_privilege_changes or selection_resource_enumeration or
+               selection_suspicious_app_access or selection_api_abuse
 falsepositives:
     - Legitimate users traveling or working from new locations
     - Authorized administrative activities

@@ -2,7 +2,7 @@
 title: Drive-by Compromise Detection
 id: e7f2c9a4-8b5d-4e1f-a3c6-9f2e7d8c4a1b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects drive-by compromise attempts by monitoring for malicious web content
   exploitation, suspicious JavaScript execution, and browser exploit patterns
   that may lead to initial system compromise.
@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate JavaScript applications
   - Normal website redirects
 level: high
+

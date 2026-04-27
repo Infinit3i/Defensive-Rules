@@ -1,7 +1,7 @@
 title: Cloud Security Tool Disabling Detection
 id: 475i82ad-b23e-4567-8901-cdef01234567
 status: experimental
-description: Detects attempts to disable or bypass cloud security tools and monitoring services, including CloudTrail logging disabling, security center modifications, firewall rule changes, and monitoring agent tampering to evade detection.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1562/007/
     - https://docs.aws.amazon.com/cloudtrail/latest/userguide/
@@ -58,7 +58,10 @@ detection:
             - 'RevokeSecurityGroupEgress'
         requestParameters.groupId: '*'
         requestParameters.ipPermissions.cidrIp: '0.0.0.0/0'
-    condition: selection_cloudtrail_disable or selection_guardduty_disable or selection_security_hub_disable or selection_config_disable or selection_vpc_flow_logs_disable or selection_cloudwatch_tampering or selection_iam_logging_disable or selection_network_security_disable
+    condition: selection_cloudtrail_disable or selection_guardduty_disable or
+               selection_security_hub_disable or selection_config_disable or
+               selection_vpc_flow_logs_disable or selection_cloudwatch_tampering or
+               selection_iam_logging_disable or selection_network_security_disable
 falsepositives:
     - Legitimate administrative maintenance activities
     - Cost optimization efforts to disable unused services

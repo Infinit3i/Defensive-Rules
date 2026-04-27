@@ -2,7 +2,7 @@
 title: User Execution of Malicious Files
 id: f4b7e9c6-8a3d-4e5f-a2c7-9f5e8d4c7a9b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects user execution of potentially malicious files by monitoring for
   execution of suspicious file types, files from untrusted locations, or
   unsigned executables that may indicate malware execution.
@@ -44,3 +44,4 @@ falsepositives:
   - Legitimate software installations
   - User productivity applications
 level: low
+

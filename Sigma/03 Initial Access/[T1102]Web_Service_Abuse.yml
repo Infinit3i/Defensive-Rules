@@ -2,7 +2,7 @@
 title: Legitimate Web Service Abuse
 id: d8f3e6a2-9c4b-4e7f-a1d5-8f3e9c6d4a8b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects abuse of legitimate web services for malicious purposes including
   command and control communications, data exfiltration, or malware hosting
   using trusted platforms to bypass security controls.
@@ -40,3 +40,4 @@ falsepositives:
   - Legitimate cloud service usage
   - Normal file uploads and downloads
 level: low
+

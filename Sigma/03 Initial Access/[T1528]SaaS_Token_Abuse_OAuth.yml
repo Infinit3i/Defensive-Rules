@@ -1,7 +1,7 @@
 title: SaaS OAuth Token Abuse and Session Hijacking
 id: c9fa04e5-3456-6789-0123-456789abcdef
 status: experimental
-description: Detects cloud-based attacks and credential phishing attempts.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1528/
     - https://tools.ietf.org/html/rfc6749
@@ -60,3 +60,4 @@ tags:
     - token_abuse
     - session_hijacking
     - azure
+

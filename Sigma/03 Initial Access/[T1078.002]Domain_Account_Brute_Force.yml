@@ -2,7 +2,7 @@
 title: Domain Account Brute Force Attack
 id: d7a3e5f2-8c1b-4f6e-a9d4-2b7c6e3f1a8d
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects brute force attacks against domain accounts by monitoring for
   multiple failed authentication attempts followed by successful logins
   from the same source IP or user account.
@@ -37,3 +37,4 @@ falsepositives:
   - Users with forgotten passwords
   - System accounts with configuration issues
 level: medium
+

@@ -2,7 +2,7 @@
 title: Default Account Abuse Detection
 id: d3a8e5f1-4c7b-4e2f-b6a9-8e1c3f7d2a5b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects abuse of default accounts by monitoring for authentication attempts
   using common default usernames, unchanged default passwords, or suspicious
   activities from well-known default service accounts.
@@ -41,3 +41,4 @@ falsepositives:
   - Legitimate use of administrative accounts
   - Authorized service account activities
 level: medium
+

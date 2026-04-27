@@ -1,7 +1,7 @@
 title: Cloud Identity Provider Attack Detection
 id: 253g60eb-901c-2345-6789-abcdef012345
 status: experimental
-description: Detects attacks targeting cloud identity providers through analysis of suspicious identity federation activities, including SAML token manipulation, identity provider configuration changes, federation trust modifications, and attacks against identity synchronization services.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1199/
     - https://docs.microsoft.com/en-us/azure/active-directory/hybrid/
@@ -26,7 +26,7 @@ detection:
             - 'ReplyUrls'
             - 'SignOnUrl'
             - 'LogoutUrl'
-    # Modifications to SAML configuration
+        # Modifications to SAML configuration
     selection_identity_sync_attacks:
         ActivityDisplayName:
             - 'Add service principal'
@@ -42,7 +42,7 @@ detection:
             - 'Update application'
             - 'Add service principal credentials'
         TargetResources.modifiedProperties.displayName: 'KeyCredentials'
-    # Certificate-based authentication attacks
+        # Certificate-based authentication attacks
     selection_suspicious_token_signing:
         ActivityDisplayName:
             - 'Update application'
@@ -57,7 +57,7 @@ detection:
             - 'SAML2'
             - 'WS-Fed'
             - 'OAuth2'
-    # Sign-ins through potentially compromised identity providers
+        # Sign-ins through potentially compromised identity providers
         UserPrincipalName|contains: '@federated.'
     selection_privileged_federation_access:
         ActivityDisplayName:
@@ -67,7 +67,7 @@ detection:
             - 'Global Administrator'
             - 'Application Administrator'
             - 'Cloud Application Administrator'
-    # Privilege escalation through federation
+        # Privilege escalation through federation
     selection_adfs_configuration_changes:
         ActivityDisplayName|contains:
             - 'ADFS'

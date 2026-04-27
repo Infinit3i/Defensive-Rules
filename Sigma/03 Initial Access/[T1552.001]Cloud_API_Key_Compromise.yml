@@ -1,7 +1,7 @@
 title: Cloud API Key Compromise Detection
 id: 031e48c9-789a-0123-4567-89abcdef0123
 status: experimental
-description: Detects potential compromise of cloud API keys through analysis of suspicious API usage patterns, including API calls from unusual geographic locations, rapid enumeration activities, access to sensitive resources, and API key usage from multiple distinct sources simultaneously.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1552/001/
     - https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html

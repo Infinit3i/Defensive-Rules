@@ -1,7 +1,7 @@
 title: Cloud Storage Bucket Compromise Detection
 id: d0eb15f6-4567-7890-1234-56789abcdef0
 status: experimental
-description: Detects cloud-based attacks and credential phishing attempts.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1190/
     - https://docs.aws.amazon.com/s3/latest/userguide/security.html
@@ -71,3 +71,4 @@ tags:
     - s3
     - storage
     - bucket_compromise
+

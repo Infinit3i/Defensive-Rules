@@ -2,7 +2,7 @@
 title: System Image Modification Detection
 id: b9f4e7c8-3a5d-4e2f-c6a1-9e3f8c5d2a7b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects unauthorized modification of system images including firmware,
   BIOS updates, bootloader changes, or operating system image tampering
   that may indicate persistent compromise or rootkit installation.
@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate firmware updates
   - Authorized system maintenance
 level: high
+

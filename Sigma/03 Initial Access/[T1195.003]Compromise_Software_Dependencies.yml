@@ -2,7 +2,7 @@
 title: Compromised Software Dependencies Detection
 id: e8f5c2a9-7d4b-4e1f-a6c3-9f2e8d1c5a8b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects potential compromise of software dependencies by monitoring for
   unusual package installations, dependency confusion attacks, or suspicious
   library downloads that may indicate supply chain attacks.
@@ -47,3 +47,4 @@ falsepositives:
   - Legitimate package installations
   - Internal package repositories
 level: medium
+

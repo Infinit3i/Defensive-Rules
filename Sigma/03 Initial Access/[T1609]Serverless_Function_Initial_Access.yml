@@ -1,7 +1,7 @@
 title: Serverless Function Abuse for Initial Access
 id: f20d37b8-6789-9012-3456-789abcdef012
 status: experimental
-description: Detects abuse of serverless functions for initial access through suspicious Lambda executions and code injection.
+description: Detects cloud-based security attacks and access attempts.
 references:
     - https://attack.mitre.org/techniques/T1609/
     - https://docs.aws.amazon.com/lambda/latest/dg/security.html
@@ -63,7 +63,9 @@ detection:
             - 'AWS_ACCESS_KEY_ID'
             - 'AWS_SECRET_ACCESS_KEY'
             - 'PATH=/tmp'
-    condition: selection_suspicious_lambda_creation or selection_excessive_permissions or selection_suspicious_invocations or selection_data_access_functions or selection_reverse_shell_indicators or selection_code_injection or selection_environment_tampering
+    condition: selection_suspicious_lambda_creation or selection_excessive_permissions or
+               selection_suspicious_invocations or selection_data_access_functions or
+               selection_reverse_shell_indicators or selection_code_injection or selection_environment_tampering
 falsepositives:
     - Legitimate serverless applications with required permissions
     - Development and testing environments

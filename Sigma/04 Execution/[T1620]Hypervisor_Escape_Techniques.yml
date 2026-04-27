@@ -80,7 +80,7 @@ detection:
     DestinationIp:
       - '169.254.1.1'  # VMware host-guest communication
       - '10.0.2.2'     # VirtualBox host
-      - '192.168.122.1' # QEMU/KVM default
+      - '192.168.122.1'  # QEMU/KVM default
     DestinationPort:
       - 427    # Service Location Protocol
       - 902    # VMware vCenter

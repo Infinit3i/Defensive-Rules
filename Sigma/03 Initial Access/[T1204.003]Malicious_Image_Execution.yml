@@ -2,7 +2,7 @@
 title: Malicious Image File Execution
 id: a3f6e8c9-7b4d-4e2f-c5a8-9f6e8d5c8a4b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects execution of malicious code embedded in image files by monitoring
   for steganography tools, image parsing vulnerabilities, or suspicious
   processes launched from image file interactions.
@@ -44,3 +44,4 @@ falsepositives:
   - Legitimate image processing applications
   - Photo editing software
 level: medium
+

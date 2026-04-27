@@ -2,7 +2,7 @@
 title: Content Injection Attack Detection
 id: c7e4f9a3-8d2b-4e5f-a1c6-9f3e8d2c5a7b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects content injection attacks by monitoring for malicious script
   injection, HTML manipulation, or content spoofing attempts that may
   be used to compromise users or deliver malicious payloads.
@@ -42,3 +42,4 @@ falsepositives:
   - Legitimate web application functionality
   - Dynamic content generation
 level: medium
+

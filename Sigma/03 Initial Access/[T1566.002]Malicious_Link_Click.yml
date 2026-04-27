@@ -2,7 +2,7 @@
 title: Malicious Link Click from Email
 id: a8d3f7e2-9c4b-41f5-b2e8-7d6c3a9f1e4b
 status: experimental
-description: Detects cloud-based attacks and credential phishing attempts.
+description: Detects cloud-based security attacks and access attempts.
   Detects potential malicious link clicks by monitoring browser process creation
   with suspicious URLs or domains that may originate from phishing emails.
 references:
@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate URL shortener usage
   - Social media link clicks
 level: medium
+

@@ -2,7 +2,7 @@
 title: SMS Phishing (Smishing) Attack Detection
 id: f3c7e9a5-8b2d-4e6f-a1c4-9e2f7d8c3a5b
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects SMS phishing attacks by monitoring for suspicious text messages
   containing malicious links, fake alerts, or social engineering attempts
   that may lead to credential theft or malware installation.
@@ -43,3 +43,4 @@ falsepositives:
   - Legitimate SMS notifications
   - Authorized marketing messages
 level: medium
+

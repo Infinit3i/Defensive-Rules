@@ -2,7 +2,7 @@
 title: Supply Chain Compromise Software Installation
 id: f2c8e4a1-9b7d-4e6c-a3f8-5d2b9e1c7a4f
 status: experimental
-description: >-
+description: Detects cloud-based security attacks and access attempts.
   Detects potential supply chain compromises by monitoring for installation
   or execution of software from unexpected sources, unsigned binaries, or
   processes with suspicious digital signatures.
@@ -42,3 +42,4 @@ falsepositives:
   - Internal development tools
   - Legitimate unsigned utilities
 level: high
+
