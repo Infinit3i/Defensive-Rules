@@ -53,7 +53,6 @@ detection:
       - 'sc query'
       - 'Get-Service'
       - 'tasklist'
-    CommandLine|contains:
       - 'vmware'
       - 'vbox'
       - 'virtualbox'

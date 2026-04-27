@@ -23,4 +23,3 @@ detection:
 falsepositives:
   - Legitimate telemetry domains (e.g., antivirus or EDR heartbeat pings) and some CDN services.
 level: high
-

@@ -44,7 +44,9 @@ detection:
     EventID: 3
     Initiated: 'true'
     Protocol: 'tcp'
-  condition: (selection_process_create and selection_file_create and selection_file_transaction) or (selection_process_access and suspicious_process_characteristics) or (selection_registry_transaction and network_callback)
+  condition: (selection_process_create and selection_file_create and selection_file_transaction) or
+             (selection_process_access and suspicious_process_characteristics) or
+             (selection_registry_transaction and network_callback)
 falsepositives:
   - Legitimate software using NTFS transactions
   - System recovery operations

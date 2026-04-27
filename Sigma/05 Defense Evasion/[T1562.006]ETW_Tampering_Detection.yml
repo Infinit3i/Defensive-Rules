@@ -37,7 +37,6 @@ detection:
       - 'sl'
       - '/e:false'
       - '/enabled:false'
-    CommandLine|contains:
       - 'Microsoft-Windows-PowerShell/Operational'
       - 'Microsoft-Windows-WMI-Activity/Operational'
       - 'Microsoft-Windows-Sysmon/Operational'
@@ -67,7 +66,6 @@ detection:
       - 'stop'
       - 'delete'
       - 'update'
-    CommandLine|contains:
       - 'EventLog-System'
       - 'EventLog-Security'
       - 'EventLog-Application'
@@ -85,7 +83,8 @@ detection:
       - 'Microsoft.Diagnostics.Tracing'
       - 'System.Diagnostics.Eventing'
       - 'TraceLogging'
-  condition: selection_etw_registry or selection_etw_powershell or selection_etw_wevtutil or selection_etw_process_access or selection_etw_api_calls or selection_etw_logman or selection_etw_service_stop or selection_etw_com
+  condition: selection_etw_registry or selection_etw_powershell or selection_etw_wevtutil or selection_etw_process_access or selection_etw_api_calls o
+               r selection_etw_logman or selection_etw_service_stop or selection_etw_com
 falsepositives:
   - Legitimate system administration tasks
   - Performance troubleshooting activities

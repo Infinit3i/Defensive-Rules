@@ -50,7 +50,9 @@ detection:
     CommandLine|contains:
       - 'res://ieframe.dll'
       - 'res://mshtml.dll'
-  condition: selection_process and (selection_suspicious_args or selection_encoded_content or selection_network_download or selection_parent_suspicious or selection_network_connection) and not filter_legitimate
+  condition: selection_process and (selection_suspicious_args or selection_encoded_content or
+             selection_network_download or selection_parent_suspicious or
+             selection_network_connection) and not filter_legitimate
 falsepositives:
   - Legitimate HTML applications
   - Corporate intranet applications

@@ -29,4 +29,3 @@ detection:
 falsepositives:
   - Custom integrations, vulnerability scanners, or monitoring tools with non-standard User-Agents.
 level: medium
-

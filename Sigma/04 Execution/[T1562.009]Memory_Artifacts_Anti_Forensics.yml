@@ -76,7 +76,6 @@ detection:
       - 'NtQueryInformationProcess'
       - 'OutputDebugString'
       - 'FindWindow'
-    CommandLine|contains:
       - 'ollydbg'
       - 'windbg'
       - 'x64dbg'

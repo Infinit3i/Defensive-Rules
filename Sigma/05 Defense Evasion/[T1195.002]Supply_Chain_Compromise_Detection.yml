@@ -97,7 +97,10 @@ detection:
     ImageLoaded|re: '.*\\[a-zA-Z0-9_-]+\.dll$'
     Signed: 'false'
     ProcessId: 'ProcessId'
-  condition: selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or (selection_trusted_binary_modification and selection_file_hash_mismatch) or (selection_certificate_anomaly and selection_registry_persistence) or (selection_process_creation_trusted and selection_dll_sideloading)
+  condition: selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or
+             (selection_trusted_binary_modification and selection_file_hash_mismatch) or
+             (selection_certificate_anomaly and selection_registry_persistence) or
+             (selection_process_creation_trusted and selection_dll_sideloading)
 falsepositives:
   - Legitimate software updates and installations
   - Normal package manager operations

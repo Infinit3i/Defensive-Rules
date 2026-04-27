@@ -36,4 +36,3 @@ falsepositives:
   - CDN-generated subdomains
   - Legitimate random identifiers
 level: high
-

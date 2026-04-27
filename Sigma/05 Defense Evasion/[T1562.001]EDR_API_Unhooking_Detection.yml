@@ -61,7 +61,8 @@ detection:
       - 'bitdefender'
       - 'carbon'
       - 'elastic'
-  condition: (selection_process_access and selection_api_modules) or (selection_suspicious_calls and selection_memory_protection) or (selection_file_access and edr_processes)
+  condition: (selection_process_access and selection_api_modules) or (selection_suspicious_calls and selection_memory_protection) or (selection_file_a
+               ccess and edr_processes)
 falsepositives:
   - Legitimate debugging and development tools
   - Security research tools

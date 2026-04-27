@@ -68,7 +68,8 @@ detection:
       - 'System.Management.Automation'
       - 'Microsoft.PowerShell'
     ProcessId: 'ProcessId'
-  condition: selection_registry_policy or selection_registry_direct or selection_powershell_commands or (selection_process_manipulation and selection_assembly_loading) or selection_etw_tampering
+  condition: selection_registry_policy or selection_registry_direct or selection_powershell_commands or (selection_process_manipulation and selection_
+               assembly_loading) or selection_etw_tampering
 falsepositives:
   - Administrative scripts requiring execution policy changes
   - Legitimate system administration tasks

@@ -74,7 +74,8 @@ detection:
       - 'wmic computersystem get'
     CommandLine|re:
       - '.*"[^"]*\^[^"]*".*'
-  condition: selection_powershell_obfuscation or selection_base64_powershell or selection_char_substitution or selection_string_manipulation or selection_format_operators or selection_compression or selection_cmd_obfuscation or selection_batch_obfuscation or selection_wmi_obfuscation
+  condition: selection_powershell_obfuscation or selection_base64_powershell or selection_char_substitution or selection_string_manipulation or select
+               ion_format_operators or selection_compression or selection_cmd_obfuscation or selection_batch_obfuscation or selection_wmi_obfuscation
 falsepositives:
   - Legitimate scripts using advanced PowerShell features
   - Administrative automation scripts

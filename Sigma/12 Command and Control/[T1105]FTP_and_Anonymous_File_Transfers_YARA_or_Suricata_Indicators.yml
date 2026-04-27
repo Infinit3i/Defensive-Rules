@@ -40,4 +40,3 @@ fields:
   - zeek.ftp.request
   - zeek.smb.command
   - zeek.orig_h
-

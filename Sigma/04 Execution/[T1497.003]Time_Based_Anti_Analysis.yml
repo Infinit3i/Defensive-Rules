@@ -71,9 +71,10 @@ detection:
       - 'mouse_event'
       - 'keybd_event'
   selection_file_timestamps:
-    EventID: 11
+    EventID:
+      - 11
+      - 2  # File creation time change
     TargetFilename|endswith: '.tmp'
-    EventID: 2  # File creation time change
   condition: 2 of selection_*
 falsepositives:
   - Legitimate applications with timing requirements

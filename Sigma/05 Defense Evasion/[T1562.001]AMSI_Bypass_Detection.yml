@@ -55,7 +55,8 @@ detection:
       - 'Get-Help about_*'
       - 'Import-Module'
       - 'Test-Path'
-  condition: (selection_powershell_amsi or selection_amsi_bypass_strings or selection_obfuscation or selection_reflection or selection_com_hijack or selection_memory_patch) and not filter_legitimate
+  condition: (selection_powershell_amsi or selection_amsi_bypass_strings or selection_obfuscation or selection_reflection or selection_com_hijack or s
+               election_memory_patch) and not filter_legitimate
 falsepositives:
   - Security research and educational content
   - Penetration testing frameworks

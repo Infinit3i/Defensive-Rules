@@ -23,4 +23,3 @@ detection:
 falsepositives:
   - Large DNS records used by cloud services or CDNs.
 level: high
-

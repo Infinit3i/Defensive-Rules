@@ -76,7 +76,8 @@ detection:
       - '\Microsoft\SystemCertificates\CA\Certificates'
       - '\Microsoft\SystemCertificates\ROOT\Certificates'
       - '\Microsoft\SystemCertificates\TrustedPublisher\Certificates'
-  condition: (selection_process_access and selection_dll_injection) or selection_registry_modification or (selection_file_modification and selection_network_anomaly) or selection_powershell_crypto or selection_certificate_store
+  condition: (selection_process_access and selection_dll_injection) or selection_registry_modification or (selection_file_modification and selection_n
+               etwork_anomaly) or selection_powershell_crypto or selection_certificate_store
 falsepositives:
   - Legitimate certificate management tools
   - Development and testing environments
