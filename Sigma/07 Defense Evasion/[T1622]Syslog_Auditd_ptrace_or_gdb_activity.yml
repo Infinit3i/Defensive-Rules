@@ -1,3 +1,4 @@
+---
 title: ptrace/syscall or gdb invocation detected in syslog/auditd
 id: f3c4d5e6-7f01-2345-6789-0abcdef12345
 status: experimental

@@ -1,3 +1,4 @@
+---
 title: Detect FRPC Communication on Designated Ports
 id: b33f772a-12f3-4ae6-942c-f6c81803d107
 description: Detects possible FRPC (Fast Reverse Proxy Client) activity by identifying traffic on high-risk ports (6000, 7000) using Zeek logs.

@@ -12,10 +12,10 @@ jobs:
   sigma-validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -33,7 +33,7 @@ jobs:
           python scripts/test_framework.py --output sigma-test-results.json
 
       - name: Upload test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: sigma-test-results
           path: sigma-test-results.json
@@ -45,10 +45,10 @@ jobs:
       matrix:
         platform: [splunk, sentinel]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -66,7 +66,7 @@ jobs:
             --validate-only
 
       - name: Upload conversion results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.platform }}-conversion-results
           path: test-results/${{ matrix.platform }}/
@@ -96,10 +96,10 @@ jobs:
   mitre-coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -145,7 +145,7 @@ jobs:
           "
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: mitre-coverage-report
           path: mitre-coverage.json
@@ -153,12 +153,16 @@ jobs:
   soar-integration-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Install SOAR dependencies
+        run: |
+          pip install requests
 
       - name: Test SOAR integration
         run: |
@@ -187,10 +191,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [sigma-validation, conversion-testing]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -210,7 +214,7 @@ jobs:
           test -f build/sentinel-analytics-rules-*.zip
 
       - name: Upload packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: siem-packages
           path: build/*.tar.gz
@@ -218,16 +222,16 @@ jobs:
   performance-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
         run: |
-          pip install pysigma pysigma-backend-splunk memory-profiler time
+          pip install pysigma pysigma-backend-splunk memory-profiler psutil
 
       - name: Performance test
         run: |

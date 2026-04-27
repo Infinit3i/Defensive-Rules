@@ -1,3 +1,4 @@
+---
 title: Detect ICMP-Based FRPC Communication
 id: 49e5a81b-f83d-4c26-aeaa-6b423d678c2c
 description: Detects ICMP echo request and reply traffic which may indicate FRPC tunneling behavior for C2 using non-application layer protocols.
