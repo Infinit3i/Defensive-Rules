@@ -1,4 +1,0 @@
-filename,rule_name,description,author,date
-Javascript_Anti_Forensics.yar,Javascript_Anti_Forensics,Arguements callee checks against a value to see if it has been modified,Infinit3i,2025-09-25
-PDF_Suspicious_Features.yar,PDF_Suspicious_Features,PDF with risky features (JS, Launch, EmbeddedFiles, OpenAction, etc.),Infinit3i,2025-09-24
-WIN_AntiDebug_Common_APIs.yar,WIN_AntiDebug_Common_APIs,No description,MJ,2025-09-27
