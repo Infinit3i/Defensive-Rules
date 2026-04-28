@@ -9,18 +9,10 @@ date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1497/003/
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1497.003
-    # Platform/tool tags
-    - windows
-    - sysmon
+  - attack.defense_evasion
   - attack.t1497.003
-  - tactic.defense-evasion
-  - platform:windows
-  - technique:T1497.003
-  - mitre_version:16.1
+  - windows
+  - powershell
 logsource:
   product: windows
   service: powershell

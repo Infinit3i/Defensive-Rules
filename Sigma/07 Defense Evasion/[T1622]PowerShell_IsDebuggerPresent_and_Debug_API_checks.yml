@@ -11,18 +11,10 @@ references:
 author: Infinit3i
 date: 2025-10-19
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1622
-    # Platform/tool tags
-    - windows
-    - sysmon
+  - attack.defense_evasion
   - attack.t1622
-  - tactic.defense-evasion
-  - platform:windows
-  - technique:T1622
-  - mitre_version:16.1
+  - windows
+  - powershell
 logsource:
   product: windows
   service: powershell
