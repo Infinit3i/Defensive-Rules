@@ -22,17 +22,17 @@ logsource:
   service: sharepoint
 detection:
   external_sharing:
-    Operation:
-    EventSource:
-    SharingLevel:
-    large_upload:
-    Operation:
-    ItemType:
-    ObjectId|contains:
-    sync_activity:
-    Operation:
-    UserAgent|contains:
-  condition: external_sharing or large_upload or sync_activity
+  Operation:
+  EventSource:
+  SharingLevel:
+  large_upload:
+  Operation:
+  ItemType:
+  ObjectId|contains:
+  sync_activity:
+  Operation:
+  UserAgent|contains:
+    condition: external_sharing or large_upload or sync_activity
 falsepositives:
   - Legitimate business cloud sharing
   - Authorized file synchronization

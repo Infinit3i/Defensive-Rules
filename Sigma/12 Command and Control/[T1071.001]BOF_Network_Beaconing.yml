@@ -30,7 +30,7 @@ detection:
   timing_pattern:
   interval_variance|lte:
   request_count|gte:
-  condition: (regular_beacons or payload_patterns) and timing_pattern
+    condition: (regular_beacons or payload_patterns) and timing_pattern
 fields:
   - src_ip
   - dest_ip

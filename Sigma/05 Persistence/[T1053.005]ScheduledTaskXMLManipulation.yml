@@ -32,7 +32,7 @@ detection:
       - '\wordpad.exe'
       - '\powershell.exe'
   CommandLine|contains:
-  condition: (file_creation or file_modification) and (xml_tools or direct_xml_access)
+    condition: (file_creation or file_modification) and (xml_tools or direct_xml_access)
 fields:
   - TargetFilename
   - Image

@@ -11,14 +11,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'stop'
       - 'delete'
       - 'config'
       - 'disable'
   email_services:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'MSExchangeTransport'
       - 'MSExchangeIS'
       - 'MSExchangeMailboxAssistants'

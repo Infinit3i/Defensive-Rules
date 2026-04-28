@@ -27,7 +27,7 @@ detection:
   Image|contains:
   ImageLoaded|endswith:
   Signed:
-  condition: selection_registry or selection_environment or selection_dotnet
+    condition: selection_registry or selection_environment or selection_dotnet
 falsepositives:
   - Legitimate .NET profiling tools
   - Development environments

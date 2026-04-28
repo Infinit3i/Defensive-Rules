@@ -31,7 +31,7 @@ detection:
   subject|startswith:
   issuer|startswith:
   subject|contains:
-  condition: self_signed OR bad_issuer OR mismatched_cn
+    condition: self_signed OR bad_issuer OR mismatched_cn
 falsepositives:
   - Internal self-signed certs for testing or dev environments.
 level: high

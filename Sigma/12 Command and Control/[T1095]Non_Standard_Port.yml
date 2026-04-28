@@ -22,17 +22,17 @@ logsource:
   service: conn
 detection:
   unusual_ports:
-    id.resp_p|gte:
-    id.resp_p|lte:
-    service:
-    high_ports:
-    id.resp_p|gte:
-    orig_bytes|gte:
-    resp_bytes|gte:
-    protocol_mismatch:
-    id.resp_p:
-    service:
-  condition: unusual_ports or high_ports or protocol_mismatch
+  id.resp_p|gte:
+  id.resp_p|lte:
+  service:
+  high_ports:
+  id.resp_p|gte:
+  orig_bytes|gte:
+  resp_bytes|gte:
+  protocol_mismatch:
+  id.resp_p:
+  service:
+    condition: unusual_ports or high_ports or protocol_mismatch
 falsepositives:
   - Application-specific ports
   - Development servers

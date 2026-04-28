@@ -22,18 +22,18 @@ logsource:
   service: dns
 detection:
   ddns_providers:
-    query|endswith:
+  query|endswith:
       - '.dyndns.org'
       - '.no-ip.com'
       - '.ddns.net'
       - '.freedns.org'
-    short_ttl:
-    TTL|lte:
-    qtype_name:
-    frequent_changes:
-    query|count|gte:
-    answers|count|gte:
-  condition: ddns_providers or short_ttl or frequent_changes
+  short_ttl:
+  TTL|lte:
+  qtype_name:
+  frequent_changes:
+  query|count|gte:
+  answers|count|gte:
+    condition: ddns_providers or short_ttl or frequent_changes
 falsepositives:
   - Legitimate dynamic DNS usage
   - Home network services

@@ -22,21 +22,21 @@ logsource:
   service: http
 detection:
   beacon_pattern:
-    method:
-    response_code:
-    orig_bytes|lte:
-    resp_bytes|lte:
-    data_retrieval:
-    method:
-    uri|contains:
+  method:
+  response_code:
+  orig_bytes|lte:
+  resp_bytes|lte:
+  data_retrieval:
+  method:
+  uri|contains:
       - '/data'
       - '/config'
       - '/update'
-    periodic_access:
-    host|count|gte:
-    method:
-    time_interval:
-  condition: beacon_pattern or data_retrieval or periodic_access
+  periodic_access:
+  host|count|gte:
+  method:
+  time_interval:
+    condition: beacon_pattern or data_retrieval or periodic_access
 falsepositives:
   - Legitimate data synchronization
   - Application updates

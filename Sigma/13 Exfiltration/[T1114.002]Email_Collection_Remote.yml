@@ -22,20 +22,20 @@ logsource:
   service: conn
 detection:
   email_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 993
       - 995
       - 143
       - 110
-    large_download:
-    service:
-    resp_bytes|gte:
-    id.resp_p:
-    api_access:
-    id.resp_p:
-    orig_bytes|gte:
-    service:
-  condition: email_ports and (large_download or api_access)
+  large_download:
+  service:
+  resp_bytes|gte:
+  id.resp_p:
+  api_access:
+  id.resp_p:
+  orig_bytes|gte:
+  service:
+    condition: email_ports and (large_download or api_access)
 falsepositives:
   - Legitimate email client synchronization
   - Authorized email access

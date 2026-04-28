@@ -31,7 +31,7 @@ detection:
       - '/Embedding'
       - '-Embedding'
   Image|endswith:
-  condition: (selection_process and selection_image_load) or selection_suspicious_cmdline
+    condition: (selection_process and selection_image_load) or selection_suspicious_cmdline
 fields:
   - Image
   - CommandLine

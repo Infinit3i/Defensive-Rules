@@ -27,9 +27,9 @@ detection:
   selection_rapid_connections:
   program:
   message|contains:
-  condition: selection_ssh_login and selection_internal_ssh
-  timeframe: 5m
-  count: 5
+    condition: selection_ssh_login and selection_internal_ssh
+    timeframe: 5m
+    count: 5
 level: medium
 fields:
   - user

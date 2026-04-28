@@ -38,7 +38,7 @@ detection:
       - '\opera.exe'
   multiple_redirects:
   EventID:
-  condition: shortener_domains and browser_process and multiple_redirects
+    condition: shortener_domains and browser_process and multiple_redirects
 falsepositives:
   - Legitimate social media links
   - Marketing campaign URLs

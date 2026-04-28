@@ -34,7 +34,7 @@ detection:
       - 'PAGE_EXECUTE_READWRITE'
   sel_size_pattern:
   CommandLine|re:
-  condition: sel_process and sel_memory and (sel_alloc_pattern or sel_size_pattern)
+    condition: sel_process and sel_memory and (sel_alloc_pattern or sel_size_pattern)
 falsepositives:
   - JIT compilation in .NET applications
   - Browser JIT engines

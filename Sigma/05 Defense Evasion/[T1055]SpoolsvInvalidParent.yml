@@ -18,7 +18,7 @@ detection:
   Image|endswith:
   filter:
   ParentImage|endswith:
-  condition: selection and not filter
+    condition: selection and not filter
 falsepositives:
   - Unknown legitimate processes spawning spoolsv (rare)
 level: high

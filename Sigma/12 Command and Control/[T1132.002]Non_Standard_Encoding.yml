@@ -22,16 +22,16 @@ logsource:
   service: http
 detection:
   unusual_charset:
-    uri|contains:
+  uri|contains:
       - 'charset=unknown'
       - 'custom'
       - 'proprietary'
-    binary_data:
-    content_type:
-    request_body_len|gte:
-    encoded_patterns:
-    uri|regex:
-  condition: unusual_charset or binary_data or encoded_patterns
+  binary_data:
+  content_type:
+  request_body_len|gte:
+  encoded_patterns:
+  uri|regex:
+    condition: unusual_charset or binary_data or encoded_patterns
 falsepositives:
   - Custom applications
   - Binary file transfers

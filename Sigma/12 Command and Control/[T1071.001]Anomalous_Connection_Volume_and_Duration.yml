@@ -25,7 +25,7 @@ detection:
   duration|gt:
   high_volume:
   history|contains:
-  condition: long_duration OR high_volume
+    condition: long_duration OR high_volume
 falsepositives:
   - Backup systems, monitoring agents, or CDN connections.
 level: medium

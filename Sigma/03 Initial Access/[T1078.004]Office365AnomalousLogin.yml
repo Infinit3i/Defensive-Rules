@@ -25,9 +25,9 @@ detection:
   selection_new_country:
   OperationName:
   Location.countryOrRegion:
-  condition: selection_failed_attempts or selection_impossible_travel or selection_tor_usage
-  timeframe: 1h
-  count: 10
+    condition: selection_failed_attempts or selection_impossible_travel or selection_tor_usage
+    timeframe: 1h
+    count: 10
 level: high
 fields:
   - UserPrincipalName

@@ -22,18 +22,18 @@ logsource:
   service: security
 detection:
   ntlm_logon:
-    EventID:
-    LogonType:
-    AuthenticationPackageName:
-    unusual_source:
-    WorkstationName|contains:
+  EventID:
+  LogonType:
+  AuthenticationPackageName:
+  unusual_source:
+  WorkstationName|contains:
       - 'WORKSTATION'
       - 'UNKNOWN'
       - 'DESKTOP'
-    no_password:
-    LogonProcessName:
-    SubStatus:
-  condition: ntlm_logon and (unusual_source or no_password)
+  no_password:
+  LogonProcessName:
+  SubStatus:
+    condition: ntlm_logon and (unusual_source or no_password)
 falsepositives:
   - Legacy NTLM applications
   - Normal network authentication

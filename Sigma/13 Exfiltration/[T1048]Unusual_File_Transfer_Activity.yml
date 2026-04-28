@@ -28,7 +28,7 @@ detection:
   total_bytes|gt:
   protocol_anomaly:
   tx_hosts|contains:
-  condition: suspicious_mime OR large_file OR protocol_anomaly
+    condition: suspicious_mime OR large_file OR protocol_anomaly
 falsepositives:
   - Legitimate large file transfers or patching events.
 level: high

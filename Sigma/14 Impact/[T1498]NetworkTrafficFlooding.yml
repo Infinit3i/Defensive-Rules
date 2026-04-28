@@ -44,7 +44,7 @@ detection:
   sel_network_stress:
   EventID:
   Initiated:
-  condition: sel_ddos_tools or sel_ddos_args
+    condition: sel_ddos_tools or sel_ddos_args
 level: high
 tags:
   - attack.impact

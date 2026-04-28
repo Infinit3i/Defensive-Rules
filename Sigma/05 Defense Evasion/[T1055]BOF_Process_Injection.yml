@@ -52,7 +52,7 @@ detection:
       - 'C:\Program Files (x86)\'
       - 'C:\Windows\System32\'
   Signed:
-  condition: (any of selection_*) and not filter_legit
+    condition: (any of selection_*) and not filter_legit
 falsepositives:
   - Legitimate security software
   - System administration tools

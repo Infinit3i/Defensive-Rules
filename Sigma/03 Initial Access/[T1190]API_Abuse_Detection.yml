@@ -44,7 +44,7 @@ detection:
       - 'PUT'
       - 'DELETE'
   uri|startswith:
-  condition: rate_limiting_bypass or auth_bypass or excessive_requests
+    condition: rate_limiting_bypass or auth_bypass or excessive_requests
 falsepositives:
   - Legitimate API testing and monitoring tools
   - High-traffic applications with proper rate limiting

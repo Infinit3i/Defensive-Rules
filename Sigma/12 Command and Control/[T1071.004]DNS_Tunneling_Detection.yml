@@ -23,7 +23,7 @@ detection:
       - "TXT"
       - "NULL"
   query|re:
-  condition: long_query
+    condition: long_query
 falsepositives:
   - Large DNS records used by cloud services or CDNs.
 level: high

@@ -27,7 +27,7 @@ detection:
       - '\msvcr71.dll'
       - '\dwmapi.dll'
   Signed:
-  condition: selection_file_create or selection_image_load
+    condition: selection_file_create or selection_image_load
 falsepositives:
   - Legitimate software installations
   - Development environments

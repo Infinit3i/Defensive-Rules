@@ -20,7 +20,7 @@ logsource:
 detection:
   selection:
   CommandLine|contains:
-  condition: selection
+    condition: selection
 falsepositives:
   - Legitimate administrative activities and remote management tools accessing ADMIN$ for maintenance or backups.
 level: medium

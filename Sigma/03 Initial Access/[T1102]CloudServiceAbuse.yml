@@ -26,8 +26,8 @@ detection:
   method:
   selection_frequency:
   status_code:
-    timeframe:
-  condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
+  timeframe:
+    condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
 falsepositives:
   - Legitimate cloud storage synchronization
   - File sharing for business purposes

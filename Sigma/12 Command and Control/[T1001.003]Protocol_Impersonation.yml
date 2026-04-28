@@ -22,16 +22,16 @@ logsource:
   service: conn
 detection:
   port_mismatch:
-    id.resp_p:
-    service:
-    protocol_confusion:
-    id.resp_p:
-    service:
-    unusual_patterns:
-    orig_bytes:
-    duration|lte:
-    service:
-  condition: port_mismatch or protocol_confusion or unusual_patterns
+  id.resp_p:
+  service:
+  protocol_confusion:
+  id.resp_p:
+  service:
+  unusual_patterns:
+  orig_bytes:
+  duration|lte:
+  service:
+    condition: port_mismatch or protocol_confusion or unusual_patterns
 falsepositives:
   - Misconfigured services
   - Protocol negotiations

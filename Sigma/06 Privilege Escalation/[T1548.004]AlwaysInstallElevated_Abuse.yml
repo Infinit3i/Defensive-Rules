@@ -23,7 +23,7 @@ detection:
       - '/i'
       - '/package'
   IntegrityLevel:
-  condition: selection_registry or selection_msiexec
+    condition: selection_registry or selection_msiexec
 falsepositives:
   - Legitimate software installations
   - Administrative package deployments

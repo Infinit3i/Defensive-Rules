@@ -21,8 +21,8 @@ detection:
   selection_timing:
   EventID:
   LogonType:
-    timeframe:
-  condition: selection_hid and selection_timing | count() > 10
+  timeframe:
+    condition: selection_hid and selection_timing | count() > 10
 falsepositives:
   - Power users with rapid keyboard usage
   - Automation scripts via keyboard simulation

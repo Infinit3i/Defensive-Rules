@@ -23,7 +23,7 @@ detection:
   ServiceFileName|endswith:
   whitelist:
   ServiceFileName|startswith:
-  condition: selection and not whitelist
+    condition: selection and not whitelist
 falsepositives:
   - Legitimate driver updates or installations by trusted vendors in standard directories.
 level: high

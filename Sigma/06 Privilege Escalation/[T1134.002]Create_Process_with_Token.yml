@@ -29,7 +29,7 @@ detection:
       - '\lsass.exe'
       - '\winlogon.exe'
   GrantedAccess:
-  condition: selection_api_call and (selection_process or selection_token_access)
+    condition: selection_api_call and (selection_process or selection_token_access)
 falsepositives:
   - Legitimate service processes
   - System authentication

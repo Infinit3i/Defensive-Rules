@@ -36,7 +36,7 @@ detection:
   high_frequency:
   source_number|count|gte:
   time_window:
-  condition: suspicious_keywords or impersonation_attempts or high_frequency
+    condition: suspicious_keywords or impersonation_attempts or high_frequency
 falsepositives:
   - Legitimate support calls
   - Authorized IT communications

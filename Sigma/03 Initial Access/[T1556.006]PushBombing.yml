@@ -22,8 +22,8 @@ detection:
   UserPrincipalName:
   selection_timing:
   TimeGenerated:
-    timeframe:
-  condition: selection_push and selection_repeated | count() > 5
+  timeframe:
+    condition: selection_push and selection_repeated | count() > 5
 falsepositives:
   - Users accidentally triggering multiple MFA prompts
   - Application retry mechanisms

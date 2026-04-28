@@ -23,10 +23,10 @@ logsource:
 detection:
   post_method:
   method:
-    timeframe:
+  timeframe:
   threshold:
-    count:
-  condition: post_method
+  count:
+    condition: post_method
 falsepositives:
   - High-volume API integrations or legitimate applications uploading data.
 level: high

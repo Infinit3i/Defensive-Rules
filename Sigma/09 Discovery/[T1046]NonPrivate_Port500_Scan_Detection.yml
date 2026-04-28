@@ -22,7 +22,7 @@ detection:
   src_port:
   condition3:
   dest_port:
-  condition: selection and (condition1 or condition2 or condition3)
+    condition: selection and (condition1 or condition2 or condition3)
 fields:
   - _time
   - src_ip

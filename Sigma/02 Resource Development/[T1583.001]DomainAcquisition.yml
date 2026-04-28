@@ -34,9 +34,9 @@ detection:
       - 'app1e'
   selection_bulk_registration:
   registrant_email:
-  condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
-  timeframe: 24h
-  count: 5
+    condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
+    timeframe: 24h
+    count: 5
 level: medium
 fields:
   - domain

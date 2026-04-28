@@ -40,7 +40,7 @@ detection:
       - '.bmp'
       - '.gif'
   Image|endswith:
-  condition: image_viewers or steganography_tools or suspicious_image_process
+    condition: image_viewers or steganography_tools or suspicious_image_process
 falsepositives:
   - Legitimate image processing applications
   - Photo editing software

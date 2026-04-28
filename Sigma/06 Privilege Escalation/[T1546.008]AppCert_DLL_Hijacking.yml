@@ -23,7 +23,7 @@ detection:
   selection_process:
   EventID:
   CommandLine|contains:
-  condition: selection_registry or selection_dll_load or selection_process
+    condition: selection_registry or selection_dll_load or selection_process
 falsepositives:
   - Legitimate application certification tools
   - Security software installations

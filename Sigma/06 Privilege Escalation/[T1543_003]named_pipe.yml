@@ -19,9 +19,9 @@ logsource:
 detection:
   selection:
   EventID:
-    # "A service was installed in the system"
+  # "A service was installed in the system"
   ServiceFileName|contains:
-  condition: selection
+    condition: selection
 falsepositives:
   - Legitimate internal or custom services using named pipes
 level: high

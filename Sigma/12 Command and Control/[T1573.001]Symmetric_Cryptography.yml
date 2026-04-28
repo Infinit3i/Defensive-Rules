@@ -22,19 +22,19 @@ logsource:
   service: ssl
 detection:
   symmetric_ciphers:
-    cipher|contains:
+  cipher|contains:
       - 'AES'
       - 'ChaCha'
       - 'DES'
-    weak_encryption:
-    cipher|contains:
+  weak_encryption:
+  cipher|contains:
       - 'RC4'
       - 'DES'
-    version:
-    self_signed_cert:
-    cert_subject|contains:
-    established:
-  condition: symmetric_ciphers or weak_encryption or self_signed_cert
+  version:
+  self_signed_cert:
+  cert_subject|contains:
+  established:
+    condition: symmetric_ciphers or weak_encryption or self_signed_cert
 falsepositives:
   - Legitimate encrypted communications
   - Legacy applications

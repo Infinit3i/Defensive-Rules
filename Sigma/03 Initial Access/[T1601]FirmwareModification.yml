@@ -27,7 +27,7 @@ detection:
   EventID:
   Source:
   BugcheckCode:
-  condition: selection_firmware or selection_boot or selection_suspicious
+    condition: selection_firmware or selection_boot or selection_suspicious
 falsepositives:
   - Legitimate firmware updates
   - System hardware changes

@@ -20,7 +20,7 @@ logsource:
 detection:
   selection:
   EventID:
-  condition: selection
+    condition: selection
 falsepositives:
   - Legitimate scheduled task creation by system administrators or software update mechanisms.
 level: high

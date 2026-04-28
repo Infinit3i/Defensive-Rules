@@ -16,7 +16,7 @@ detection:
       - '\WindowsPowerShell\'
       - '\PowerShell\7\'
   TargetFilename|endswith:
-  condition: selection
+    condition: selection
 level: medium
 tags:
   - attack.persistence

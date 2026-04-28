@@ -25,7 +25,7 @@ detection:
   proto:
   id_resp_p:
   service:
-  condition: unencrypted_443
+    condition: unencrypted_443
 falsepositives:
   - Port 443 used for non-TLS services in test or legacy environments.
 level: high

@@ -20,8 +20,8 @@ detection:
   LogonType:
   selection_geographic:
   SourceNetworkAddress|regex:
-    timeframe:
-  condition: (selection_rdp and selection_geographic) or (selection_failed | count() > 5)
+  timeframe:
+    condition: (selection_rdp and selection_geographic) or (selection_failed | count() > 5)
 falsepositives:
   - Legitimate remote administration
   - Users connecting from new locations

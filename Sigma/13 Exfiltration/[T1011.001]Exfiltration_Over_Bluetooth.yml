@@ -22,20 +22,20 @@ logsource:
   service: system
 detection:
   bluetooth_service:
-    EventID:
-    ServiceName|contains:
+  EventID:
+  ServiceName|contains:
       - 'bluetooth'
       - 'bth'
-    file_transfer:
-    EventID:
-    ServiceName|contains:
+  file_transfer:
+  EventID:
+  ServiceName|contains:
       - 'obex'
       - 'ftp'
-    ServiceType:
-    bluetooth_connection:
-    EventID:
-    DeviceInstanceId|contains:
-  condition: bluetooth_service or file_transfer or bluetooth_connection
+  ServiceType:
+  bluetooth_connection:
+  EventID:
+  DeviceInstanceId|contains:
+    condition: bluetooth_service or file_transfer or bluetooth_connection
 falsepositives:
   - Legitimate Bluetooth file sharing
   - Bluetooth peripheral connections

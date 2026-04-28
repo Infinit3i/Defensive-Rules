@@ -24,7 +24,7 @@ detection:
   selection_registry:
   EventID:
   TargetObject|contains:
-  condition: selection_schtasks or selection_taskschd or selection_registry
+    condition: selection_schtasks or selection_taskschd or selection_registry
 falsepositives:
   - Legitimate system administration
   - Software installation tasks

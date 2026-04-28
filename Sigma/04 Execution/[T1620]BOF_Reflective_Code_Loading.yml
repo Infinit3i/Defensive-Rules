@@ -37,7 +37,7 @@ detection:
       - '0x1FFFFF'
       - '0x143A'
   CallTrace|contains:
-  condition: any of selection_*
+    condition: any of selection_*
 falsepositives:
   - Legitimate software using similar memory manipulation techniques
   - Security tools performing memory analysis

@@ -31,7 +31,7 @@ detection:
       - 123
   selection_ntp_req:
   zeek.ntp.request|exists:
-  condition: selection_ntp_port or selection_udp123 or selection_ntp_req
+    condition: selection_ntp_port or selection_udp123 or selection_ntp_req
 falsepositives:
   - Legitimate NTP synchronization with corporate or public NTP servers (domain controllers, NTP pools).
 level: low

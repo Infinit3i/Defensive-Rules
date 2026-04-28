@@ -13,7 +13,7 @@ detection:
   method:
   status_code:
   response_body_len:
-  condition: selection
+    condition: selection
 tags:
   - attack.command_and_control
   - attack.t1071.001

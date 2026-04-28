@@ -25,7 +25,7 @@ detection:
   EventID:
   Image|contains:
   ParentImage|endswith:
-  condition: (selection_file or selection_load) and selection_process
+    condition: (selection_file or selection_load) and selection_process
 falsepositives:
   - Legitimate third-party services
   - Software updates

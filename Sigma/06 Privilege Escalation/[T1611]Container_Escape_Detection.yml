@@ -27,7 +27,7 @@ detection:
   type:
   syscall:
   success:
-  condition: selection_mount or selection_chroot or selection_capabilities
+    condition: selection_mount or selection_chroot or selection_capabilities
 falsepositives:
   - Legitimate container operations
   - System maintenance

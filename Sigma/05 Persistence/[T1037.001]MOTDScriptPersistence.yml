@@ -15,7 +15,7 @@ detection:
       - 'write'
       - 'creat'
   name|contains:
-  condition: selection
+    condition: selection
 level: medium
 tags:
   - attack.persistence

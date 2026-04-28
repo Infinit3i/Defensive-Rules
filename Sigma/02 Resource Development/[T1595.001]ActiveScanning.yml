@@ -30,9 +30,9 @@ detection:
   selection_rapid_connections:
   proto:
   conn_state:
-  condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
-  timeframe: 1m
-  count: 50
+    condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
+    timeframe: 1m
+    count: 50
 level: medium
 fields:
   - id.orig_h

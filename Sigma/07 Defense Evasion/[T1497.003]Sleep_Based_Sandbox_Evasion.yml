@@ -13,7 +13,7 @@ detection:
   selection:
   EventID:
   CommandLine|re:
-  condition: selection
+    condition: selection
 fields:
   - Image
   - CommandLine

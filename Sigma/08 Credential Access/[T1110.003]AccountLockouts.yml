@@ -14,7 +14,7 @@ logsource:
 detection:
   selection_event:
   EventID:
-  condition: selection_event
+    condition: selection_event
 fields:
   - TargetUserName
   - CallerComputerName

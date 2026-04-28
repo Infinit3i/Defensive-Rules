@@ -65,7 +65,7 @@ detection:
   type:
   syscall:
   success:
-  condition: 1 of selection_*
+    condition: 1 of selection_*
 falsepositives:
   - Legitimate container orchestration operations
   - System administration tasks

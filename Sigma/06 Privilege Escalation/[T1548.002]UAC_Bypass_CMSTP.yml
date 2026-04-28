@@ -26,7 +26,7 @@ detection:
   selection_registry:
   EventID:
   TargetObject|contains:
-  condition: selection_cmstp and (selection_inf_file or selection_registry)
+    condition: selection_cmstp and (selection_inf_file or selection_registry)
 falsepositives:
   - Legitimate VPN connection setups
   - Network profile installations

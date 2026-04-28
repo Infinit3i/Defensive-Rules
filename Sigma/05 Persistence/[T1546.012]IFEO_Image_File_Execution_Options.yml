@@ -33,7 +33,7 @@ detection:
   EventID:
   TargetObject|endswith:
   Details|contains:
-  condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
+    condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
 fields:
   - TargetObject
   - Details

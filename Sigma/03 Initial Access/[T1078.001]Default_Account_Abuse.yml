@@ -37,7 +37,7 @@ detection:
       - 'svc'
       - 'service'
   LogonType:
-  condition: default_users or service_accounts
+    condition: default_users or service_accounts
 falsepositives:
   - Legitimate use of administrative accounts
   - Authorized service account activities

@@ -77,7 +77,7 @@ detection:
       - 11
       - 2  # File creation time change
   TargetFilename|endswith:
-  condition: 2 of selection_*
+    condition: 2 of selection_*
 falsepositives:
   - Legitimate applications with timing requirements
   - Performance benchmarking tools

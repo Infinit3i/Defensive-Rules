@@ -30,7 +30,7 @@ detection:
   selection_redirect:
   referrer|contains:
   status_code:
-  condition: selection_ads and (selection_payload or selection_redirect)
+    condition: selection_ads and (selection_payload or selection_redirect)
 falsepositives:
   - Legitimate advertising content
   - Large image advertisements

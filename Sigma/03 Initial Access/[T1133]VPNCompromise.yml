@@ -27,8 +27,8 @@ detection:
   TargetUserName|contains:
   selection_timing:
   EventID:
-    timeframe:
-  condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
+  timeframe:
+    condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
 falsepositives:
   - Legitimate VPN connections from remote workers
   - VPN reconnection after network issues

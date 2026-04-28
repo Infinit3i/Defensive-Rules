@@ -22,15 +22,15 @@ logsource:
   service: conn
 detection:
   mirrored_traffic:
-    id.orig_h:
-    duration|lte:
-    duplicate_connections:
-    id.orig_h|count|gte:
-    id.resp_h|count|gte:
-    span_port_activity:
-    service:
-    orig_bytes|gte:
-  condition: mirrored_traffic or duplicate_connections or span_port_activity
+  id.orig_h:
+  duration|lte:
+  duplicate_connections:
+  id.orig_h|count|gte:
+  id.resp_h|count|gte:
+  span_port_activity:
+  service:
+  orig_bytes|gte:
+    condition: mirrored_traffic or duplicate_connections or span_port_activity
 falsepositives:
   - Network monitoring tools
   - Legitimate traffic analysis

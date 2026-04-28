@@ -22,20 +22,20 @@ logsource:
   service: wlansvc
 detection:
   wifi_connection:
-    EventID:
-    SSID|contains:
+  EventID:
+  SSID|contains:
       - 'free'
       - 'guest'
       - 'open'
       - 'public'
-    adhoc_network:
-    EventID:
-    NetworkType:
-    suspicious_ap:
-    EventID:
-    SecurityType:
-    SignalStrength|gte:
-  condition: wifi_connection or adhoc_network or suspicious_ap
+  adhoc_network:
+  EventID:
+  NetworkType:
+  suspicious_ap:
+  EventID:
+  SecurityType:
+  SignalStrength|gte:
+    condition: wifi_connection or adhoc_network or suspicious_ap
 falsepositives:
   - Legitimate public Wi-Fi usage
   - Guest network connections

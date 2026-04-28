@@ -23,20 +23,20 @@ logsource:
   category: file_create
 detection:
   split_files:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.part'
       - '.001'
       - '.002'
       - '.zip'
-    archive_creation:
-    Image|endswith:
+  archive_creation:
+  Image|endswith:
       - '\7z.exe'
       - '\winrar.exe'
       - '\zip.exe'
-    multiple_uploads:
-    ProcessName|count|gte:
-    TargetFilename|contains:
-  condition: split_files or archive_creation or multiple_uploads
+  multiple_uploads:
+  ProcessName|count|gte:
+  TargetFilename|contains:
+    condition: split_files or archive_creation or multiple_uploads
 falsepositives:
   - Legitimate file archiving
   - Large file management

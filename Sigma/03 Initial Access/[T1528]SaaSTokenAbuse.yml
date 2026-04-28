@@ -24,8 +24,8 @@ detection:
       - 'python'
   selection_timing:
   eventTime:
-    timeframe:
-  condition: selection_api and selection_suspicious and selection_timing | count() > 10
+  timeframe:
+    condition: selection_api and selection_suspicious and selection_timing | count() > 10
 falsepositives:
   - Legitimate API usage from external IPs
   - Automated scripts and CI/CD pipelines

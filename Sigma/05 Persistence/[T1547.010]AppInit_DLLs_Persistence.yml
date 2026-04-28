@@ -22,7 +22,7 @@ detection:
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
   filter_empty:
   Details:
-  condition: selection_event and selection_appinit and not filter_empty
+    condition: selection_event and selection_appinit and not filter_empty
 fields:
   - Image
   - TargetObject

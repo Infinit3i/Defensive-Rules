@@ -22,20 +22,20 @@ logsource:
   service: conn
 detection:
   mail_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 25
       - 587
       - 993
       - 995
-    unusual_traffic:
-    service:
-    orig_bytes|gte:
-    duration|gte:
-    automated_mail:
-    id.orig_h|count|lte:
-    id.resp_p:
-    orig_bytes|gte:
-  condition: mail_ports and (unusual_traffic or automated_mail)
+  unusual_traffic:
+  service:
+  orig_bytes|gte:
+  duration|gte:
+  automated_mail:
+  id.orig_h|count|lte:
+  id.resp_p:
+  orig_bytes|gte:
+    condition: mail_ports and (unusual_traffic or automated_mail)
 falsepositives:
   - Legitimate email communications
   - Email server operations

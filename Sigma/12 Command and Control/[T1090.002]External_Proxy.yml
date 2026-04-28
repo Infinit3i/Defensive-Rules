@@ -22,20 +22,20 @@ logsource:
   service: conn
 detection:
   proxy_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 1080
       - 8080
       - 3128
       - 8888
-    socks_traffic:
-    service:
-    id.resp_p:
-    orig_bytes|gte:
-    proxy_services:
-    service:
-    id.resp_p:
-    orig_bytes|gte:
-  condition: proxy_ports and (socks_traffic or proxy_services)
+  socks_traffic:
+  service:
+  id.resp_p:
+  orig_bytes|gte:
+  proxy_services:
+  service:
+  id.resp_p:
+  orig_bytes|gte:
+    condition: proxy_ports and (socks_traffic or proxy_services)
 falsepositives:
   - Legitimate proxy usage
   - Corporate proxy servers

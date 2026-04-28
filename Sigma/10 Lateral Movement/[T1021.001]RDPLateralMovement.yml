@@ -21,9 +21,9 @@ detection:
   EventID:
   LogonType:
   ProcessName:
-  condition: selection_rdp_logon or selection_network_logon
-  timeframe: 10m
-  count: 3
+    condition: selection_rdp_logon or selection_network_logon
+    timeframe: 10m
+    count: 3
 level: medium
 fields:
   - TargetUserName

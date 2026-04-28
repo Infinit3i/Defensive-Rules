@@ -14,7 +14,7 @@ detection:
   selection_hook:
   type:
   a0|contains:
-  condition: selection or selection_hook
+    condition: selection or selection_hook
 level: low
 tags:
   - attack.persistence

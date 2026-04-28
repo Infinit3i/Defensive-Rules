@@ -30,7 +30,7 @@ detection:
   sel_consumer:
   EventID:
   Consumer|contains:
-  condition: sel_query or sel_consumer
+    condition: sel_query or sel_consumer
 falsepositives:
   - Enterprise management tooling performing inventory via WMI.
 level: high

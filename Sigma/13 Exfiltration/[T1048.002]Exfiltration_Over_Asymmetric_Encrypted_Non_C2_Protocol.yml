@@ -22,17 +22,17 @@ logsource:
   service: x509
 detection:
   unusual_cert:
-    certificate.subject|contains:
+  certificate.subject|contains:
       - 'CN=temp'
       - 'CN=test'
       - 'CN=localhost'
-    short_lived_cert:
-    certificate.not_valid_before|contains:
-    certificate.not_valid_after|contains:
-    suspicious_key:
-    certificate.key_length|gte:
-    certificate.key_type:
-  condition: unusual_cert or short_lived_cert or suspicious_key
+  short_lived_cert:
+  certificate.not_valid_before|contains:
+  certificate.not_valid_after|contains:
+  suspicious_key:
+  certificate.key_length|gte:
+  certificate.key_type:
+    condition: unusual_cert or short_lived_cert or suspicious_key
 falsepositives:
   - Legitimate certificate operations
   - Development environments

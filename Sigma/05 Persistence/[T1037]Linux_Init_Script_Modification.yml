@@ -22,7 +22,7 @@ detection:
   type:
   syscall:
   a1:
-  condition: (selection_write and selection_paths) or (selection_chmod and selection_paths)
+    condition: (selection_write and selection_paths) or (selection_chmod and selection_paths)
 level: high
 tags:
   - attack.persistence

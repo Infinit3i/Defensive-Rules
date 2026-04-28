@@ -34,7 +34,7 @@ detection:
       - 'computerdefaults'
   selection_local_admin:
   User|re:
-  condition: selection_process and (selection_elevation_tools or selection_bypass_uac) and selection_local_admin
+    condition: selection_process and (selection_elevation_tools or selection_bypass_uac) and selection_local_admin
 level: high
 fields:
   - Image

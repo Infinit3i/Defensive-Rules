@@ -20,7 +20,7 @@ detection:
       - "/root/.ssh/authorized_keys"
   selection_remote:
   auid:
-  condition: selection_write and selection_ssh_keys
+    condition: selection_write and selection_ssh_keys
 level: high
 tags:
   - attack.persistence

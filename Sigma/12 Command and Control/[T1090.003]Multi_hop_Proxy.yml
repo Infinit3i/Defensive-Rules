@@ -22,17 +22,17 @@ logsource:
   service: conn
 detection:
   proxy_chain:
-    id.orig_h|count|gte:
-    service:
-    duration|gte:
-    multiple_hops:
-    id.resp_h|count|gte:
-    orig_bytes|gte:
-    resp_bytes|gte:
-    tor_indicators:
-    id.resp_p:
-    service:
-  condition: proxy_chain or multiple_hops or tor_indicators
+  id.orig_h|count|gte:
+  service:
+  duration|gte:
+  multiple_hops:
+  id.resp_h|count|gte:
+  orig_bytes|gte:
+  resp_bytes|gte:
+  tor_indicators:
+  id.resp_p:
+  service:
+    condition: proxy_chain or multiple_hops or tor_indicators
 falsepositives:
   - Complex network architectures
   - Legitimate anonymization services

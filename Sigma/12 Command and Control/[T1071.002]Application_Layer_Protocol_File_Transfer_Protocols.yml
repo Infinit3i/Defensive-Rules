@@ -22,20 +22,20 @@ logsource:
   service: conn
 detection:
   ftp_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 21
       - 22
       - 990
       - 989
-    suspicious_transfer:
-    service:
-    orig_bytes|gte:
-    resp_bytes|gte:
-    encrypted_ftp:
-    service:
-    id.resp_p:
-    orig_bytes|lte:
-  condition: ftp_ports and (suspicious_transfer or encrypted_ftp)
+  suspicious_transfer:
+  service:
+  orig_bytes|gte:
+  resp_bytes|gte:
+  encrypted_ftp:
+  service:
+  id.resp_p:
+  orig_bytes|lte:
+    condition: ftp_ports and (suspicious_transfer or encrypted_ftp)
 falsepositives:
   - Legitimate file transfers
   - System backups

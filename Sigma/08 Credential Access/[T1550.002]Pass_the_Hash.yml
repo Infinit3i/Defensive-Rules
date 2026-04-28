@@ -22,7 +22,7 @@ detection:
   EventID:
   LogonType:
   AuthenticationPackageName:
-  condition: selection
+    condition: selection
 falsepositives:
   - Legitimate network logon activity that uses NTLM authentication.
 level: high

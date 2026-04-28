@@ -23,7 +23,7 @@ detection:
   Image|endswith:
   rundll32:
   Image|endswith:
-  condition: regsvr32 OR rundll32
+    condition: regsvr32 OR rundll32
 falsepositives:
   - Legitimate use of regsvr32 or rundll32 by system processes, software installers, and administrative tools.
 level: medium

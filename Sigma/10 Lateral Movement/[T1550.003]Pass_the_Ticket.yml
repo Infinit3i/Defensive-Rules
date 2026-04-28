@@ -22,21 +22,21 @@ logsource:
   service: security
 detection:
   kerberos_logon:
-    EventID:
-    LogonType:
-    AuthenticationPackageName:
-    unusual_ticket:
-    EventID:
-    TicketEncryptionType:
-    IpAddress|startswith:
+  EventID:
+  LogonType:
+  AuthenticationPackageName:
+  unusual_ticket:
+  EventID:
+  TicketEncryptionType:
+  IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    ticket_reuse:
-    EventID:
-    TargetUserName|endswith:
-    ClientAddress:
-  condition: kerberos_logon and (unusual_ticket or ticket_reuse)
+  ticket_reuse:
+  EventID:
+  TargetUserName|endswith:
+  ClientAddress:
+    condition: kerberos_logon and (unusual_ticket or ticket_reuse)
 falsepositives:
   - Normal Kerberos authentication
   - Service account activities

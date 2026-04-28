@@ -25,7 +25,7 @@ detection:
       - "modprobe"
   abnormal_path:
   Message|contains:
-  condition: selection and abnormal_path
+    condition: selection and abnormal_path
 falsepositives:
   - Legitimate kernel module loading during system updates or when modules are temporarily staged in /tmp/ during packaging.
 level: medium

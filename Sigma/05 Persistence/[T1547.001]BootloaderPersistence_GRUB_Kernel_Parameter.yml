@@ -29,7 +29,7 @@ detection:
   selection_file_content:
       - type: SYSCALL
   syscall:
-  condition: selection_grub_params and selection_file_content and selection_suspicious_params
+    condition: selection_grub_params and selection_file_content and selection_suspicious_params
 level: high
 tags:
   - attack.persistence

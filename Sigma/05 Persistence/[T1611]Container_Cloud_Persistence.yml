@@ -47,7 +47,7 @@ detection:
       - '/etc/systemd/system/'
       - '/usr/lib/systemd/system/'
   nametype:
-  condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
+    condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
 falsepositives:
   - Legitimate container orchestration
   - Authorized system administration

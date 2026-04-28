@@ -30,7 +30,7 @@ detection:
       - '<body>'
       - '<div>'
   status_code:
-  condition: selection_xss or selection_forms or selection_html
+    condition: selection_xss or selection_forms or selection_html
 falsepositives:
   - Legitimate HTML content in parameters
   - Web development and testing

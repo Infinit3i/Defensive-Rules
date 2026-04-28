@@ -40,9 +40,9 @@ detection:
       - 'autoclick'
       - 'botclick'
   rapid_requests:
-    # Would need correlation rule for timing
+  # Would need correlation rule for timing
   src_ip:
-  condition: (selection_rapid_clicks and selection_user_agents) or selection_suspicious_referrers
+    condition: (selection_rapid_clicks and selection_user_agents) or selection_suspicious_referrers
 fields:
   - src_ip
   - dst_ip

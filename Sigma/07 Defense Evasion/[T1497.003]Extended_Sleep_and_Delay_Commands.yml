@@ -42,7 +42,7 @@ detection:
       - '/n 60'
   long_delays:
   CommandLine|re:
-  condition: (selection_timeout or selection_powershell or selection_batch) and long_delays
+    condition: (selection_timeout or selection_powershell or selection_batch) and long_delays
 fields:
   - Image
   - CommandLine

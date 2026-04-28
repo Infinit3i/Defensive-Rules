@@ -22,22 +22,22 @@ logsource:
   service: http
 detection:
   cloud_services:
-    host|endswith:
+  host|endswith:
       - '.dropbox.com'
       - '.googledrive.com'
       - '.onedrive.com'
       - '.box.com'
       - '.mega.nz'
-    large_upload:
-    method:
-    request_body_len|gte:
-    file_sync:
-    uri|contains:
+  large_upload:
+  method:
+  request_body_len|gte:
+  file_sync:
+  uri|contains:
       - '/upload'
       - '/sync'
       - '/files'
-    method:
-  condition: cloud_services and (large_upload or file_sync)
+  method:
+    condition: cloud_services and (large_upload or file_sync)
 falsepositives:
   - Legitimate cloud storage usage
   - Business file synchronization

@@ -31,7 +31,7 @@ detection:
       - 'image'
   status:
   content_length:
-  condition: selection_methods or selection_injection or selection_upload
+    condition: selection_methods or selection_injection or selection_upload
 falsepositives:
   - Legitimate content management operations
   - File upload functionality

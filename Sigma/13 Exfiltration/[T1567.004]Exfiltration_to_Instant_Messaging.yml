@@ -22,26 +22,26 @@ logsource:
   service: http
 detection:
   messaging_platforms:
-    host|endswith:
+  host|endswith:
       - '.telegram.org'
       - '.discord.com'
       - '.slack.com'
       - '.whatsapp.com'
       - '.messenger.com'
-    file_upload:
-    method:
-    request_body_len|gte:
-    uri|contains:
+  file_upload:
+  method:
+  request_body_len|gte:
+  uri|contains:
       - '/upload'
       - '/file'
       - '/attach'
-    api_messaging:
-    uri|contains:
+  api_messaging:
+  uri|contains:
       - '/api/v'
       - '/webhooks'
       - '/bot'
-    method:
-  condition: messaging_platforms and (file_upload or api_messaging)
+  method:
+    condition: messaging_platforms and (file_upload or api_messaging)
 falsepositives:
   - Legitimate business communications
   - Authorized file sharing

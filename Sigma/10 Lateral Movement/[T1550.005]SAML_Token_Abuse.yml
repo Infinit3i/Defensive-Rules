@@ -22,17 +22,17 @@ logsource:
   service: signinlogs
 detection:
   saml_logon:
-    AuthenticationProtocol:
-    TokenIssuerType:
-    suspicious_issuer:
-    TokenIssuerName|contains:
+  AuthenticationProtocol:
+  TokenIssuerType:
+  suspicious_issuer:
+  TokenIssuerName|contains:
       - 'adfs'
       - 'sso'
       - 'federation'
-    unusual_attributes:
-    ConditionalAccessStatus:
-    RiskLevelAggregated:
-  condition: saml_logon and (suspicious_issuer or unusual_attributes)
+  unusual_attributes:
+  ConditionalAccessStatus:
+  RiskLevelAggregated:
+    condition: saml_logon and (suspicious_issuer or unusual_attributes)
 falsepositives:
   - Legitimate federated authentication
   - Normal SAML SSO operations
