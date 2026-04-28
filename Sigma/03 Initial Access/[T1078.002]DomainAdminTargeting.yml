@@ -1,0 +1,52 @@
+title: Domain Administrator Account Targeting Detection
+id: d9e8f7c6-b5a4-3210-9876-fedcba098765
+status: experimental
+description: Detects targeted attacks against domain administrator accounts through suspicious logon patterns
+author: Infinit3i
+date: 2026/04/27
+modified: 2026/04/27
+tags:
+    - attack.initial_access
+    - attack.t1078.002
+    - attack.credential_access
+    - windows
+    - security
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_admin_logon:
+        EventID: 4624
+        TargetUserName|endswith:
+            - 'admin'
+            - 'administrator'
+        LogonType:
+            - 2   # Interactive
+            - 10  # RemoteInteractive
+    selection_privilege_groups:
+        MemberName|contains:
+            - 'Domain Admins'
+            - 'Enterprise Admins'
+            - 'Schema Admins'
+            - 'Backup Operators'
+    selection_unusual_access:
+        WorkstationName|re: '^[A-Z0-9-]{1,8}$'
+    selection_time_anomaly:
+        TimeGenerated|re: '(0[0-5]|2[2-3]):[0-5][0-9]:[0-5][0-9]'
+    condition: selection_admin_logon and (selection_privilege_groups or
+               (selection_unusual_access and selection_time_anomaly))
+level: critical
+fields:
+    - TargetUserName
+    - WorkstationName
+    - IpAddress
+    - LogonType
+    - TimeGenerated
+falsepositives:
+    - Legitimate administrator access during off-hours
+    - Emergency administrative access
+    - Scheduled administrative tasks
+references:
+    - https://attack.mitre.org/techniques/T1078/002/
+technique:
+    - T1078.002

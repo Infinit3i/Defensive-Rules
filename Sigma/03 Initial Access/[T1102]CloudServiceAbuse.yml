@@ -1,0 +1,38 @@
+title: Malicious Cloud Service C2 Communication
+id: c3d4e5f6-g7h8-9012-cdef-345678901234
+status: experimental
+description: Detects command and control communication through legitimate cloud services like Dropbox or Google Drive
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1102/
+logsource:
+    product: zeek
+    service: http
+detection:
+    selection_domains:
+        host|contains:
+            - 'dropbox.com'
+            - 'drive.google.com'
+            - 'onedrive.live.com'
+            - 'box.com'
+            - 'mega.nz'
+    selection_suspicious:
+        uri|contains:
+            - '/download'
+            - '/files'
+            - '/shared'
+        method: 'GET'
+    selection_frequency:
+        status_code: 200
+    timeframe: 60s
+    condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
+falsepositives:
+    - Legitimate cloud storage synchronization
+    - File sharing for business purposes
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1102
+    - zeek
+    - network

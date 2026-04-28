@@ -1,0 +1,34 @@
+title: Rogue Network Device Detection
+id: j0k1l2m3-n4o5-6789-jklm-012345678901
+status: experimental
+description: Detects rogue network devices through MAC address monitoring and unusual network interface activity
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1200/
+logsource:
+    product: zeek
+    service: dhcp
+detection:
+    selection_dhcp:
+        msg_types|contains: 'REQUEST'
+        mac|regex: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+    selection_unknown:
+        vendor_class|contains:
+            - 'unknown'
+            - 'generic'
+            - ''
+    selection_suspicious:
+        requested_addr|startswith:
+            - '169.254.'
+            - '0.0.0.0'
+    condition: selection_dhcp and (selection_unknown or selection_suspicious)
+falsepositives:
+    - New legitimate devices joining network
+    - DHCP configuration issues
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1200
+    - zeek
+    - dhcp

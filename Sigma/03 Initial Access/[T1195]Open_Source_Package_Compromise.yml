@@ -1,0 +1,55 @@
+---
+title: Open Source Package Compromise Detection
+technique: T1195
+id: a9b0c1d2-3e4f-5a6b-7c8d-9e0f1a2b3c4d
+status: experimental
+description: Detects compromise of open source packages through typosquatting, dependency confusion, and malicious package installations
+references:
+  - https://attack.mitre.org/techniques/T1195/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195
+  - supply_chain
+  - open_source
+  - package_manager
+logsource:
+  product: linux
+  service: auditd
+detection:
+  package_installation:
+    syscall: execve
+    comm:
+      - 'pip'
+      - 'npm'
+      - 'gem'
+      - 'go'
+      - 'cargo'
+    exe|contains:
+      - '/bin/pip'
+      - '/bin/npm'
+      - '/bin/gem'
+  suspicious_packages:
+    arguments|contains:
+      - 'reqeusts'
+      - 'urllib4'
+      - 'colorcama'
+      - 'python3-dateutil'
+      - 'beatifulsoup'
+  private_registry:
+    arguments|contains:
+      - '--index-url'
+      - '--extra-index-url'
+      - 'registry='
+      - '--registry'
+  environment_variables:
+    key|contains:
+      - 'PIP_INDEX_URL'
+      - 'NPM_CONFIG_REGISTRY'
+      - 'GEM_SOURCE'
+  condition: package_installation and (suspicious_packages or private_registry or environment_variables)
+falsepositives:
+  - Legitimate use of private package repositories
+  - Development environments with custom registries
+level: medium

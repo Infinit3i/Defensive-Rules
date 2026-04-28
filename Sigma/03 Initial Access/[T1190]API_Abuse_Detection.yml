@@ -1,0 +1,50 @@
+---
+title: API Rate Limiting and Abuse Detection
+technique: T1190
+id: f8d9e1a2-3b4c-5d6e-7f8a-9b0c1d2e3f4a
+status: experimental
+description: Detects API abuse through excessive requests, authentication bypass attempts, and anomalous endpoint usage patterns
+references:
+  - https://attack.mitre.org/techniques/T1190/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1190
+  - api
+  - web
+  - abuse
+logsource:
+  product: zeek
+  service: http
+detection:
+  rate_limiting_bypass:
+    method:
+      - 'GET'
+      - 'POST'
+    status_code:
+      - 429
+      - 503
+    user_agent|contains:
+      - 'curl'
+      - 'python-requests'
+      - 'scanner'
+  auth_bypass:
+    uri|contains:
+      - '/api/v1/admin'
+      - '/api/auth/bypass'
+      - '/api/internal'
+    status_code: 200
+    method: 'GET'
+  excessive_requests:
+    method:
+      - 'GET'
+      - 'POST'
+      - 'PUT'
+      - 'DELETE'
+    uri|startswith: '/api/'
+  condition: rate_limiting_bypass or auth_bypass or excessive_requests
+falsepositives:
+  - Legitimate API testing and monitoring tools
+  - High-traffic applications with proper rate limiting
+level: high

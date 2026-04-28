@@ -1,0 +1,46 @@
+title: Cross-Domain Authentication Attack Detection
+id: c8d7e6f5-9a0b-1234-5678-9abcdef01234
+status: experimental
+description: Detects suspicious cross-domain authentication attempts indicating domain compromise
+author: Infinit3i
+date: 2026/04/27
+modified: 2026/04/27
+tags:
+    - attack.initial_access
+    - attack.t1078.002
+    - attack.lateral_movement
+    - windows
+    - security
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_event:
+        EventID: 4624
+        LogonType: 3
+    selection_domain_mismatch:
+        TargetDomainName|exists: true
+        WorkstationName|exists: true
+    filter_normal:
+        TargetDomainName|contains:
+            - TargetUserName
+    selection_suspicious_timing:
+        IpAddress|re: '^(?!10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.).*'
+    condition: selection_event and selection_domain_mismatch and not filter_normal and
+               selection_suspicious_timing
+    timeframe: 10m
+    count: 5
+level: high
+fields:
+    - TargetUserName
+    - TargetDomainName
+    - WorkstationName
+    - IpAddress
+falsepositives:
+    - Legitimate cross-domain trust relationships
+    - Remote administration from trusted networks
+    - Service account authentication across domains
+references:
+    - https://attack.mitre.org/techniques/T1078/002/
+technique:
+    - T1078.002

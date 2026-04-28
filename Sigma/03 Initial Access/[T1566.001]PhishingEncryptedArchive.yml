@@ -1,0 +1,46 @@
+title: Phishing Email with Encrypted Archive and Password in Body
+id: f7a9c8e2-4d6b-3a1c-9f5e-8b2d7c4a6e91
+status: experimental
+description: Detects phishing emails containing encrypted archives with passwords provided in email body text
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1566/001/
+logsource:
+    product: email-security
+    service: exchange
+detection:
+    selection_attachment:
+        AttachmentName|endswith:
+            - '.zip'
+            - '.rar'
+            - '.7z'
+            - '.tar.gz'
+    selection_password_keywords:
+        Body|contains:
+            - 'password:'
+            - 'pass:'
+            - 'pwd:'
+            - 'key:'
+            - 'unlock'
+            - 'extract'
+    selection_common_passwords:
+        Body|contains:
+            - '123456'
+            - 'password'
+            - 'infected'
+            - '2026'
+            - 'document'
+    condition: selection_attachment and (selection_password_keywords or selection_common_passwords)
+level: high
+tags:
+    - attack.initial-access
+    - attack.t1566
+    - attack.t1566.001
+    - email
+technique:
+    name: Phishing
+    id: T1566
+    subtechnique:
+        name: Spearphishing Attachment
+        id: T1566.001

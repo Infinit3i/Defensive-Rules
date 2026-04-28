@@ -1,0 +1,42 @@
+title: Malvertisement Drive-by Detection
+id: h8i9j0k1-l2m3-4567-hijk-890123456789
+status: experimental
+description: Detects malicious advertising networks used for drive-by compromise campaigns
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1189/
+logsource:
+    product: zeek
+    service: http
+detection:
+    selection_ads:
+        uri|contains:
+            - '/ads/'
+            - '/ad?'
+            - '/advertisement'
+            - '/banners/'
+        host|contains:
+            - 'ads'
+            - 'banner'
+            - 'popup'
+    selection_payload:
+        response_body_len: '>50000'
+        status_code: 200
+        mime_type|contains:
+            - 'javascript'
+            - 'flash'
+            - 'java'
+    selection_redirect:
+        referrer|contains: 'google.com'
+        status_code: 302
+    condition: selection_ads and (selection_payload or selection_redirect)
+falsepositives:
+    - Legitimate advertising content
+    - Large image advertisements
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1189
+    - zeek
+    - malvertising

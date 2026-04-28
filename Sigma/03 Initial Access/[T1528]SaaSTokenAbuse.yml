@@ -1,0 +1,36 @@
+title: SaaS Application Token Abuse
+id: l2m3n4o5-p6q7-8901-lmno-234567890123
+status: experimental
+description: Detects abuse of stolen SaaS application tokens through unusual API access patterns
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1528/
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection_api:
+        eventName|contains:
+            - 'AssumeRole'
+            - 'GetSessionToken'
+            - 'CreateAccessKey'
+    selection_suspicious:
+        sourceIPAddress|regex: '^(?!10\.|172\.|192\.168\.)'
+        userAgent|contains:
+            - 'aws-cli'
+            - 'boto'
+            - 'python'
+    selection_timing:
+        eventTime: '*'
+    timeframe: 300s
+    condition: selection_api and selection_suspicious and selection_timing | count() > 10
+falsepositives:
+    - Legitimate API usage from external IPs
+    - Automated scripts and CI/CD pipelines
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1528
+    - aws
+    - api

@@ -1,0 +1,39 @@
+title: System Firmware Modification Detection
+id: s9t0u1v2-w3x4-5678-stuv-901234567890
+status: experimental
+description: Detects unauthorized firmware modifications and bootkit installation attempts
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1601/
+logsource:
+    product: windows
+    service: system
+detection:
+    selection_firmware:
+        EventID: 6009
+        Source: 'EventLog'
+        Message|contains:
+            - 'firmware'
+            - 'BIOS'
+            - 'UEFI'
+    selection_boot:
+        EventID: 12
+        Source: 'Microsoft-Windows-Kernel-General'
+        ProcessName|contains:
+            - 'bootmgr'
+            - 'winload'
+    selection_suspicious:
+        EventID: 41
+        Source: 'Microsoft-Windows-Kernel-Power'
+        BugcheckCode: '*'
+    condition: selection_firmware or selection_boot or selection_suspicious
+falsepositives:
+    - Legitimate firmware updates
+    - System hardware changes
+level: critical
+tags:
+    - attack.initial_access
+    - attack.t1601
+    - windows
+    - firmware

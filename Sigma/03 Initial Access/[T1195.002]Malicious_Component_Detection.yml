@@ -1,0 +1,56 @@
+---
+title: Malicious Hardware Component Detection
+technique: T1195.002
+id: c5d6e7f8-9a0b-1c2d-3e4f-5a6b7c8d9e0f
+status: experimental
+description: Detects insertion of malicious hardware components through PCI device enumeration and driver loading anomalies
+references:
+  - https://attack.mitre.org/techniques/T1195/002/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195.002
+  - hardware
+  - pci
+  - device
+  - malicious_component
+logsource:
+  product: windows
+  service: system
+detection:
+  unknown_pci_device:
+    EventID: 7000
+    EventData|contains:
+      - 'PCI\VEN_'
+    ServiceName|contains:
+      - 'Unknown'
+      - 'Generic'
+  suspicious_driver:
+    EventID: 7045
+    ServiceName|contains:
+      - 'pci'
+      - 'device'
+      - 'unknown'
+    ImagePath|contains:
+      - '\temp\'
+      - '\users\'
+      - '\programdata\'
+  hardware_enumeration:
+    EventID: 7026
+    EventData|contains:
+      - 'Hardware'
+      - 'Device'
+      - 'PCI'
+  device_installation:
+    EventID: 20001
+    DeviceInstanceId|startswith: 'PCI\'
+    DriverName|contains:
+      - 'generic'
+      - 'unknown'
+      - 'temp'
+  condition: unknown_pci_device or suspicious_driver or hardware_enumeration or device_installation
+falsepositives:
+  - New hardware installations requiring generic drivers
+  - Hardware compatibility issues during updates
+level: high

@@ -1,0 +1,45 @@
+---
+title: XML External Entity Attack Detection
+technique: T1190
+id: a7b8c9d0-1e2f-3a4b-5c6d-7e8f9a0b1c2d
+status: experimental
+description: Detects XXE attacks through malicious XML payloads and external entity references in HTTP requests
+references:
+  - https://attack.mitre.org/techniques/T1190/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1190
+  - xml
+  - xxe
+  - injection
+logsource:
+  product: zeek
+  service: http
+detection:
+  xxe_payload:
+    request_body_len|gt: 100
+    request_body|contains:
+      - '<!ENTITY'
+      - 'SYSTEM "file://'
+      - 'SYSTEM "http://'
+      - '<!DOCTYPE'
+  xxe_headers:
+    content_type|contains:
+      - 'application/xml'
+      - 'text/xml'
+    request_body|contains:
+      - '&xxe;'
+      - '%xxe;'
+  file_disclosure:
+    request_body|contains:
+      - '/etc/passwd'
+      - '/proc/self/environ'
+      - 'C:\Windows\system.ini'
+      - 'file:///etc/'
+  condition: (xxe_payload and xxe_headers) or file_disclosure
+falsepositives:
+  - Legitimate XML processing with external references
+  - Security testing by authorized personnel
+level: critical

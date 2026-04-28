@@ -1,0 +1,49 @@
+---
+title: Hardware Firmware Implant Detection
+technique: T1195.002
+id: e7f8a9b0-1c2d-3e4f-5a6b-7c8d9e0f1a2b
+status: experimental
+description: Detects firmware-level implants through BIOS/UEFI modifications and suspicious low-level system activities
+references:
+  - https://attack.mitre.org/techniques/T1195/002/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195.002
+  - firmware
+  - bios
+  - uefi
+  - implant
+logsource:
+  product: windows
+  service: system
+detection:
+  bios_modifications:
+    EventID:
+      - 1
+      - 12
+    ProcessName|contains:
+      - 'nvflash.exe'
+      - 'flashrom.exe'
+      - 'afudos.exe'
+      - 'awdflash.exe'
+  uefi_changes:
+    EventID: 12
+    TargetObject|contains:
+      - '\EFI\Microsoft\Boot\'
+      - '\EFI\Boot\'
+      - 'HKLM\SYSTEM\CurrentControlSet\Control\SecureBoot'
+  system_firmware_events:
+    EventID: 1
+    ProcessName|contains:
+      - 'bcdedit.exe'
+    CommandLine|contains:
+      - 'set testsigning on'
+      - 'set nointegritychecks on'
+      - 'delete'
+  condition: bios_modifications or uefi_changes or system_firmware_events
+falsepositives:
+  - Legitimate firmware updates by IT administrators
+  - BIOS configuration changes during system maintenance
+level: critical

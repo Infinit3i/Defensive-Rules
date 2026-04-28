@@ -1,0 +1,62 @@
+---
+title: CI/CD Pipeline Supply Chain Compromise
+technique: T1195
+id: f2a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c
+status: experimental
+description: Detects compromise of CI/CD pipelines through malicious build scripts, unauthorized code injection, and pipeline manipulation
+references:
+  - https://attack.mitre.org/techniques/T1195/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1195
+  - supply_chain
+  - cicd
+  - pipeline
+  - build
+logsource:
+  product: linux
+  service: syslog
+detection:
+  malicious_build_commands:
+    process|contains:
+      - 'curl http'
+      - 'wget http'
+      - 'nc -e'
+      - 'bash -i'
+    facility: 'local0'
+  unauthorized_dependencies:
+    message|contains:
+      - 'pip install'
+      - 'npm install'
+      - 'gem install'
+    source|contains:
+      - 'jenkins'
+      - 'gitlab'
+      - 'github'
+      - 'buildkite'
+  environment_manipulation:
+    message|contains:
+      - 'export'
+      - 'setenv'
+      - 'ENV'
+    keyword|contains:
+      - 'TOKEN'
+      - 'KEY'
+      - 'SECRET'
+      - 'PASSWORD'
+  code_injection:
+    message|contains:
+      - 'echo'
+      - 'printf'
+    pattern|contains:
+      - '>>'
+      - 'dockerfile'
+      - 'makefile'
+      - '.sh'
+  condition: malicious_build_commands or unauthorized_dependencies or environment_manipulation or code_injection
+falsepositives:
+  - Legitimate CI/CD operations and build processes
+  - Authorized pipeline modifications
+level: high

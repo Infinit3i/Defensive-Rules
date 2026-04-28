@@ -1,0 +1,54 @@
+---
+title: Office Macro Containerized Payload Execution
+technique: T1204.002
+id: 6b2a9e4f-8c5d-7f3e-a4b8-9f6e3d8c5a2b
+status: experimental
+description: Detects Office macro execution that deploys containerized malware payloads through Docker or container runtime exploitation.
+references:
+  - https://attack.mitre.org/techniques/T1204/002/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1204.002
+  - office_macro
+  - container_escape
+  - docker
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  office_parent:
+    ParentImage|endswith:
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\powerpnt.exe'
+      - '\msaccess.exe'
+  container_execution:
+    Image|endswith:
+      - '\docker.exe'
+      - '\podman.exe'
+      - '\containerd.exe'
+    CommandLine|contains:
+      - 'run'
+      - 'exec'
+      - '--privileged'
+  macro_indicators:
+    CommandLine|contains:
+      - 'Application.Run'
+      - 'Shell.Application'
+      - 'CreateObject'
+      - 'WScript.Shell'
+  suspicious_downloads:
+    CommandLine|contains:
+      - 'docker pull'
+      - 'registry'
+      - 'hub.docker'
+  condition: office_parent and (container_execution or (macro_indicators and suspicious_downloads))
+falsepositives:
+  - Legitimate containerized applications
+  - Development workflows
+  - DevOps automation scripts
+level: high

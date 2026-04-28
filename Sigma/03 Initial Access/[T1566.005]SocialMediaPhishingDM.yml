@@ -1,0 +1,47 @@
+title: Social Media Phishing via Direct Messages
+id: d8f3e7a1-9c2b-4e5d-a7f8-c3d6e9a2b4f7
+status: experimental
+description: Detects phishing attempts through social media direct messages with malicious links
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1566/005/
+logsource:
+    product: social-media-security
+    service: platform-api
+detection:
+    selection_direct_message:
+        MessageType: DirectMessage
+    selection_suspicious_links:
+        MessageContent|contains:
+            - 'bit.ly'
+            - 'tinyurl'
+            - 'cutt.ly'
+            - 'ow.ly'
+            - 't.co'
+    selection_urgent_language:
+        MessageContent|contains:
+            - 'urgent'
+            - 'verify'
+            - 'suspended'
+            - 'click here'
+            - 'limited time'
+            - 'act now'
+    selection_new_account:
+        SenderAccountAge|lt: 30
+    selection_low_followers:
+        SenderFollowerCount|lt: 50
+    condition: selection_direct_message and selection_suspicious_links and
+               (selection_urgent_language or (selection_new_account and selection_low_followers))
+level: medium
+tags:
+    - attack.initial-access
+    - attack.t1566
+    - attack.t1566.005
+    - social-media
+technique:
+    name: Phishing
+    id: T1566
+    subtechnique:
+        name: Spearphishing via Social Media
+        id: T1566.005

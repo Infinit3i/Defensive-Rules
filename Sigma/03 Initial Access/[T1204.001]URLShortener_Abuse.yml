@@ -1,0 +1,45 @@
+---
+title: URL Shortener Service Abuse Detection
+technique: T1204.001
+id: 8f3a6e9c-4b7d-2e5f-a1c8-7f2e9d6c3a5b
+status: experimental
+description: Detects abuse of URL shortening services for malicious link distribution through browser traffic analysis and command line monitoring.
+references:
+  - https://attack.mitre.org/techniques/T1204/001/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1204.001
+  - url_shortener
+  - browser
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+  category: network_connection
+detection:
+  shortener_domains:
+    DestinationHostname|endswith:
+      - 'bit.ly'
+      - 'tinyurl.com'
+      - 'goo.gl'
+      - 't.co'
+      - 'short.ly'
+      - 'ow.ly'
+      - 'buff.ly'
+  browser_process:
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+      - '\brave.exe'
+      - '\opera.exe'
+  multiple_redirects:
+    EventID: 3
+  condition: shortener_domains and browser_process and multiple_redirects
+falsepositives:
+  - Legitimate social media links
+  - Marketing campaign URLs
+  - Business communications
+level: medium

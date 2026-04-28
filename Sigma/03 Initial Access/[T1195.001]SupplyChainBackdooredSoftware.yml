@@ -1,0 +1,47 @@
+title: Backdoored Software Installation from Compromised Repository
+id: a7f8e9d2-5c6b-3a4e-8d7f-c9a5e8d2b6f9
+status: experimental
+description: Detects installation of backdoored software from compromised legitimate repositories
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1195/001/
+logsource:
+    product: endpoint-security
+    service: process-monitoring
+detection:
+    selection_installer:
+        ProcessName|endswith:
+            - 'setup.exe'
+            - 'install.exe'
+            - 'update.exe'
+            - 'msi'
+    selection_suspicious_signature:
+        - DigitalSignature: null
+        - SignatureVerified: false
+        - CertificateIssuer|not|contains: 'trusted_ca'
+    selection_network_activity:
+        NetworkConnections|contains:
+            - '.onion'
+            - 'tor'
+            - 'suspicious_domain'
+    selection_file_creation:
+        FileCreated|contains:
+            - '%APPDATA%'
+            - '%TEMP%'
+            - 'startup'
+            - 'autorun'
+    condition: selection_installer and selection_suspicious_signature and (selection_network_activity or selection_file_creation)
+level: high
+tags:
+    - attack.initial-access
+    - attack.t1195
+    - attack.t1195.001
+    - supply-chain
+    - backdoor
+technique:
+    name: Supply Chain Compromise
+    id: T1195
+    subtechnique:
+        name: Compromise Software Dependencies and Development Tools
+        id: T1195.001

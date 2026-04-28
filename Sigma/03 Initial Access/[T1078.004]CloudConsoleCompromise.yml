@@ -1,0 +1,57 @@
+title: Cloud Console Compromise Detection
+id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+status: experimental
+description: Detects compromise of cloud management console accounts through suspicious access patterns
+author: Infinit3i
+date: 2026/04/27
+modified: 2026/04/27
+tags:
+    - attack.initial_access
+    - attack.t1078.004
+    - attack.persistence
+    - azure
+    - aws
+    - cloud
+logsource:
+    product: azure
+    service: signin
+detection:
+    selection_console_access:
+        Category: 'SignInLogs'
+        AppDisplayName|contains:
+            - 'Azure portal'
+            - 'AWS Management Console'
+            - 'Google Cloud Console'
+            - 'Microsoft Azure PowerShell'
+    selection_suspicious_location:
+        Location|exists: true
+    selection_risk_indicators:
+        RiskLevelDuringSignIn:
+            - 'high'
+            - 'medium'
+        RiskDetail|contains:
+            - 'unfamiliarFeatures'
+            - 'anonymizedIPAddress'
+            - 'maliciousIPAddress'
+    selection_admin_roles:
+        UserPrincipalName|contains:
+            - 'admin'
+            - 'root'
+        ConditionalAccessStatus: 'notApplied'
+    condition: selection_console_access and (selection_risk_indicators or
+               (selection_suspicious_location and selection_admin_roles))
+level: high
+fields:
+    - UserPrincipalName
+    - IPAddress
+    - Location
+    - AppDisplayName
+    - RiskLevelDuringSignIn
+falsepositives:
+    - Legitimate administrator access from new locations
+    - Business travel access to cloud consoles
+    - Emergency access during incidents
+references:
+    - https://attack.mitre.org/techniques/T1078/004/
+technique:
+    - T1078.004

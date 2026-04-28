@@ -1,0 +1,37 @@
+title: Cloud Logging Service Disruption
+id: q7r8s9t0-u1v2-3456-qrst-789012345678
+status: experimental
+description: Detects attempts to disable cloud logging services to evade detection and impair defenses
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1562/007/
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection_disable:
+        eventName|contains:
+            - 'StopLogging'
+            - 'DeleteTrail'
+            - 'PutTrailStatus'
+    selection_logging:
+        eventName|contains:
+            - 'DeleteLogGroup'
+            - 'DeleteLogStream'
+            - 'PutRetentionPolicy'
+    selection_config:
+        eventName|contains:
+            - 'StopConfigurationRecorder'
+            - 'DeleteConfigurationRecorder'
+            - 'DeleteDeliveryChannel'
+    condition: selection_disable or selection_logging or selection_config
+falsepositives:
+    - Legitimate log retention policy changes
+    - Cost optimization activities
+level: high
+tags:
+    - attack.initial_access
+    - attack.t1562.007
+    - aws
+    - logging

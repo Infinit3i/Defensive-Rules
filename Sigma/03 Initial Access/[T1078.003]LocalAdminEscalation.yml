@@ -1,0 +1,53 @@
+title: Local Administrator Privilege Escalation Detection
+id: e0f1c2d3-a4b5-6789-cdef-0123456789ab
+status: experimental
+description: Detects privilege escalation attempts using local administrator accounts
+author: Infinit3i
+date: 2026/04/27
+modified: 2026/04/27
+tags:
+    - attack.initial_access
+    - attack.t1078.003
+    - attack.privilege_escalation
+    - windows
+    - sysmon
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_process:
+        EventID: 1
+        User|contains: 'Administrators'
+    selection_elevation_tools:
+        Image|endswith:
+            - '\psexec.exe'
+            - '\runas.exe'
+            - '\schtasks.exe'
+            - '\at.exe'
+            - '\wmic.exe'
+    selection_bypass_uac:
+        CommandLine|contains:
+            - 'bypassuac'
+            - 'fodhelper'
+            - 'sdclt'
+            - 'eventvwr'
+            - 'computerdefaults'
+    selection_local_admin:
+        User|re: '.*\\[Aa]dmin.*'
+    condition: selection_process and (selection_elevation_tools or selection_bypass_uac) and
+               selection_local_admin
+level: high
+fields:
+    - Image
+    - CommandLine
+    - User
+    - ParentImage
+    - ProcessId
+falsepositives:
+    - Legitimate administrative tools usage
+    - System maintenance scripts
+    - Software installation requiring elevation
+references:
+    - https://attack.mitre.org/techniques/T1078/003/
+technique:
+    - T1078.003

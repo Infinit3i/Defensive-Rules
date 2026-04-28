@@ -1,0 +1,53 @@
+---
+title: Malicious Docker Image Execution Detection
+technique: T1204.003
+id: 4e8b6c2a-3f7d-5e9f-a3c7-7f4e6d8c9a5b
+status: experimental
+description: Detects execution of malicious Docker images through suspicious container runtime activity and untrusted registry pulls.
+references:
+  - https://attack.mitre.org/techniques/T1204/003/
+author: Infinit3i
+date: 2026-04-27
+tags:
+  - attack.initial_access
+  - attack.t1204.003
+  - docker
+  - container
+  - malicious_image
+  - linux
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  docker_execution:
+    Image|endswith:
+      - '\docker.exe'
+      - '\podman.exe'
+    CommandLine|contains:
+      - 'run'
+      - 'create'
+  suspicious_registries:
+    CommandLine|contains:
+      - 'dockerhub.com'
+      - 'quay.io'
+      - 'gcr.io'
+    CommandLine|re: '.*[a-f0-9]{12,64}.*'
+  privilege_escalation:
+    CommandLine|contains:
+      - '--privileged'
+      - '--cap-add'
+      - '--user root'
+      - '--security-opt'
+  untrusted_sources:
+    CommandLine|contains:
+      - 'latest'
+      - 'http://'
+      - '--insecure-registry'
+  condition: docker_execution and (suspicious_registries or privilege_escalation or untrusted_sources)
+falsepositives:
+  - Legitimate container deployments
+  - Development testing
+  - CI/CD pipeline operations
+level: medium

@@ -1,0 +1,44 @@
+title: Voice Phishing Call Center Pattern Detection
+id: e7d4a9c2-5f8b-3c1e-a6d9-b4c7e8f2a5d9
+status: experimental
+description: Detects voice phishing attempts through call center patterns and suspicious telephony activity
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1566/004/
+logsource:
+    product: telephony
+    service: pbx
+detection:
+    selection_caller_pattern:
+        CallerID|startswith:
+            - '+1800'
+            - '+1855'
+            - '+1866'
+            - '+1877'
+            - '+1888'
+    selection_spoofed_number:
+        - CallerIDName|contains: 'Bank'
+        - CallerIDName|contains: 'Security'
+        - CallerIDName|contains: 'Support'
+        - CallerIDName|contains: 'Microsoft'
+        - CallerIDName|contains: 'Apple'
+    selection_call_duration:
+        CallDuration|gte: 120
+    selection_frequent_calls:
+        CallCount|gte: 10
+        TimeWindow: 1h
+    condition: (selection_caller_pattern and selection_spoofed_number) or (selection_call_duration and selection_frequent_calls)
+level: medium
+tags:
+    - attack.initial-access
+    - attack.t1566
+    - attack.t1566.004
+    - telephony
+    - voice
+technique:
+    name: Phishing
+    id: T1566
+    subtechnique:
+        name: Spearphishing Voice
+        id: T1566.004

@@ -1,0 +1,53 @@
+title: SMS Phishing Smishing Campaign Detection
+id: b6e9d3f8-4c7a-2e5b-9d8f-e7a3c6d9f2b5
+status: experimental
+description: Detects SMS phishing campaigns through suspicious text message patterns and links
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1566/006/
+logsource:
+    product: mobile-security
+    service: sms-gateway
+detection:
+    selection_suspicious_sender:
+        - SenderNumber|startswith: '+'
+        - SenderNumber|length: 5
+        - SenderID|contains: 'Bank'
+        - SenderID|contains: 'Security'
+    selection_phishing_content:
+        MessageContent|contains:
+            - 'click link'
+            - 'verify account'
+            - 'suspended'
+            - 'urgent action'
+            - 'limited time'
+            - 'expires today'
+    selection_malicious_links:
+        MessageContent|contains:
+            - 'http'
+            - 'bit.ly'
+            - 'tinyurl'
+            - 'cutt.ly'
+    selection_financial_keywords:
+        MessageContent|contains:
+            - 'bank'
+            - 'card'
+            - 'payment'
+            - 'refund'
+            - 'transaction'
+    condition: (selection_suspicious_sender and selection_phishing_content) and
+               (selection_malicious_links or selection_financial_keywords)
+level: high
+tags:
+    - attack.initial-access
+    - attack.t1566
+    - attack.t1566.006
+    - sms
+    - mobile
+technique:
+    name: Phishing
+    id: T1566
+    subtechnique:
+        name: Spearphishing SMS
+        id: T1566.006
