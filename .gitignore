@@ -91,4 +91,6 @@ credentials/
 *.key
 *.pem
 *.p12
-*.pfx
+*.pfx# Build outputs
+docs/dist/
+docs/node_modules/

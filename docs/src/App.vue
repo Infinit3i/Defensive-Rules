@@ -94,7 +94,6 @@
               {{ rule.technique }}
             </span>
           </div>
-          <p class="rule-description">{{ rule.description }}</p>
         </div>
       </div>
 
@@ -116,7 +115,6 @@
               {{ rule.mitre_attack }}
             </span>
           </div>
-          <p class="rule-description">{{ rule.description }}</p>
         </div>
       </div>
 
@@ -168,6 +166,22 @@
       </div>
       <div class="modal-content">
         <div v-if="selectedRule.title" class="rule-details">
+          <div v-if="selectedRule.detection" class="detail-row">
+            <div class="rule-commands-title">Detection Logic:</div>
+            <div class="rule-commands">{{ formatDetection(selectedRule.detection) }}</div>
+          </div>
+          <div class="detail-row">
+            <strong>Description:</strong> {{ selectedRule.description }}
+          </div>
+          <div class="detail-row">
+            <strong>Level:</strong> {{ selectedRule.level }}
+          </div>
+          <div class="detail-row">
+            <strong>Technique:</strong> {{ selectedRule.technique }}
+          </div>
+          <div v-if="selectedRule.logsource" class="detail-row">
+            <strong>Log Source:</strong> {{ formatLogSource(selectedRule.logsource) }}
+          </div>
           <div class="detail-row">
             <strong>ID:</strong> {{ selectedRule.id }}
           </div>
@@ -175,23 +189,7 @@
             <strong>Status:</strong> {{ selectedRule.status }}
           </div>
           <div class="detail-row">
-            <strong>Level:</strong> {{ selectedRule.level }}
-          </div>
-          <div class="detail-row">
             <strong>Author:</strong> {{ selectedRule.author }}
-          </div>
-          <div class="detail-row">
-            <strong>Technique:</strong> {{ selectedRule.technique }}
-          </div>
-          <div class="detail-row">
-            <strong>Description:</strong> {{ selectedRule.description }}
-          </div>
-          <div v-if="selectedRule.logsource" class="detail-row">
-            <strong>Log Source:</strong> {{ formatLogSource(selectedRule.logsource) }}
-          </div>
-          <div v-if="selectedRule.detection" class="detail-row">
-            <div class="rule-commands-title">Detection Logic:</div>
-            <div class="rule-commands">{{ formatDetection(selectedRule.detection) }}</div>
           </div>
           <div v-if="selectedRule.references?.length" class="detail-row">
             <strong>References:</strong>
