@@ -53,7 +53,7 @@ jobs:
 
       - name: Validate YAML syntax
         run: |
-          yamllint Sigma/ -d "{extends: default, rules: {line-length: {max: 200}, document-start: disable}}"
+          yamllint Sigma/
 
       - name: Validate YARA rules
         run: |
