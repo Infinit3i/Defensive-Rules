@@ -1,0 +1,42 @@
+title: Google Workspace Suspicious Data Access
+id: a7b8c9d0-1e2f-3456-789a-bcdef0123456
+status: experimental
+description: Detects suspicious data access patterns in Google Workspace indicating potential data exfiltration
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.collection
+    - attack.t1530
+    - google_workspace
+    - cloud
+logsource:
+    product: google_workspace
+    service: admin
+detection:
+    selection_download:
+        event_name:
+            - 'download'
+            - 'copy'
+            - 'view'
+    selection_volume:
+        event_name: download
+    selection_external:
+        actor.email|endswith:
+            - '@gmail.com'
+            - '@yahoo.com'
+            - '@hotmail.com'
+    condition: selection_download and (selection_volume or selection_external)
+    timeframe: 1h
+    count: 50
+level: high
+fields:
+    - actor.email
+    - target.name
+    - ip_address
+    - event_name
+falsepositives:
+    - Legitimate bulk downloads by authorized users
+    - Automated backup processes
+references:
+    - https://attack.mitre.org/techniques/T1530/
+technique: T1530

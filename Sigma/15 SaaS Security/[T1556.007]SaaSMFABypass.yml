@@ -1,0 +1,40 @@
+title: SaaS Multi-Factor Authentication Bypass
+id: f6a7b8c9-0123-4567-890e-f01234567890
+status: experimental
+description: Detects attempts to bypass multi-factor authentication in SaaS applications
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.credential_access
+    - attack.t1556.007
+    - mfa_bypass
+    - cloud
+logsource:
+    product: saas_platform
+    service: authentication
+detection:
+    selection_mfa_events:
+        event_type:
+            - 'mfa_bypass'
+            - 'trusted_device_added'
+            - 'mfa_disabled'
+    selection_login_pattern:
+        event_type: login_success
+        mfa_status: 'not_required'
+        risk_level:
+            - 'high'
+            - 'medium'
+    condition: selection_mfa_events or selection_login_pattern
+level: critical
+fields:
+    - user_id
+    - ip_address
+    - user_agent
+    - event_type
+    - mfa_status
+falsepositives:
+    - Legitimate MFA configuration changes by administrators
+    - Approved trusted device additions
+references:
+    - https://attack.mitre.org/techniques/T1556/007/
+technique: T1556.007

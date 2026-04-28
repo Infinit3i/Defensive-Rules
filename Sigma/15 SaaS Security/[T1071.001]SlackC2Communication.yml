@@ -1,0 +1,45 @@
+title: Slack Command and Control Communication
+id: b2c3d4e5-6f78-9012-345a-bcdef6789012
+status: experimental
+description: Detects suspicious Slack usage patterns indicating command and control communication
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.command_and_control
+    - attack.t1071.001
+    - slack
+    - cloud
+logsource:
+    product: slack
+    service: audit
+detection:
+    selection_automated:
+        action:
+            - 'message_posted'
+            - 'file_uploaded'
+        user_agent|contains:
+            - 'bot'
+            - 'curl'
+            - 'python'
+            - 'powershell'
+    selection_suspicious_content:
+        message|contains:
+            - 'base64'
+            - 'powershell'
+            - 'cmd.exe'
+            - 'wget'
+            - 'curl'
+    condition: selection_automated or selection_suspicious_content
+level: medium
+fields:
+    - user.name
+    - user.email
+    - channel.name
+    - message
+    - user_agent
+falsepositives:
+    - Legitimate automation bots
+    - DevOps tools using Slack integration
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+technique: T1071.001

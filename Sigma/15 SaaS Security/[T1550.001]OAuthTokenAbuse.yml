@@ -1,0 +1,45 @@
+title: OAuth Token Abuse in SaaS Applications
+id: c3d4e5f6-7890-1234-567b-cdef89012345
+status: experimental
+description: Detects suspicious OAuth token usage patterns across SaaS platforms indicating token abuse
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.defense_evasion
+    - attack.t1550.001
+    - oauth
+    - cloud
+logsource:
+    product: cloud_platform
+    service: oauth
+detection:
+    selection_token_usage:
+        event_type: token_validation
+        grant_type: authorization_code
+    selection_suspicious:
+        - ip_address|startswith:
+            - '10.'
+            - '192.168.'
+            - '172.'
+        - user_agent|contains:
+            - 'curl'
+            - 'python'
+            - 'bot'
+        - scope|contains:
+            - 'admin'
+            - 'write'
+            - 'delete'
+    condition: selection_token_usage and selection_suspicious
+level: high
+fields:
+    - client_id
+    - user_id
+    - ip_address
+    - user_agent
+    - scope
+falsepositives:
+    - Legitimate API applications
+    - Internal automation tools
+references:
+    - https://attack.mitre.org/techniques/T1550/001/
+technique: T1550.001

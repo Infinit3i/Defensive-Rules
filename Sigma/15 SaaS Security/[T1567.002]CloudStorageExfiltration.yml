@@ -1,0 +1,48 @@
+title: Cloud Storage Data Exfiltration
+id: d4e5f6a7-8901-2345-678c-def012345678
+status: experimental
+description: Detects suspicious data exfiltration to cloud storage platforms like Dropbox, Box, OneDrive
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.exfiltration
+    - attack.t1567.002
+    - cloud_storage
+    - cloud
+logsource:
+    product: cloud_storage
+    service: access
+detection:
+    selection_upload:
+        event_type:
+            - 'upload'
+            - 'create'
+            - 'share'
+    selection_volume:
+        file_size|gt: 100000000  # > 100MB
+    selection_suspicious:
+        - file_name|contains:
+            - 'dump'
+            - 'backup'
+            - 'export'
+            - 'confidential'
+        - ip_address|startswith:
+            - '10.'
+            - '192.168.'
+            - '172.'
+    condition: selection_upload and (selection_volume or selection_suspicious)
+    timeframe: 1h
+    count: 10
+level: high
+fields:
+    - user_email
+    - file_name
+    - file_size
+    - ip_address
+    - event_type
+falsepositives:
+    - Legitimate large file uploads
+    - Automated backup processes
+references:
+    - https://attack.mitre.org/techniques/T1567/002/
+technique: T1567.002

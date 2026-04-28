@@ -1,0 +1,40 @@
+title: Microsoft 365 Suspicious Login Pattern
+id: e4f8a2b1-5c9d-4e3f-8a7b-1c2d3e4f5a6b
+status: experimental
+description: Detects suspicious login patterns in Microsoft 365 indicating potential account compromise
+author: Infinit3i
+date: 2026/04/27
+tags:
+    - attack.initial_access
+    - attack.t1078.004
+    - microsoft365
+    - cloud
+logsource:
+    product: microsoft365
+    service: audit
+detection:
+    selection_signin:
+        Operation: UserLoggedIn
+    selection_suspicious:
+        - DeviceDetail.isCompliant: false
+        - IPAddress|startswith:
+            - '10.'
+            - '192.168.'
+            - '172.'
+        - UserAgent|contains:
+            - 'curl'
+            - 'python'
+            - 'bot'
+    condition: selection_signin and selection_suspicious
+level: high
+fields:
+    - UserId
+    - IPAddress
+    - UserAgent
+    - DeviceDetail
+falsepositives:
+    - Legitimate admin access from internal networks
+    - Authorized API applications
+references:
+    - https://attack.mitre.org/techniques/T1078/004/
+technique: T1078.004
