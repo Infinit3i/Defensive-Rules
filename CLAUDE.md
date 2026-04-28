@@ -39,6 +39,36 @@ level: critical/high/medium/low
 tags: [attack.tactic, attack.technique, platform]
 ```
 
+### CRITICAL Formatting Requirements
+
+**ALL Sigma rule generation MUST follow these standards:**
+
+#### Line Length & Structure
+- **Maximum 200 characters per line**
+- **Descriptions max 150 chars**: Format as "Detects [threat] through [method]"
+- **Break long conditions** at logical operators:
+```yaml
+condition: (sel_one and sel_two) or
+           (sel_three and sel_four)
+```
+
+#### YAML Structure Requirements
+- **NO duplicate keys** - merge multiple values into single list
+- **NO blank lines within YAML structure**
+- **Exactly ONE newline at file end**
+- **NO trailing spaces anywhere**
+- **Comments indented 4 spaces under parent element**
+
+#### Validation Checklist
+Before finalizing any Sigma rule:
+1. Run yamllint validation
+2. Verify no duplicate keys exist
+3. Check all line length limits
+4. Confirm proper 4-space indentation
+5. Test condition syntax validity
+
+**These standards prevent the 100+ validation errors previously found across all tactics.**
+
 **Splunk Rules (Markdown):**
 ```markdown
 # [TTACTIC] Rule Title

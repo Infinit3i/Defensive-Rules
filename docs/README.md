@@ -1,25 +1,30 @@
 # Defensive Rules Frontend
 
-Clean Vue.js frontend for browsing Sigma and YARA detection rules. Uses nerd fonts and works with GitHub Pages.
+Vue.js TypeScript frontend for browsing Sigma and YARA detection rules. Uses Vite build system and works with GitHub Pages.
 
 ## Features
 
-- Browse 281+ Sigma rules organized by MITRE ATT&CK tactics
+- Browse 281+ Sigma rules organized by MITRE ATT&CK tactics  
 - View 17+ YARA rules for binary detection
 - Search and filter rules by technique, severity, or keywords
 - Clean dark theme with nerd font icons
 - Mobile responsive design
 - Static hosting compatible (GitHub Pages)
+- Build-time rule processing for production
 
 ## Architecture
 
 ```
 docs/
-├── index.html          # Main HTML entry point
+├── index.html              # HTML entry point
 ├── src/
-│   └── app.js          # Vue.js application logic
-└── assets/
-    └── style.css       # Clean dark theme styling
+│   ├── App.vue            # Vue.js TypeScript application
+│   └── main.ts            # Application bootstrap
+├── assets/
+│   ├── style.css          # Clean dark theme styling
+│   └── nerd-fonts.css     # Local nerd font definitions
+├── vite.config.ts         # Vite build configuration
+└── package.json           # Dependencies and scripts
 ```
 
 ## GitHub Pages Setup
@@ -35,24 +40,44 @@ docs/
 ## Local Development
 
 ```bash
-# No server needed! Just open in browser
-open docs/index.html
+# Install dependencies
+npm install
 
-# Or use any simple server (optional)
-cd docs && python3 -m http.server 8000
-# Then visit: http://localhost:8000
+# Start development server
+npm run dev
 
-# Rules are loaded dynamically via GitHub API
+# Visit http://localhost:5173/
 ```
 
-## Dynamic Rule Loading
+## GitHub Pages Deployment
 
-The frontend loads rules dynamically without pre-generated JSON files:
+The app is automatically deployed to GitHub Pages via GitHub Actions:
 
-- **Sigma rules**: Discovered from `Sigma/` directory structure via GitHub API
-- **YARA rules**: Discovered from `Yara/` directory via GitHub API  
-- **Fallback**: Common file patterns if API unavailable
-- **No build step**: Rules update automatically when repository changes
+1. **Automatic**: Push to `main` branch triggers deployment
+2. **Build Process**: Vite bundles all YAML files at build time
+3. **Static Hosting**: GitHub Pages serves the built assets
+
+### Manual Build
+
+```bash
+# Development build
+npm run build:dev
+
+# Production build for GitHub Pages  
+npm run build:gh-pages
+
+# Preview production build
+npm run preview
+```
+
+## Rule Loading System
+
+The frontend uses build-time processing for production compatibility:
+
+- **Development**: Direct file access via Vite dev server
+- **Production**: All YAML files bundled using `import.meta.glob()` with `eager: true`
+- **GitHub Pages**: Static assets served from build output
+- **No API calls**: Rules embedded in build for reliability
 
 ## Technology Stack
 

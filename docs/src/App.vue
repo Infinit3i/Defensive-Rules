@@ -324,35 +324,66 @@ const isValidHttpUrl = (string: string): boolean => {
 const loadLocalRules = async (): Promise<void> => {
   try {
     console.log('Loading rules from local repository...')
+    console.log('Environment:', import.meta.env.MODE)
+    console.log('Base URL:', import.meta.env.BASE_URL)
 
-    // Load Sigma rules using Vite's glob import
-    const sigmaFiles = import.meta.glob('../../Sigma/**/*.yml', { query: '?raw', import: 'default', eager: true })
+    // Load Sigma rules using Vite's glob import with eager loading for production
+    const sigmaFiles = import.meta.glob('../../Sigma/**/*.yml', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    })
     console.log(`Found ${Object.keys(sigmaFiles).length} Sigma files`)
+    console.log('Sigma file paths:', Object.keys(sigmaFiles).slice(0, 5)) // Log first 5 for debugging
 
+    let successfulSigmaRules = 0
     for (const [path, content] of Object.entries(sigmaFiles)) {
-      const filename = path.split('/').pop() || ''
-      const directory = path.split('/')[3] || '' // Extract directory name
+      try {
+        const filename = path.split('/').pop() || ''
+        const directory = path.split('/')[3] || '' // Extract directory name
 
-      const rule = parseSigmaRule(content as string, filename, directory)
-      if (rule) {
-        sigmaRules.value.push(rule)
+        const rule = parseSigmaRule(content as string, filename, directory)
+        if (rule) {
+          sigmaRules.value.push(rule)
+          successfulSigmaRules++
+        }
+      } catch (parseError) {
+        console.warn(`Failed to parse Sigma rule ${path}:`, parseError)
       }
     }
+    console.log(`Successfully parsed ${successfulSigmaRules} Sigma rules`)
 
-    // Load YARA rules using Vite's glob import
-    const yaraFiles = import.meta.glob('../../Yara/*.yar', { query: '?raw', import: 'default', eager: true })
+    // Load YARA rules using Vite's glob import with eager loading for production
+    const yaraFiles = import.meta.glob('../../Yara/*.yar', {
+      query: '?raw',
+      import: 'default',
+      eager: true
+    })
     console.log(`Found ${Object.keys(yaraFiles).length} YARA files`)
 
+    let successfulYaraRules = 0
     for (const [path, content] of Object.entries(yaraFiles)) {
-      const filename = path.split('/').pop() || ''
-      const rules = parseYaraRules(content as string, filename)
-      yaraRules.value.push(...rules)
+      try {
+        const filename = path.split('/').pop() || ''
+        const rules = parseYaraRules(content as string, filename)
+        yaraRules.value.push(...rules)
+        successfulYaraRules += rules.length
+      } catch (parseError) {
+        console.warn(`Failed to parse YARA rule ${path}:`, parseError)
+      }
+    }
+    console.log(`Successfully parsed ${successfulYaraRules} YARA rules`)
+
+    console.log(`Final count: ${sigmaRules.value.length} Sigma rules and ${yaraRules.value.length} YARA rules`)
+
+    if (sigmaRules.value.length === 0 && yaraRules.value.length === 0) {
+      console.error('No rules loaded! This might be a build configuration issue.')
     }
 
-    console.log(`Loaded ${sigmaRules.value.length} Sigma rules and ${yaraRules.value.length} YARA rules`)
     extractMetadata()
   } catch (error) {
     console.error('Error loading rules:', error)
+    console.error('This might be a GitHub Pages build issue. Check Vite configuration.')
   } finally {
     loading.value = false
   }
