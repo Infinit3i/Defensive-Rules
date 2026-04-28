@@ -1,0 +1,44 @@
+title: Office 365 Anomalous Login Pattern
+id: a1b2c3d4-e5f6-7890-1234-567890123456
+status: experimental
+description: Detects anomalous login patterns in Office 365 indicating account compromise
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.initial_access
+  - attack.t1078.004
+  - office365
+  - cloud
+logsource:
+  product: azure
+  service: signin
+detection:
+  selection_failed_attempts:
+    OperationName: 'Sign-in activity'
+    ResultType: 50126
+  selection_impossible_travel:
+    OperationName: 'Sign-in activity'
+    RiskDetail: 'impossibleTravel'
+  selection_tor_usage:
+    OperationName: 'Sign-in activity'
+    NetworkLocationDetails|contains: 'tor'
+  selection_new_country:
+    OperationName: 'Sign-in activity'
+    Location.countryOrRegion: '*'
+  condition: selection_failed_attempts or selection_impossible_travel or selection_tor_usage
+  timeframe: 1h
+  count: 10
+level: high
+fields:
+  - UserPrincipalName
+  - IPAddress
+  - Location
+  - UserAgent
+  - RiskDetail
+falsepositives:
+  - Legitimate travel
+  - VPN usage
+  - Remote work scenarios
+references:
+  - https://attack.mitre.org/techniques/T1078/004/
+technique: T1078.004

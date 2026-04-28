@@ -1,0 +1,49 @@
+title: Google Workspace Audit Log Disable
+id: c3d4e5f6-a7b8-9012-3456-789012345678
+status: experimental
+description: Detects attempts to disable audit logging in Google Workspace
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.defense_evasion
+  - attack.t1562.008
+  - google_workspace
+  - audit
+logsource:
+  product: google_workspace
+  service: admin
+detection:
+  selection_audit_disable:
+    event_name: CHANGE_APPLICATION_SETTING
+    application_name: 'Admin console'
+    setting_name|contains:
+      - 'audit'
+      - 'logging'
+      - 'security'
+  selection_retention_change:
+    event_name: CHANGE_APPLICATION_SETTING
+    setting_name|contains:
+      - 'retention'
+      - 'delete'
+      - 'purge'
+  selection_admin_privilege:
+    event_name: ASSIGN_ROLE
+    role_name|contains:
+      - 'Super Admin'
+      - 'Security'
+      - 'Audit'
+  condition: selection_audit_disable or selection_retention_change
+level: high
+fields:
+  - actor.email
+  - event_name
+  - setting_name
+  - new_value
+  - old_value
+falsepositives:
+  - Legitimate audit configuration
+  - Compliance adjustments
+  - Policy updates
+references:
+  - https://attack.mitre.org/techniques/T1562/008/
+technique: T1562.008

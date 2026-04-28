@@ -1,0 +1,51 @@
+title: DCOM Lateral Movement Detection
+id: c3d4e5f6-a7b8-9012-cdef-345678901234
+status: experimental
+description: Detects lateral movement via Distributed Component Object Model (DCOM)
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1021.003
+  - dcom
+  - windows
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_dcom_execution:
+    EventID: 1
+    ParentImage|endswith: '\svchost.exe'
+    ParentCommandLine|contains: '-k DcomLaunch'
+    Image|endswith:
+      - '\powershell.exe'
+      - '\cmd.exe'
+      - '\wmic.exe'
+  selection_wmi_dcom:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - '/node:'
+      - 'process call create'
+  selection_dcom_network:
+    EventID: 3
+    DestinationPort: 135
+    Image|endswith:
+      - '\svchost.exe'
+      - '\wmiprvse.exe'
+  condition: selection_dcom_execution or selection_wmi_dcom or selection_dcom_network
+level: medium
+fields:
+  - Image
+  - ParentImage
+  - CommandLine
+  - DestinationIp
+  - DestinationPort
+  - User
+falsepositives:
+  - Legitimate DCOM applications
+  - Remote administration tools
+  - System monitoring software
+references:
+  - https://attack.mitre.org/techniques/T1021/003/
+technique: T1021.003

@@ -1,0 +1,36 @@
+title: PowerShell Data Compression Activities
+id: n4o5p6q7-r8s9-0123-4567-890123nopqrs
+status: experimental
+description: Detects PowerShell commands used to compress collected data
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1560/
+tags:
+    - attack.collection
+    - attack.t1560
+    - powershell
+    - windows
+logsource:
+    product: windows
+    service: powershell-classic
+detection:
+    selection:
+        EventID: 4104
+    compression:
+        ScriptBlockText|contains:
+            - 'Compress-Archive'
+            - 'System.IO.Compression'
+            - 'ZipFile'
+            - 'GZipStream'
+    data_sources:
+        ScriptBlockText|contains:
+            - 'Get-ChildItem'
+            - 'Documents'
+            - 'Users'
+            - 'Desktop'
+    condition: selection and compression and data_sources
+falsepositives:
+    - Legitimate PowerShell scripts
+    - Backup automation
+level: medium

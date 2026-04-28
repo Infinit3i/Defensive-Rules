@@ -1,0 +1,59 @@
+title: Taint Shared Content Detection
+id: a3b4c5d6-e7f8-9012-6789-345678901234
+status: experimental
+description: Detects attempts to taint shared content for lateral movement
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1080
+  - shared_content
+  - file_modification
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_shared_file_modify:
+    EventID: 11
+    TargetFilename|contains:
+      - '\\*\NETLOGON\'
+      - '\\*\SYSVOL\'
+      - '\\*\shared\'
+      - '\\*\public\'
+    TargetFilename|endswith:
+      - '.exe'
+      - '.dll'
+      - '.bat'
+      - '.ps1'
+      - '.vbs'
+      - '.scr'
+  selection_network_share_write:
+    EventID: 5145
+    AccessMask: '0x120089'
+    RelativeTargetName|endswith:
+      - '.exe'
+      - '.dll'
+      - '.bat'
+      - '.ps1'
+  selection_shortcut_modification:
+    EventID: 11
+    TargetFilename|endswith: '.lnk'
+    TargetFilename|contains:
+      - '\\Desktop\'
+      - '\\Start Menu\'
+      - '\\Startup\'
+  condition: selection_shared_file_modify or selection_network_share_write or selection_shortcut_modification
+level: medium
+fields:
+  - TargetFilename
+  - RelativeTargetName
+  - User
+  - Image
+  - ProcessId
+falsepositives:
+  - Legitimate file updates on shared drives
+  - Software installations
+  - Administrative maintenance
+references:
+  - https://attack.mitre.org/techniques/T1080/
+technique: T1080

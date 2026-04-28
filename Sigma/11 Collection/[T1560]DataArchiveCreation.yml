@@ -1,0 +1,36 @@
+title: Suspicious Data Archive Creation
+id: m3n4o5p6-q7r8-9012-3456-789012mnopqr
+status: experimental
+description: Detects creation of archives containing collected data
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1560/
+tags:
+    - attack.collection
+    - attack.t1560
+    - sysmon
+    - windows
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 1
+    archive_tools:
+        - Image|endswith: '\7z.exe'
+        - Image|endswith: '\winrar.exe'
+        - Image|endswith: '\zip.exe'
+        - CommandLine|contains: 'Compress-Archive'
+    multiple_files:
+        CommandLine|contains:
+            - '-r'
+            - '-recurse'
+            - 'Documents'
+            - 'Desktop'
+            - 'Users'
+    condition: selection and archive_tools and multiple_files
+falsepositives:
+    - Legitimate backup operations
+    - Software packaging
+level: medium

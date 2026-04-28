@@ -1,0 +1,58 @@
+title: Internal Spearphishing Detection
+id: b8c9d0e1-f2a3-4567-1234-890123456789
+status: experimental
+description: Detects internal spearphishing emails used for lateral movement
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1534
+  - email
+  - phishing
+logsource:
+  product: email_security
+  service: exchange
+detection:
+  selection_internal_email:
+    sender_domain: 'internal.company.com'
+    recipient_domain: 'internal.company.com'
+  selection_suspicious_attachments:
+    attachment_type:
+      - '.exe'
+      - '.scr'
+      - '.bat'
+      - '.ps1'
+      - '.docm'
+      - '.xlsm'
+      - '.zip'
+      - '.rar'
+  selection_phishing_keywords:
+    subject|contains:
+      - 'urgent'
+      - 'action required'
+      - 'verify account'
+      - 'security alert'
+      - 'suspended'
+      - 'click here'
+  selection_external_links:
+    body|contains:
+      - 'http://'
+      - 'https://'
+      - 'bit.ly'
+      - 'tinyurl'
+      - 'shortened'
+  condition: selection_internal_email and (selection_suspicious_attachments or selection_phishing_keywords or selection_external_links)
+level: high
+fields:
+  - sender
+  - recipient
+  - subject
+  - attachment_type
+  - body
+falsepositives:
+  - Legitimate internal communications
+  - Security awareness training
+  - Official company notifications
+references:
+  - https://attack.mitre.org/techniques/T1534/
+technique: T1534

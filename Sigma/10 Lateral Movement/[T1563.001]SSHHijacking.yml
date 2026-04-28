@@ -1,0 +1,52 @@
+title: SSH Session Hijacking Detection
+id: d0e1f2a3-b4c5-6789-3456-012345678901
+status: experimental
+description: Detects SSH session hijacking for lateral movement
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1563.001
+  - ssh
+  - session_hijacking
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_ssh_agent:
+    type: SYSCALL
+    comm: ssh-agent
+    syscall:
+      - 'connect'
+      - 'bind'
+      - 'socket'
+  selection_ssh_add:
+    type: EXECVE
+    comm: ssh-add
+    a0|contains: '-'
+  selection_ssh_session_reuse:
+    type: USER_AUTH
+    exe: '/usr/bin/ssh'
+    res: 'success'
+  selection_multiple_sessions:
+    type: USER_START
+    exe: '/usr/sbin/sshd'
+    terminal: 'ssh'
+  condition: selection_ssh_agent or selection_ssh_add or (selection_ssh_session_reuse and selection_multiple_sessions)
+  timeframe: 10m
+  count: 3
+level: medium
+fields:
+  - uid
+  - gid
+  - comm
+  - exe
+  - terminal
+  - addr
+falsepositives:
+  - Legitimate SSH key management
+  - Authorized session sharing
+  - Administrative activities
+references:
+  - https://attack.mitre.org/techniques/T1563/001/
+technique: T1563.001

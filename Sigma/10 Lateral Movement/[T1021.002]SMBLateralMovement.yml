@@ -1,0 +1,49 @@
+title: SMB Admin Share Lateral Movement
+id: b2c3d4e5-f6a7-8901-bcde-234567890123
+status: experimental
+description: Detects lateral movement via SMB admin shares (C$, ADMIN$, IPC$)
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1021.002
+  - smb
+  - network
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_smb_access:
+    EventID: 5140
+    ShareName:
+      - '\\*\C$'
+      - '\\*\ADMIN$'
+      - '\\*\IPC$'
+  selection_file_access:
+    EventID: 5145
+    RelativeTargetName|contains:
+      - '\Windows\System32\'
+      - '\Windows\Temp\'
+      - '\Users\'
+  selection_net_use:
+    EventID: 1
+    Image|endswith: '\net.exe'
+    CommandLine|contains:
+      - 'use \\*\C$'
+      - 'use \\*\ADMIN$'
+      - 'use \\*\IPC$'
+  condition: selection_smb_access or selection_file_access or selection_net_use
+level: medium
+fields:
+  - SubjectUserName
+  - IpAddress
+  - ShareName
+  - RelativeTargetName
+  - CommandLine
+falsepositives:
+  - Administrative file transfers
+  - Backup operations
+  - System management tools
+references:
+  - https://attack.mitre.org/techniques/T1021/002/
+technique: T1021.002

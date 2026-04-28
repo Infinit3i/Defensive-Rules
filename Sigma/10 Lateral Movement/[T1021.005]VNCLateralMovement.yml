@@ -1,0 +1,57 @@
+title: VNC Lateral Movement Detection
+id: e5f6a7b8-c9d0-1234-ef01-567890123456
+status: experimental
+description: Detects lateral movement via VNC remote desktop connections
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1021.005
+  - vnc
+  - network
+logsource:
+  product: network
+  service: connection
+detection:
+  selection_vnc_ports:
+    destination_port:
+      - 5900
+      - 5901
+      - 5902
+      - 5903
+      - 5904
+      - 5905
+    protocol: tcp
+  selection_vnc_process:
+    EventID: 1
+    Image|contains:
+      - 'vnc'
+      - 'tightvnc'
+      - 'ultravnc'
+      - 'realvnc'
+  selection_internal_network:
+    source_ip|startswith:
+      - '10.'
+      - '172.'
+      - '192.168.'
+    destination_ip|startswith:
+      - '10.'
+      - '172.'
+      - '192.168.'
+  condition: (selection_vnc_ports or selection_vnc_process) and selection_internal_network
+  timeframe: 10m
+  count: 3
+level: medium
+fields:
+  - source_ip
+  - destination_ip
+  - destination_port
+  - Image
+  - CommandLine
+falsepositives:
+  - Legitimate VNC remote support
+  - Authorized remote desktop access
+  - System administration activities
+references:
+  - https://attack.mitre.org/techniques/T1021/005/
+technique: T1021.005

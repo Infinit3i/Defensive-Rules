@@ -1,0 +1,36 @@
+title: Local System Data Collection via PowerShell
+id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+status: experimental
+description: Detects PowerShell commands attempting to collect data from local system directories
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1005/
+tags:
+    - attack.collection
+    - attack.t1005
+    - sysmon
+    - windows
+logsource:
+    product: windows
+    service: powershell-classic
+detection:
+    selection:
+        EventID: 4103
+    keywords:
+        Message|contains:
+            - 'Get-ChildItem'
+            - 'gci'
+            - 'dir'
+            - 'ls'
+    paths:
+        Message|contains:
+            - 'C:\Users'
+            - 'Documents'
+            - 'Desktop'
+            - 'Downloads'
+    condition: selection and keywords and paths
+falsepositives:
+    - Legitimate system administration
+    - Software installation scripts
+level: medium

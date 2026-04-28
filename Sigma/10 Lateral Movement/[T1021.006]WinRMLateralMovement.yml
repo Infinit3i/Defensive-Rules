@@ -1,0 +1,48 @@
+title: WinRM Lateral Movement Detection
+id: f6a7b8c9-d0e1-2345-f012-678901234567
+status: experimental
+description: Detects lateral movement via Windows Remote Management (WinRM)
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1021.006
+  - winrm
+  - powershell
+logsource:
+  product: windows
+  service: winrm
+detection:
+  selection_winrm_connection:
+    EventID: 91
+    SourceName: 'Microsoft-Windows-WinRM'
+  selection_powershell_remoting:
+    EventID: 4103
+    Channel: 'Microsoft-Windows-PowerShell/Operational'
+    Message|contains:
+      - 'Enter-PSSession'
+      - 'Invoke-Command'
+      - 'New-PSSession'
+  selection_winrs_execution:
+    EventID: 1
+    Image|endswith: '\winrs.exe'
+    CommandLine|contains: '-r:'
+  selection_network_logon:
+    EventID: 4624
+    LogonType: 3
+    ProcessName: '*\wsmprovhost.exe'
+  condition: selection_winrm_connection or selection_powershell_remoting or selection_winrs_execution or selection_network_logon
+level: medium
+fields:
+  - TargetUserName
+  - IpAddress
+  - CommandLine
+  - Message
+  - ProcessName
+falsepositives:
+  - Legitimate PowerShell remoting
+  - Authorized remote administration
+  - Configuration management tools
+references:
+  - https://attack.mitre.org/techniques/T1021/006/
+technique: T1021.006

@@ -1,0 +1,54 @@
+title: Software Deployment Tools Lateral Movement
+id: f2a3b4c5-d6e7-8901-5678-234567890123
+status: experimental
+description: Detects abuse of software deployment tools for lateral movement
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1072
+  - deployment_tools
+  - administration
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_psexec:
+    EventID: 1
+    Image|endswith: '\PsExec.exe'
+    CommandLine|contains: '\\*'
+  selection_sccm:
+    EventID: 1
+    ParentImage|contains: 'ccmexec'
+    Image|endswith:
+      - '\powershell.exe'
+      - '\cmd.exe'
+      - '\cscript.exe'
+  selection_wmi_deployment:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - '/node:'
+      - 'process call create'
+      - 'Win32_Process'
+  selection_deployment_shares:
+    EventID: 5140
+    ShareName|contains:
+      - 'NETLOGON'
+      - 'SYSVOL'
+      - 'DeploymentShare'
+  condition: selection_psexec or selection_sccm or selection_wmi_deployment or selection_deployment_shares
+level: medium
+fields:
+  - Image
+  - ParentImage
+  - CommandLine
+  - User
+  - ShareName
+falsepositives:
+  - Legitimate software deployment
+  - System administration activities
+  - Patch management systems
+references:
+  - https://attack.mitre.org/techniques/T1072/
+technique: T1072

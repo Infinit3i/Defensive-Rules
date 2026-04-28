@@ -1,0 +1,40 @@
+title: Data Staging in Hidden Locations
+id: p6q7r8s9-t0u1-2345-6789-012345pqrstu
+status: experimental
+description: Detects data staging activities using hidden directories and files
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1074/
+tags:
+    - attack.collection
+    - attack.t1074
+    - powershell
+    - windows
+logsource:
+    product: windows
+    service: powershell-classic
+detection:
+    selection:
+        EventID: 4104
+    hidden_attributes:
+        ScriptBlockText|contains:
+            - 'Hidden'
+            - 'Set-ItemProperty'
+            - 'attrib +h'
+    file_operations:
+        ScriptBlockText|contains:
+            - 'Copy-Item'
+            - 'Move-Item'
+            - 'New-Item'
+    staging_patterns:
+        ScriptBlockText|contains:
+            - 'collected'
+            - 'staging'
+            - 'backup'
+            - '.tmp'
+    condition: selection and hidden_attributes and file_operations and staging_patterns
+falsepositives:
+    - System administration scripts
+    - Backup utilities
+level: high

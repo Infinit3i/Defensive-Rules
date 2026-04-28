@@ -1,0 +1,49 @@
+title: Office 365 Suspicious Account Creation
+id: a7b8c9d0-e1f2-3456-7890-123456789012
+status: experimental
+description: Detects suspicious account creation in Office 365 for persistence
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.persistence
+  - attack.t1136.003
+  - office365
+  - account_creation
+logsource:
+  product: azure
+  service: auditlogs
+detection:
+  selection_user_creation:
+    OperationName: 'Add user'
+    Category: UserManagement
+  selection_bulk_creation:
+    OperationName: 'Bulk create users'
+  selection_privileged_creation:
+    OperationName:
+      - 'Add member to role'
+      - 'Add user'
+    TargetResources.modifiedProperties.newValue|contains:
+      - 'Global Administrator'
+      - 'Exchange Administrator'
+      - 'Security Administrator'
+  selection_external_domain:
+    TargetResources.userPrincipalName|endswith:
+      - '@gmail.com'
+      - '@outlook.com'
+      - '@yahoo.com'
+  condition: (selection_user_creation or selection_bulk_creation) and (selection_privileged_creation or selection_external_domain)
+  timeframe: 1h
+  count: 3
+level: high
+fields:
+  - InitiatedBy.user.userPrincipalName
+  - TargetResources.userPrincipalName
+  - OperationName
+  - ActivityDisplayName
+falsepositives:
+  - Legitimate user provisioning
+  - HR onboarding processes
+  - Bulk user imports
+references:
+  - https://attack.mitre.org/techniques/T1136/003/
+technique: T1136.003

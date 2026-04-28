@@ -1,0 +1,58 @@
+title: Teams Slack C2 Communication Channel
+id: d4e5f6a7-b8c9-0123-4567-890123456789
+status: experimental
+description: Detects command and control communication via Teams or Slack channels
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.command_and_control
+  - attack.t1102.002
+  - teams
+  - slack
+logsource:
+  product: collaboration_platform
+  service: messaging
+detection:
+  selection_encoded_messages:
+    message_content|contains:
+      - 'base64'
+      - 'powershell'
+      - 'cmd /c'
+      - 'invoke-'
+      - 'download'
+      - 'execute'
+  selection_file_uploads:
+    event_type: file_upload
+    file_extension:
+      - '.exe'
+      - '.bat'
+      - '.ps1'
+      - '.vbs'
+      - '.scr'
+  selection_external_links:
+    message_content|contains:
+      - 'bit.ly'
+      - 'tinyurl'
+      - 'pastebin'
+      - 'github.com/raw'
+  selection_automated_posting:
+    user_agent|contains:
+      - 'bot'
+      - 'python'
+      - 'curl'
+      - 'webhook'
+  condition: selection_encoded_messages or selection_file_uploads or (selection_external_links and selection_automated_posting)
+level: medium
+fields:
+  - user_id
+  - user_name
+  - channel_name
+  - message_content
+  - file_name
+falsepositives:
+  - Legitimate automation bots
+  - File sharing activities
+  - DevOps integrations
+references:
+  - https://attack.mitre.org/techniques/T1102/002/
+technique: T1102.002

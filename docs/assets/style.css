@@ -314,6 +314,144 @@ body {
     align-items: center;
 }
 
+/* Severity Slider */
+.severity-slider-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    margin-right: 1rem;
+}
+
+.severity-label {
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.severity-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #30363d;
+    border-radius: 3px;
+    outline: none;
+    margin-bottom: 0.5rem;
+}
+
+.severity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #58a6ff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.severity-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #58a6ff;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+.severity-markers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #8b949e;
+}
+
+/* Popular Techniques Checkbox */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.popular-checkbox {
+    margin-right: 0.75rem;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.checkmark {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+/* Mobile Severity Slider */
+.mobile-severity-slider {
+    padding: 0.75rem 1rem;
+    background: #21262d;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.mobile-severity-label {
+    color: #e0e0e0;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.mobile-severity-slider-input {
+    width: 100%;
+    height: 6px;
+    background: #30363d;
+    border-radius: 3px;
+    outline: none;
+    margin-bottom: 0.5rem;
+}
+
+.mobile-severity-markers {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #8b949e;
+}
+
+/* Mobile Checkbox */
+.mobile-checkbox-container {
+    padding: 0.75rem 1rem;
+    background: #21262d;
+    border-radius: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.mobile-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.mobile-popular-checkbox {
+    margin-right: 0.75rem;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.mobile-checkmark {
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
 /* Common Technique Star Overlay */
 .common-star-overlay {
     position: absolute;

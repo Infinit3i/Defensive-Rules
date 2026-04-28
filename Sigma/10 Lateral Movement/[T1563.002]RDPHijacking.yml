@@ -1,0 +1,50 @@
+title: RDP Session Hijacking Detection
+id: e1f2a3b4-c5d6-7890-4567-123456789012
+status: experimental
+description: Detects RDP session hijacking for lateral movement
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1563.002
+  - rdp
+  - session_hijacking
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_session_hijack:
+    EventID: 4778
+    ClientName: '*'
+    ClientAddress: '*'
+  selection_tscon_usage:
+    EventID: 1
+    Image|endswith: '\tscon.exe'
+    CommandLine|contains:
+      - '/dest:'
+      - '/password'
+      - '/v'
+  selection_rdp_reconnect:
+    EventID: 4779
+    TargetLogonId: '*'
+  selection_multiple_sessions:
+    EventID: 4624
+    LogonType: 10
+    IpAddress: '*'
+  condition: selection_session_hijack or selection_tscon_usage or (selection_rdp_reconnect and selection_multiple_sessions)
+  timeframe: 5m
+  count: 2
+level: high
+fields:
+  - TargetUserName
+  - TargetLogonId
+  - ClientName
+  - ClientAddress
+  - CommandLine
+falsepositives:
+  - Legitimate session reconnections
+  - Administrative RDP session management
+  - Terminal server operations
+references:
+  - https://attack.mitre.org/techniques/T1563/002/
+technique: T1563.002

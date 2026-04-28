@@ -1,0 +1,57 @@
+title: SharePoint Data Collection Activity
+id: b8c9d0e1-f2a3-4567-8901-234567890123
+status: experimental
+description: Detects suspicious data collection from SharePoint sites
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.collection
+  - attack.t1114.002
+  - sharepoint
+  - data_collection
+logsource:
+  product: sharepoint
+  service: audit
+detection:
+  selection_bulk_download:
+    Operation:
+      - 'FileDownloaded'
+      - 'FileAccessed'
+      - 'FileViewed'
+    ItemType: 'File'
+  selection_search_activity:
+    Operation: 'SearchQueryPerformed'
+    Query|contains:
+      - 'confidential'
+      - 'secret'
+      - 'password'
+      - 'private'
+      - 'sensitive'
+  selection_external_sharing:
+    Operation:
+      - 'SharingSet'
+      - 'AnonymousLinkCreated'
+      - 'SecureLinkCreated'
+  selection_api_access:
+    UserAgent|contains:
+      - 'python'
+      - 'curl'
+      - 'powershell'
+      - 'graph'
+  condition: (selection_bulk_download or selection_search_activity or selection_external_sharing) and selection_api_access
+  timeframe: 1h
+  count: 50
+level: medium
+fields:
+  - UserId
+  - ClientIP
+  - SourceFileName
+  - Operation
+  - UserAgent
+falsepositives:
+  - Legitimate file synchronization
+  - Bulk document processing
+  - Automated backup systems
+references:
+  - https://attack.mitre.org/techniques/T1114/002/
+technique: T1114.002

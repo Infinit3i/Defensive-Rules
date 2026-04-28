@@ -1,0 +1,40 @@
+title: Remote Desktop Protocol Lateral Movement
+id: a1b2c3d4-e5f6-7890-abcd-123456789012
+status: experimental
+description: Detects lateral movement via RDP connections to multiple hosts
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.lateral_movement
+  - attack.t1021.001
+  - rdp
+  - network
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_rdp_logon:
+    EventID: 4624
+    LogonType: 10
+    AuthenticationPackageName: Negotiate
+  selection_network_logon:
+    EventID: 4624
+    LogonType: 3
+    ProcessName: '*\svchost.exe'
+  condition: selection_rdp_logon or selection_network_logon
+  timeframe: 10m
+  count: 3
+level: medium
+fields:
+  - TargetUserName
+  - IpAddress
+  - WorkstationName
+  - LogonType
+  - ProcessName
+falsepositives:
+  - Legitimate administrative RDP sessions
+  - Remote support activities
+  - Automated deployment tools
+references:
+  - https://attack.mitre.org/techniques/T1021/001/
+technique: T1021.001

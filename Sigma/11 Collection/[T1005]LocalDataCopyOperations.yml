@@ -1,0 +1,36 @@
+title: Local Data Copy Operations for Collection
+id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
+status: experimental
+description: Detects file copy operations targeting sensitive local directories
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1005/
+tags:
+    - attack.collection
+    - attack.t1005
+    - sysmon
+    - windows
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 1
+    commands:
+        CommandLine|contains:
+            - 'copy'
+            - 'xcopy'
+            - 'robocopy'
+            - 'move'
+    targets:
+        CommandLine|contains:
+            - '\Users\'
+            - '\Documents\'
+            - '\AppData\'
+            - '\Desktop\'
+    condition: selection and commands and targets
+falsepositives:
+    - System backup operations
+    - User file management
+level: low

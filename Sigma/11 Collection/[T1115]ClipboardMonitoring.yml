@@ -1,0 +1,34 @@
+title: Suspicious Clipboard Monitoring Activity
+id: f6g7h8i9-j0k1-2345-6789-012345fghijk
+status: experimental
+description: Detects continuous clipboard monitoring and data extraction
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1115/
+tags:
+    - attack.collection
+    - attack.t1115
+    - powershell
+    - windows
+logsource:
+    product: windows
+    service: powershell-classic
+detection:
+    selection:
+        EventID: 4104
+    monitoring:
+        ScriptBlockText|contains:
+            - 'while($true)'
+            - 'Start-Sleep'
+            - 'Get-Clipboard'
+    loops:
+        ScriptBlockText|contains:
+            - 'for('
+            - 'foreach'
+            - 'do{'
+    condition: selection and monitoring and loops
+falsepositives:
+    - Legitimate monitoring scripts
+    - Clipboard utilities
+level: high

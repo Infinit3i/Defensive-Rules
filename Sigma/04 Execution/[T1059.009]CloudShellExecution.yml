@@ -1,0 +1,54 @@
+title: Cloud Shell Command Execution
+id: c9d0e1f2-a3b4-5678-9012-345678901234
+status: experimental
+description: Detects suspicious command execution via cloud shell services
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.execution
+  - attack.t1059.009
+  - cloud_shell
+  - azure
+logsource:
+  product: azure
+  service: cloudshell
+detection:
+  selection_cloud_shell:
+    OperationName: 'Microsoft.Portal/cloudShell/consoles/write'
+    ResourceType: 'Microsoft.Portal/cloudShell'
+  selection_suspicious_commands:
+    properties.message|contains:
+      - 'wget'
+      - 'curl'
+      - 'powershell'
+      - 'invoke-'
+      - 'download'
+      - 'base64'
+      - 'encode'
+  selection_file_operations:
+    properties.message|contains:
+      - 'az storage'
+      - 'az keyvault'
+      - 'az ad user'
+      - 'get-azuser'
+  selection_persistence_setup:
+    properties.message|contains:
+      - 'crontab'
+      - 'systemctl'
+      - 'service'
+      - '.bashrc'
+      - '.profile'
+  condition: selection_cloud_shell and (selection_suspicious_commands or selection_file_operations or selection_persistence_setup)
+level: medium
+fields:
+  - CallerIpAddress
+  - Identity.claims.name
+  - properties.message
+  - ResourceId
+falsepositives:
+  - Legitimate cloud administration
+  - DevOps automation
+  - Infrastructure management
+references:
+  - https://attack.mitre.org/techniques/T1059/009/
+technique: T1059.009

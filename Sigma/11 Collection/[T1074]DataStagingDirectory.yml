@@ -1,0 +1,41 @@
+title: Data Staging in Temporary Directories
+id: o5p6q7r8-s9t0-1234-5678-901234opqrst
+status: experimental
+description: Detects data being staged in temporary directories for collection
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1074/
+tags:
+    - attack.collection
+    - attack.t1074
+    - sysmon
+    - windows
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 1
+    staging_dirs:
+        CommandLine|contains:
+            - '\temp\'
+            - '\tmp\'
+            - 'C:\Windows\Temp'
+            - '$env:TEMP'
+    copy_operations:
+        CommandLine|contains:
+            - 'copy'
+            - 'xcopy'
+            - 'robocopy'
+            - 'move'
+    source_dirs:
+        CommandLine|contains:
+            - 'Users'
+            - 'Documents'
+            - 'Desktop'
+    condition: selection and staging_dirs and copy_operations and source_dirs
+falsepositives:
+    - Software installations
+    - System cleanup scripts
+level: medium

@@ -1,0 +1,48 @@
+title: AWS Cloud Account Discovery
+id: f6a7b8c9-d0e1-2345-6789-012345678901
+status: experimental
+description: Detects cloud account discovery activities in AWS
+author: Infinit3i
+date: 2026/04/28
+tags:
+  - attack.discovery
+  - attack.t1087.004
+  - aws
+  - account_discovery
+logsource:
+  product: aws
+  service: cloudtrail
+detection:
+  selection_list_users:
+    eventName:
+      - 'ListUsers'
+      - 'GetUser'
+      - 'ListGroups'
+      - 'ListRoles'
+  selection_enumerate_permissions:
+    eventName:
+      - 'ListUserPolicies'
+      - 'ListGroupPolicies'
+      - 'ListRolePolicies'
+      - 'GetPolicy'
+  selection_cross_account:
+    eventName:
+      - 'ListAccounts'
+      - 'DescribeOrganization'
+      - 'ListAccountsForParent'
+  condition: selection_list_users or selection_enumerate_permissions or selection_cross_account
+  timeframe: 5m
+  count: 10
+level: medium
+fields:
+  - userIdentity.arn
+  - sourceIPAddress
+  - eventName
+  - requestParameters
+falsepositives:
+  - Automated security tools
+  - Account management scripts
+  - Compliance scanning
+references:
+  - https://attack.mitre.org/techniques/T1087/004/
+technique: T1087.004
