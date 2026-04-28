@@ -69,14 +69,7 @@ falsepositives:
   - System administration
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1218.011
-    # Platform/tool tags
-    - windows
-    - sysmon
-  - attack.defense-evasion
+  - attack.defense_evasion
   - attack.t1218.011
-  - sysmon
   - windows
+  - sysmon
