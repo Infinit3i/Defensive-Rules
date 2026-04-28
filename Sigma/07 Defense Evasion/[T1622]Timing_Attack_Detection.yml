@@ -20,12 +20,7 @@ detection:
       - 'GetLocalTime'
   condition: selection
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1622
-    # Platform/tool tags
-    - windows
-    - sysmon
-  - attack.defense-evasion
+  - attack.defense_evasion
   - attack.t1622
+  - windows
+  - sysmon
