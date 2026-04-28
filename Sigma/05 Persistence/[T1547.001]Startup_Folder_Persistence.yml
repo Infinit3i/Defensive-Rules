@@ -43,8 +43,8 @@ falsepositives:
     - User-installed startup applications
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1547
-    - attack.t1547.001
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.001
+  - sysmon
+  - windows

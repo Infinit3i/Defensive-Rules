@@ -18,9 +18,9 @@ detection:
     condition: selection
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1037.001
-    - auditd
-    - linux
+  - attack.persistence
+  - attack.t1037.001
+  - auditd
+  - linux
 references:
     - https://attack.mitre.org/techniques/T1037/001/

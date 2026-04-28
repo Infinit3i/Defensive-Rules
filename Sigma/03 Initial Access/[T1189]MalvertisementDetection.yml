@@ -36,8 +36,8 @@ falsepositives:
     - Large image advertisements
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1189
-    - zeek
-    - malvertising
+  - attack.initial_access
+  - attack.t1189
+  - zeek
+  - malvertising
 technique: T1189

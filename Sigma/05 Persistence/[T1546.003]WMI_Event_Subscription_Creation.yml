@@ -41,8 +41,8 @@ falsepositives:
     - Monitoring solutions
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546.003
-    - sysmon
-    - windows
-    - wmi
+  - attack.persistence
+  - attack.t1546.003
+  - sysmon
+  - windows
+  - wmi

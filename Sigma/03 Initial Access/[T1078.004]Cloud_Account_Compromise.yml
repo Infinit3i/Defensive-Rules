@@ -72,19 +72,19 @@ falsepositives:
     - Authorized application integrations and API usage
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1078.004
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1078.004
-    - attack.privilege_escalation
-    - attack.t1484
-    - attack.discovery
-    - attack.t1087
-    - azure
-    - account_compromise
-    - cloud
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1078.004
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1078.004
+  - attack.privilege_escalation
+  - attack.t1484
+  - attack.discovery
+  - attack.t1087
+  - azure
+  - account_compromise
+  - cloud

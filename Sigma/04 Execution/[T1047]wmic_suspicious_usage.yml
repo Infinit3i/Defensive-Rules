@@ -40,13 +40,13 @@ falsepositives:
   - Legitimate remote admin or software deployment using WMIC
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1047
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1047
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.T1047
   - execution
   - windows

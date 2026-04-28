@@ -15,12 +15,12 @@ detection:
     response_body_len: '>1000'
   condition: selection
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1071.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1071.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command-and-control
   - attack.t1071.001

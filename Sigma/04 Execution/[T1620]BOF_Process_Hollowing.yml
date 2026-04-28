@@ -51,10 +51,10 @@ falsepositives:
     - Some antivirus software behavior
 level: high
 tags:
-    - attack.execution
-    - attack.t1620
-    - attack.t1055.012
-    - windows
-    - sysmon
-    - cobalt_strike
-    - bof
+  - attack.execution
+  - attack.t1620
+  - attack.t1055.012
+  - windows
+  - sysmon
+  - cobalt_strike
+  - bof

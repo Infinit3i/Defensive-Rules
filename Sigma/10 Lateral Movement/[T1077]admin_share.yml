@@ -13,15 +13,15 @@ references:
 author: Infinit3i
 date: 2025-04-08
 tags:
-    # MITRE ATT&CK tactic
-    - attack.lateral_movement
-    # MITRE ATT&CK technique
-    - attack.t1077
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.lateral_movement
-    - attack.t1077
+  # MITRE ATT&CK tactic
+  - attack.lateral_movement
+  # MITRE ATT&CK technique
+  - attack.t1077
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.lateral_movement
+  - attack.t1077
 logsource:
     product: windows
     category: process_creation

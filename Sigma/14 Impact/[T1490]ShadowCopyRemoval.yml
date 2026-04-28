@@ -30,7 +30,7 @@ falsepositives:
     - Legitimate system deployment scripts
 level: critical
 tags:
-    - attack.impact
-    - attack.t1490
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1490
+  - sysmon
+  - windows

@@ -26,11 +26,11 @@ detection:
                (selection_chmod and selection_paths)
 level: high
 tags:
-    - attack.persistence
-    - attack.t1037
-    - attack.t1037.004
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.t1037
+  - attack.t1037.004
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1037/004/
 falsepositives:

@@ -29,11 +29,11 @@ detection:
     condition: selection_init and selection_suspicious
 level: high
 tags:
-    - attack.persistence
-    - attack.t1037
-    - attack.t1037.004
-    - linux
-    - syslog
+  - attack.persistence
+  - attack.t1037
+  - attack.t1037.004
+  - linux
+  - syslog
 references:
     - https://attack.mitre.org/techniques/T1037/004/
 falsepositives:

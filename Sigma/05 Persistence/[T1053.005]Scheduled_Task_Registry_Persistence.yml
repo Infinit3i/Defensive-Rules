@@ -39,8 +39,8 @@ falsepositives:
     - Legitimate software scheduling tasks
 level: high
 tags:
-    - attack.persistence
-    - attack.t1053
-    - attack.t1053.005
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1053
+  - attack.t1053.005
+  - sysmon
+  - windows

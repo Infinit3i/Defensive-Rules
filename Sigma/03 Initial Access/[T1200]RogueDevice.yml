@@ -28,8 +28,8 @@ falsepositives:
     - DHCP configuration issues
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1200
-    - zeek
-    - dhcp
+  - attack.initial_access
+  - attack.t1200
+  - zeek
+  - dhcp
 technique: T1200

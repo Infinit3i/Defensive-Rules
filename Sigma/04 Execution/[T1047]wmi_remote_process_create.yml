@@ -36,13 +36,13 @@ falsepositives:
   - Approved admin tools that orchestrate software installs or updates via WMI
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1047
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1047
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.T1047
   - execution
   - windows

@@ -31,13 +31,13 @@ falsepositives:
   - Administrator troubleshooting sessions
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.credential_access
-    # MITRE ATT&CK technique
-    - attack.t1078.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.credential_access
+  # MITRE ATT&CK technique
+  - attack.t1078.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.T1078
   - attack.T1078.004
   - credential-access

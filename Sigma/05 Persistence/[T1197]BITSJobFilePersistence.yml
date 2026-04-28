@@ -25,9 +25,9 @@ detection:
     condition: selection_cmd or selection_powershell
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1197
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1197
+  - sysmon
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1197/

@@ -28,8 +28,8 @@ falsepositives:
     - Application retry mechanisms
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1556.006
-    - azure
-    - push_bombing
+  - attack.initial_access
+  - attack.t1556.006
+  - azure
+  - push_bombing
 technique: T1556.006

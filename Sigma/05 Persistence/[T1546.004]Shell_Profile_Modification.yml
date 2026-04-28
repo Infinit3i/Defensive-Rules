@@ -28,12 +28,12 @@ detection:
     condition: selection_write and selection_profiles
 level: medium
 tags:
-    - attack.persistence
-    - attack.privilege_escalation
-    - attack.t1546
-    - attack.t1546.004
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1546
+  - attack.t1546.004
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1546/004/
 falsepositives:

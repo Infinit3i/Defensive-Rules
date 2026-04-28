@@ -33,8 +33,8 @@ falsepositives:
     - System hardware changes
 level: critical
 tags:
-    - attack.initial_access
-    - attack.t1601
-    - windows
-    - firmware
+  - attack.initial_access
+  - attack.t1601
+  - windows
+  - firmware
 technique: T1601

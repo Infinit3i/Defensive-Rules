@@ -47,11 +47,11 @@ falsepositives:
     - Legitimate startup applications
 level: high
 tags:
-    - attack.persistence
-    - attack.t1547.001
-    - bof
-    - registry
-    - autorun
-    - com_hijacking
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1547.001
+  - bof
+  - registry
+  - autorun
+  - com_hijacking
+  - sysmon
+  - windows

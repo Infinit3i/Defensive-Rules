@@ -33,15 +33,15 @@ falsepositives:
     - Development environments
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1574.001
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1574.001
-    - attack.persistence
-    - sysmon
-    - windows
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1574.001
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1574.001
+  - attack.persistence
+  - sysmon
+  - windows

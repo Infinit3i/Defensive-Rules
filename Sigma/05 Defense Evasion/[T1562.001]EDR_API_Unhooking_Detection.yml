@@ -71,13 +71,13 @@ falsepositives:
   - Some penetration testing frameworks
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1562.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1562.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.defense_evasion
   - attack.t1562.001
   - attack.privilege_escalation

@@ -22,15 +22,15 @@ falsepositives:
     - None known - LSASS should always be spawned by wininit.exe
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1055
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.defense_evasion
-    - attack.t1055
-    - attack.t1036
-    - sysmon
-    - windows
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1055
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.defense_evasion
+  - attack.t1055
+  - attack.t1036
+  - sysmon
+  - windows

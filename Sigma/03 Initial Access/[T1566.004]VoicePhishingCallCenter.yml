@@ -31,9 +31,9 @@ detection:
     condition: (selection_caller_pattern and selection_spoofed_number) or (selection_call_duration and selection_frequent_calls)
 level: medium
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.004
-    - telephony
-    - voice
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.004
+  - telephony
+  - voice
 technique: T1566.004

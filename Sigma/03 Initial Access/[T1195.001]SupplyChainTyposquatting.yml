@@ -29,9 +29,9 @@ detection:
     condition: selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1195
-    - attack.t1195.001
-    - supply-chain
-    - package-manager
+  - attack.initial-access
+  - attack.t1195
+  - attack.t1195.001
+  - supply-chain
+  - package-manager
 technique: T1195.001

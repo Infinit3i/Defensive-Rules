@@ -72,20 +72,20 @@ falsepositives:
   - Container runtime operations
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1611
-    # Platform/tool tags
-    - windows
-    - sysmon
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1611
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1611
+  # Platform/tool tags
+  - windows
+  - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1611
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.privilege_escalation
   - attack.t1611
   - container_escape

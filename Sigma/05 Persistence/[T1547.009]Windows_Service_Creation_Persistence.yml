@@ -42,8 +42,8 @@ falsepositives:
     - Administrative service management
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1547
-    - attack.t1547.009
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.009
+  - sysmon
+  - windows

@@ -53,13 +53,13 @@ falsepositives:
   - System administration tools
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1055.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1055.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.defense_evasion
   - attack.t1055.004
   - attack.privilege_escalation

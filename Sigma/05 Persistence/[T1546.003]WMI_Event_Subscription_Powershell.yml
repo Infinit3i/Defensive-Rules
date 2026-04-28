@@ -42,8 +42,8 @@ falsepositives:
     - Security monitoring tools
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546.003
-    - powershell
-    - windows
-    - wmi
+  - attack.persistence
+  - attack.t1546.003
+  - powershell
+  - windows
+  - wmi

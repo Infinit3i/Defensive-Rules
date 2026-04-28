@@ -46,10 +46,10 @@ detection:
     condition: sel_ddos_tools or sel_ddos_args
 level: high
 tags:
-    - attack.impact
-    - attack.t1498
-    - sysmon
-    - windows
-    - network
-    - dos
-    - flooding
+  - attack.impact
+  - attack.t1498
+  - sysmon
+  - windows
+  - network
+  - dos
+  - flooding

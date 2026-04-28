@@ -5,10 +5,10 @@ description: Detects suspicious data access patterns in Google Workspace indicat
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.collection
-    - attack.t1530
-    - google_workspace
-    - cloud
+  - attack.collection
+  - attack.t1530
+  - google_workspace
+  - cloud
 logsource:
     product: google_workspace
     service: admin

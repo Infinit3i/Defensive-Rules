@@ -38,13 +38,13 @@ detection:
   condition: selection_platforms and selection_suspicious_posts and selection_encoded_content and not selection_automated_patterns
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1102.002
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1102.002
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1102.002
   - attack.t1071.001

@@ -53,19 +53,19 @@ falsepositives:
     - Corporate applications with broad permissions
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1528
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1528
-    - attack.credential_access
-    - attack.t1550.001
-    - oauth
-    - saas
-    - token_abuse
-    - session_hijacking
-    - azure
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1528
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1528
+  - attack.credential_access
+  - attack.t1550.001
+  - oauth
+  - saas
+  - token_abuse
+  - session_hijacking
+  - azure

@@ -86,25 +86,25 @@ detection:
                selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1485
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1485
-    - attack.exfiltration
-    - attack.t1567
-    - attack.t1567.002
-    - powershell
-    - windows
-    - saas
-    - office365
-    - google_workspace
-    - salesforce
-    - data_destruction
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1485
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1485
+  - attack.exfiltration
+  - attack.t1567
+  - attack.t1567.002
+  - powershell
+  - windows
+  - saas
+  - office365
+  - google_workspace
+  - salesforce
+  - data_destruction
 falsepositives:
     - Legitimate bulk data management operations
     - Automated backup and archival processes

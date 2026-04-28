@@ -92,23 +92,23 @@ detection:
     condition: selection_package_managers and (selection_typosquatting or selection_suspicious_install or selection_malicious_scripts) or (selection_network_exfil and selection_file_creation)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1195
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1195
-    - attack.t1195.002
-    - attack.initial_access
-    - attack.t1566.002
-    - sysmon
-    - windows
-    - supply_chain
-    - package_manager
-    - dependency_confusion
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1195
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1195
+  - attack.t1195.002
+  - attack.initial_access
+  - attack.t1566.002
+  - sysmon
+  - windows
+  - supply_chain
+  - package_manager
+  - dependency_confusion
 falsepositives:
     - Legitimate package installations with --force flag
     - Development environments with custom package repositories

@@ -43,8 +43,8 @@ falsepositives:
     - Third-party applications
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1546.015
-    - sysmon
-    - windows
-    - com
+  - attack.persistence
+  - attack.t1546.015
+  - sysmon
+  - windows
+  - com

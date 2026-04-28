@@ -24,13 +24,13 @@ falsepositives:
   - Misconfigured applications
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.credential_access
-    # MITRE ATT&CK technique
-    - attack.t1110.003
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.credential_access
+  # MITRE ATT&CK technique
+  - attack.t1110.003
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.credential_access
   - attack.t1110
   - attack.t1110.003

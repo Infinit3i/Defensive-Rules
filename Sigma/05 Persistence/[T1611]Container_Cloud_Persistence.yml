@@ -53,18 +53,18 @@ falsepositives:
     - CI/CD deployment processes
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1611
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.t1611
-    - auditd
-    - linux
-    - container
-    - cloud
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1611
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.t1611
+  - auditd
+  - linux
+  - container
+  - cloud
 references:
     - https://attack.mitre.org/techniques/T1611/

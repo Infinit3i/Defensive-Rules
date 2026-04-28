@@ -103,20 +103,20 @@ falsepositives:
   - VM performance monitoring
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1620
-    # Platform/tool tags
-    - windows
-    - sysmon
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1620
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1620
+  # Platform/tool tags
+  - windows
+  - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1620
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.escape_virtualization
   - attack.t1620
   - hypervisor_escape

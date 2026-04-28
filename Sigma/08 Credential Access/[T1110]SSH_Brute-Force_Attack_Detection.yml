@@ -9,13 +9,13 @@ references:
 author: Infinit3i
 date: 2025-04-08
 tags:
-    # MITRE ATT&CK tactic
-    - attack.credential_access
-    # MITRE ATT&CK technique
-    - attack.t1110
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.credential_access
+  # MITRE ATT&CK technique
+  - attack.t1110
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.credential_access
   - attack.t1110
 logsource:

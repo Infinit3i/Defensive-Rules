@@ -47,16 +47,16 @@ falsepositives:
     - Backup and restore operations
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1053.005
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.defense_evasion
-    - attack.t1053
-    - attack.t1053.005
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1053.005
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1053
+  - attack.t1053.005
+  - windows
+  - sysmon

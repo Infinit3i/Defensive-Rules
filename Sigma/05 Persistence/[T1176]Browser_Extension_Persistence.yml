@@ -36,17 +36,17 @@ falsepositives:
     - Administrative browser configuration
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1176
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.t1176
-    - sysmon
-    - windows
-    - browser
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1176
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.t1176
+  - sysmon
+  - windows
+  - browser
 references:
     - https://attack.mitre.org/techniques/T1176/

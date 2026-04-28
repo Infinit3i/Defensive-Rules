@@ -37,13 +37,13 @@ falsepositives:
   - Administrative configuration changes
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1037.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1037.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.persistence
   - attack.t1037
   - attack.t1037.001

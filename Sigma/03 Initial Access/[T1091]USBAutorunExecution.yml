@@ -31,8 +31,8 @@ falsepositives:
     - Authorized portable applications
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1091
-    - sysmon
-    - windows
+  - attack.initial_access
+  - attack.t1091
+  - sysmon
+  - windows
 technique: T1091

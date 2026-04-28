@@ -35,8 +35,8 @@ falsepositives:
     - Web development and testing
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1659
-    - zeek
-    - html_injection
+  - attack.initial_access
+  - attack.t1659
+  - zeek
+  - html_injection
 technique: T1659

@@ -46,18 +46,18 @@ falsepositives:
     - Administrative Office configuration changes
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1137
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.t1137
-    - sysmon
-    - windows
-    - office
-    - macro
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1137
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.t1137
+  - sysmon
+  - windows
+  - office
+  - macro
 references:
     - https://attack.mitre.org/techniques/T1137/

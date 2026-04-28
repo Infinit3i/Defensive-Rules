@@ -33,15 +33,15 @@ falsepositives:
     - System monitoring tools
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1055.001
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1055.001
-    - attack.defense_evasion
-    - sysmon
-    - windows
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1055.001
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1055.001
+  - attack.defense_evasion
+  - sysmon
+  - windows

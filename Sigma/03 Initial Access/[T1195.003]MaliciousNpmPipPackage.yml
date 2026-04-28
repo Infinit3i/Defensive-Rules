@@ -39,10 +39,10 @@ detection:
                (selection_obfuscated_code and selection_network_requests))
 level: critical
 tags:
-    - attack.initial-access
-    - attack.t1195
-    - attack.t1195.003
-    - malicious-package
-    - npm
-    - pip
+  - attack.initial-access
+  - attack.t1195
+  - attack.t1195.003
+  - malicious-package
+  - npm
+  - pip
 technique: T1195.003

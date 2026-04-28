@@ -65,20 +65,20 @@ falsepositives:
     - Public content intentionally shared via S3
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1190
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1190
-    - attack.collection
-    - attack.t1530
-    - attack.exfiltration
-    - attack.t1041
-    - aws
-    - s3
-    - storage
-    - bucket_compromise
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1190
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1190
+  - attack.collection
+  - attack.t1530
+  - attack.exfiltration
+  - attack.t1041
+  - aws
+  - s3
+  - storage
+  - bucket_compromise

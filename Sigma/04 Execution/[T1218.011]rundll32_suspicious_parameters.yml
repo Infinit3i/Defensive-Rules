@@ -32,20 +32,20 @@ falsepositives:
   - Software invoking valid DLLs
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1218.011
-    # Platform/tool tags
-    - windows
-    - sysmon
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1218.011
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1218.011
+  # Platform/tool tags
+  - windows
+  - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1218.011
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.T1218
   - attack.T1218.011
   - execution

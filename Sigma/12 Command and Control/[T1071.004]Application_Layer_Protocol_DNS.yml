@@ -12,13 +12,13 @@ references:
 author: Infinit3i
 date: 2026-04-27
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1071.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1071.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1071.004
   - dns

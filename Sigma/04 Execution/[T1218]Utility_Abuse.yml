@@ -10,20 +10,20 @@ references:
 author: Infinit3i
 date: 2025-04-08
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1218
-    # Platform/tool tags
-    - windows
-    - sysmon
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1218
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1218
+  # Platform/tool tags
+  - windows
+  - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1218
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.execution
   - attack.t1218.011
 logsource:

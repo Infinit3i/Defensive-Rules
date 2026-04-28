@@ -5,10 +5,10 @@ description: Detects suspicious administrative activities in SaaS platforms indi
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.privilege_escalation
-    - attack.t1484
-    - saas_admin
-    - cloud
+  - attack.privilege_escalation
+  - attack.t1484
+  - saas_admin
+  - cloud
 logsource:
     product: saas_platform
     service: admin

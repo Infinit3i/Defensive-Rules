@@ -38,10 +38,10 @@ detection:
                (selection_suspicious_keywords or selection_pressure_tactics)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.007
-    - telephony
-    - voice
-    - social-engineering
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.007
+  - telephony
+  - voice
+  - social-engineering
 technique: T1566.007

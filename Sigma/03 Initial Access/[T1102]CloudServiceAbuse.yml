@@ -32,8 +32,8 @@ falsepositives:
     - File sharing for business purposes
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1102
-    - zeek
-    - network
+  - attack.initial_access
+  - attack.t1102
+  - zeek
+  - network
 technique: T1102

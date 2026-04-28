@@ -5,10 +5,10 @@ description: Detects suspicious Slack usage patterns indicating command and cont
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.command_and_control
-    - attack.t1071.001
-    - slack
-    - cloud
+  - attack.command_and_control
+  - attack.t1071.001
+  - slack
+  - cloud
 logsource:
     product: slack
     service: audit

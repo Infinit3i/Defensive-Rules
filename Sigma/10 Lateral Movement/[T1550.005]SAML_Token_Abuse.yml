@@ -12,13 +12,13 @@ references:
 author: Infinit3i
 date: 2026-04-27
 tags:
-    # MITRE ATT&CK tactic
-    - attack.lateral_movement
-    # MITRE ATT&CK technique
-    - attack.t1550.005
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.lateral_movement
+  # MITRE ATT&CK technique
+  - attack.t1550.005
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.lateral_movement
   - attack.t1550.005
   - saml

@@ -44,8 +44,8 @@ falsepositives:
     - Developer tools registration
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546.015
-    - sysmon
-    - windows
-    - registry
+  - attack.persistence
+  - attack.t1546.015
+  - sysmon
+  - windows
+  - registry

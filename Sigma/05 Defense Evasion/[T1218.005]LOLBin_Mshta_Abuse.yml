@@ -61,13 +61,13 @@ falsepositives:
   - Administrative tools using HTA files
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1218.005
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1218.005
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.defense_evasion
   - attack.t1218.005
   - attack.execution

@@ -41,9 +41,9 @@ falsepositives:
     - System maintenance scripts
 level: high
 tags:
-    - attack.persistence
-    - attack.t1547
-    - attack.t1547.001
-    - attack.defense_evasion
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.001
+  - attack.defense_evasion
+  - sysmon
+  - windows

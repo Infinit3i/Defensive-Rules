@@ -34,9 +34,9 @@ detection:
     condition: selection_installer and selection_suspicious_signature and (selection_network_activity or selection_file_creation)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1195
-    - attack.t1195.001
-    - supply-chain
-    - backdoor
+  - attack.initial-access
+  - attack.t1195
+  - attack.t1195.001
+  - supply-chain
+  - backdoor
 technique: T1195.001

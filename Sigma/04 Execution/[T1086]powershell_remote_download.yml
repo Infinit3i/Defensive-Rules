@@ -40,20 +40,20 @@ falsepositives:
   - Legitimate update scripts or cloud-based administration tasks
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1086
-    # Platform/tool tags
-    - windows
-    - sysmon
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1086
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1086
+  # Platform/tool tags
+  - windows
+  - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1086
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.T1086
   - execution
   - windows

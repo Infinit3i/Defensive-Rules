@@ -35,15 +35,15 @@ falsepositives:
     - System services
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1134.005
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1134.005
-    - attack.lateral_movement
-    - sysmon
-    - windows
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1134.005
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1134.005
+  - attack.lateral_movement
+  - sysmon
+  - windows

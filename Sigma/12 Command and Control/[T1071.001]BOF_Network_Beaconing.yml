@@ -44,9 +44,9 @@ falsepositives:
     - Automated backup systems
 level: medium
 tags:
-    - attack.command_and_control
-    - attack.t1071.001
-    - bof
-    - beaconing
-    - zeek
-    - network
+  - attack.command_and_control
+  - attack.t1071.001
+  - bof
+  - beaconing
+  - zeek
+  - network

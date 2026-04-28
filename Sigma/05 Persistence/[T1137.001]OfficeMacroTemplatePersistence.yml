@@ -25,9 +25,9 @@ detection:
     condition: selection_file or selection_ext
 level: high
 tags:
-    - attack.persistence
-    - attack.t1137.001
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1137.001
+  - sysmon
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1137/001/

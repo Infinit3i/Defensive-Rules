@@ -101,25 +101,25 @@ detection:
                (selection_recording_tools and selection_browser_activity and selection_network_upload)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1566
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1566
-    - attack.t1566.001
-    - attack.t1566.002
-    - attack.t1598
-    - attack.social_engineering
-    - sysmon
-    - windows
-    - deepfake
-    - business_email_compromise
-    - synthetic_media
-    - voice_cloning
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1566
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1566
+  - attack.t1566.001
+  - attack.t1566.002
+  - attack.t1598
+  - attack.social_engineering
+  - sysmon
+  - windows
+  - deepfake
+  - business_email_compromise
+  - synthetic_media
+  - voice_cloning
 falsepositives:
     - Legitimate video/audio editing and production work
     - Content creation and multimedia development

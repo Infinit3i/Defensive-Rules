@@ -40,9 +40,9 @@ detection:
                (selection_malicious_links or selection_financial_keywords)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.006
-    - sms
-    - mobile
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.006
+  - sms
+  - mobile
 technique: T1566.006

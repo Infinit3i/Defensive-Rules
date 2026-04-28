@@ -31,11 +31,11 @@ detection:
                (selection_ssh_keygen and selection_suspicious_timing)
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1098
-    - attack.t1098.004
-    - linux
-    - syslog
+  - attack.persistence
+  - attack.t1098
+  - attack.t1098.004
+  - linux
+  - syslog
 references:
     - https://attack.mitre.org/techniques/T1098/004/
 falsepositives:

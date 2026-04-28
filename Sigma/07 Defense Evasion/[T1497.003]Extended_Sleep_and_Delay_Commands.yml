@@ -54,13 +54,13 @@ falsepositives:
   - Backup scripts with delays
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1497.003
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.defense_evasion
+  # MITRE ATT&CK technique
+  - attack.t1497.003
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.defense-evasion
   - attack.t1497.003
   - sysmon

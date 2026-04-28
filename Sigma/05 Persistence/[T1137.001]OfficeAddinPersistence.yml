@@ -23,9 +23,9 @@ detection:
     condition: selection
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1137.001
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1137.001
+  - sysmon
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1137/001/

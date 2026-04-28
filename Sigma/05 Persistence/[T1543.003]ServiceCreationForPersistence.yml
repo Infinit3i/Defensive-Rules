@@ -51,15 +51,15 @@ falsepositives:
     - Third-party service management tools
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1543.003
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.t1543
-    - attack.t1543.003
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1543.003
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.t1543
+  - attack.t1543.003
+  - windows
+  - sysmon

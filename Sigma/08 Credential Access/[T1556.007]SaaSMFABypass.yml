@@ -5,10 +5,10 @@ description: Detects attempts to bypass multi-factor authentication in SaaS appl
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.credential_access
-    - attack.t1556.007
-    - mfa_bypass
-    - cloud
+  - attack.credential_access
+  - attack.t1556.007
+  - mfa_bypass
+  - cloud
 logsource:
     product: saas_platform
     service: authentication

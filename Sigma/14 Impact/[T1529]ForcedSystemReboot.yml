@@ -40,7 +40,7 @@ falsepositives:
     - Automated deployment systems
 level: medium
 tags:
-    - attack.impact
-    - attack.t1529
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1529
+  - sysmon
+  - windows

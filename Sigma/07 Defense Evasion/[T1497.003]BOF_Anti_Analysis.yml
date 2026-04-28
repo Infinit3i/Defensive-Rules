@@ -55,12 +55,12 @@ falsepositives:
     - Performance monitoring
 level: medium
 tags:
-    - attack.defense_evasion
-    - attack.t1497.003
-    - bof
-    - anti_analysis
-    - evasion
-    - timing_attack
-    - vm_detection
-    - sysmon
-    - windows
+  - attack.defense_evasion
+  - attack.t1497.003
+  - bof
+  - anti_analysis
+  - evasion
+  - timing_attack
+  - vm_detection
+  - sysmon
+  - windows

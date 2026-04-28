@@ -26,9 +26,9 @@ detection:
     condition: selection and selection_hook
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1546.015
-    - auditd
-    - linux
+  - attack.persistence
+  - attack.t1546.015
+  - auditd
+  - linux
 references:
     - https://attack.mitre.org/techniques/T1546/015/

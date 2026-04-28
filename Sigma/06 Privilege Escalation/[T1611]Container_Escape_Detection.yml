@@ -33,15 +33,15 @@ falsepositives:
     - System maintenance
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1611
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1611
-    - auditd
-    - linux
-    - container
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1611
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1611
+  - auditd
+  - linux
+  - container

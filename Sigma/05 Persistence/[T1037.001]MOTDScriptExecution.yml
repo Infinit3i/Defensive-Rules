@@ -19,9 +19,9 @@ detection:
     condition: selection or selection_process
 level: low
 tags:
-    - attack.persistence
-    - attack.t1037.001
-    - syslog
-    - linux
+  - attack.persistence
+  - attack.t1037.001
+  - syslog
+  - linux
 references:
     - https://attack.mitre.org/techniques/T1037/001/

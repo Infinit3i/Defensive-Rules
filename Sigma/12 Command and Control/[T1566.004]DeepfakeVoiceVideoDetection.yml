@@ -48,13 +48,13 @@ detection:
   condition: selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1566.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1566.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.initial_access
   - attack.t1566.004
   - attack.command_and_control

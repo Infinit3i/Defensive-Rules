@@ -11,13 +11,13 @@ references:
 author: Infinit3i
 date: 2025-04-08
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1542.007
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1542.007
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.persistence
   - attack.t1542.007
 logsource:

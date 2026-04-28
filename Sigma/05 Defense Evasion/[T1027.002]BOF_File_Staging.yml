@@ -50,10 +50,10 @@ falsepositives:
     - Antivirus scanning
 level: medium
 tags:
-    - attack.defense_evasion
-    - attack.t1027.002
-    - bof
-    - file_staging
-    - obfuscation
-    - sysmon
-    - windows
+  - attack.defense_evasion
+  - attack.t1027.002
+  - bof
+  - file_staging
+  - obfuscation
+  - sysmon
+  - windows

@@ -7,10 +7,10 @@ date: 2026/04/28
 references:
     - https://attack.mitre.org/techniques/T1113/
 tags:
-    - attack.collection
-    - attack.t1113
-    - powershell
-    - windows
+  - attack.collection
+  - attack.t1113
+  - powershell
+  - windows
 logsource:
     product: windows
     service: powershell-classic

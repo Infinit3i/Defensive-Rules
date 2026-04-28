@@ -63,17 +63,17 @@ falsepositives:
     - Monitoring and backup software
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1053.005
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.execution
-    - attack.t1053
-    - attack.t1053.005
-    - attack.t1059.001
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1053.005
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.execution
+  - attack.t1053
+  - attack.t1053.005
+  - attack.t1059.001
+  - windows
+  - sysmon

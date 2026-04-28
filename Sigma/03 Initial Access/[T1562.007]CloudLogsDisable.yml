@@ -31,8 +31,8 @@ falsepositives:
     - Cost optimization activities
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1562.007
-    - aws
-    - logging
+  - attack.initial_access
+  - attack.t1562.007
+  - aws
+  - logging
 technique: T1562.007

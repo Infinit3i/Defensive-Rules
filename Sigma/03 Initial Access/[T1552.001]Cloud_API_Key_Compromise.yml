@@ -83,20 +83,20 @@ falsepositives:
     - Service accounts with legitimate automation
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1552.001
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1552.001
-    - attack.credential_access
-    - attack.t1087
-    - attack.discovery
-    - attack.t1526
-    - aws
-    - api_key
-    - compromise
-    - cloudtrail
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1552.001
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1552.001
+  - attack.credential_access
+  - attack.t1087
+  - attack.discovery
+  - attack.t1526
+  - aws
+  - api_key
+  - compromise
+  - cloudtrail

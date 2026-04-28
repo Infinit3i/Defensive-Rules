@@ -39,7 +39,7 @@ falsepositives:
     - Software installation requiring restart
 level: medium
 tags:
-    - attack.impact
-    - attack.t1529
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1529
+  - sysmon
+  - windows

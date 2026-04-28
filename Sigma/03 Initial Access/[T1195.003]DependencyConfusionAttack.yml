@@ -32,9 +32,9 @@ detection:
     condition: selection_internal_pattern and selection_public_repo and (selection_suspicious_version or selection_recent_upload)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1195
-    - attack.t1195.003
-    - dependency-confusion
-    - package-manager
+  - attack.initial-access
+  - attack.t1195
+  - attack.t1195.003
+  - dependency-confusion
+  - package-manager
 technique: T1195.003

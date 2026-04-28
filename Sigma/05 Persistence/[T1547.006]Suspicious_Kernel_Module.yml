@@ -34,12 +34,12 @@ detection:
                (selection_suspicious_names or selection_unsigned)
 level: critical
 tags:
-    - attack.persistence
-    - attack.defense_evasion
-    - attack.t1547
-    - attack.t1547.006
-    - linux
-    - syslog
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1547
+  - attack.t1547.006
+  - linux
+  - syslog
 references:
     - https://attack.mitre.org/techniques/T1547/006/
 falsepositives:

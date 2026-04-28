@@ -33,14 +33,14 @@ falsepositives:
     - Automated scripts
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1548.003
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1548.003
-    - auditd
-    - linux
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1548.003
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1548.003
+  - auditd
+  - linux

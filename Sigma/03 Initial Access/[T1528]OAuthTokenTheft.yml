@@ -32,8 +32,8 @@ falsepositives:
     - Administrative OAuth configurations
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1528
-    - azure
-    - oauth
+  - attack.initial_access
+  - attack.t1528
+  - azure
+  - oauth
 technique: T1528

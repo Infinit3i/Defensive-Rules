@@ -36,8 +36,8 @@ falsepositives:
     - File upload functionality
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1659
-    - apache
-    - web
+  - attack.initial_access
+  - attack.t1659
+  - apache
+  - web
 technique: T1659

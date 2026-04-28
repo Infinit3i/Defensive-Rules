@@ -100,25 +100,25 @@ detection:
                (selection_steganography and selection_network_exfil) or selection_registry_persistence
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1565
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1565
-    - attack.t1565.001
-    - attack.t1565.002
-    - attack.persistence
-    - attack.t1547.001
-    - sysmon
-    - windows
-    - artificial_intelligence
-    - data_manipulation
-    - integrity_attack
-    - steganography
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1565
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1565
+  - attack.t1565.001
+  - attack.t1565.002
+  - attack.persistence
+  - attack.t1547.001
+  - sysmon
+  - windows
+  - artificial_intelligence
+  - data_manipulation
+  - integrity_attack
+  - steganography
 falsepositives:
     - Legitimate data science and analytics workflows
     - Database maintenance and ETL processes

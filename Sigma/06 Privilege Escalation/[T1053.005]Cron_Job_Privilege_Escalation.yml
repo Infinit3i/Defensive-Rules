@@ -34,15 +34,15 @@ falsepositives:
     - Automated backup scripts
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.privilege_escalation
-    # MITRE ATT&CK technique
-    - attack.t1053.005
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.privilege_escalation
-    - attack.t1053.005
-    - attack.persistence
-    - auditd
-    - linux
+  # MITRE ATT&CK tactic
+  - attack.privilege_escalation
+  # MITRE ATT&CK technique
+  - attack.t1053.005
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.privilege_escalation
+  - attack.t1053.005
+  - attack.persistence
+  - auditd
+  - linux

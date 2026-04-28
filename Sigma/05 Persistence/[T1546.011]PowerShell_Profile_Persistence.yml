@@ -32,18 +32,18 @@ falsepositives:
     - Administrative PowerShell configuration
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1546.011
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.t1546.011
-    - sysmon
-    - windows
-    - powershell
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1546.011
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.t1546.011
+  - sysmon
+  - windows
+  - powershell
 references:
     - https://attack.mitre.org/techniques/T1546/011/
     - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles

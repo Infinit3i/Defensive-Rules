@@ -47,9 +47,9 @@ falsepositives:
     - Windows Installer operations
 level: critical
 tags:
-    - attack.persistence
-    - attack.defense_evasion
-    - attack.t1574.001
-    - sysmon
-    - windows
-    - dll
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1574.001
+  - sysmon
+  - windows
+  - dll

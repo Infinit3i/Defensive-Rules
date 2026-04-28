@@ -110,13 +110,13 @@ falsepositives:
   - Development environment activities
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1195.002
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1195.002
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.initial_access
   - attack.t1195.002
   - attack.defense_evasion

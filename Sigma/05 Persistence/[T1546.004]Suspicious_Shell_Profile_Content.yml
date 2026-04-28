@@ -44,11 +44,11 @@ detection:
                suspicious_content) and not filter_legitimate
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546
-    - attack.t1546.004
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.t1546
+  - attack.t1546.004
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1546/004/
 falsepositives:

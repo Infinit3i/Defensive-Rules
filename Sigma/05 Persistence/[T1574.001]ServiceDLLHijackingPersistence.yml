@@ -56,16 +56,16 @@ falsepositives:
     - Security software operations
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1574.001
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.persistence
-    - attack.privilege_escalation
-    - attack.t1574
-    - attack.t1574.001
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1574.001
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1574
+  - attack.t1574.001
+  - windows
+  - sysmon

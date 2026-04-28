@@ -78,20 +78,20 @@ falsepositives:
     - Password reset flows for legitimate users
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1556.006
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1556.006
-    - attack.credential_access
-    - attack.t1556
-    - attack.defense_evasion
-    - attack.t1621
-    - azure
-    - mfa
-    - authentication
-    - bypass
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1556.006
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1556.006
+  - attack.credential_access
+  - attack.t1556
+  - attack.defense_evasion
+  - attack.t1621
+  - azure
+  - mfa
+  - authentication
+  - bypass

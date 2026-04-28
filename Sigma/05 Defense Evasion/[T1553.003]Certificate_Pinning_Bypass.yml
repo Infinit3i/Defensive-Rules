@@ -87,13 +87,13 @@ falsepositives:
   - Corporate proxy configurations
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - 
-    # MITRE ATT&CK technique
-    - attack.t1553.003
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - 
+  # MITRE ATT&CK technique
+  - attack.t1553.003
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.defense_evasion
   - attack.t1553.003
   - attack.man_in_the_middle

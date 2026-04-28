@@ -39,13 +39,13 @@ detection:
   condition: (selection_fake_update or selection_suspicious_domains) and selection_fake_installers
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1071.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1071.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1071.001
   - attack.initial_access

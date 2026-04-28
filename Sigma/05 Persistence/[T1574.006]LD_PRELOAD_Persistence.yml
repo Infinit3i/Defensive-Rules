@@ -27,12 +27,12 @@ detection:
                selection_preload_file or selection_export
 level: high
 tags:
-    - attack.persistence
-    - attack.privilege_escalation
-    - attack.t1574
-    - attack.t1574.006
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1574
+  - attack.t1574.006
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1574/006/
 falsepositives:

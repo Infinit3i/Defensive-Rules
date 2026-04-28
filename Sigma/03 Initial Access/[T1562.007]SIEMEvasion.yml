@@ -34,8 +34,8 @@ falsepositives:
     - System maintenance operations
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1562.007
-    - sysmon
-    - evasion
+  - attack.initial_access
+  - attack.t1562.007
+  - sysmon
+  - evasion
 technique: T1562.007

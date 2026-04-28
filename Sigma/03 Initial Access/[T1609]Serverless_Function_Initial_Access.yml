@@ -75,20 +75,20 @@ falsepositives:
     - Administrative functions requiring elevated access
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1609
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1609
-    - attack.execution
-    - attack.t1059
-    - attack.privilege_escalation
-    - attack.t1068
-    - aws
-    - lambda
-    - serverless
-    - function
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1609
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1609
+  - attack.execution
+  - attack.t1059
+  - attack.privilege_escalation
+  - attack.t1068
+  - aws
+  - lambda
+  - serverless
+  - function

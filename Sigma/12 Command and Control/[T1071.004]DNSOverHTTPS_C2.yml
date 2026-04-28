@@ -38,13 +38,13 @@ detection:
   condition: selection_doh_providers and (selection_suspicious_queries or selection_encoded_subdomains or selection_long_queries or selection_txt_records)
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1071.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1071.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1071.004
   - attack.t1568.002

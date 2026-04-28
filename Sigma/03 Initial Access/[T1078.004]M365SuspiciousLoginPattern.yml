@@ -5,10 +5,10 @@ description: Detects suspicious login patterns in Microsoft 365 indicating poten
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.initial_access
-    - attack.t1078.004
-    - microsoft365
-    - cloud
+  - attack.initial_access
+  - attack.t1078.004
+  - microsoft365
+  - cloud
 logsource:
     product: microsoft365
     service: audit

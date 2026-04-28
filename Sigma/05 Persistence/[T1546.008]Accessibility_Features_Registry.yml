@@ -45,8 +45,8 @@ falsepositives:
     - Assistive technology setup
 level: critical
 tags:
-    - attack.persistence
-    - attack.t1546.008
-    - sysmon
-    - windows
-    - registry
+  - attack.persistence
+  - attack.t1546.008
+  - sysmon
+  - windows
+  - registry

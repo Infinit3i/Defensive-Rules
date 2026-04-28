@@ -53,8 +53,8 @@ falsepositives:
     - Assistive technology installations
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546.008
-    - sysmon
-    - windows
-    - accessibility
+  - attack.persistence
+  - attack.t1546.008
+  - sysmon
+  - windows
+  - accessibility

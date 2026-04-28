@@ -34,13 +34,13 @@ falsepositives:
   - Legitimate domain admin role assignments
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.persistence
-    # MITRE ATT&CK technique
-    - attack.t1098
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.persistence
+  # MITRE ATT&CK technique
+  - attack.t1098
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.persistence
   - attack.privilege_escalation
   - attack.t1098

@@ -72,20 +72,20 @@ falsepositives:
     - Compliance-driven security configuration changes
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1562.007
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1562.007
-    - attack.defense_evasion
-    - attack.t1562
-    - attack.impact
-    - attack.t1489
-    - aws
-    - cloudtrail
-    - security_disable
-    - monitoring
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1562.007
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1562.007
+  - attack.defense_evasion
+  - attack.t1562
+  - attack.impact
+  - attack.t1489
+  - aws
+  - cloudtrail
+  - security_disable
+  - monitoring

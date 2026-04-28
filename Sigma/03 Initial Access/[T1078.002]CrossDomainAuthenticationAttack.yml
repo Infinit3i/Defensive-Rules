@@ -6,11 +6,11 @@ author: Infinit3i
 date: 2026/04/27
 modified: 2026/04/27
 tags:
-    - attack.initial_access
-    - attack.t1078.002
-    - attack.lateral_movement
-    - windows
-    - security
+  - attack.initial_access
+  - attack.t1078.002
+  - attack.lateral_movement
+  - windows
+  - security
 logsource:
     product: windows
     service: security

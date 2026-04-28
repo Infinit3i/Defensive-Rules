@@ -33,8 +33,8 @@ falsepositives:
     - VPN reconnection after network issues
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1133
-    - windows
-    - vpn
+  - attack.initial_access
+  - attack.t1133
+  - windows
+  - vpn
 technique: T1133

@@ -35,8 +35,8 @@ detection:
                (selection_urgent_language or (selection_new_account and selection_low_followers))
 level: medium
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.005
-    - social-media
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.005
+  - social-media
 technique: T1566.005

@@ -82,25 +82,25 @@ detection:
                (selection_container_tools and selection_resource_requests and selection_network_mining)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1496
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1496
-    - attack.resource_hijacking
-    - attack.t1610
-    - attack.deploy_container
-    - auditd
-    - linux
-    - containers
-    - kubernetes
-    - docker
-    - cryptocurrency
-    - mining
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1496
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1496
+  - attack.resource_hijacking
+  - attack.t1610
+  - attack.deploy_container
+  - auditd
+  - linux
+  - containers
+  - kubernetes
+  - docker
+  - cryptocurrency
+  - mining
 falsepositives:
     - Legitimate cryptocurrency mining in authorized environments
     - Performance testing and benchmarking tools

@@ -13,13 +13,13 @@ date: 2025/04/08
 references:
   - https://attack.mitre.org/techniques/T1219/   # MITRE ATT&CK: T1219 - Remote Access Tools
 tags:
-    # MITRE ATT&CK tactic
-    - attack.lateral_movement
-    # MITRE ATT&CK technique
-    - attack.t1219
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.lateral_movement
+  # MITRE ATT&CK technique
+  - attack.t1219
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.t1219
   - attack.execution
 logsource:

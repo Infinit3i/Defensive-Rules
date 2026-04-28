@@ -49,11 +49,11 @@ detection:
                sel_memcached_amplification or sel_ssdp_amplification
 level: high
 tags:
-    - attack.impact
-    - attack.t1498
-    - attack.t1498.002
-    - zeek
-    - network
-    - dns
-    - amplification
-    - dos
+  - attack.impact
+  - attack.t1498
+  - attack.t1498.002
+  - zeek
+  - network
+  - dns
+  - amplification
+  - dos

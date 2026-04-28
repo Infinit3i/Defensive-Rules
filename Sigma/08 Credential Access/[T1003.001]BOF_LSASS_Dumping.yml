@@ -46,10 +46,10 @@ falsepositives:
     - Debugging applications
 level: high
 tags:
-    - attack.credential_access
-    - attack.t1003.001
-    - bof
-    - lsass
-    - memory_dump
-    - sysmon
-    - windows
+  - attack.credential_access
+  - attack.t1003.001
+  - bof
+  - lsass
+  - memory_dump
+  - sysmon
+  - windows

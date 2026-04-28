@@ -12,13 +12,13 @@ date: 2025-04-08
 references:
   - https://attack.mitre.org/techniques/T1047/
 tags:
-    # MITRE ATT&CK tactic
-    - attack.execution
-    # MITRE ATT&CK technique
-    - attack.t1047
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.execution
+  # MITRE ATT&CK technique
+  - attack.t1047
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.execution
   - attack.lateral_movement
   - attack.t1047

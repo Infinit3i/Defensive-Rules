@@ -90,18 +90,18 @@ falsepositives:
     - Administrative tasks by authorized personnel
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1199
-    # Platform/tool tags
-    - azure
-    - cloud
-    - attack.t1606
-    - attack.defense_evasion
-    - attack.t1484
-    - azure
-    - saml
-    - federation
-    - identity_provider
-    - adfs
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1199
+  # Platform/tool tags
+  - azure
+  - cloud
+  - attack.t1606
+  - attack.defense_evasion
+  - attack.t1484
+  - azure
+  - saml
+  - federation
+  - identity_provider
+  - adfs

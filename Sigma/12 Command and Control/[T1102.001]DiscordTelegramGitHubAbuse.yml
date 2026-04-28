@@ -45,13 +45,13 @@ detection:
   condition: (selection_discord or selection_telegram or selection_github or selection_pastebin) and selection_suspicious_activity and selection_automated
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1102.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1102.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1102.001
   - attack.t1071.001

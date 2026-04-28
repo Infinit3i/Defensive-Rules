@@ -53,10 +53,10 @@ detection:
     condition: (sel_mining_pools or (sel_mining_ports and sel_stratum_protocol)) and not filter_legitimate
 level: high
 tags:
-    - attack.impact
-    - attack.t1496
-    - sysmon
-    - windows
-    - network
-    - cryptocurrency
-    - mining
+  - attack.impact
+  - attack.t1496
+  - sysmon
+  - windows
+  - network
+  - cryptocurrency
+  - mining

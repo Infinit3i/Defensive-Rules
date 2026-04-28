@@ -44,10 +44,10 @@ detection:
                selection_crypto_process
 level: critical
 tags:
-    - attack.impact
-    - attack.t1486
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1486
+  - sysmon
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1486/
 falsepositives:

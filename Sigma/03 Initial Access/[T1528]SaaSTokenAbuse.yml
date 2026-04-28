@@ -30,8 +30,8 @@ falsepositives:
     - Automated scripts and CI/CD pipelines
 level: medium
 tags:
-    - attack.initial_access
-    - attack.t1528
-    - aws
-    - api
+  - attack.initial_access
+  - attack.t1528
+  - aws
+  - api
 technique: T1528

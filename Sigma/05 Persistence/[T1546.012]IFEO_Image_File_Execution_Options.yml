@@ -44,8 +44,8 @@ falsepositives:
     - System administration utilities
 level: high
 tags:
-    - attack.persistence
-    - attack.t1546.012
-    - sysmon
-    - windows
-    - registry
+  - attack.persistence
+  - attack.t1546.012
+  - sysmon
+  - windows
+  - registry

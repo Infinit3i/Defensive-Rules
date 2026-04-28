@@ -99,25 +99,25 @@ detection:
                (selection_ransom_note and selection_crypto_apis and selection_network_c2)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1486
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1486
-    - attack.persistence
-    - attack.t1547
-    - attack.command_and_control
-    - attack.t1071.001
-    - sysmon
-    - windows
-    - ransomware
-    - quantum_cryptography
-    - post_quantum
-    - advanced_encryption
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1486
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1486
+  - attack.persistence
+  - attack.t1547
+  - attack.command_and_control
+  - attack.t1071.001
+  - sysmon
+  - windows
+  - ransomware
+  - quantum_cryptography
+  - post_quantum
+  - advanced_encryption
 falsepositives:
     - Legitimate post-quantum cryptography research and testing
     - Security software implementing quantum-resistant algorithms

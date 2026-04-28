@@ -41,13 +41,13 @@ detection:
   condition: (selection_cdn_providers and selection_suspicious_paths and selection_encrypted_traffic) or (selection_host_mismatch) or (selection_https_tunnel and selection_cdn_providers)
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1090.004
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1090.004
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.command_and_control
   - attack.t1090.004
   - attack.t1071.001

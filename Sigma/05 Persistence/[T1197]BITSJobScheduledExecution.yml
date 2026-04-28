@@ -20,9 +20,9 @@ detection:
     condition: selection
 level: high
 tags:
-    - attack.persistence
-    - attack.t1197
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1197
+  - sysmon
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1197/

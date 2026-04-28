@@ -19,9 +19,9 @@ detection:
     condition: selection
 level: low
 tags:
-    - attack.persistence
-    - attack.t1546.013
-    - powershell
-    - windows
+  - attack.persistence
+  - attack.t1546.013
+  - powershell
+  - windows
 references:
     - https://attack.mitre.org/techniques/T1546/013/

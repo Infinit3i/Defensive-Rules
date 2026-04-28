@@ -31,12 +31,12 @@ detection:
                (selection_suspicious_paths or selection_suspicious_names)
 level: critical
 tags:
-    - attack.persistence
-    - attack.defense_evasion
-    - attack.t1574
-    - attack.t1574.006
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1574
+  - attack.t1574.006
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1574/006/
 falsepositives:

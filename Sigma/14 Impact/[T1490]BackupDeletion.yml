@@ -29,7 +29,7 @@ falsepositives:
     - System maintenance activities
 level: high
 tags:
-    - attack.impact
-    - attack.t1490
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1490
+  - sysmon
+  - windows

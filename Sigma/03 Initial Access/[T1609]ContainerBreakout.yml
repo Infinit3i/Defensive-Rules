@@ -36,8 +36,8 @@ falsepositives:
     - System monitoring tools
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1609
-    - linux
-    - container
+  - attack.initial_access
+  - attack.t1609
+  - linux
+  - container
 technique: T1609

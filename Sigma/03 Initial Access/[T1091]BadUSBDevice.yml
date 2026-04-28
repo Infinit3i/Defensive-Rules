@@ -27,8 +27,8 @@ falsepositives:
     - Automation scripts via keyboard simulation
 level: high
 tags:
-    - attack.initial_access
-    - attack.t1091
-    - windows
-    - security
+  - attack.initial_access
+  - attack.t1091
+  - windows
+  - security
 technique: T1091

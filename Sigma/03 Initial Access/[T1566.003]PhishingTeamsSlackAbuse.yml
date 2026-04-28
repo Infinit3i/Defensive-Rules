@@ -35,9 +35,9 @@ detection:
     condition: selection_external_link and selection_external_sender and (selection_suspicious_domains or selection_urgency)
 level: medium
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.003
-    - teams
-    - collaboration
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.003
+  - teams
+  - collaboration
 technique: T1566.003

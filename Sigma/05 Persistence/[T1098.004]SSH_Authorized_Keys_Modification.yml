@@ -23,12 +23,12 @@ detection:
     condition: selection_write and selection_ssh_keys
 level: high
 tags:
-    - attack.persistence
-    - attack.defense_evasion
-    - attack.t1098
-    - attack.t1098.004
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.defense_evasion
+  - attack.t1098
+  - attack.t1098.004
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1098/004/
 falsepositives:

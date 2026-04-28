@@ -49,7 +49,7 @@ falsepositives:
     - Disk formatting for legitimate purposes
 level: high
 tags:
-    - attack.impact
-    - attack.t1561
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1561
+  - sysmon
+  - windows

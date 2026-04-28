@@ -14,7 +14,7 @@ tags:
   - attack.privilege_escalation
   - attack.t1548
   - windows
-    - sysmon
+  - sysmon
   - attack.privilege_escalation
   - attack.t1548
 logsource:

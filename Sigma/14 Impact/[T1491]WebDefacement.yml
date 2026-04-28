@@ -35,7 +35,7 @@ falsepositives:
     - Web development activities
 level: medium
 tags:
-    - attack.impact
-    - attack.t1491
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1491
+  - sysmon
+  - windows

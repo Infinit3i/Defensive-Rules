@@ -7,10 +7,10 @@ date: 2026/04/28
 references:
     - https://attack.mitre.org/techniques/T1560/
 tags:
-    - attack.collection
-    - attack.t1560
-    - sysmon
-    - windows
+  - attack.collection
+  - attack.t1560
+  - sysmon
+  - windows
 logsource:
     product: windows
     service: sysmon

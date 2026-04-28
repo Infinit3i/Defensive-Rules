@@ -45,8 +45,8 @@ falsepositives:
     - Software installations modifying services
 level: high
 tags:
-    - attack.persistence
-    - attack.t1547
-    - attack.t1547.009
-    - sysmon
-    - windows
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.009
+  - sysmon
+  - windows

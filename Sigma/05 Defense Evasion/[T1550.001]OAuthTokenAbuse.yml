@@ -5,10 +5,10 @@ description: Detects suspicious OAuth token usage patterns across SaaS platforms
 author: Infinit3i
 date: 2026/04/27
 tags:
-    - attack.defense_evasion
-    - attack.t1550.001
-    - oauth
-    - cloud
+  - attack.defense_evasion
+  - attack.t1550.001
+  - oauth
+  - cloud
 logsource:
     product: cloud_platform
     service: oauth

@@ -34,8 +34,8 @@ falsepositives:
     - Legitimate boot configuration changes
 level: critical
 tags:
-    - attack.initial_access
-    - attack.t1601
-    - sysmon
-    - bootkit
+  - attack.initial_access
+  - attack.t1601
+  - sysmon
+  - bootkit
 technique: T1601

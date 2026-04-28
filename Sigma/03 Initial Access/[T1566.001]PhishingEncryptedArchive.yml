@@ -34,8 +34,8 @@ detection:
     condition: selection_attachment and (selection_password_keywords or selection_common_passwords)
 level: high
 tags:
-    - attack.initial-access
-    - attack.t1566
-    - attack.t1566.001
-    - email
+  - attack.initial-access
+  - attack.t1566
+  - attack.t1566.001
+  - email
 technique: T1566.001

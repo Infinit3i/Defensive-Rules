@@ -61,13 +61,13 @@ falsepositives:
   - System monitoring tools
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.discovery
-    # MITRE ATT&CK technique
-    - attack.t1057
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.discovery
+  # MITRE ATT&CK technique
+  - attack.t1057
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.discovery
   - attack.t1057
   - sysmon

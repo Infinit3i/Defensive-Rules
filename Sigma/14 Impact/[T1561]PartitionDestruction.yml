@@ -53,7 +53,7 @@ falsepositives:
     - Backup and restore operations
 level: critical
 tags:
-    - attack.impact
-    - attack.t1561
-    - sysmon
-    - windows
+  - attack.impact
+  - attack.t1561
+  - sysmon
+  - windows

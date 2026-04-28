@@ -19,10 +19,10 @@ detection:
     condition: selection
 level: medium
 tags:
-    - attack.persistence
-    - attack.t1546.013
-    - sysmon
-    - windows
-    - powershell
+  - attack.persistence
+  - attack.t1546.013
+  - sysmon
+  - windows
+  - powershell
 references:
     - https://attack.mitre.org/techniques/T1546/013/

@@ -81,25 +81,25 @@ detection:
     condition: (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1485
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1485
-    - attack.t1499
-    - attack.resource_hijacking
-    - attack.t1496
-    - powershell
-    - windows
-    - cloud
-    - aws
-    - azure
-    - gcp
-    - infrastructure_destruction
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1485
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1485
+  - attack.t1499
+  - attack.resource_hijacking
+  - attack.t1496
+  - powershell
+  - windows
+  - cloud
+  - aws
+  - azure
+  - gcp
+  - infrastructure_destruction
 falsepositives:
     - Legitimate infrastructure cleanup operations
     - Automated cloud resource management scripts

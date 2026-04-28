@@ -65,22 +65,22 @@ detection:
     condition: (selection_ai_models and selection_encryption) or (selection_mass_file_ops and selection_adaptive_behavior) or (selection_network_ml and selection_encryption)
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1486
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1486
-    - attack.persistence
-    - attack.t1543.003
-    - sysmon
-    - windows
-    - ransomware
-    - artificial_intelligence
-    - machine_learning
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1486
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1486
+  - attack.persistence
+  - attack.t1543.003
+  - sysmon
+  - windows
+  - ransomware
+  - artificial_intelligence
+  - machine_learning
 falsepositives:
     - Legitimate machine learning development environments
     - Data science applications performing encryption

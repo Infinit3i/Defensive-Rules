@@ -46,9 +46,9 @@ detection:
     condition: sel_mining_processes or sel_mining_args
 level: high
 tags:
-    - attack.impact
-    - attack.t1496
-    - sysmon
-    - windows
-    - cryptocurrency
-    - mining
+  - attack.impact
+  - attack.t1496
+  - sysmon
+  - windows
+  - cryptocurrency
+  - mining

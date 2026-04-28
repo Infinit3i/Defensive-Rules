@@ -32,12 +32,12 @@ detection:
                (selection_commands and selection_suspicious_paths)
 level: high
 tags:
-    - attack.persistence
-    - attack.privilege_escalation
-    - attack.t1547
-    - attack.t1547.006
-    - linux
-    - auditd
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1547
+  - attack.t1547.006
+  - linux
+  - auditd
 references:
     - https://attack.mitre.org/techniques/T1547/006/
 falsepositives:

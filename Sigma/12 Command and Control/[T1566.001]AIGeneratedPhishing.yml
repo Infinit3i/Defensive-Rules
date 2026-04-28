@@ -46,13 +46,13 @@ detection:
   condition: (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.command_and_control
-    # MITRE ATT&CK technique
-    - attack.t1566.001
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.command_and_control
+  # MITRE ATT&CK technique
+  - attack.t1566.001
+  # Platform/tool tags
+  - windows
+  - sysmon
   - attack.initial_access
   - attack.t1566.001
   - attack.t1566.002

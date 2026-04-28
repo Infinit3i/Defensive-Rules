@@ -67,20 +67,20 @@ falsepositives:
     - Legacy applications in migration process
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.initial_access
-    # MITRE ATT&CK technique
-    - attack.t1195.002
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.initial_access
-    - attack.t1195.002
-    - attack.execution
-    - attack.t1610
-    - attack.privilege_escalation
-    - attack.t1611
-    - kubernetes
-    - container
-    - supply_chain
-    - docker
+  # MITRE ATT&CK tactic
+  - attack.initial_access
+  # MITRE ATT&CK technique
+  - attack.t1195.002
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.initial_access
+  - attack.t1195.002
+  - attack.execution
+  - attack.t1610
+  - attack.privilege_escalation
+  - attack.t1611
+  - kubernetes
+  - container
+  - supply_chain
+  - docker

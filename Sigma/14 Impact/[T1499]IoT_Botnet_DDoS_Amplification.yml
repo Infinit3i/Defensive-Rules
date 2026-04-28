@@ -70,25 +70,25 @@ detection:
                (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
 level: critical
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1499
-    # Platform/tool tags
-    - windows
-    - sysmon
-    - attack.impact
-    - attack.t1499
-    - attack.t1499.004
-    - attack.resource_hijacking
-    - attack.t1496
-    - zeek
-    - network
-    - iot
-    - botnet
-    - ddos
-    - amplification
-    - mirai
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
+  - attack.t1499
+  # Platform/tool tags
+  - windows
+  - sysmon
+  - attack.impact
+  - attack.t1499
+  - attack.t1499.004
+  - attack.resource_hijacking
+  - attack.t1496
+  - zeek
+  - network
+  - iot
+  - botnet
+  - ddos
+  - amplification
+  - mirai
 falsepositives:
     - Legitimate network scanning and monitoring tools
     - DNS resolution spikes during normal operations

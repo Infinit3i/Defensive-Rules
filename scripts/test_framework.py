@@ -42,6 +42,50 @@ class SigmaRuleValidator:
 
         return errors
 
+    def validate_yamllint_formatting(self) -> List[Dict]:
+        """Validate YAML formatting using yamllint"""
+        errors = []
+
+        try:
+            # Run yamllint on the entire Sigma directory
+            result = subprocess.run(['yamllint', str(self.sigma_dir)],
+                                  capture_output=True, text=True, timeout=120)
+
+            if result.returncode != 0:
+                # Parse yamllint output
+                for line in result.stdout.split('\n'):
+                    if line.strip() and not line.startswith(' '):
+                        # Extract file path and error
+                        parts = line.split(':', 3)
+                        if len(parts) >= 4:
+                            errors.append({
+                                'file': parts[0],
+                                'line': parts[1] if parts[1].isdigit() else 0,
+                                'column': parts[2] if parts[2].isdigit() else 0,
+                                'error': parts[3].strip(),
+                                'type': 'yamllint'
+                            })
+        except FileNotFoundError:
+            errors.append({
+                'file': 'system',
+                'error': 'yamllint not installed - run: pip install yamllint',
+                'type': 'yamllint_missing'
+            })
+        except subprocess.TimeoutExpired:
+            errors.append({
+                'file': 'system',
+                'error': 'yamllint validation timeout',
+                'type': 'yamllint_timeout'
+            })
+        except Exception as e:
+            errors.append({
+                'file': 'system',
+                'error': f'yamllint error: {str(e)}',
+                'type': 'yamllint_error'
+            })
+
+        return errors
+
     def validate_required_fields(self) -> List[Dict]:
         """Validate required Sigma fields"""
         errors = []
