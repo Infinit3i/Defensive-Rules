@@ -1,0 +1,70 @@
+title: Suspicious Tool Acquisition Activity
+id: d4e5f6a7-b8c9-0123-4567-890123defghi
+status: experimental
+description: Detects acquisition of hacking tools and offensive security software
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1588.002
+  - tool_acquisition
+  - hacking_tools
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_download_tools:
+    EventID: 15
+    Contents|contains:
+      - 'metasploit'
+      - 'cobalt strike'
+      - 'empire'
+      - 'powersploit'
+      - 'mimikatz'
+      - 'bloodhound'
+      - 'nmap'
+      - 'burp suite'
+      - 'sqlmap'
+      - 'hashcat'
+      - 'john the ripper'
+      - 'hydra'
+      - 'aircrack'
+      - 'wireshark'
+      - 'responder'
+  selection_github_tools:
+    EventID: 22
+    QueryName|contains:
+      - 'github.com'
+    QueryResults|contains:
+      - 'exploit'
+      - 'payload'
+      - 'backdoor'
+      - 'c2'
+      - 'command-control'
+  selection_tool_execution:
+    EventID: 1
+    Image|endswith:
+      - '\metasploit.exe'
+      - '\msfvenom.exe'
+      - '\msfconsole.exe'
+      - '\empire.exe'
+      - '\mimikatz.exe'
+      - '\bloodhound.exe'
+      - '\nmap.exe'
+      - '\sqlmap.exe'
+condition: selection_download_tools or selection_github_tools or selection_tool_execution
+level: medium
+fields:
+  - Image
+  - CommandLine
+  - Contents
+  - QueryName
+  - User
+falsepositives:
+  - Legitimate security testing
+  - Penetration testing engagements
+  - Security research
+  - Red team exercises
+references:
+  - https://attack.mitre.org/techniques/T1588/002/
+technique: T1588.002

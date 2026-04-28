@@ -1,0 +1,51 @@
+title: Suspicious Domain Registration Activity
+id: a1b2c3d4-e5f6-7890-1234-567890abcdef
+status: experimental
+description: Detects suspicious domain registration patterns indicating resource development for attacks
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1583.001
+  - dns
+  - infrastructure
+logsource:
+  product: dns
+  service: registration
+detection:
+  selection_suspicious_domains:
+    domain|contains:
+      - 'paypal'
+      - 'amazon'
+      - 'microsoft'
+      - 'google'
+      - 'apple'
+      - 'login'
+      - 'secure'
+      - 'update'
+      - 'verification'
+  selection_typosquatting:
+    domain|contains:
+      - 'micr0soft'
+      - 'g00gle'
+      - 'paypaI'
+      - 'amaz0n'
+      - 'app1e'
+  selection_bulk_registration:
+    registrant_email: '*'
+  condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
+  timeframe: 24h
+  count: 5
+level: medium
+fields:
+  - domain
+  - registrant_email
+  - registrant_name
+  - creation_date
+  - nameservers
+falsepositives:
+  - Legitimate domain registrations by companies
+  - Brand protection services
+references:
+  - https://attack.mitre.org/techniques/T1583/001/
+technique: T1583.001

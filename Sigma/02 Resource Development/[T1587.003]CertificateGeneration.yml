@@ -1,0 +1,76 @@
+title: Suspicious Certificate Generation Activity
+id: a7b8c9d0-e1f2-3456-7890-123456ghijkl
+status: experimental
+description: Detects suspicious SSL/TLS certificate generation for malicious infrastructure
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1587.003
+  - certificate_generation
+  - ssl_tls
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_openssl_activity:
+    EventID: 1
+    Image|endswith: '\openssl.exe'
+    CommandLine|contains:
+      - 'req -new'
+      - 'x509 -req'
+      - 'genrsa'
+      - 'genpkey'
+  selection_cert_tools:
+    EventID: 1
+    Image|endswith:
+      - '\certreq.exe'
+      - '\makecert.exe'
+      - '\certutil.exe'
+    CommandLine|contains:
+      - '-new'
+      - '-submit'
+      - '-install'
+  selection_suspicious_subjects:
+    EventID: 1
+    CommandLine|contains:
+      - 'CN=Microsoft'
+      - 'CN=Google'
+      - 'CN=Apple'
+      - 'CN=PayPal'
+      - 'CN=Amazon'
+      - 'CN=*.microsoft.com'
+      - 'CN=*.google.com'
+      - 'CN=login'
+      - 'CN=secure'
+      - 'CN=update'
+  selection_cert_files:
+    EventID: 11
+    TargetFilename|endswith:
+      - '.csr'
+      - '.pem'
+      - '.p12'
+      - '.pfx'
+      - '.key'
+    TargetFilename|contains:
+      - 'microsoft'
+      - 'google'
+      - 'paypal'
+      - 'amazon'
+      - 'login'
+      - 'secure'
+  condition: selection_openssl_activity or selection_cert_tools or selection_suspicious_subjects or selection_cert_files
+level: medium
+fields:
+  - Image
+  - CommandLine
+  - TargetFilename
+  - User
+  - ProcessId
+falsepositives:
+  - Legitimate certificate generation for internal services
+  - Development and testing activities
+  - System administration tasks
+references:
+  - https://attack.mitre.org/techniques/T1587/003/
+technique: T1587.003

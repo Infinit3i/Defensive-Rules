@@ -1,0 +1,59 @@
+title: Suspicious Cloud Infrastructure Acquisition
+id: b8c9d0e1-f2a3-4567-8901-234567hijklm
+status: experimental
+description: Detects suspicious cloud infrastructure acquisition patterns indicating resource development
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1583.003
+  - cloud_infrastructure
+  - aws
+  - azure
+  - gcp
+logsource:
+  product: cloud_platform
+  service: audit
+detection:
+  selection_rapid_provisioning:
+    event_name:
+      - 'CreateInstance'
+      - 'RunInstances'
+      - 'CreateVirtualMachine'
+      - 'CreateCompute'
+  selection_suspicious_regions:
+    region:
+      - 'us-gov-east-1'
+      - 'us-gov-west-1'
+      - 'cn-north-1'
+      - 'cn-northwest-1'
+  selection_bulk_resources:
+    event_name:
+      - 'CreateLoadBalancer'
+      - 'CreateDomain'
+      - 'CreateHostedZone'
+      - 'CreateCdnProfile'
+  selection_anonymous_access:
+    user_identity.type: 'Unknown'
+    source_ip_address|startswith:
+      - '10.'
+      - '192.168.'
+      - '172.'
+  condition: (selection_rapid_provisioning or selection_bulk_resources) and (selection_suspicious_regions or selection_anonymous_access)
+  timeframe: 1h
+  count: 5
+level: medium
+fields:
+  - event_name
+  - user_identity.arn
+  - source_ip_address
+  - region
+  - resource_name
+falsepositives:
+  - Legitimate cloud resource provisioning
+  - Infrastructure automation
+  - Development environment setup
+  - Disaster recovery testing
+references:
+  - https://attack.mitre.org/techniques/T1583/003/
+technique: T1583.003

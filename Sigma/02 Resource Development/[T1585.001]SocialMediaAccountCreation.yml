@@ -1,0 +1,52 @@
+title: Suspicious Social Media Account Creation
+id: b2c3d4e5-f6a7-8901-2345-678901bcdefg
+status: experimental
+description: Detects suspicious patterns in social media account creation for impersonation attacks
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1585.001
+  - social_media
+  - account_creation
+logsource:
+  product: social_media
+  service: registration
+detection:
+  selection_bulk_creation:
+    event_type: account_created
+    ip_address: '*'
+  selection_suspicious_names:
+    display_name|contains:
+      - 'CEO'
+      - 'Manager'
+      - 'Admin'
+      - 'Support'
+      - 'Security'
+      - 'IT'
+      - 'Help'
+  selection_impersonation:
+    display_name|contains:
+      - 'Microsoft'
+      - 'Google'
+      - 'Amazon'
+      - 'Apple'
+      - 'PayPal'
+      - 'Bank'
+      - 'Support Team'
+  condition: (selection_bulk_creation and selection_suspicious_names) or selection_impersonation
+  timeframe: 1h
+  count: 3
+level: medium
+fields:
+  - username
+  - display_name
+  - email
+  - ip_address
+  - user_agent
+falsepositives:
+  - Legitimate account creation by employees
+  - Social media marketing campaigns
+references:
+  - https://attack.mitre.org/techniques/T1585/001/
+technique: T1585.001

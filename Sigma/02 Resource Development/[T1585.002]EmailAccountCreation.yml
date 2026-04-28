@@ -1,0 +1,63 @@
+title: Suspicious Email Account Creation Pattern
+id: f6a7b8c9-d0e1-2345-6789-012345fghijk
+status: experimental
+description: Detects suspicious email account creation patterns for phishing campaigns
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1585.002
+  - email_accounts
+  - phishing_infrastructure
+logsource:
+  product: email_provider
+  service: registration
+detection:
+  selection_bulk_registration:
+    event_type: account_created
+    ip_address: '*'
+  selection_suspicious_naming:
+    email|contains:
+      - 'noreply'
+      - 'no-reply'
+      - 'admin'
+      - 'support'
+      - 'security'
+      - 'notification'
+      - 'alert'
+      - 'update'
+      - 'service'
+  selection_domain_spoofing:
+    email|contains:
+      - 'microsft'
+      - 'gooogle'
+      - 'paypaI'
+      - 'amazom'
+      - 'app1e'
+      - 'gmail.co'
+      - 'outlook.co'
+  selection_temporary_providers:
+    email|endswith:
+      - '@10minutemail.com'
+      - '@guerrillamail.com'
+      - '@mailinator.com'
+      - '@tempmail.org'
+      - '@yopmail.com'
+      - '@throwaway.email'
+  condition: (selection_bulk_registration and selection_suspicious_naming) or selection_domain_spoofing or selection_temporary_providers
+  timeframe: 1h
+  count: 5
+level: medium
+fields:
+  - email
+  - ip_address
+  - user_agent
+  - registration_time
+  - verification_status
+falsepositives:
+  - Legitimate bulk email account creation
+  - Marketing campaign setup
+  - System administrators creating service accounts
+references:
+  - https://attack.mitre.org/techniques/T1585/002/
+technique: T1585.002

@@ -1,0 +1,50 @@
+title: Active Network Scanning Activity
+id: e5f6a7b8-c9d0-1234-5678-901234efghij
+status: experimental
+description: Detects active network scanning activities indicating reconnaissance for resource development
+author: Infinit3i
+date: 2026/04/27
+tags:
+  - attack.resource_development
+  - attack.t1595.001
+  - reconnaissance
+  - network_scanning
+logsource:
+  product: zeek
+  service: conn
+detection:
+  selection_port_scanning:
+    conn_state:
+      - 'REJ'
+      - 'S0'
+    dest_port|lt: 1024
+  selection_scanning_tools:
+    user_agent|contains:
+      - 'nmap'
+      - 'masscan'
+      - 'zmap'
+      - 'unicornscan'
+      - 'angry'
+      - 'scanner'
+  selection_rapid_connections:
+    proto: 'tcp'
+    conn_state: 'S0'
+  condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
+  timeframe: 1m
+  count: 50
+level: medium
+fields:
+  - id.orig_h
+  - id.resp_h
+  - id.resp_p
+  - conn_state
+  - user_agent
+  - duration
+falsepositives:
+  - Network security tools
+  - Vulnerability scanners
+  - Network monitoring
+  - Asset discovery tools
+references:
+  - https://attack.mitre.org/techniques/T1595/001/
+technique: T1595.001

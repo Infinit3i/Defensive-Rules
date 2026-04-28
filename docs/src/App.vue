@@ -252,7 +252,6 @@
         >
           <div class="rule-header">
             <h3 class="rule-title">
-              <i v-if="isCommonTechnique(rule.technique)" class="nf nf-fa-star common-star" title="Common Technique"></i>
               {{ rule.title }}
             </h3>
             <span class="rule-severity" :class="rule.level" :title="rule.level">
@@ -261,6 +260,7 @@
               <i v-else-if="rule.level === 'medium'" class="nf nf-fa-minus_circle"></i>
               <i v-else-if="rule.level === 'low'" class="nf nf-fa-info_circle"></i>
             </span>
+            <i v-if="isCommonTechnique(rule.technique)" class="nf nf-fa-shield common-star-overlay" title="Popular Technique"></i>
           </div>
           <div class="rule-meta">
             <span v-if="!selectedTactic" class="rule-tactic">
@@ -292,6 +292,7 @@
               <i v-else-if="rule.severity === 'medium'" class="nf nf-fa-minus_circle"></i>
               <i v-else-if="rule.severity === 'low'" class="nf nf-fa-info_circle"></i>
             </span>
+            <i v-if="isCommonTechnique(rule.mitre_attack)" class="nf nf-fa-shield common-star-overlay" title="Popular Technique"></i>
           </div>
           <div class="rule-meta">
             <span class="rule-technique">
