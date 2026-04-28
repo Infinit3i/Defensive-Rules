@@ -1,0 +1,36 @@
+title: Scheduled Task Creation for Privilege Escalation
+id: 6c7d8e9f-0a1b-2345-6789-abcdef012345
+status: experimental
+description: Detects scheduled task creation with elevated privileges
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1543/003/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_schtasks:
+        EventID: 1
+        Image|endswith: '\schtasks.exe'
+        CommandLine|contains:
+            - '/ru system'
+            - '/rl highest'
+            - 'NT AUTHORITY\SYSTEM'
+    selection_taskschd:
+        EventID: 1
+        ParentImage|endswith: '\taskschd.msc'
+    selection_registry:
+        EventID: 13
+        TargetObject|contains: '\Schedule\TaskCache\Tasks\'
+    condition: selection_schtasks or selection_taskschd or selection_registry
+falsepositives:
+    - Legitimate system administration
+    - Software installation tasks
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1543.003
+    - attack.persistence
+    - sysmon
+    - windows

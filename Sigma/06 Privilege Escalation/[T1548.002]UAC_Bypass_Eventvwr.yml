@@ -1,0 +1,34 @@
+title: UAC Bypass via Eventvwr MSC Registry Hijacking
+id: 7d8e9f01-2a3b-4c5d-6e7f-8901a2b3c4d5
+status: experimental
+description: Detects UAC bypass through eventvwr.exe registry key hijacking
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - 'mscfile\shell\open\command'
+            - 'Classes\mscfile'
+        Details|contains: 'cmd'
+    selection_process:
+        EventID: 1
+        Image|endswith: '\eventvwr.exe'
+        ParentImage|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+    condition: selection_registry or selection_process
+falsepositives:
+    - Legitimate system administration
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.002
+    - attack.defense_evasion
+    - sysmon
+    - windows

@@ -1,0 +1,35 @@
+title: Token Manipulation via SetThreadToken API
+id: 8b9c0d1e-2f3g-4h5i-6j7k-8l9m0n1o2p3q
+status: experimental
+description: Detects token manipulation through SetThreadToken API calls
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1134/001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_image_load:
+        EventID: 7
+        ImageLoaded|contains: 'advapi32.dll'
+    selection_process_access:
+        EventID: 10
+        CallTrace|contains:
+            - 'SetThreadToken'
+            - 'ImpersonateLoggedOnUser'
+            - 'DuplicateTokenEx'
+        GrantedAccess:
+            - '0x1478'
+            - '0x1400'
+    condition: selection_image_load and selection_process_access
+falsepositives:
+    - Legitimate service authentication
+    - System processes
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1134.001
+    - attack.defense_evasion
+    - sysmon
+    - windows

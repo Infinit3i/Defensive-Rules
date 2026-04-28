@@ -1,0 +1,36 @@
+title: AppCert DLL Registry Hijacking Detection
+id: 1c2d3e4f-5a6b-7890-1234-567890123456
+status: experimental
+description: Detects AppCert DLL hijacking through registry manipulation
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/008/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - 'AppCertDlls'
+            - 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls'
+    selection_dll_load:
+        EventID: 7
+        ImageLoaded|contains: 'AppCert'
+        Signed: 'false'
+    selection_process:
+        EventID: 1
+        CommandLine|contains: 'AppCertDlls'
+    condition: selection_registry or selection_dll_load or
+               selection_process
+falsepositives:
+    - Legitimate application certification tools
+    - Security software installations
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1546.008
+    - attack.persistence
+    - sysmon
+    - windows

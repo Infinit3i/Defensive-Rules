@@ -1,0 +1,35 @@
+title: Cloud IAM Privilege Escalation Detection
+id: 6e7f8a9b-0c1d-2345-6789-abcdef012345
+status: experimental
+description: Detects cloud IAM privilege escalation through role modifications
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1078/004/
+logsource:
+    product: azure
+    service: activitylog
+detection:
+    selection_role_assignment:
+        operationName:
+            - 'Create role assignment'
+            - 'Delete role assignment'
+        properties.roleDefinitionName|contains:
+            - 'Owner'
+            - 'Contributor'
+            - 'Global Administrator'
+    selection_privilege_escalation:
+        operationName|contains:
+            - 'Add member to role'
+            - 'Update user'
+        properties.targetResources.userPrincipalName|endswith: '@'
+    condition: selection_role_assignment or selection_privilege_escalation
+falsepositives:
+    - Legitimate administrative changes
+    - User onboarding processes
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1078.004
+    - azure
+    - cloud

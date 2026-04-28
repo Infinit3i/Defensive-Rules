@@ -1,0 +1,39 @@
+title: Container Escape Attempt Detection
+id: 4f5a6b7c-8d9e-0123-4567-89abcdef0123
+status: experimental
+description: Detects container escape attempts through privileged operations
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1611/
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_mount:
+        type: 'SYSCALL'
+        syscall: 'mount'
+        a0|contains:
+            - '/proc'
+            - '/sys'
+            - '/dev'
+    selection_chroot:
+        type: 'SYSCALL'
+        syscall:
+            - 'chroot'
+            - 'pivot_root'
+    selection_capabilities:
+        type: 'SYSCALL'
+        syscall: 'capset'
+        success: 'yes'
+    condition: selection_mount or selection_chroot or selection_capabilities
+falsepositives:
+    - Legitimate container operations
+    - System maintenance
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1611
+    - auditd
+    - linux
+    - container

@@ -1,49 +1,77 @@
 <template>
   <header class="header">
     <div class="container">
-      <h1 class="title">
-        <i class="nf nf-fa-shield"></i>
-        Defensive Rules Repository
-      </h1>
-      <p class="subtitle">Cybersecurity Detection Rules - Sigma & YARA</p>
+      <div class="header-content">
+        <div class="header-left">
+          <h1 class="title">
+            <i class="nf nf-fa-shield"></i>
+            Defensive Rules Repository
+          </h1>
+          <p class="subtitle">Cybersecurity Detection Rules - Sigma & YARA</p>
+        </div>
+        <div class="header-right">
+          <div class="header-stats">
+            <div class="header-stat">
+              <i class="nf nf-fa-shield"></i>
+              Total Rules: {{ totalRules }}
+            </div>
+          </div>
+          <div class="rule-type-buttons">
+            <button
+              class="rule-type-btn"
+              :class="{ active: activeRuleType === 'sigma' }"
+              @click="activeRuleType = 'sigma'"
+            >
+              <i class="nf nf-fa-search"></i>
+              Sigma ({{ sigmaRules.length }})
+            </button>
+            <button
+              class="rule-type-btn"
+              :class="{ active: activeRuleType === 'yara' }"
+              @click="activeRuleType = 'yara'"
+            >
+              <i class="nf nf-fa-bug"></i>
+              YARA ({{ yaraRules.length }})
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
   <nav class="nav">
     <div class="container">
-      <div class="nav-tabs">
+      <div class="tactic-nav">
         <button
-          class="nav-tab"
-          :class="{ active: activeTab === 'sigma' }"
-          @click="activeTab = 'sigma'"
+          class="tactic-tab"
+          :class="{ active: selectedTactic === '' }"
+          @click="selectedTactic = ''"
         >
-          <i class="nf nf-fa-search"></i>
-          Sigma Rules ({{ sigmaRules.length }})
+          <i class="nf nf-fa-list"></i>
+          <span class="tactic-name">All</span>
+          <span class="tactic-count">({{ sigmaRules.length }})</span>
         </button>
         <button
-          class="nav-tab"
-          :class="{ active: activeTab === 'yara' }"
-          @click="activeTab = 'yara'"
+          v-for="tactic in tactics"
+          :key="tactic"
+          class="tactic-tab"
+          :class="{ active: selectedTactic === tactic }"
+          @click="selectedTactic = tactic"
         >
-          <i class="nf nf-fa-bug"></i>
-          YARA Rules ({{ yaraRules.length }})
-        </button>
-        <button
-          class="nav-tab"
-          :class="{ active: activeTab === 'stats' }"
-          @click="activeTab = 'stats'"
-        >
-          <i class="nf nf-fa-bar_chart"></i>
-          Statistics
+          <span class="tactic-name">
+            <span v-for="word in tactic.split(' ')" :key="word" class="tactic-word">{{ word }}</span>
+          </span>
+          <span class="tactic-count">({{ sigmaRules.filter(r => r.tactic === tactic).length }})</span>
         </button>
       </div>
     </div>
   </nav>
 
+
   <main class="main">
     <div class="container">
       <!-- Search and Filter -->
-      <div class="search-section" v-if="activeTab !== 'stats'">
+      <div class="search-section">
         <div class="search-bar">
           <i class="nf nf-fa-search search-icon"></i>
           <input
@@ -54,14 +82,7 @@
           >
         </div>
 
-        <div class="filters" v-if="activeTab === 'sigma'">
-          <select v-model="selectedTactic" class="filter-select">
-            <option value="">All Tactics</option>
-            <option v-for="tactic in tactics" :key="tactic" :value="tactic">
-              {{ tactic }}
-            </option>
-          </select>
-
+        <div class="filters">
           <select v-model="selectedSeverity" class="filter-select">
             <option value="">All Severities</option>
             <option value="critical">Critical</option>
@@ -72,8 +93,8 @@
         </div>
       </div>
 
-      <!-- Sigma Rules Tab -->
-      <div v-if="activeTab === 'sigma'" class="rules-grid">
+      <!-- Sigma Rules Grid -->
+      <div v-if="activeRuleType === 'sigma'" class="rules-grid">
         <div
           v-for="rule in filteredSigmaRules"
           :key="rule.id"
@@ -97,8 +118,8 @@
         </div>
       </div>
 
-      <!-- YARA Rules Tab -->
-      <div v-if="activeTab === 'yara'" class="rules-grid">
+      <!-- YARA Rules Grid -->
+      <div v-if="activeRuleType === 'yara'" class="rules-grid">
         <div
           v-for="rule in filteredYaraRules"
           :key="rule.name"
@@ -115,41 +136,6 @@
               {{ rule.mitre_attack }}
             </span>
           </div>
-        </div>
-      </div>
-
-      <!-- Statistics Tab -->
-      <div v-if="activeTab === 'stats'" class="stats-grid">
-        <div class="stat-card">
-          <h3>
-            <i class="nf nf-fa-shield"></i>
-            Total Rules
-          </h3>
-          <div class="stat-value">{{ totalRules }}</div>
-        </div>
-
-        <div class="stat-card">
-          <h3>
-            <i class="nf nf-fa-crosshairs"></i>
-            MITRE Techniques
-          </h3>
-          <div class="stat-value">{{ uniqueTechniques.length }}</div>
-        </div>
-
-        <div class="stat-card">
-          <h3>
-            <i class="nf nf-fa-bullseye"></i>
-            MITRE Tactics
-          </h3>
-          <div class="stat-value">{{ tactics.length }}</div>
-        </div>
-
-        <div class="stat-card">
-          <h3>
-            <i class="nf nf-fa-percentage"></i>
-            Coverage
-          </h3>
-          <div class="stat-value">{{ coveragePercentage }}%</div>
         </div>
       </div>
     </div>
@@ -254,7 +240,7 @@ interface YaraRule {
 type SelectedRule = SigmaRule | YaraRule | null
 
 // Reactive state
-const activeTab = ref<'sigma' | 'yara' | 'stats'>('sigma')
+const activeRuleType = ref<'sigma' | 'yara'>('sigma')
 const searchQuery = ref('')
 const selectedTactic = ref('')
 const selectedSeverity = ref('')
@@ -400,7 +386,31 @@ const extractMetadata = (): void => {
     if (rule.mitre_attack) techniquesSet.add(rule.mitre_attack)
   })
 
-  tactics.value = Array.from(tacticsSet).sort()
+  // Order tactics by MITRE ATT&CK framework sequence
+  const mitreOrder = [
+    'Resource Development',
+    'Initial Access',
+    'Execution',
+    'Persistence',
+    'Privilege Escalation',
+    'Defense Evasion',
+    'Credential Access',
+    'Discovery',
+    'Lateral Movement',
+    'Collection',
+    'Command and Control',
+    'Exfiltration',
+    'Impact'
+  ]
+
+  const availableTactics = Array.from(tacticsSet)
+  tactics.value = mitreOrder.filter(tactic =>
+    availableTactics.some(available =>
+      available.toLowerCase().includes(tactic.toLowerCase()) ||
+      tactic.toLowerCase().includes(available.toLowerCase())
+    )
+  )
+
   uniqueTechniques.value = Array.from(techniquesSet).sort()
 }
 

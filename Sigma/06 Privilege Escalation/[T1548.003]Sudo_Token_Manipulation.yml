@@ -1,0 +1,38 @@
+title: Sudo Token Manipulation and Caching Abuse
+id: 1a2b3c4d-5e6f-7890-abcd-ef1234567890
+status: experimental
+description: Detects abuse of sudo token caching for privilege escalation
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1548/003/
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_sudo:
+        type: 'SYSCALL'
+        comm: 'sudo'
+        success: 'yes'
+    selection_timestamp:
+        type: 'USER_CMD'
+        msg|contains:
+            - 'sudo -S'
+            - 'sudo -A'
+            - 'sudo -k'
+    selection_unusual:
+        comm: 'sudo'
+        exe|contains:
+            - '/tmp/'
+            - '/var/tmp/'
+            - '/dev/shm/'
+    condition: selection_sudo and (selection_timestamp or selection_unusual)
+falsepositives:
+    - Legitimate administrative tasks
+    - Automated scripts
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.003
+    - auditd
+    - linux

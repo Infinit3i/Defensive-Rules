@@ -1,0 +1,38 @@
+title: UAC Bypass via Fodhelper Executable
+id: 4c5bf4c1-8c4d-4e3b-9a1e-2f5c7d8e9f01
+status: experimental
+description: Detects UAC bypass through fodhelper.exe registry manipulation
+author: SOC Team
+date: 2024/04/27
+references:
+    # Reference to MITRE ATT&CK technique
+    - https://attack.mitre.org/techniques/T1548/002/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_process:
+        EventID: 1
+        Image|endswith: '\fodhelper.exe'
+        ParentImage|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\wscript.exe'
+            - '\cscript.exe'
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - 'ms-settings\shell\open\command'
+            - 'Classes\ms-settings'
+    condition: selection_process or selection_registry
+falsepositives:
+    # Legitimate system administration
+    - Legitimate system administration activities
+    - Software installation processes
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.002
+    - attack.defense_evasion
+    - sysmon
+    - windows

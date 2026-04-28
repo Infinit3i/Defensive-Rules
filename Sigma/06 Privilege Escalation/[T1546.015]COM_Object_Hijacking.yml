@@ -1,0 +1,40 @@
+title: COM Object Hijacking for Privilege Escalation
+id: 5c6d7e8f-9a0b-1234-5678-90abcdef1234
+status: experimental
+description: Detects COM object hijacking through registry manipulation
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/015/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - '\CLSID\'
+            - '\InprocServer32\'
+            - '\LocalServer32\'
+        Details|endswith:
+            - '.dll'
+            - '.exe'
+    selection_process:
+        EventID: 1
+        ParentImage|endswith:
+            - '\explorer.exe'
+            - '\dllhost.exe'
+        CommandLine|contains:
+            - '/Processid:'
+            - '-Embedding'
+    condition: selection_registry or selection_process
+falsepositives:
+    - Legitimate software installations
+    - COM object registrations
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1546.015
+    - attack.persistence
+    - sysmon
+    - windows

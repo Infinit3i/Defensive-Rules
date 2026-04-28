@@ -19,11 +19,30 @@ body {
     padding: 0 20px;
 }
 
+.nav .container {
+    padding: 0;
+}
+
 /* Header */
 .header {
     background: #161b22;
     border-bottom: 1px solid #30363d;
     padding: 2rem 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-right {
+    flex: none;
 }
 
 .title {
@@ -42,6 +61,61 @@ body {
     font-size: 1.1rem;
     color: #8b949e;
     font-weight: 400;
+}
+
+.rule-type-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.rule-type-btn {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #e0e0e0;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.rule-type-btn:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+}
+
+.rule-type-btn.active {
+    background: #58a6ff;
+    border-color: #58a6ff;
+    color: #0d1117;
+}
+
+.rule-type-btn i {
+    font-size: 1rem;
+}
+
+.header-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.header-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #8b949e;
+}
+
+.header-stat i {
+    color: #58a6ff;
+    font-size: 0.9rem;
 }
 
 /* Navigation */
@@ -84,6 +158,77 @@ body {
 
 .nav-tab i {
     font-size: 1rem;
+}
+
+/* Tactic Navigation */
+.tactic-nav {
+    display: flex;
+    gap: 0.1rem;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    width: 100vw;
+    padding: 0;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tactic-tab {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #e0e0e0;
+    padding: 0.4rem 0.2rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    flex: 1;
+    min-width: 0;
+    height: 3rem;
+}
+
+.tactic-tab:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+}
+
+.tactic-tab.active {
+    background: #58a6ff;
+    border-color: #58a6ff;
+    color: #0d1117;
+}
+
+.tactic-tab i {
+    font-size: 0.7rem;
+}
+
+.tactic-name {
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.tactic-word {
+    display: block;
+}
+
+.tactic-count {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-size: 0.55rem;
+}
+
+.tactic-tab:hover .tactic-count,
+.tactic-tab.active .tactic-count {
+    opacity: 1;
 }
 
 /* Main Content */
@@ -251,18 +396,25 @@ body {
     overflow: hidden;
 }
 
+/* Statistics Section */
+.stats-section {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    padding: 0.25rem 0;
+}
+
 /* Statistics Grid */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
 }
 
 .stat-card {
     background: #161b22;
     border: 1px solid #30363d;
-    border-radius: 0.75rem;
-    padding: 2rem;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
     text-align: center;
     transition: border-color 0.3s ease;
 }
@@ -273,21 +425,21 @@ body {
 
 .stat-card h3 {
     color: #8b949e;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
 }
 
 .stat-card h3 i {
     color: #58a6ff;
-    font-size: 1.2rem;
+    font-size: 0.85rem;
 }
 
 .stat-value {
-    font-size: 3rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #58a6ff;
     font-family: inherit;

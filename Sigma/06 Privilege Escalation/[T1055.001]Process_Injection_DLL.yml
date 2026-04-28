@@ -1,0 +1,39 @@
+title: Process Injection via DLL for Privilege Gain
+id: 2d3e4f5a-6b7c-8901-2345-6789abcdef01
+status: experimental
+description: Detects DLL injection into privileged processes for escalation
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1055/001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_injection:
+        EventID: 8
+        TargetImage|endswith:
+            - '\lsass.exe'
+            - '\winlogon.exe'
+            - '\csrss.exe'
+            - '\services.exe'
+    selection_process_access:
+        EventID: 10
+        TargetImage|endswith:
+            - '\lsass.exe'
+            - '\winlogon.exe'
+        CallTrace|contains:
+            - 'WriteProcessMemory'
+            - 'VirtualAllocEx'
+            - 'CreateRemoteThread'
+    condition: selection_injection or selection_process_access
+falsepositives:
+    - Legitimate security software
+    - System monitoring tools
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1055.001
+    - attack.defense_evasion
+    - sysmon
+    - windows

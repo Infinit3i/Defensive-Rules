@@ -1,0 +1,38 @@
+title: Thread Execution Hijacking for Privilege Gain
+id: 2f3a4b5c-6d7e-8901-2345-678901234567
+status: experimental
+description: Detects thread execution hijacking in privileged processes
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1055/003/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_thread_hijack:
+        EventID: 8
+        TargetImage|endswith:
+            - '\lsass.exe'
+            - '\winlogon.exe'
+            - '\services.exe'
+    selection_remote_thread:
+        EventID: 10
+        TargetImage|endswith:
+            - '\lsass.exe'
+            - '\winlogon.exe'
+        CallTrace|contains:
+            - 'SetThreadContext'
+            - 'SuspendThread'
+            - 'ResumeThread'
+    condition: selection_thread_hijack or selection_remote_thread
+falsepositives:
+    - Legitimate security tools
+    - System monitoring software
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1055.003
+    - attack.defense_evasion
+    - sysmon
+    - windows

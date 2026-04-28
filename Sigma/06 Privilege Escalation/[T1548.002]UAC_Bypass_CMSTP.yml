@@ -1,0 +1,39 @@
+title: UAC Bypass via CMSTP Connection Manager
+id: 0e1f2a3b-4c5d-6789-0123-456789abcdef
+status: experimental
+description: Detects UAC bypass using CMSTP.exe connection manager profiles
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_cmstp:
+        EventID: 1
+        Image|endswith: '\cmstp.exe'
+        CommandLine|contains:
+            - '/au'
+            - '/s'
+    selection_inf_file:
+        EventID: 11
+        TargetFilename|endswith: '.inf'
+        TargetFilename|contains:
+            - '\Temp\'
+            - '\AppData\'
+    selection_registry:
+        EventID: 13
+        TargetObject|contains: 'Connection Manager'
+    condition: selection_cmstp and (selection_inf_file or
+               selection_registry)
+falsepositives:
+    - Legitimate VPN connection setups
+    - Network profile installations
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.002
+    - attack.defense_evasion
+    - sysmon
+    - windows

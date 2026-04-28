@@ -1,0 +1,39 @@
+title: DLL Search Order Hijacking Detection
+id: 9f0e1d2c-3b4a-5968-7e8f-0a1b2c3d4e5f
+status: experimental
+description: Detects DLL hijacking through search order manipulation
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1574/001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_file_create:
+        EventID: 11
+        TargetFilename|endswith:
+            - '\version.dll'
+            - '\msvcr71.dll'
+            - '\msvcr100.dll'
+            - '\msvcp100.dll'
+            - '\dwmapi.dll'
+            - '\wininet.dll'
+    selection_image_load:
+        EventID: 7
+        ImageLoaded|endswith:
+            - '\version.dll'
+            - '\msvcr71.dll'
+            - '\dwmapi.dll'
+        Signed: 'false'
+    condition: selection_file_create or selection_image_load
+falsepositives:
+    - Legitimate software installations
+    - Development environments
+level: medium
+tags:
+    - attack.privilege_escalation
+    - attack.t1574.001
+    - attack.persistence
+    - sysmon
+    - windows

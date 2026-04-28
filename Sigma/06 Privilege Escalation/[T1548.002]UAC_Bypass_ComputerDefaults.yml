@@ -1,0 +1,34 @@
+title: UAC Bypass via ComputerDefaults Registry Manipulation
+id: 3f4e5d6c-7a8b-9c0d-1e2f-3456789abcde
+status: experimental
+description: Detects UAC bypass using ComputerDefaults.exe registry hijacking
+author: SOC Team
+date: 2024/04/27
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - 'ms-settings\Shell\Open\Command'
+            - 'ms-settings\shell\open\command'
+    selection_process:
+        EventID: 1
+        Image|endswith: '\ComputerDefaults.exe'
+        ParentImage|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\wscript.exe'
+    condition: selection_registry or selection_process
+falsepositives:
+    - Legitimate Windows settings changes
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.t1548.002
+    - attack.defense_evasion
+    - sysmon
+    - windows
