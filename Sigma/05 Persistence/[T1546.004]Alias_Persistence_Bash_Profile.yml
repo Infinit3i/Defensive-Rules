@@ -1,0 +1,50 @@
+title: Alias Persistence via Bash Profile Modification
+id: i9j0k1l2-m3n4-5678-9012-345678ijklmn
+status: experimental
+description: Detects malicious alias creation in bash configuration files for command hijacking persistence
+author: Infinit3i
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1546/004/
+  - https://www.gnu.org/software/bash/manual/bash.html#Aliases
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_bash_files:
+    - type: PATH
+      name|contains:
+        - .bashrc
+        - .bash_profile
+        - .bash_aliases
+        - .profile
+        - /etc/bash.bashrc
+        - /etc/profile
+  selection_write_operations:
+    - type: SYSCALL
+      syscall: write
+  selection_alias_commands:
+    - comm|contains:
+        - alias ls=
+        - alias ps=
+        - alias sudo=
+        - alias su=
+        - alias ssh=
+        - alias wget=
+        - alias curl=
+        - alias cat=
+        - alias grep=
+        - alias top=
+  condition: selection_bash_files and selection_write_operations and selection_alias_commands
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1546
+  - attack.t1546.004
+  - linux
+  - auditd
+  - shell
+  - alias
+falsepositives:
+  - User customization of shell aliases
+  - System administrator shell configurations

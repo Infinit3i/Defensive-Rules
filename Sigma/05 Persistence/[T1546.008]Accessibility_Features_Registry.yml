@@ -1,0 +1,52 @@
+title: Accessibility Features Registry Modification
+id: 89012345-6789-0123-4567-89abcdef0123
+status: experimental
+description: Detects registry modifications targeting accessibility features for backdoor creation
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/008/
+    - https://www.sans.org/blog/investigating-powershell-attacks/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe'
+            - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe'
+            - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe'
+            - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\narrator.exe'
+            - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe'
+    selection_debugger:
+        EventID: 13
+        TargetObject|endswith: '\Debugger'
+        Details|contains:
+            - 'cmd.exe'
+            - 'powershell.exe'
+            - 'rundll32.exe'
+    selection_accessibility_reg:
+        EventID: 13
+        TargetObject|contains: '\Control Panel\Accessibility\'
+        Details|contains:
+            - '.exe'
+            - '.bat'
+            - '.cmd'
+    condition: (selection_registry and selection_debugger) or selection_accessibility_reg
+fields:
+    - TargetObject
+    - Details
+    - Image
+    - ProcessId
+falsepositives:
+    - Legitimate accessibility software configuration
+    - System administration scripts
+    - Assistive technology setup
+level: critical
+tags:
+    - attack.persistence
+    - attack.t1546.008
+    - sysmon
+    - windows
+    - registry

@@ -1,0 +1,55 @@
+title: DLL Hijacking from System32 Directory
+id: 4d5e6f78-9012-3456-7890-abcdef012345
+status: experimental
+description: Detects DLL hijacking attempts targeting system DLLs in System32 directory
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1574/001/
+    - https://www.fireeye.com/blog/threat-research/2010/07/malware-and-the-windows-dll-search-order.html
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_file_create:
+        EventID: 11
+        TargetFilename|endswith: '.dll'
+        TargetFilename|contains: 'C:\Windows\System32\'
+    selection_unsigned:
+        EventID: 11
+        TargetFilename|endswith:
+            - '\kernel32.dll'
+            - '\ntdll.dll'
+            - '\user32.dll'
+            - '\advapi32.dll'
+            - '\ole32.dll'
+    selection_process:
+        EventID: 11
+        Image|contains:
+            - '\Users\'
+            - '\Temp\'
+            - '\AppData\'
+    filter_legitimate:
+        Image|startswith:
+            - 'C:\Windows\System32\'
+            - 'C:\Windows\SysWOW64\'
+            - 'C:\Program Files\'
+            - 'C:\Program Files (x86)\'
+    condition: selection_file_create and (selection_unsigned or selection_process) and not filter_legitimate
+fields:
+    - TargetFilename
+    - Image
+    - ProcessId
+    - User
+falsepositives:
+    - System updates and patches
+    - Legitimate software installations
+    - Windows Installer operations
+level: critical
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1574.001
+    - sysmon
+    - windows
+    - dll

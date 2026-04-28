@@ -39,3 +39,4 @@ tags:
     - attack.t1659
     - zeek
     - html_injection
+technique: T1659

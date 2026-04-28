@@ -1,0 +1,33 @@
+title: Office Macro Template Persistence via Global Template Modification
+id: 8b9c0d12-5e6f-7890-1234-56789abcdef0
+status: experimental
+description: Detects Office template modification with macro content for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_file:
+        EventID: 11
+        TargetFilename|contains:
+            - '\Microsoft Office\UnsafeLocations\'
+            - '\Microsoft\Templates\'
+            - '\STARTUP\'
+            - 'Normal.dotm'
+            - 'Personal.xlsb'
+    selection_ext:
+        TargetFilename|endswith:
+            - '.dotm'
+            - '.xlam'
+            - '.ppam'
+            - '.potm'
+    condition: selection_file or selection_ext
+level: high
+tags:
+    - attack.persistence
+    - attack.t1137.001
+    - sysmon
+    - windows
+references:
+    - https://attack.mitre.org/techniques/T1137/001/

@@ -1,0 +1,60 @@
+title: Accessibility Features Hijacking
+id: 78901234-5678-9012-3456-789abcdef012
+status: experimental
+description: Detects hijacking of accessibility features like sethc.exe and utilman.exe for persistence
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/008/
+    - https://blog.malwarebytes.com/101/2016/01/the-windows-accessibility-feature-backdoor/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_file_replace:
+        EventID: 11
+        TargetFilename|endswith:
+            - '\sethc.exe'
+            - '\utilman.exe'
+            - '\osk.exe'
+            - '\narrator.exe'
+            - '\magnify.exe'
+            - '\displayswitch.exe'
+            - '\atbroker.exe'
+    selection_accessibility_execution:
+        EventID: 1
+        Image|endswith:
+            - '\sethc.exe'
+            - '\utilman.exe'
+            - '\osk.exe'
+            - '\narrator.exe'
+            - '\magnify.exe'
+        ParentImage|endswith:
+            - '\winlogon.exe'
+            - '\userinit.exe'
+    selection_suspicious_child:
+        EventID: 1
+        ParentImage|endswith:
+            - '\sethc.exe'
+            - '\utilman.exe'
+        Image|endswith:
+            - '\cmd.exe'
+            - '\powershell.exe'
+            - '\rundll32.exe'
+    condition: selection_file_replace or selection_accessibility_execution or selection_suspicious_child
+fields:
+    - Image
+    - TargetFilename
+    - CommandLine
+    - ParentImage
+falsepositives:
+    - Legitimate accessibility software updates
+    - System administrators using accessibility features
+    - Assistive technology installations
+level: high
+tags:
+    - attack.persistence
+    - attack.t1546.008
+    - sysmon
+    - windows
+    - accessibility

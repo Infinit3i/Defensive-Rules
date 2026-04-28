@@ -1,0 +1,40 @@
+title: Suspicious Linux Init Script Execution
+id: 7f3e9c8b-2a1d-4b6e-8c5f-9e4d3a7b2c1e
+status: experimental
+description: Detects execution of potentially malicious init scripts during boot
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: syslog
+detection:
+    selection_init:
+        program:
+            - "init"
+            - "systemd"
+            - "rc.local"
+            - "update-rc.d"
+            - "service"
+    selection_suspicious:
+        message|contains:
+            - "curl"
+            - "wget"
+            - "nc -"
+            - "/dev/tcp"
+            - "base64 -d"
+            - "python -c"
+            - "perl -e"
+            - "bash -i"
+            - "sh -i"
+    condition: selection_init and selection_suspicious
+level: high
+tags:
+    - attack.persistence
+    - attack.t1037
+    - attack.t1037.004
+    - linux
+    - syslog
+references:
+    - https://attack.mitre.org/techniques/T1037/004/
+falsepositives:
+    - Legitimate system scripts with network functionality

@@ -1,52 +1,43 @@
----
 title: Registry Run Keys Persistence Detection
-technique: T1547.001
-id: a7d2f8c9-5b3e-4f1a-9d8c-2e6b7a4f9c1d
+id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
-description: Detects suspicious modifications to registry Run keys for persistence through Sysmon Event ID 13
+description: Detects suspicious process execution from Registry Run keys through registry modification events
 author: Infinit3i
 date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-  product: windows
-  service: sysmon
-  category: registry_set
+    product: windows
+    service: sysmon
 detection:
-  selection_event:
-    EventID: 13
-  selection_runkeys:
-    TargetObject|contains:
-      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\'
-      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\'
-      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx\'
-      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices\'
-      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce\'
-  filter_legitimate:
-    Details|contains:
-      - 'C:\Program Files\'
-      - 'C:\Program Files (x86)\'
-      - 'C:\Windows\System32\'
-  condition: selection_event and selection_runkeys and not filter_legitimate
-fields:
-  - Image
-  - TargetObject
-  - Details
-  - ProcessId
-  - ComputerName
+    selection_reg:
+        EventID: 13
+        TargetObject|contains:
+            - '\Software\Microsoft\Windows\CurrentVersion\Run\'
+            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+    selection_suspicious:
+        - Details|contains:
+            - 'powershell'
+            - 'cmd.exe'
+            - 'wscript'
+            - 'cscript'
+            - 'rundll32'
+            - 'regsvr32'
+        - Details|endswith:
+            - '.exe -h'
+            - '.exe --hidden'
+            - '.bat'
+            - '.vbs'
+            - '.js'
+            - '.ps1'
+    condition: selection_reg and selection_suspicious
 falsepositives:
-  - Legitimate software installations
-  - System updates and patches
-  - Antivirus software persistence
+    - Legitimate software installations
+    - Administrative scripts
 level: medium
 tags:
-    # MITRE ATT&CK tactic
     - attack.persistence
-    # MITRE ATT&CK technique
+    - attack.t1547
     - attack.t1547.001
-    # Platform/tool tags
-    - windows
     - sysmon
-  - attack.persistence
-  - attack.t1547
-  - attack.t1547.001
-  - sysmon
-  - windows
+    - windows

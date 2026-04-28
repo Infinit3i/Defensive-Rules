@@ -38,3 +38,4 @@ tags:
     - attack.t1601
     - sysmon
     - bootkit
+technique: T1601

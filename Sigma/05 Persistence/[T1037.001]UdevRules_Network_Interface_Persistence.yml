@@ -1,0 +1,45 @@
+title: Udev Rules Network Interface Persistence
+id: d4e5f6g7-h8i9-0123-4567-890123defghi
+status: experimental
+description: Detects udev rules targeting network interfaces for persistence through interface state changes
+author: Infinit3i
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1037/001/
+  - https://www.freedesktop.org/software/systemd/man/udev.html
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_udev_files:
+    - type: PATH
+      name|contains:
+        - /etc/udev/rules.d/
+        - /lib/udev/rules.d/
+  selection_network_subsystem:
+    - comm|contains:
+        - SUBSYSTEM=="net"
+        - ACTION=="add"
+        - ACTION=="change"
+        - KERNEL=="eth*"
+        - KERNEL=="wlan*"
+        - KERNEL=="tun*"
+  selection_command_execution:
+    - comm|contains:
+        - RUN+="/bin/
+        - RUN+="/usr/bin/
+        - PROGRAM="/bin/
+        - PROGRAM="/usr/bin/
+  condition: selection_udev_files and selection_network_subsystem and selection_command_execution
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1037
+  - attack.t1037.001
+  - linux
+  - auditd
+  - udev
+  - network
+falsepositives:
+  - Network management tools and scripts
+  - VPN client configurations

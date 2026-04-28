@@ -32,3 +32,4 @@ tags:
     - attack.t1556.006
     - azure
     - push_bombing
+technique: T1556.006

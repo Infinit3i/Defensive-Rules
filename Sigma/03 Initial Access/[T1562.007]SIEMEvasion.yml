@@ -38,3 +38,4 @@ tags:
     - attack.t1562.007
     - sysmon
     - evasion
+technique: T1562.007

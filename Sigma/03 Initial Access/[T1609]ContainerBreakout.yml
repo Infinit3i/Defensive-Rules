@@ -40,3 +40,4 @@ tags:
     - attack.t1609
     - linux
     - container
+technique: T1609

@@ -1,0 +1,51 @@
+---
+title: Print Processor Suspicious DLL Loading
+technique: T1547.012
+id: d3e4f5a6-0b1c-7d8e-2f9a-5b6c7d8e9f0a
+status: experimental
+description: Detects suspicious DLL loading by print spooler indicating malicious print processor
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_spoolsv_process:
+    EventID: 7
+    Image|endswith: '\spoolsv.exe'
+  selection_suspicious_dll:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '\Users\Public\'
+    ImageLoaded|endswith: '.dll'
+  filter_legitimate_processors:
+    ImageLoaded|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - '\DriverStore\'
+  condition: selection_spoolsv_process and selection_suspicious_dll and not filter_legitimate_processors
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - User
+  - ComputerName
+  - Hashes
+falsepositives:
+  - Third-party printer drivers from non-standard locations
+  - Custom print processing software
+  - Portable printer installations
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1547.012
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1547/012/
+  - https://www.microsoft.com/security/blog/print-spooler-vulnerabilities

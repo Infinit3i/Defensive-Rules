@@ -40,3 +40,4 @@ tags:
     - attack.t1659
     - apache
     - web
+technique: T1659

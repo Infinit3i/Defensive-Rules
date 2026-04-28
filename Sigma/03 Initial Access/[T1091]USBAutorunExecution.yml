@@ -35,3 +35,4 @@ tags:
     - attack.t1091
     - sysmon
     - windows
+technique: T1091

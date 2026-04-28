@@ -1,0 +1,52 @@
+---
+title: Netsh Helper DLL Suspicious Loading Detection
+technique: T1546.007
+id: b1c2d3e4-8f9a-5b6c-0d7e-3f4a5b6c7d8e
+status: experimental
+description: Detects suspicious DLL loading by netsh.exe indicating malicious helper DLL usage
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_netsh_process:
+    EventID: 7
+    Image|endswith: '\netsh.exe'
+  selection_suspicious_dll:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '\Users\Public\'
+    ImageLoaded|endswith: '.dll'
+  filter_legitimate_helpers:
+    ImageLoaded|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - '\Microsoft.NET\Framework'
+  condition: selection_netsh_process and selection_suspicious_dll and not filter_legitimate_helpers
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - ParentImage
+  - User
+  - ComputerName
+  - Hashes
+falsepositives:
+  - Custom network management tools
+  - Third-party networking software
+  - Development environments with custom helpers
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1546.007
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/007/
+  - https://www.fireeye.com/blog/threat-research/2016/11/dll_search_order_hi.html

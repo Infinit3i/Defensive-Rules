@@ -1,0 +1,38 @@
+title: Linux Init Script Modification Detected
+id: 8c4a1f9e-3b2d-4e7f-9a8c-1d5e6f0a2b3c
+status: experimental
+description: Detects unauthorized modification or creation of init scripts for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_write:
+        type: "SYSCALL"
+        syscall: "openat"
+        a2: ["O_WRONLY", "O_RDWR", "O_CREAT"]
+    selection_paths:
+        name:
+            - "/etc/init.d/*"
+            - "/etc/rc*.d/*"
+            - "/etc/rc.local"
+            - "/etc/rc.d/*"
+    selection_chmod:
+        type: "SYSCALL"
+        syscall: "chmod"
+        a1: "755"
+    condition: (selection_write and selection_paths) or
+               (selection_chmod and selection_paths)
+level: high
+tags:
+    - attack.persistence
+    - attack.t1037
+    - attack.t1037.004
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1037/004/
+falsepositives:
+    - Legitimate system administration
+    - Package installations

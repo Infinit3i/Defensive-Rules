@@ -36,3 +36,4 @@ tags:
     - attack.t1528
     - azure
     - oauth
+technique: T1528

@@ -1,0 +1,50 @@
+title: COM Object Hijacking Process Creation
+id: 2b3c4d5e-6f78-9012-3456-789abcdef012
+status: experimental
+description: Detects process creation from hijacked COM objects via suspicious DLL loading
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/015/
+    - https://bohops.com/2018/06/28/abusing-com-registry-structure-clsid-localserver32-inprocserver32/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_process:
+        EventID: 1
+        ParentImage|endswith:
+            - '\dllhost.exe'
+            - '\rundll32.exe'
+            - '\regsvr32.exe'
+    selection_image_load:
+        EventID: 7
+        ImageLoaded|contains:
+            - '\Users\'
+            - '\Temp\'
+            - '\AppData\'
+            - '\ProgramData\'
+    selection_suspicious_cmdline:
+        EventID: 1
+        CommandLine|contains:
+            - '/Processid:'
+            - '/Embedding'
+            - '-Embedding'
+        Image|endswith: '\dllhost.exe'
+    condition: (selection_process and selection_image_load) or selection_suspicious_cmdline
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ImageLoaded
+falsepositives:
+    - Legitimate COM object usage
+    - System administration tools
+    - Third-party applications
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1546.015
+    - sysmon
+    - windows
+    - com

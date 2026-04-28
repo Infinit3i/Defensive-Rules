@@ -1,0 +1,51 @@
+---
+title: Browser Helper Object Registration Persistence
+technique: T1546.008
+id: c6d8e4f2-3b7a-4c5e-8f9d-1a2b3c4d5e6f
+status: experimental
+description: Detects malicious Browser Helper Object registration for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_bho_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
+      - '\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
+  selection_clsid_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Classes\CLSID\'
+    TargetObject|endswith:
+      - '\InprocServer32\(Default)'
+      - '\InprocServer32\ThreadingModel'
+  filter_known_paths:
+    Details|contains:
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+  condition: (selection_bho_reg or selection_clsid_reg) and not filter_known_paths
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate browser extensions installation
+  - Software updates
+  - Administrative browser configuration
+level: high
+tags:
+  - attack.persistence
+  - attack.t1546.008
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/008/
+  - https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa753587

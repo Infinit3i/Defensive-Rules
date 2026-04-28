@@ -1,0 +1,51 @@
+---
+title: LSA Security Package DLL Registration
+technique: T1547.005
+id: e8f4a5b6-5d9c-4e3a-9b7f-3c6e8d2a4b5c
+status: experimental
+description: Detects malicious LSA Security Package registration for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_lsa_packages:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages'
+      - '\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\Security Packages'
+  selection_auth_packages:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Control\Lsa\Authentication Packages'
+  selection_notification_packages:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Control\Lsa\Notification Packages'
+  filter_system_process:
+    Image|contains:
+      - 'C:\Windows\System32\lsass.exe'
+      - 'C:\Windows\System32\winlogon.exe'
+      - 'C:\Windows\System32\svchost.exe'
+  condition: (selection_lsa_packages or selection_auth_packages or selection_notification_packages) and not filter_system_process
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate security software installation
+  - System updates
+  - Administrative LSA configuration
+level: critical
+tags:
+  - attack.persistence
+  - attack.t1547.005
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1547/005/
+  - https://docs.microsoft.com/en-us/windows/win32/secauthn/lsa-authentication-packages

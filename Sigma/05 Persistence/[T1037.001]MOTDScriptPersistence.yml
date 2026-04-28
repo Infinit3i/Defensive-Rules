@@ -1,0 +1,26 @@
+title: MOTD Script Persistence via update-motd.d Directory
+id: d4e5f6a7-0123-4567-8901-cdef01234567
+status: experimental
+description: Detects MOTD script creation or modification for persistence on Linux
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection:
+        type: 'SYSCALL'
+        syscall:
+            - 'openat'
+            - 'write'
+            - 'creat'
+        name|contains: '/etc/update-motd.d/'
+    condition: selection
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1037.001
+    - auditd
+    - linux
+references:
+    - https://attack.mitre.org/techniques/T1037/001/

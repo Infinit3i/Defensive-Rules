@@ -40,3 +40,4 @@ tags:
     - attack.t1189
     - zeek
     - malvertising
+technique: T1189

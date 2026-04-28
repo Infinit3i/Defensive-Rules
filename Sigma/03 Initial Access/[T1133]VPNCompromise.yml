@@ -37,3 +37,4 @@ tags:
     - attack.t1133
     - windows
     - vpn
+technique: T1133

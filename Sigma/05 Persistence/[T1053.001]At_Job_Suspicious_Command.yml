@@ -1,0 +1,50 @@
+title: At Job Suspicious Command Execution
+id: g7h8i9j0-k1l2-3456-7890-123456ghijkl
+status: experimental
+description: Detects suspicious commands scheduled via at/batch for delayed execution and persistence
+author: Infinit3i
+date: 2026/04/27
+references:
+  - https://attack.mitre.org/techniques/T1053/001/
+  - https://linux.die.net/man/1/at
+logsource:
+  product: linux
+  service: auditd
+detection:
+  selection_at_commands:
+    - type: EXECVE
+      a0|endswith:
+        - /at
+        - /batch
+  selection_suspicious_content:
+    - a1|contains:
+        - wget
+        - curl
+        - nc
+        - ncat
+        - python
+        - perl
+        - bash
+        - /dev/tcp
+        - reverse
+        - shell
+        - base64
+        - chmod +x
+  selection_file_operations:
+    - type: PATH
+      name|contains:
+        - /var/spool/at/
+        - /var/spool/cron/atjobs/
+  condition: selection_at_commands and (selection_suspicious_content or selection_file_operations)
+level: high
+tags:
+  - attack.persistence
+  - attack.execution
+  - attack.t1053
+  - attack.t1053.001
+  - linux
+  - auditd
+  - scheduled-task
+falsepositives:
+  - Legitimate system maintenance scripts scheduled via at
+  - Automated backup operations

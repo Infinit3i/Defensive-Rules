@@ -1,0 +1,49 @@
+title: Windows Service Creation Persistence
+id: e5f6g7h8-i9j0-1234-5678-901234efghij
+status: experimental
+description: Detects suspicious Windows service creation for persistence through sc.exe and PowerShell commands
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1547/009/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_sc:
+        EventID: 1
+        Image|endswith: '\sc.exe'
+        CommandLine|contains:
+            - 'create'
+            - 'config'
+    selection_powershell:
+        EventID: 1
+        CommandLine|contains:
+            - 'New-Service'
+            - 'Set-Service'
+            - 'Install-ServiceBinary'
+    selection_suspicious:
+        - CommandLine|contains:
+            - 'binpath='
+            - 'binPath='
+            - 'DisplayName='
+        - CommandLine|re: '.*\\x[0-9a-fA-F]{2}.*'
+        - CommandLine|contains:
+            - '\AppData\'
+            - '\Temp\'
+            - '\Users\Public\'
+            - '\ProgramData\'
+            - 'powershell'
+            - 'cmd.exe'
+            - 'rundll32'
+    condition: (selection_sc or selection_powershell) and selection_suspicious
+falsepositives:
+    - Legitimate service installations
+    - Administrative service management
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1547
+    - attack.t1547.009
+    - sysmon
+    - windows

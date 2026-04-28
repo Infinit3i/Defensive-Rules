@@ -1,0 +1,58 @@
+---
+title: Browser Helper Object Suspicious DLL Loading
+technique: T1546.008
+id: d7e9f3a4-4c8b-4f2d-9e6a-2b5c8d1a7e3f
+status: experimental
+description: Detects suspicious DLL loading by browser processes indicating BHO usage
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_browser_process:
+    EventID: 7
+    Image|contains:
+      - 'iexplore.exe'
+      - 'chrome.exe'
+      - 'firefox.exe'
+      - 'msedge.exe'
+      - 'brave.exe'
+  selection_suspicious_dll:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '\Users\Public\'
+    ImageLoaded|endswith: '.dll'
+  filter_legitimate:
+    ImageLoaded|contains:
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - '\Google\Chrome\'
+      - '\Mozilla Firefox\'
+      - '\Microsoft\Edge\'
+  condition: selection_browser_process and selection_suspicious_dll and not filter_legitimate
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - User
+  - ComputerName
+  - Hashes
+falsepositives:
+  - Legitimate browser plugins from non-standard locations
+  - Development environments
+  - Portable browser installations
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1546.008
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/008/
+  - https://blog.malwarebytes.com/cybercrime/2013/02/browser-hijacking-through-bho/

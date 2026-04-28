@@ -1,0 +1,50 @@
+---
+title: LSA Security Package Suspicious DLL Loading
+technique: T1547.005
+id: f9e6b7c8-6e0d-4f4b-0c8a-4d7f9e3a6b8d
+status: experimental
+description: Detects suspicious DLL loading by LSASS indicating malicious security packages
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_lsass_process:
+    EventID: 7
+    Image|endswith: '\lsass.exe'
+  selection_suspicious_dll:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '\Users\Public\'
+    ImageLoaded|endswith: '.dll'
+  filter_system_dlls:
+    ImageLoaded|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+  condition: selection_lsass_process and selection_suspicious_dll and not filter_system_dlls
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - User
+  - ComputerName
+  - Hashes
+falsepositives:
+  - Legitimate third-party authentication providers
+  - Security software components
+  - Custom authentication modules
+level: critical
+tags:
+  - attack.persistence
+  - attack.t1547.005
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1547/005/
+  - https://www.microsoft.com/security/blog/lsa-security-packages

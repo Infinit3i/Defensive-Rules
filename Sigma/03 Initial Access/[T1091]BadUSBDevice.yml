@@ -31,3 +31,4 @@ tags:
     - attack.t1091
     - windows
     - security
+technique: T1091

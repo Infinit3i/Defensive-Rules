@@ -1,0 +1,49 @@
+title: WMI Event Subscription via PowerShell
+id: 9c8e0b3d-4f56-5a90-c234-567890bcdef1
+status: experimental
+description: Detects PowerShell commands creating WMI event subscriptions for persistence
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/003/
+    - https://powershell.one/wmi/wmi-events
+logsource:
+    product: windows
+    service: powershell-classic
+detection:
+    selection_cmdlet:
+        EventID: 4104
+        ScriptBlockText|contains:
+            - 'Register-WmiEvent'
+            - 'New-WmiEventFilter'
+            - 'New-WmiEventConsumer'
+            - 'New-WmiEventBinding'
+    selection_wmi_class:
+        EventID: 4104
+        ScriptBlockText|contains:
+            - 'Win32_VolumeChangeEvent'
+            - 'Win32_ProcessStartTrace'
+            - 'Win32_SystemConfigurationChangeEvent'
+            - 'Win32_PowerManagementEvent'
+    selection_consumer_type:
+        EventID: 4104
+        ScriptBlockText|contains:
+            - 'CommandLineEventConsumer'
+            - 'ActiveScriptEventConsumer'
+            - 'NTEventLogEventConsumer'
+    condition: selection_cmdlet and (selection_wmi_class or selection_consumer_type)
+fields:
+    - ScriptBlockText
+    - ScriptBlockId
+    - Path
+falsepositives:
+    - Legitimate PowerShell monitoring scripts
+    - System administration automation
+    - Security monitoring tools
+level: high
+tags:
+    - attack.persistence
+    - attack.t1546.003
+    - powershell
+    - windows
+    - wmi

@@ -30,3 +30,4 @@ tags:
     - attack.t1133
     - windows
     - rdp
+technique: T1133

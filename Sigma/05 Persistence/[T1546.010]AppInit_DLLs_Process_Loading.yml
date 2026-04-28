@@ -1,0 +1,54 @@
+---
+title: AppInit_DLLs Suspicious DLL Loading Detection
+technique: T1546.010
+id: b5f7c2e9-4a8d-4b1e-8c6f-9e2a5d3c8b7a
+status: experimental
+description: Detects suspicious DLL loading through AppInit_DLLs mechanism
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_image_load:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '.tmp'
+      - '.dat'
+  selection_process:
+    EventID: 7
+    Image|contains:
+      - 'explorer.exe'
+      - 'winlogon.exe'
+      - 'userinit.exe'
+      - 'dwm.exe'
+  filter_legitimate:
+    ImageLoaded|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+  condition: selection_image_load and selection_process and not filter_legitimate
+fields:
+  - Image
+  - ImageLoaded
+  - ProcessId
+  - User
+  - ComputerName
+  - Hashes
+falsepositives:
+  - Legitimate applications with custom DLL loading
+  - Development environments
+  - Third-party software with AppInit_DLLs usage
+level: medium
+tags:
+  - attack.persistence
+  - attack.t1546.010
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/010/
+  - https://www.microsoft.com/security/blog/appinit-dlls-security

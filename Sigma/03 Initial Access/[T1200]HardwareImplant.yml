@@ -37,3 +37,4 @@ tags:
     - attack.t1200
     - windows
     - hardware
+technique: T1200

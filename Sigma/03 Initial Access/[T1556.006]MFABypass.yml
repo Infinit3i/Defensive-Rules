@@ -37,3 +37,4 @@ tags:
     - attack.t1556.006
     - azure
     - mfa
+technique: T1556.006

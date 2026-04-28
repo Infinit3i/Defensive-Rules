@@ -1,0 +1,51 @@
+---
+title: Print Processor Registration Persistence
+technique: T1547.012
+id: c2d3e4f5-9a0b-6c7d-1e8f-4a5b6c7d8e9f
+status: experimental
+description: Detects malicious print processor registration for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_print_processor_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Print Processors\'
+      - '\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Print Processors\'
+  selection_spooler_dll:
+    EventID: 13
+    TargetObject|contains:
+      - '\SYSTEM\CurrentControlSet\Control\Print\Printers\'
+    TargetObject|endswith:
+      - '\PrintProcessor'
+      - '\Print Processor'
+  filter_system_processors:
+    Details|contains:
+      - 'winprint'
+      - 'localspl'
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+  condition: (selection_print_processor_reg or selection_spooler_dll) and not filter_system_processors
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate printer driver installation
+  - Print management software
+  - Administrative printer configuration
+level: high
+tags:
+  - attack.persistence
+  - attack.t1547.012
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1547/012/
+  - https://docs.microsoft.com/en-us/windows-hardware/drivers/print/print-processors

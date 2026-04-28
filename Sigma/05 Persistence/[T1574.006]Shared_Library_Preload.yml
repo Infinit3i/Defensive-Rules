@@ -1,0 +1,43 @@
+title: Suspicious Shared Library Preloading
+id: 5c9e7f3a-4d2b-6e8f-2a7c-9e5f3d7b4c8a
+status: experimental
+description: Detects preloading of suspicious shared libraries via LD_PRELOAD
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_process:
+        type: "SYSCALL"
+        syscall: "execve"
+    selection_preload_env:
+        a0|contains: "LD_PRELOAD="
+    selection_suspicious_paths:
+        a0|contains:
+            - "/tmp/"
+            - "/var/tmp/"
+            - "/dev/shm/"
+            - "/home/"
+            - "/usr/local/lib/"
+    selection_suspicious_names:
+        a0|contains:
+            - "evil.so"
+            - "rootkit.so"
+            - "backdoor.so"
+            - "hook.so"
+            - "inject.so"
+    condition: selection_process and selection_preload_env and
+               (selection_suspicious_paths or selection_suspicious_names)
+level: critical
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1574
+    - attack.t1574.006
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1574/006/
+falsepositives:
+    - Development and testing environments

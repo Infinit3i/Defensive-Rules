@@ -37,3 +37,4 @@ tags:
     - attack.t1601
     - windows
     - firmware
+technique: T1601

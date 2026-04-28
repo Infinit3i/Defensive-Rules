@@ -1,0 +1,55 @@
+title: Scheduled Task Creation Persistence
+id: g7h8i9j0-k1l2-3456-7890-123456ghijkl
+status: experimental
+description: Detects suspicious scheduled task creation for persistence through schtasks and Task Scheduler COM
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1053/005/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_schtasks:
+        EventID: 1
+        Image|endswith: '\schtasks.exe'
+        CommandLine|contains:
+            - '/create'
+            - '/change'
+    selection_taskschd:
+        EventID: 1
+        CommandLine|contains:
+            - 'Schedule.Service'
+            - 'TaskScheduler'
+            - 'Register-ScheduledTask'
+            - 'New-ScheduledTask'
+    selection_suspicious:
+        - CommandLine|contains:
+            - '/tr'
+            - '/ru system'
+            - '/rl highest'
+            - '/f'
+            - 'SYSTEM'
+            - 'NT AUTHORITY'
+        - CommandLine|contains:
+            - 'powershell'
+            - 'cmd.exe'
+            - 'rundll32'
+            - 'regsvr32'
+            - 'mshta'
+        - CommandLine|contains:
+            - '\AppData\'
+            - '\Temp\'
+            - '\Users\Public\'
+            - '\ProgramData\'
+    condition: (selection_schtasks or selection_taskschd) and selection_suspicious
+falsepositives:
+    - Legitimate scheduled task creation
+    - Administrative automation scripts
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1053
+    - attack.t1053.005
+    - sysmon
+    - windows

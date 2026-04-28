@@ -1,0 +1,52 @@
+title: Startup Folder LNK File Analysis
+id: j0k1l2m3-n4o5-6789-0123-456789jklmno
+status: experimental
+description: Detects suspicious shortcut files in startup folders with focus on target analysis and evasion
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_lnk:
+        EventID: 11
+        TargetFilename|endswith: '.lnk'
+        TargetFilename|contains:
+            - '\Start Menu\Programs\Startup\'
+            - '\Start Menu\Programs\StartUp\'
+    selection_process:
+        EventID: 1
+        ParentImage|endswith: '\explorer.exe'
+        CommandLine|contains: 'Programs\Startup'
+    selection_suspicious:
+        - CommandLine|contains:
+            - 'powershell'
+            - 'cmd.exe /c'
+            - 'rundll32'
+            - 'mshta'
+            - 'wscript'
+            - 'cscript'
+        - CommandLine|contains:
+            - ' -w hidden'
+            - ' -windowstyle hidden'
+            - ' -enc '
+            - ' -e '
+            - 'bypass'
+        - Image|contains:
+            - '\AppData\'
+            - '\Temp\'
+            - '\Users\Public\'
+            - '\ProgramData\'
+    condition: (selection_lnk or selection_process) and selection_suspicious
+falsepositives:
+    - Legitimate application shortcuts
+    - User-created shortcuts to tools
+level: high
+tags:
+    - attack.persistence
+    - attack.t1547
+    - attack.t1547.001
+    - sysmon
+    - windows

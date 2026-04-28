@@ -1,0 +1,47 @@
+title: Suspicious Kernel Module Installation
+id: 7e4f8c2a-9d5b-3e6f-1a8c-5e7f4d8b2c6a
+status: experimental
+description: Detects installation of potentially malicious kernel modules
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: syslog
+detection:
+    selection_kernel:
+        program: "kernel"
+        message|contains: "module"
+    selection_loaded:
+        message|contains:
+            - "module loaded"
+            - "insmod"
+            - "modprobe"
+    selection_suspicious_names:
+        message|contains:
+            - "rootkit"
+            - "backdoor"
+            - "keylog"
+            - "hide"
+            - "stealth"
+            - "evil"
+            - "malware"
+    selection_unsigned:
+        message|contains:
+            - "unsigned module"
+            - "module verification failed"
+            - "loading unsigned module"
+    condition: (selection_kernel and selection_loaded) and
+               (selection_suspicious_names or selection_unsigned)
+level: critical
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1547
+    - attack.t1547.006
+    - linux
+    - syslog
+references:
+    - https://attack.mitre.org/techniques/T1547/006/
+falsepositives:
+    - Development environments with unsigned modules
+    - Testing custom kernel modules

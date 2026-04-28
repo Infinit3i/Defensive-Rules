@@ -1,0 +1,52 @@
+title: IFEO Process Hijacking via Debugger
+id: 6f789012-3456-7890-1234-56789abcdef0
+status: experimental
+description: Detects process hijacking through IFEO debugger redirection for persistence
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1546/012/
+    - https://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-5/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_process:
+        EventID: 1
+        ParentCommandLine|contains: 'svchost.exe'
+    selection_hijacked_binary:
+        EventID: 1
+        Image|endswith:
+            - '\sethc.exe'
+            - '\utilman.exe'
+            - '\osk.exe'
+            - '\narrator.exe'
+            - '\magnify.exe'
+        ParentImage|endswith: '\winlogon.exe'
+    selection_suspicious_parent:
+        EventID: 1
+        ParentImage|contains:
+            - '\Temp\'
+            - '\Users\'
+            - '\AppData\'
+    selection_registry_execution:
+        EventID: 1
+        CommandLine|contains: 'Image File Execution Options'
+    condition: (selection_process and selection_suspicious_parent) or
+               selection_hijacked_binary or selection_registry_execution
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ParentCommandLine
+falsepositives:
+    - Legitimate accessibility tool usage
+    - System troubleshooting
+    - Development environments
+level: high
+tags:
+    - attack.persistence
+    - attack.t1546.012
+    - sysmon
+    - windows
+    - process

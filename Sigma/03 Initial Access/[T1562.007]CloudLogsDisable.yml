@@ -35,3 +35,4 @@ tags:
     - attack.t1562.007
     - aws
     - logging
+technique: T1562.007

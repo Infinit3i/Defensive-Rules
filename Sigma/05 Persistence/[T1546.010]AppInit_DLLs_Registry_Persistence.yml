@@ -1,0 +1,50 @@
+---
+title: AppInit_DLLs Registry Persistence Detection
+technique: T1546.010
+id: a3e4f5b8-2c9d-4e1a-9f8b-6c3e7d2a1b9c
+status: experimental
+description: Detects malicious persistence via AppInit_DLLs registry key modifications
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_registry:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
+      - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
+  selection_enable:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
+      - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
+    Details: 'DWORD (0x00000001)'
+  filter_system:
+    Image|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+  condition: (selection_registry or selection_enable) and not filter_system
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate software installation
+  - System administration tasks
+  - Graphics driver installations
+level: high
+tags:
+  - attack.persistence
+  - attack.t1546.010
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/010/
+  - https://docs.microsoft.com/en-us/windows/win32/dlls/appinit-dlls

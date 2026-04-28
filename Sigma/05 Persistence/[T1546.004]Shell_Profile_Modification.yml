@@ -1,0 +1,41 @@
+title: Linux Shell Profile Script Modification
+id: 9d5e7f2a-4c3b-6e8f-1a9c-5d7e2f4b8c3a
+status: experimental
+description: Detects modification of shell profile scripts for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_write:
+        type: "SYSCALL"
+        syscall: "openat"
+        a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
+    selection_profiles:
+        name:
+            - "*/.bashrc"
+            - "*/.bash_profile"
+            - "*/.bash_login"
+            - "*/.profile"
+            - "*/.zshrc"
+            - "*/.zsh_profile"
+            - "*/.cshrc"
+            - "*/.tcshrc"
+            - "/etc/profile"
+            - "/etc/bash.bashrc"
+            - "/etc/zsh/zshrc"
+    condition: selection_write and selection_profiles
+level: medium
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1546
+    - attack.t1546.004
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1546/004/
+falsepositives:
+    - User customization of shell environment
+    - Automated configuration management

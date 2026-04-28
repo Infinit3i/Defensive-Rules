@@ -1,0 +1,36 @@
+title: SSH Authorized Keys File Modification
+id: 4e7f9c2a-6d3e-5f8b-1c9a-3e7f2d6b8c4e
+status: experimental
+description: Detects unauthorized modification of SSH authorized_keys files
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_write:
+        type: "SYSCALL"
+        syscall: ["openat", "open"]
+        a2: ["O_WRONLY", "O_RDWR", "O_APPEND", "O_CREAT"]
+    selection_ssh_keys:
+        name:
+            - "*/.ssh/authorized_keys"
+            - "*/.ssh/authorized_keys2"
+            - "/home/*/.ssh/authorized_keys"
+            - "/root/.ssh/authorized_keys"
+    selection_remote:
+        auid: "4294967295"  # Remote/unknown user
+    condition: selection_write and selection_ssh_keys
+level: high
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1098
+    - attack.t1098.004
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1098/004/
+falsepositives:
+    - Legitimate SSH key management
+    - Automated deployment systems

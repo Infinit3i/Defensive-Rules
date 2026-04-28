@@ -1,0 +1,27 @@
+title: MOTD Script Execution Detection via Process Monitoring
+id: e5f6a7b8-1234-5678-9012-def012345678
+status: experimental
+description: Detects execution of MOTD scripts during login for persistence detection
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: syslog
+detection:
+    selection:
+        program: 'run-parts'
+        message|contains: '/etc/update-motd.d/'
+    selection_process:
+        message|contains:
+            - 'update-motd'
+            - '/etc/motd'
+            - 'pam_motd'
+    condition: selection or selection_process
+level: low
+tags:
+    - attack.persistence
+    - attack.t1037.001
+    - syslog
+    - linux
+references:
+    - https://attack.mitre.org/techniques/T1037/001/

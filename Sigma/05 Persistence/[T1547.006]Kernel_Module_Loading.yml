@@ -1,0 +1,45 @@
+title: Kernel Module Loading via insmod/modprobe
+id: 3a7e5c9f-6d4b-8e2f-5c9a-7e3f6d4b8e2c
+status: experimental
+description: Detects loading of kernel modules for persistence or privilege escalation
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_commands:
+        comm:
+            - "insmod"
+            - "modprobe"
+            - "rmmod"
+        type: "SYSCALL"
+        syscall: "execve"
+    selection_init_module:
+        type: "SYSCALL"
+        syscall: "init_module"
+    selection_finit_module:
+        type: "SYSCALL"
+        syscall: "finit_module"
+    selection_suspicious_paths:
+        a1|contains:
+            - "/tmp/"
+            - "/var/tmp/"
+            - "/dev/shm/"
+            - "/home/"
+    condition: selection_commands or selection_init_module or
+               selection_finit_module or
+               (selection_commands and selection_suspicious_paths)
+level: high
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1547
+    - attack.t1547.006
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1547/006/
+falsepositives:
+    - System administration
+    - Hardware driver installation

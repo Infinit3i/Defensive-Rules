@@ -1,0 +1,59 @@
+---
+title: Netsh Helper DLL Registration Persistence
+technique: T1546.007
+id: a0b1c2d3-7e8f-4a5b-9c6d-2e3f4a5b6c7d
+status: experimental
+description: Detects malicious Netsh Helper DLL registration for persistence
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_netsh_helper:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Netsh\'
+  selection_netsh_process:
+    EventID: 1
+    Image|endswith: '\netsh.exe'
+    CommandLine|contains:
+      - 'add helper'
+      - 'install'
+  selection_suspicious_dll:
+    EventID: 1
+    CommandLine|contains:
+      - '.dll'
+    CommandLine|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\ProgramData\'
+      - '\Users\Public\'
+  filter_system_paths:
+    CommandLine|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+  condition: (selection_netsh_helper or (selection_netsh_process and selection_suspicious_dll)) and not filter_system_paths
+fields:
+  - Image
+  - CommandLine
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate network helper installations
+  - Administrative network configuration
+  - Third-party network tools
+level: high
+tags:
+  - attack.persistence
+  - attack.t1546.007
+  - windows
+  - sysmon
+references:
+  - https://attack.mitre.org/techniques/T1546/007/
+  - https://docs.microsoft.com/en-us/windows-server/networking/technologies/netsh/netsh

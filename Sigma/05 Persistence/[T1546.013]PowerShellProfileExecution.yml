@@ -1,0 +1,27 @@
+title: PowerShell Profile Execution Detection via Script Block Logging
+id: a1b2c3d4-7890-1234-5678-9abcdef01234
+status: experimental
+description: Detects execution of PowerShell commands from profile scripts
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: powershell
+detection:
+    selection:
+        EventID: 4104
+        ScriptBlockText|contains:
+            - '$PROFILE'
+            - 'Microsoft.PowerShell_profile'
+            - 'Import-Module'
+            - 'Add-Type'
+            - 'Invoke-Expression'
+    condition: selection
+level: low
+tags:
+    - attack.persistence
+    - attack.t1546.013
+    - powershell
+    - windows
+references:
+    - https://attack.mitre.org/techniques/T1546/013/

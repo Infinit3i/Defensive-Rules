@@ -1,0 +1,55 @@
+title: Suspicious Content in Shell Profile Scripts
+id: 6b8e2f4c-9a3d-5e7f-2c4a-8d6e1f3b7c9a
+status: experimental
+description: Detects malicious commands added to shell profile scripts
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    selection_files:
+        name:
+            - "*/.bashrc"
+            - "*/.bash_profile"
+            - "*/.zshrc"
+            - "*/.profile"
+            - "/etc/profile"
+    selection_suspicious:
+        comm:
+            - "echo"
+            - "cat"
+            - "tee"
+        exe:
+            - "/bin/echo"
+            - "/bin/cat"
+            - "/usr/bin/tee"
+    filter_legitimate:
+        proctitle|contains:
+            - "alias "
+            - "export PATH"
+            - "export LANG"
+            - "PS1="
+    suspicious_content:
+        proctitle|contains:
+            - "curl http"
+            - "wget http"
+            - "nc -l"
+            - "python -c"
+            - "bash -i >&"
+            - "/dev/tcp/"
+            - "base64 -d"
+            - "chmod +x"
+    condition: (selection_files and selection_suspicious and
+               suspicious_content) and not filter_legitimate
+level: high
+tags:
+    - attack.persistence
+    - attack.t1546
+    - attack.t1546.004
+    - linux
+    - auditd
+references:
+    - https://attack.mitre.org/techniques/T1546/004/
+falsepositives:
+    - Legitimate shell customization
