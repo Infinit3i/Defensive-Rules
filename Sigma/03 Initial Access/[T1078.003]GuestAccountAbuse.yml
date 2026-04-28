@@ -52,5 +52,4 @@ falsepositives:
     - Public computer access scenarios
 references:
     - https://attack.mitre.org/techniques/T1078/003/
-technique:
-    - T1078.003
+technique: T1078.003

@@ -283,6 +283,29 @@
           </div>
         </div>
         <div v-else class="rule-details">
+          <div v-if="selectedRule.detectionLogic" class="detail-row">
+            <div class="rule-commands-title">Detection Logic:</div>
+            <div class="detection-tabs">
+              <button
+                class="tab-btn active"
+              >
+                <i class="nf nf-fa-code"></i>
+                YARA
+              </button>
+              <button
+                class="tab-btn copy-tab"
+                @click="copyYaraDetectionLogic(selectedRule)"
+                title="Copy detection logic"
+              >
+                <i class="nf nf-fa-copy"></i>
+                Copy
+              </button>
+            </div>
+            <div class="rule-commands">{{ selectedRule.detectionLogic }}</div>
+          </div>
+          <div class="detail-row">
+            <strong>Description:</strong> {{ selectedRule.description }}
+          </div>
           <div class="detail-row">
             <strong>Name:</strong> {{ selectedRule.name }}
           </div>
@@ -291,9 +314,6 @@
           </div>
           <div class="detail-row">
             <strong>Severity:</strong> {{ selectedRule.severity }}
-          </div>
-          <div class="detail-row">
-            <strong>Description:</strong> {{ selectedRule.description }}
           </div>
         </div>
         </div>
@@ -332,6 +352,7 @@ interface YaraRule {
   severity: string
   mitre_attack: string
   reference: string
+  detectionLogic: string
 }
 
 type SelectedRule = SigmaRule | YaraRule | null
@@ -754,7 +775,7 @@ const cleanDescription = (description: any): string => {
 
 const parseYaraRules = (yaraContent: string, filename: string): YaraRule[] => {
   const rules: YaraRule[] = []
-  const ruleMatches = yaraContent.match(/rule\s+(\w+)\s*{([^}]*meta:[^}]*?)}/gs)
+  const ruleMatches = yaraContent.match(/rule\s+(\w+)\s*\{([\s\S]*?)\}/gs)
 
   if (ruleMatches) {
     for (const match of ruleMatches) {
@@ -765,9 +786,22 @@ const parseYaraRules = (yaraContent: string, filename: string): YaraRule[] => {
         const ruleName = nameMatch[1]
         const meta = parseYaraMeta(metaMatch[1])
 
+        // Extract strings and condition sections for detection logic
+        const stringsMatch = match.match(/strings:\s*(.*?)(?=condition:|$)/s)
+        const conditionMatch = match.match(/condition:\s*(.*?)$/s)
+
+        let detectionLogic = ''
+        if (stringsMatch) {
+          detectionLogic += 'strings:\n' + stringsMatch[1].trim() + '\n\n'
+        }
+        if (conditionMatch) {
+          detectionLogic += 'condition:\n    ' + conditionMatch[1].trim()
+        }
+
         rules.push({
           name: ruleName,
           filename: filename,
+          detectionLogic: detectionLogic.trim(),
           description: meta.description || '',
           author: meta.author || 'Unknown',
           date: meta.date || '',
@@ -992,6 +1026,15 @@ const copyDetectionLogic = async (rule: SigmaRule): Promise<void> => {
     console.log(`${activeDetectionFormat.value.toUpperCase()} detection logic copied to clipboard`)
   } catch (err) {
     console.error('Failed to copy detection logic:', err)
+  }
+}
+
+const copyYaraDetectionLogic = async (rule: YaraRule): Promise<void> => {
+  try {
+    await navigator.clipboard.writeText(rule.detectionLogic)
+    console.log('YARA detection logic copied to clipboard')
+  } catch (err) {
+    console.error('Failed to copy YARA detection logic:', err)
   }
 }
 

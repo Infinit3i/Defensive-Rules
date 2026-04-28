@@ -14,7 +14,7 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 80vw;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -305,7 +305,7 @@ body {
 /* Rules Grid */
 .rules-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
 }
 

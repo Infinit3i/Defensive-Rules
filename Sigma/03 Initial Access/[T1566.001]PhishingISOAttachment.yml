@@ -36,9 +36,4 @@ tags:
     - attack.t1566
     - attack.t1566.001
     - email
-technique:
-    name: Phishing
-    id: T1566
-    subtechnique:
-        name: Spearphishing Attachment
-        id: T1566.001
+technique: T1566.001

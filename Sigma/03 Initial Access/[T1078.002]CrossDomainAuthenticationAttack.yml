@@ -42,5 +42,4 @@ falsepositives:
     - Service account authentication across domains
 references:
     - https://attack.mitre.org/techniques/T1078/002/
-technique:
-    - T1078.002
+technique: T1078.002

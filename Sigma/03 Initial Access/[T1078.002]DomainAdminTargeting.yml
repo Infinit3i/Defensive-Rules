@@ -48,5 +48,4 @@ falsepositives:
     - Scheduled administrative tasks
 references:
     - https://attack.mitre.org/techniques/T1078/002/
-technique:
-    - T1078.002
+technique: T1078.002

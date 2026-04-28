@@ -45,9 +45,4 @@ tags:
     - attack.t1566.006
     - sms
     - mobile
-technique:
-    name: Phishing
-    id: T1566
-    subtechnique:
-        name: Spearphishing SMS
-        id: T1566.006
+technique: T1566.006

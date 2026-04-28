@@ -44,9 +44,4 @@ tags:
     - telephony
     - voice
     - social-engineering
-technique:
-    name: Phishing
-    id: T1566
-    subtechnique:
-        name: Spearphishing Voice
-        id: T1566.007
+technique: T1566.007

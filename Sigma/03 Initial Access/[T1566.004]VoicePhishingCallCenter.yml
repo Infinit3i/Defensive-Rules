@@ -36,9 +36,4 @@ tags:
     - attack.t1566.004
     - telephony
     - voice
-technique:
-    name: Phishing
-    id: T1566
-    subtechnique:
-        name: Spearphishing Voice
-        id: T1566.004
+technique: T1566.004

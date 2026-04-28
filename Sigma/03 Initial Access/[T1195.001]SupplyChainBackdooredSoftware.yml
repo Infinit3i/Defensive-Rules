@@ -39,9 +39,4 @@ tags:
     - attack.t1195.001
     - supply-chain
     - backdoor
-technique:
-    name: Supply Chain Compromise
-    id: T1195
-    subtechnique:
-        name: Compromise Software Dependencies and Development Tools
-        id: T1195.001
+technique: T1195.001

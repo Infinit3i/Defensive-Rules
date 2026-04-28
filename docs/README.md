@@ -4,8 +4,8 @@ Vue.js TypeScript frontend for browsing Sigma and YARA detection rules. Uses Vit
 
 ## Features
 
-- Browse 281+ Sigma rules organized by MITRE ATT&CK tactics  
-- View 17+ YARA rules for binary detection
+- Browse 451 Sigma rules organized by MITRE ATT&CK tactics  
+- View 6+ YARA rules for binary detection
 - Search and filter rules by technique, severity, or keywords
 - Clean dark theme with nerd font icons
 - Mobile responsive design

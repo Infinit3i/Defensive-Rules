@@ -37,9 +37,4 @@ tags:
     - attack.t1195.003
     - dependency-confusion
     - package-manager
-technique:
-    name: Supply Chain Compromise
-    id: T1195
-    subtechnique:
-        name: Compromise Software Supply Chain
-        id: T1195.003
+technique: T1195.003

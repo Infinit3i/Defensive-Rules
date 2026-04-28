@@ -39,9 +39,4 @@ tags:
     - attack.t1566
     - attack.t1566.005
     - social-media
-technique:
-    name: Phishing
-    id: T1566
-    subtechnique:
-        name: Spearphishing via Social Media
-        id: T1566.005
+technique: T1566.005

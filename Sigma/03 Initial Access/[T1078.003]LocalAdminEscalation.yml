@@ -49,5 +49,4 @@ falsepositives:
     - Software installation requiring elevation
 references:
     - https://attack.mitre.org/techniques/T1078/003/
-technique:
-    - T1078.003
+technique: T1078.003
