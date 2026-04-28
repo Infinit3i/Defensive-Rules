@@ -211,10 +211,34 @@
         <div class="modal-content">
         <div v-if="selectedRule.title" class="rule-details">
           <div v-if="selectedRule.detection" class="detail-row">
-            <div class="detection-header">
-              <div class="rule-commands-title">Detection Logic:</div>
+            <div class="rule-commands-title">Detection Logic:</div>
+            <div class="detection-tabs">
               <button
-                class="detection-copy-btn"
+                class="tab-btn"
+                :class="{ active: activeDetectionFormat === 'sigma' }"
+                @click="activeDetectionFormat = 'sigma'"
+              >
+                <i class="nf nf-fa-code"></i>
+                Sigma
+              </button>
+              <button
+                class="tab-btn"
+                :class="{ active: activeDetectionFormat === 'splunk' }"
+                @click="activeDetectionFormat = 'splunk'"
+              >
+                <i class="nf nf-fa-search"></i>
+                Splunk
+              </button>
+              <button
+                class="tab-btn"
+                :class="{ active: activeDetectionFormat === 'sentinel' }"
+                @click="activeDetectionFormat = 'sentinel'"
+              >
+                <i class="nf nf-fa-shield"></i>
+                Sentinel
+              </button>
+              <button
+                class="tab-btn copy-tab"
                 @click="copyDetectionLogic(selectedRule)"
                 title="Copy detection logic"
               >
@@ -222,7 +246,7 @@
                 Copy
               </button>
             </div>
-            <div class="rule-commands">{{ formatDetection(selectedRule.detection) }}</div>
+            <div class="rule-commands">{{ getFormattedDetection(selectedRule) }}</div>
           </div>
           <div class="detail-row">
             <strong>Description:</strong> {{ selectedRule.description }}
@@ -326,6 +350,7 @@ const loading = ref(true)
 const funnyQuote = ref('')
 const cardRect = ref<DOMRect | null>(null)
 const isAnimating = ref(false)
+const activeDetectionFormat = ref<'sigma' | 'splunk' | 'sentinel'>('sigma')
 const tactics = ref<string[]>([])
 const uniqueTechniques = ref<string[]>([])
 const allLogSources = ref<string[]>([])
@@ -852,11 +877,119 @@ const formatDetection = (detection: any): string => {
 }
 
 
+const getFormattedDetection = (rule: SigmaRule): string => {
+  if (!rule.detection) return 'No detection logic available'
+
+  switch (activeDetectionFormat.value) {
+    case 'splunk':
+      return convertToSplunk(rule)
+    case 'sentinel':
+      return convertToSentinel(rule)
+    default:
+      return formatDetection(rule.detection)
+  }
+}
+
+const convertToSplunk = (rule: SigmaRule): string => {
+  const logSource = rule.logsource
+  let query = ''
+
+  // Base index/source
+  if (logSource?.product === 'windows' && logSource?.service === 'sysmon') {
+    query += 'index=sysmon '
+  } else if (logSource?.product === 'windows' && logSource?.service === 'security') {
+    query += 'index=wineventlog source="WinEventLog:Security" '
+  } else if (logSource?.product === 'azure') {
+    query += 'index=azure '
+  } else {
+    query += 'index=* '
+  }
+
+  // Add basic search terms from detection
+  const detection = rule.detection
+  if (detection && typeof detection === 'object') {
+    const searchTerms: string[] = []
+
+    Object.entries(detection).forEach(([key, value]) => {
+      if (key !== 'condition' && typeof value === 'object') {
+        Object.entries(value).forEach(([fieldKey, fieldValue]) => {
+          if (Array.isArray(fieldValue)) {
+            fieldValue.forEach(item => {
+              if (typeof item === 'string' && item.length > 2) {
+                searchTerms.push(`"${item}"`)
+              }
+            })
+          } else if (typeof fieldValue === 'string' && fieldValue.length > 2) {
+            searchTerms.push(`"${fieldValue}"`)
+          }
+        })
+      }
+    })
+
+    if (searchTerms.length > 0) {
+      query += `(${searchTerms.slice(0, 5).join(' OR ')}) `
+    }
+  }
+
+  query += '\n| eval rule_name="' + rule.title + '"'
+  query += '\n| eval mitre_technique="' + rule.technique + '"'
+  query += '\n| table _time, host, source, rule_name, mitre_technique'
+
+  return query
+}
+
+const convertToSentinel = (rule: SigmaRule): string => {
+  const logSource = rule.logsource
+  let query = ''
+
+  // Base table
+  if (logSource?.product === 'windows' && logSource?.service === 'sysmon') {
+    query += 'Event\n| where Source == "Microsoft-Windows-Sysmon"\n'
+  } else if (logSource?.product === 'windows' && logSource?.service === 'security') {
+    query += 'SecurityEvent\n'
+  } else if (logSource?.product === 'azure') {
+    query += 'AuditLogs\n'
+  } else {
+    query += 'Event\n'
+  }
+
+  // Add basic filters from detection
+  const detection = rule.detection
+  if (detection && typeof detection === 'object') {
+    const filters: string[] = []
+
+    Object.entries(detection).forEach(([key, value]) => {
+      if (key !== 'condition' && typeof value === 'object') {
+        Object.entries(value).forEach(([fieldKey, fieldValue]) => {
+          if (Array.isArray(fieldValue)) {
+            const values = fieldValue.filter(item => typeof item === 'string' && item.length > 2)
+            if (values.length > 0) {
+              filters.push(`(${values.map(v => `EventData contains "${v}"`).join(' or ')})`)
+            }
+          } else if (typeof fieldValue === 'string' && fieldValue.length > 2) {
+            filters.push(`EventData contains "${fieldValue}"`)
+          }
+        })
+      }
+    })
+
+    if (filters.length > 0) {
+      query += '| where ' + filters.slice(0, 3).join(' or ') + '\n'
+    }
+  }
+
+  query += `| extend RuleName = "${rule.title}"`
+  query += `\n| extend MitreTechnique = "${rule.technique}"`
+  query += '\n| project TimeGenerated, Computer, EventData, RuleName, MitreTechnique'
+
+  return query
+}
+
 const copyDetectionLogic = async (rule: SigmaRule): Promise<void> => {
   try {
-    const detectionText = formatDetection(rule.detection)
+    const detectionText = getFormattedDetection(rule)
     await navigator.clipboard.writeText(detectionText)
-    console.log('Detection logic copied to clipboard')
+    console.log(`${activeDetectionFormat.value.toUpperCase()} detection logic copied to clipboard`)
   } catch (err) {
     console.error('Failed to copy detection logic:', err)
   }

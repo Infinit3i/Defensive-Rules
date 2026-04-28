@@ -70,6 +70,24 @@ npm run build:gh-pages
 npm run preview
 ```
 
+### Alternative: Simple HTTP Server
+
+For testing without the Vite dev server:
+
+```bash
+# First, build the application
+cd docs/
+npm run build
+
+# Then serve the built files
+cd dist/
+python3 -m http.server 8000
+
+# Access at: http://localhost:8000/
+```
+
+** Important**: You must build first with `npm run build` before serving with a simple HTTP server. The source files cannot be served directly because they use Vite's import system.
+
 ## Rule Loading System
 
 The frontend uses build-time processing for production compatibility:

@@ -334,31 +334,59 @@ body {
 }
 
 
-.detection-header {
+.detection-tabs {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
+    margin: 1rem 0 0 0;
+    border-bottom: 1px solid #30363d;
+    gap: 0.25rem;
 }
 
-.detection-copy-btn {
-    background: #30363d;
-    border: 1px solid #58a6ff;
-    color: #58a6ff;
-    padding: 0.3rem 0.6rem;
-    border-radius: 0.3rem;
+.tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #8b949e;
+    padding: 0.75rem 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    margin-bottom: -1px;
+    position: relative;
 }
 
-.detection-copy-btn:hover {
+.tab-btn:hover {
+    background: #21262d;
+    color: #e0e0e0;
+    border-bottom-color: #58a6ff;
+}
+
+.tab-btn.active {
+    background: #161b22;
+    color: #58a6ff;
+    border-bottom-color: #58a6ff;
+    font-weight: 600;
+}
+
+.tab-btn.copy-tab {
+    border-radius: 0.5rem 0.5rem 0 0;
+    margin-left: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+.tab-btn.copy-tab:hover {
     background: #58a6ff;
     color: #0d1117;
+    border-bottom-color: #58a6ff;
+}
+
+.tab-btn i {
+    font-size: 0.8rem;
 }
 
 /* Vue Modal Transitions - Morphing Animation */
@@ -817,9 +845,10 @@ body {
 .rule-commands {
     background: #0d1117;
     border: 1px solid #30363d;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin-top: 1rem;
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 1.5rem;
+    margin-top: 0;
     font-family: 'Fira Code', 'JetBrains Mono', monospace;
     font-size: 0.85rem;
     overflow-x: auto;

@@ -96,7 +96,6 @@ createApp({
                 '08 Credential Access',
                 '09 Discovery',
                 '10 Lateral Movement',
-                '11 Collection',
                 '12 Command and Control',
                 '13 Exfiltration',
                 '14 Impact'
@@ -114,8 +113,19 @@ createApp({
         },
 
         async loadSigmaFromDirectory(directory) {
-            // Direct GitHub raw content access - no server needed
-            const basePath = 'https://raw.githubusercontent.com/infinit3i/Defensive-Rules/main';
+            // Dynamic basePath for localhost development and GitHub Pages
+            const basePath = (() => {
+                const isLocalhost = window.location.hostname === 'localhost' ||
+                                   window.location.hostname === '127.0.0.1';
+
+                if (isLocalhost) {
+                    // For localhost, check if server runs from root or docs/
+                    return window.location.pathname.includes('/docs/') ? '' : '/docs';
+                } else {
+                    // GitHub Pages production - use raw content
+                    return 'https://raw.githubusercontent.com/infinit3i/Defensive-Rules/main';
+                }
+            })();
 
             // Sanitize directory name
             const sanitizedDir = directory.replace(/[^a-zA-Z0-9\s\-]/g, '');
@@ -135,7 +145,13 @@ createApp({
                 if (!this.isValidRuleFileName(file)) continue;
 
                 try {
-                    const url = `${basePath}/Sigma/${encodeURIComponent(sanitizedDir)}/${encodeURIComponent(file)}`;
+                    const isLocalhost = window.location.hostname === 'localhost' ||
+                                       window.location.hostname === '127.0.0.1';
+
+                    const url = isLocalhost
+                        ? `${basePath}/Sigma/${encodeURIComponent(sanitizedDir)}/${encodeURIComponent(file)}`
+                        : `${basePath}/Sigma/${encodeURIComponent(sanitizedDir)}/${encodeURIComponent(file)}`;
+
                     const response = await fetch(url);
                     if (response.ok) {
                         const yamlContent = await response.text();
@@ -158,22 +174,66 @@ createApp({
         async discoverRuleFiles(directory) {
             // Sanitize directory input - prevent path traversal
             const sanitizedDir = directory.replace(/\.\./g, '').replace(/[^a-zA-Z0-9\/\s\-]/g, '');
+            const isLocalhost = window.location.hostname === 'localhost' ||
+                               window.location.hostname === '127.0.0.1';
 
-            // Use GitHub API for ALL environments - no server dependency
-            try {
-                const apiUrl = `https://api.github.com/repos/infinit3i/Defensive-Rules/contents/${encodeURIComponent(sanitizedDir)}`;
-                const response = await fetch(apiUrl);
+            if (isLocalhost) {
+                // For localhost development, try to list directory contents
+                try {
+                    const basePath = window.location.pathname.includes('/docs/') ? '' : '/docs';
+                    const dirUrl = `${basePath}/${sanitizedDir}/`;
+                    const response = await fetch(dirUrl);
 
-                if (response.ok) {
-                    const files = await response.json();
-                    return files
-                        .filter(file => file.type === 'file' && this.isValidRuleFileName(file.name))
-                        .map(file => file.name);
+                    if (response.ok) {
+                        const html = await response.text();
+                        const files = this.parseDirectoryListing(html);
+                        return files.filter(file => this.isValidRuleFileName(file));
+                    }
+                } catch (error) {
+                    console.warn(`Local directory listing failed for ${sanitizedDir}:`, error.message);
+                    // Fall back to known files for development
+                    return this.getKnownFilesForDirectory(directory);
                 }
-            } catch (error) {
-                console.warn(`GitHub API failed for ${sanitizedDir}:`, error.message);
+            } else {
+                // Use GitHub API for production
+                try {
+                    const apiUrl = `https://api.github.com/repos/infinit3i/Defensive-Rules/contents/${encodeURIComponent(sanitizedDir)}`;
+                    const response = await fetch(apiUrl);
+
+                    if (response.ok) {
+                        const files = await response.json();
+                        return files
+                            .filter(file => file.type === 'file' && this.isValidRuleFileName(file.name))
+                            .map(file => file.name);
+                    }
+                } catch (error) {
+                    console.warn(`GitHub API failed for ${sanitizedDir}:`, error.message);
+                }
             }
 
+            return [];
+        },
+
+        parseDirectoryListing(html) {
+            // Parse simple HTTP directory listing for .yml files
+            const files = [];
+            const linkRegex = /<a[^>]+href="([^"]+\.yml)"[^>]*>/gi;
+            let match;
+
+            while ((match = linkRegex.exec(html)) !== null) {
+                const filename = decodeURIComponent(match[1]);
+                if (filename.endsWith('.yml') && !filename.includes('/')) {
+                    files.push(filename);
+                }
+            }
+
+            return files;
+        },
+
+        getKnownFilesForDirectory(directory) {
+            // Fallback to return empty array for development
+            // In a real deployment, this could return a pre-built file list
+            console.warn(`Using fallback for directory: ${directory}`);
             return [];
         },
 
@@ -293,13 +353,26 @@ createApp({
         },
 
         async discoverYaraRules() {
-            // Use unified GitHub API approach - DRY with Sigma discovery
+            // Dynamic basePath for localhost development and GitHub Pages
+            const basePath = (() => {
+                const isLocalhost = window.location.hostname === 'localhost' ||
+                                   window.location.hostname === '127.0.0.1';
+
+                if (isLocalhost) {
+                    // For localhost, check if server runs from root or docs/
+                    return window.location.pathname.includes('/docs/') ? '' : '/docs';
+                } else {
+                    // GitHub Pages production - use raw content
+                    return 'https://raw.githubusercontent.com/infinit3i/Defensive-Rules/main';
+                }
+            })();
+
             const yaraFiles = await this.discoverRuleFiles('Yara');
             console.log(`Discovered ${yaraFiles.length} YARA files`);
 
             for (const file of yaraFiles) {
                 try {
-                    const url = `https://raw.githubusercontent.com/infinit3i/Defensive-Rules/main/Yara/${encodeURIComponent(file)}`;
+                    const url = `${basePath}/Yara/${encodeURIComponent(file)}`;
                     const response = await fetch(url);
                     if (response.ok) {
                         const yaraContent = await response.text();
