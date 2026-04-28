@@ -9,13 +9,7 @@
           </h1>
           <p class="subtitle">Cybersecurity Detection Rules - Sigma & YARA</p>
         </div>
-        <div class="header-right">
-          <div class="header-stats">
-            <div class="header-stat">
-              <i class="nf nf-fa-shield"></i>
-              Total Rules: {{ totalRules }}
-            </div>
-          </div>
+        <div class="header-right desktop-only">
           <div class="rule-type-buttons">
             <button
               class="rule-type-btn"
@@ -41,7 +35,33 @@
 
   <nav class="nav">
     <div class="container">
-      <div class="tactic-nav">
+      <!-- Mobile Hamburger -->
+      <div class="mobile-nav">
+        <button class="hamburger-btn" @click="mobileMenuOpen = !mobileMenuOpen">
+          <i class="nf nf-fa-bars"></i>
+          {{ selectedTactic || 'All Tactics' }}
+        </button>
+
+        <div class="mobile-rule-types">
+          <button
+            class="mobile-rule-type-btn"
+            :class="{ active: activeRuleType === 'sigma' }"
+            @click="activeRuleType = 'sigma'"
+          >
+            Sigma
+          </button>
+          <button
+            class="mobile-rule-type-btn"
+            :class="{ active: activeRuleType === 'yara' }"
+            @click="activeRuleType = 'yara'"
+          >
+            YARA
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Tactic Navigation -->
+      <div class="tactic-nav desktop-only">
         <button
           class="tactic-tab"
           :class="{ active: selectedTactic === '' }"
@@ -63,6 +83,29 @@
           </span>
           <span class="tactic-count">({{ sigmaRules.filter(r => r.tactic === tactic).length }})</span>
         </button>
+      </div>
+
+      <!-- Mobile Dropdown Menu -->
+      <div v-if="mobileMenuOpen" class="mobile-dropdown" @click="mobileMenuOpen = false">
+        <div class="mobile-menu" @click.stop>
+          <button
+            class="mobile-tactic-item"
+            :class="{ active: selectedTactic === '' }"
+            @click="selectedTactic = ''; mobileMenuOpen = false"
+          >
+            <i class="nf nf-fa-list"></i>
+            All Tactics ({{ sigmaRules.length }})
+          </button>
+          <button
+            v-for="tactic in tactics"
+            :key="tactic"
+            class="mobile-tactic-item"
+            :class="{ active: selectedTactic === tactic }"
+            @click="selectedTactic = tactic; mobileMenuOpen = false"
+          >
+            {{ tactic }} ({{ sigmaRules.filter(r => r.tactic === tactic).length }})
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -90,6 +133,13 @@
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
+
+          <select v-model="selectedLogSource" class="filter-select">
+            <option value="">All Log Sources</option>
+            <option v-for="source in logSources" :key="source" :value="source">
+              {{ source }}
+            </option>
+          </select>
         </div>
       </div>
 
@@ -103,7 +153,16 @@
         >
           <div class="rule-header">
             <h3 class="rule-title">{{ rule.title }}</h3>
-            <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
+            <div class="rule-actions">
+              <button
+                class="copy-btn"
+                @click.stop="copyRule(rule)"
+                title="Copy rule"
+              >
+                <i class="nf nf-fa-copy"></i>
+              </button>
+              <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
+            </div>
           </div>
           <div class="rule-meta">
             <span class="rule-tactic">
@@ -153,7 +212,17 @@
       <div class="modal-content">
         <div v-if="selectedRule.title" class="rule-details">
           <div v-if="selectedRule.detection" class="detail-row">
-            <div class="rule-commands-title">Detection Logic:</div>
+            <div class="detection-header">
+              <div class="rule-commands-title">Detection Logic:</div>
+              <button
+                class="detection-copy-btn"
+                @click="copyDetectionLogic(selectedRule)"
+                title="Copy detection logic"
+              >
+                <i class="nf nf-fa-copy"></i>
+                Copy
+              </button>
+            </div>
             <div class="rule-commands">{{ formatDetection(selectedRule.detection) }}</div>
           </div>
           <div class="detail-row">
@@ -244,14 +313,40 @@ const activeRuleType = ref<'sigma' | 'yara'>('sigma')
 const searchQuery = ref('')
 const selectedTactic = ref('')
 const selectedSeverity = ref('')
+const selectedLogSource = ref('')
 const selectedRule = ref<SelectedRule>(null)
+const mobileMenuOpen = ref(false)
 const sigmaRules = ref<SigmaRule[]>([])
 const yaraRules = ref<YaraRule[]>([])
 const loading = ref(true)
 const tactics = ref<string[]>([])
 const uniqueTechniques = ref<string[]>([])
+const allLogSources = ref<string[]>([])
 
 // Computed properties
+const logSources = computed(() => {
+  if (!selectedTactic.value) {
+    return allLogSources.value
+  }
+
+  const logSourcesSet = new Set<string>()
+
+  sigmaRules.value
+    .filter(rule => rule.tactic.toLowerCase().includes(selectedTactic.value.toLowerCase()))
+    .forEach(rule => {
+      if (rule.logsource) {
+        const product = rule.logsource.product || ''
+        const service = rule.logsource.service || ''
+        const category = rule.logsource.category || ''
+
+        if (product) logSourcesSet.add(product)
+        if (service) logSourcesSet.add(service)
+        if (category) logSourcesSet.add(category)
+      }
+    })
+
+  return Array.from(logSourcesSet).sort()
+})
 const filteredSigmaRules = computed(() => {
   let filtered = sigmaRules.value
 
@@ -273,6 +368,23 @@ const filteredSigmaRules = computed(() => {
   if (selectedSeverity.value) {
     filtered = filtered.filter(rule => rule.level === selectedSeverity.value)
   }
+
+  if (selectedLogSource.value) {
+    filtered = filtered.filter(rule => {
+      const logSource = rule.logsource
+      if (!logSource) return false
+      const sourceString = `${logSource.product || ''} ${logSource.service || ''} ${logSource.category || ''}`.toLowerCase()
+      return sourceString.includes(selectedLogSource.value.toLowerCase())
+    })
+  }
+
+  // Sort by criticality: critical > high > medium > low
+  const severityOrder = { critical: 4, high: 3, medium: 2, low: 1 }
+  filtered.sort((a, b) => {
+    const aLevel = severityOrder[a.level] || 0
+    const bLevel = severityOrder[b.level] || 0
+    return bLevel - aLevel
+  })
 
   return filtered
 })
@@ -376,10 +488,21 @@ const loadLocalRules = async (): Promise<void> => {
 const extractMetadata = (): void => {
   const tacticsSet = new Set<string>()
   const techniquesSet = new Set<string>()
+  const logSourcesSet = new Set<string>()
 
   sigmaRules.value.forEach(rule => {
     if (rule.tactic) tacticsSet.add(rule.tactic)
     if (rule.technique) techniquesSet.add(rule.technique)
+
+    if (rule.logsource) {
+      const product = rule.logsource.product || ''
+      const service = rule.logsource.service || ''
+      const category = rule.logsource.category || ''
+
+      if (product) logSourcesSet.add(product)
+      if (service) logSourcesSet.add(service)
+      if (category) logSourcesSet.add(category)
+    }
   })
 
   yaraRules.value.forEach(rule => {
@@ -412,6 +535,7 @@ const extractMetadata = (): void => {
   )
 
   uniqueTechniques.value = Array.from(techniquesSet).sort()
+  allLogSources.value = Array.from(logSourcesSet).sort()
 }
 
 const parseSigmaRule = (yamlContent: string, filename: string, directory: string): SigmaRule | null => {
@@ -699,6 +823,26 @@ const formatDetection = (detection: any): string => {
   })
 
   return formatted || 'Detection structure exists but content is empty'
+}
+
+const copyRule = async (rule: SigmaRule): Promise<void> => {
+  try {
+    const content = rule.rawContent || 'Raw content not available'
+    await navigator.clipboard.writeText(content)
+    console.log('Rule copied to clipboard')
+  } catch (err) {
+    console.error('Failed to copy rule:', err)
+  }
+}
+
+const copyDetectionLogic = async (rule: SigmaRule): Promise<void> => {
+  try {
+    const detectionText = formatDetection(rule.detection)
+    await navigator.clipboard.writeText(detectionText)
+    console.log('Detection logic copied to clipboard')
+  } catch (err) {
+    console.error('Failed to copy detection logic:', err)
+  }
 }
 
 // Lifecycle

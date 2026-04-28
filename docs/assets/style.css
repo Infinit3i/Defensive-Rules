@@ -166,7 +166,9 @@ body {
     gap: 0.1rem;
     flex-wrap: nowrap;
     justify-content: stretch;
+    align-items: center;
     width: 100vw;
+    height: 6rem;
     padding: 0;
     position: relative;
     left: 50%;
@@ -180,7 +182,7 @@ body {
     padding: 0.4rem 0.2rem;
     border-radius: 0.3rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.8s ease;
     font-family: inherit;
     font-size: 0.55rem;
     display: flex;
@@ -202,6 +204,9 @@ body {
     background: #58a6ff;
     border-color: #58a6ff;
     color: #0d1117;
+    flex: 2;
+    font-size: 0.65rem;
+    height: 4rem;
 }
 
 .tactic-tab i {
@@ -326,6 +331,204 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 1rem;
+}
+
+.rule-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copy-btn {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.rule-card:hover .copy-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.copy-btn:hover {
+    background: #30363d;
+    color: #58a6ff;
+    border-color: #58a6ff;
+}
+
+.detection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.detection-copy-btn {
+    background: #30363d;
+    border: 1px solid #58a6ff;
+    color: #58a6ff;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.detection-copy-btn:hover {
+    background: #58a6ff;
+    color: #0d1117;
+}
+
+/* Mobile Styles */
+.mobile-nav {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.hamburger-btn {
+    background: #30363d;
+    border: 1px solid #58a6ff;
+    color: #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.hamburger-btn:hover {
+    background: #58a6ff;
+    color: #0d1117;
+}
+
+.mobile-rule-types {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.mobile-rule-type-btn {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #e0e0e0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.85rem;
+}
+
+.mobile-rule-type-btn:hover {
+    background: #30363d;
+    border-color: #58a6ff;
+}
+
+.mobile-rule-type-btn.active {
+    background: #58a6ff;
+    border-color: #58a6ff;
+    color: #0d1117;
+}
+
+.mobile-dropdown {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 1rem;
+}
+
+.mobile-menu {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 0.5rem;
+    margin-left: 1rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+}
+
+.mobile-tactic-item {
+    background: transparent;
+    border: none;
+    color: #e0e0e0;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mobile-tactic-item:hover {
+    background: #30363d;
+}
+
+.mobile-tactic-item.active {
+    background: #58a6ff;
+    color: #0d1117;
+}
+
+.mobile-tactic-item:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-nav {
+        display: flex !important;
+    }
+
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .subtitle {
+        text-align: center;
+    }
 }
 
 .rule-title {
