@@ -255,7 +255,12 @@
               <i v-if="isCommonTechnique(rule.technique)" class="nf nf-fa-star common-star" title="Common Technique"></i>
               {{ rule.title }}
             </h3>
-            <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
+            <span class="rule-severity" :class="rule.level" :title="rule.level">
+              <i v-if="rule.level === 'critical'" class="nf nf-fa-exclamation_triangle"></i>
+              <i v-else-if="rule.level === 'high'" class="nf nf-fa-exclamation"></i>
+              <i v-else-if="rule.level === 'medium'" class="nf nf-fa-minus_circle"></i>
+              <i v-else-if="rule.level === 'low'" class="nf nf-fa-info_circle"></i>
+            </span>
           </div>
           <div class="rule-meta">
             <span v-if="!selectedTactic" class="rule-tactic">
@@ -281,7 +286,12 @@
         >
           <div class="rule-header">
             <h3 class="rule-title">{{ rule.name }}</h3>
-            <span class="rule-severity" :class="rule.severity">{{ rule.severity }}</span>
+            <span class="rule-severity" :class="rule.severity" :title="rule.severity">
+              <i v-if="rule.severity === 'critical'" class="nf nf-fa-exclamation_triangle"></i>
+              <i v-else-if="rule.severity === 'high'" class="nf nf-fa-exclamation"></i>
+              <i v-else-if="rule.severity === 'medium'" class="nf nf-fa-minus_circle"></i>
+              <i v-else-if="rule.severity === 'low'" class="nf nf-fa-info_circle"></i>
+            </span>
           </div>
           <div class="rule-meta">
             <span class="rule-technique">

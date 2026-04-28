@@ -814,32 +814,39 @@ body {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
-    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .rule-severity.critical {
-    background: #da3633;
+    background: #dc2626;
     color: #fff;
+    border: 1px solid #b91c1c;
 }
 
 .rule-severity.high {
-    background: #fb8500;
+    background: #ea580c;
     color: #fff;
+    border: 1px solid #c2410c;
 }
 
 .rule-severity.medium {
-    background: #f9844a;
+    background: #d97706;
     color: #fff;
+    border: 1px solid #a16207;
 }
 
 .rule-severity.low {
-    background: #3fb950;
+    background: #16a34a;
     color: #fff;
+    border: 1px solid #15803d;
 }
 
 .rule-meta {

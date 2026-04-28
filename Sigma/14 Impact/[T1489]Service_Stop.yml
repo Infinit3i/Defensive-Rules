@@ -9,18 +9,13 @@ date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1489/
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1489
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
+  - attack.impact
+  # MITRE ATT&CK technique
   - attack.t1489
-  - tactic.impact
-  - platform:windows
-  - technique:T1489
-  - mitre_version:16.1
+  # Platform/tool tags
+  - windows
+  - sysmon
 logsource:
   product: windows
   service: sysmon

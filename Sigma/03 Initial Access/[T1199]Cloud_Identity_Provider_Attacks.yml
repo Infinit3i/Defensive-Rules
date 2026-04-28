@@ -59,7 +59,7 @@ detection:
             - 'SAML2'
             - 'WS-Fed'
             - 'OAuth2'
-    # Sign-ins through potentially compromised identity providers
+        # Sign-ins through potentially compromised identity providers
         UserPrincipalName|contains: '@federated.'
     selection_privileged_federation_access:
         ActivityDisplayName:

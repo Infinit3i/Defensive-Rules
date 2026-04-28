@@ -37,9 +37,9 @@ detection:
             - 'Office 365'
             - 'OneDrive'
             - 'SharePoint'
-    # Apps mimicking legitimate Microsoft services
+        # Apps mimicking legitimate Microsoft services
         InitiatedBy.app.appId|contains:
-    # Known malicious OAuth app IDs would go here
+            # Known malicious OAuth app IDs would go here
             - '00000000-0000-0000-0000-000000000000'
     selection_session_hijacking:
         ActivityDisplayName: 'Sign-in activity'

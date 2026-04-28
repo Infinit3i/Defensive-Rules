@@ -26,7 +26,7 @@ detection:
             - 'GetObject'
             - 'ListObjects'
             - 'GetBucketLocation'
-    # High volume of object access from single IP
+        # High volume of object access from single IP
         sourceIPAddress|cidr:
             - '0.0.0.0/0'  # Will be filtered for known malicious ranges
     selection_bucket_enumeration:

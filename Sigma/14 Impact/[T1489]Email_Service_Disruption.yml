@@ -61,14 +61,10 @@ falsepositives:
   - Planned maintenance
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t1489
-    # Platform/tool tags
-    - windows
-    - sysmon
+  # MITRE ATT&CK tactic
   - attack.impact
+  # MITRE ATT&CK technique
   - attack.t1489
-  - sysmon
+  # Platform/tool tags
   - windows
+  - sysmon
