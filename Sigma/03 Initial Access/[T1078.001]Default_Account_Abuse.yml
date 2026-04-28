@@ -3,24 +3,17 @@ title: Default Account Abuse Detection
 technique: T1078.001
 id: d3a8e5f1-4c7b-4e2f-b6a9-8e1c3f7d2a5b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects abuse of default accounts by monitoring for authentication attempts
-  using common default usernames, unchanged default passwords, or suspicious
-  activities from well-known default service accounts.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects abuse of default accounts by monitoring for authentication attempts using common default usernames, unchanged default passwords, or suspicious activities from well-known default service accounts.
 references:
   - https://attack.mitre.org/techniques/T1078/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1078.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1078.001
   - default_account
   - authentication
   - weak_credentials
@@ -29,7 +22,7 @@ logsource:
   service: security
 detection:
   default_users:
-  EventID: 4624
+  EventID:
   TargetUserName|contains:
       - 'admin'
       - 'administrator'
@@ -39,11 +32,11 @@ detection:
       - 'default'
       - 'sa'
   service_accounts:
-  EventID: 4624
+  EventID:
   TargetUserName|startswith:
       - 'svc'
       - 'service'
-  LogonType: 3
+  LogonType:
   condition: default_users or service_accounts
 falsepositives:
   - Legitimate use of administrative accounts

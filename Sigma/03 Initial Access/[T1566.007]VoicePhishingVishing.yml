@@ -1,7 +1,8 @@
 title: Voice Phishing Vishing Attack Detection
 id: f9a8e7d6-3c5b-4a2e-8f7d-a6c9b4e7f3d8
 status: experimental
-description: Detects voice phishing attacks through suspicious call patterns and social engineering indicators
+description: >-
+  Detects voice phishing attacks through suspicious call patterns and social engineering indicators
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,9 +12,9 @@ logsource:
   service: call-analytics
 detection:
   selection_spoofed_caller:
-    CallerIDSpoofed: true
+  CallerIDSpoofed:
   selection_suspicious_keywords:
-    CallTranscript|contains:
+  CallTranscript|contains:
       - 'verify account'
       - 'suspended account'
       - 'security breach'
@@ -21,7 +22,7 @@ detection:
       - 'provide password'
       - 'confirm PIN'
   selection_impersonation:
-    CallerIDName|contains:
+  CallerIDName|contains:
       - 'Bank'
       - 'Microsoft'
       - 'Apple'
@@ -29,13 +30,14 @@ detection:
       - 'Support'
       - 'Security'
   selection_pressure_tactics:
-    CallTranscript|contains:
+  CallTranscript|contains:
       - 'within 24 hours'
       - 'immediately'
       - 'or your account'
       - 'legal action'
-  condition: (selection_spoofed_caller or selection_impersonation) and
-               (selection_suspicious_keywords or selection_pressure_tactics)
+  condition: |
+    (selection_spoofed_caller or selection_impersonation) and
+    (selection_suspicious_keywords or selection_pressure_tactics)
 level: high
 tags:
   - attack.initial-access

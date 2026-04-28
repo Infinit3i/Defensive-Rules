@@ -16,15 +16,15 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-    EventID: 4104
+  EventID:
   compression:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Compress-Archive'
       - 'System.IO.Compression'
       - 'ZipFile'
       - 'GZipStream'
   data_sources:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Get-ChildItem'
       - 'Documents'
       - 'Users'

@@ -3,7 +3,8 @@ title: Malicious Docker Image Execution Detection
 technique: T1204.003
 id: 4e8b6c2a-3f7d-5e9f-a3c7-7f4e6d8c9a5b
 status: experimental
-description: Detects execution of malicious Docker images through suspicious container runtime activity and untrusted registry pulls.
+description: >-
+  Detects execution of malicious Docker images through suspicious container runtime activity and untrusted registry pulls.
 references:
   - https://attack.mitre.org/techniques/T1204/003/
 author: Infinit3i
@@ -33,7 +34,7 @@ detection:
       - 'dockerhub.com'
       - 'quay.io'
       - 'gcr.io'
-  CommandLine|re: '.*[a-f0-9]{12,64}.*'
+  CommandLine|re:
   privilege_escalation:
   CommandLine|contains:
       - '--privileged'

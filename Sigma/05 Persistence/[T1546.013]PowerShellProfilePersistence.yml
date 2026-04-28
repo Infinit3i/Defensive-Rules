@@ -9,13 +9,13 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'Microsoft.PowerShell_profile.ps1'
       - 'profile.ps1'
       - '\WindowsPowerShell\'
       - '\PowerShell\7\'
-    TargetFilename|endswith: '.ps1'
+  TargetFilename|endswith:
   condition: selection
 level: medium
 tags:

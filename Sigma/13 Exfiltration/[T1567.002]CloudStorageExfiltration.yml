@@ -1,7 +1,8 @@
 title: Cloud Storage Data Exfiltration
 id: d4e5f6a7-8901-2345-678c-def012345678
 status: experimental
-description: Detects suspicious data exfiltration to cloud storage platforms like Dropbox, Box, OneDrive
+description: >-
+  Detects suspicious data exfiltration to cloud storage platforms like Dropbox, Box, OneDrive
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,19 +15,19 @@ logsource:
   service: access
 detection:
   selection_upload:
-    event_type:
+  event_type:
       - 'upload'
       - 'create'
       - 'share'
   selection_volume:
-    file_size|gt: 100000000  # > 100MB
+  file_size|gt:
   selection_suspicious:
-    - file_name|contains:
+      - file_name|contains:
       - 'dump'
       - 'backup'
       - 'export'
       - 'confidential'
-    - ip_address|startswith:
+      - ip_address|startswith:
       - '10.'
       - '192.168.'
       - '172.'

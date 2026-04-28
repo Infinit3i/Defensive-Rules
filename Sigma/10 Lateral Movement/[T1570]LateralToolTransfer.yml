@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_file_creation:
-  EventID: 11
+  EventID:
   TargetFilename|contains:
       - '\Windows\Temp\'
       - '\ProgramData\'
@@ -26,7 +26,7 @@ detection:
       - '.ps1'
       - '.vbs'
   selection_network_transfer:
-  EventID: 3
+  EventID:
   Image|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
@@ -38,8 +38,8 @@ detection:
       - 21
       - 22
   selection_copy_tools:
-  EventID: 1
-  Image|endswith: '\xcopy.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '\\*\'
       - '/s'

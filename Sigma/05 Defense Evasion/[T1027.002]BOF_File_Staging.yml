@@ -14,30 +14,29 @@ logsource:
   service: sysmon
 detection:
   temp_staging:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\AppData\Local\Temp\'
       - '\Windows\Temp\'
       - '\ProgramData\'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.tmp'
       - '.dat'
       - '.bin'
   packed_files:
-    EventID: 15
-    Hash|contains: 'IMPHASH'
-    TargetFilename|endswith:
+  EventID:
+  Hash|contains:
+  TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.obj'
   reflective_load:
-    EventID: 7
-    Signed: 'false'
-    ImageLoaded|contains:
+  EventID:
+  Signed:
+  ImageLoaded|contains:
       - '\AppData\Local\Temp\'
       - '\Windows\Temp\'
-  condition: (temp_staging and packed_files) or
-               (temp_staging and reflective_load)
+  condition: (temp_staging and packed_files) or (temp_staging and reflective_load)
 fields:
   - TargetFilename
   - ProcessId

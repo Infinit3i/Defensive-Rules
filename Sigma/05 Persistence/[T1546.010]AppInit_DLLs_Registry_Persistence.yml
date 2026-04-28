@@ -11,16 +11,16 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
   selection_enable:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
-  Details: 'DWORD (0x00000001)'
+  Details:
   filter_system:
   Image|contains:
       - 'C:\Windows\System32\'

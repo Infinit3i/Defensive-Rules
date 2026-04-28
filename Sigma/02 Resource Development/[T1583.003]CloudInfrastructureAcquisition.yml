@@ -1,7 +1,8 @@
 title: Suspicious Cloud Infrastructure Acquisition
 id: b8c9d0e1-f2a3-4567-8901-234567hijklm
 status: experimental
-description: Detects suspicious cloud infrastructure acquisition patterns indicating resource development
+description: >-
+  Detects suspicious cloud infrastructure acquisition patterns indicating resource development
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -34,12 +35,13 @@ detection:
       - 'CreateHostedZone'
       - 'CreateCdnProfile'
   selection_anonymous_access:
-  user_identity.type: 'Unknown'
+  user_identity.type:
   source_ip_address|startswith:
       - '10.'
       - '192.168.'
       - '172.'
-  condition: (selection_rapid_provisioning or selection_bulk_resources) and (selection_suspicious_regions or selection_anonymous_access)
+  condition: |
+    (selection_rapid_provisioning or selection_bulk_resources) and (selection_suspicious_regions or selection_anonymous_access)
   timeframe: 1h
   count: 5
 level: medium

@@ -10,7 +10,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'forfiles /s /m *.* /c "cmd /c if @fsize gtr 1000000'
       - 'Get-ChildItem -Recurse | Where-Object {$_.Length -gt'
@@ -18,12 +18,7 @@ detection:
       - 'du -h | grep G'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1083
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.discovery
-  - attack.t1083

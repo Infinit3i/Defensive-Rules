@@ -1,10 +1,10 @@
 ---
 title: Suspicious WMI-Based Execution (Wmiprvse Spawning Scripting Engines)
 technique: T1047
-
 id: c682cb7c-7231-45a4-89ec-5ee6894c14cc
 status: experimental
-description: Detects suspicious use of WMI where wmiprvse.exe spawns PowerShell, cmd.exe, or other scripting engines.
+description: >-
+  Detects suspicious use of WMI where wmiprvse.exe spawns PowerShell, cmd.exe, or other scripting engines.
 author: Infinit3i
 date: 2025/04/20
 logsource:
@@ -17,7 +17,7 @@ detection:
       - 1
       - 3
   selection_parent:
-  ParentImage|endswith: '\wmiprvse.exe'
+  ParentImage|endswith:
   selection_child:
   Image|endswith:
       - '\powershell.exe'
@@ -41,21 +41,8 @@ falsepositives:
   - Domain joined management tools
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1047
-  # Platform/tool tags
-  - windows
-  - sysmon
-  - attack.execution
   - attack.persistence
-  - attack.t1047
-  - sysmon

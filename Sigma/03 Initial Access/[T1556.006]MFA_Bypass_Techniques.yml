@@ -1,6 +1,7 @@
 title: Multi-Factor Authentication Bypass Detection
 technique: T1556.006
 author: Infinit3i
+date: 2026/04/28
 id: 142f59da-890b-1234-5678-9abcdef01234
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -12,64 +13,65 @@ logsource:
   service: auditlogs
 detection:
   selection_mfa_disable:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Disable Strong Authentication'
       - 'User disabled'
       - 'Update user'
-    TargetResources.modifiedProperties.displayName|contains:
+  TargetResources.modifiedProperties.displayName|contains:
       - 'StrongAuthenticationMethods'
       - 'StrongAuthenticationRequirements'
-    TargetResources.modifiedProperties.newValue: '[]'
+  TargetResources.modifiedProperties.newValue:
   selection_mfa_policy_changes:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Update conditional access policy'
       - 'Delete conditional access policy'
       - 'Update authentication methods policy'
-    TargetResources.displayName|contains:
+  TargetResources.displayName|contains:
       - 'MFA'
       - 'Multi-Factor'
       - 'Strong Authentication'
   selection_emergency_access:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationRequirement: 'singleFactorAuthentication'
-    ConditionalAccessStatus: 'notApplied'
-    UserPrincipalName|contains:
+  ActivityDisplayName:
+  AuthenticationRequirement:
+  ConditionalAccessStatus:
+  UserPrincipalName|contains:
       - 'breakglass'
       - 'emergency'
       - 'admin'
-      # Emergency access accounts used without MFA
+    # Emergency access accounts used without MFA
   selection_suspicious_auth_flow:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationDetails.succeeded: true
-    AuthenticationMethodsUsed: 'Password'
+  ActivityDisplayName:
+  AuthenticationDetails.succeeded:
+  AuthenticationMethodsUsed:
     # Successful authentication with only password, no MFA
-    RiskLevelDuringSignIn:
+  RiskLevelDuringSignIn:
       - 'high'
       - 'medium'
   selection_mfa_reset_abuse:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Reset user password'
       - 'Admin updated user'
       - 'User registered security info'
-    InitiatedBy.user.userPrincipalName|endswith:
+  InitiatedBy.user.userPrincipalName|endswith:
       - '@external.com'
       - '@guest.com'
-      # External users performing MFA-related admin actions
+    # External users performing MFA-related admin actions
   selection_token_replay:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationDetails.succeeded: true
+  ActivityDisplayName:
+  AuthenticationDetails.succeeded:
     # Multiple sign-ins with identical authentication tokens
-    TokenIssuerType: 'AzureAD'
+  TokenIssuerType:
   selection_device_registration_bypass:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Add registered users'
       - 'Update device'
       - 'Register device'
-    TargetResources.modifiedProperties.displayName: 'TrustedForDelegation'
-    TargetResources.modifiedProperties.newValue: 'True'
-  condition: selection_mfa_disable or selection_mfa_policy_changes or selection_emergency_access or
-               selection_suspicious_auth_flow or selection_mfa_reset_abuse or
-               selection_token_replay or selection_device_registration_bypass
+  TargetResources.modifiedProperties.displayName:
+  TargetResources.modifiedProperties.newValue:
+  condition: |
+    selection_mfa_disable or selection_mfa_policy_changes or selection_emergency_access or
+    selection_suspicious_auth_flow or selection_mfa_reset_abuse or
+    selection_token_replay or selection_device_registration_bypass
 falsepositives:
   - Legitimate MFA policy updates by administrators
   - Authorized emergency access during incidents
@@ -78,15 +80,10 @@ falsepositives:
   - Password reset flows for legitimate users
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1556.006
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1556.006
   - attack.credential_access
   - attack.t1556
   - attack.defense_evasion

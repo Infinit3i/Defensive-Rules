@@ -4,23 +4,16 @@ technique: T1105
 id: b4e7f2a9-8d6c-4e5f-b4e7-2f9a8d6c5b4b
 status: experimental
 description: >-
-  Detects ingress tool transfer by monitoring for file downloads, tool
-  staging activities, or binary transfers from external sources that
-  may indicate malware or tool deployment.
+  >- Detects ingress tool transfer by monitoring for file downloads, tool staging activities, or binary transfers from external sources that may indicate malware or tool deployment.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1105
   - tool_transfer
   - file_download
   - binary_staging
@@ -30,22 +23,22 @@ logsource:
   category: file_create
 detection:
   executable_download:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - '\Temp\'
       - '\Downloads\'
-  script_download:
-  TargetFilename|endswith:
+    script_download:
+    TargetFilename|endswith:
       - '.vbs'
       - '.js'
       - '.py'
       - '.pl'
-  suspicious_location:
-  TargetFilename|startswith:
+    suspicious_location:
+    TargetFilename|startswith:
       - 'C:\Users\Public\'
       - 'C:\Windows\Temp\'
       - 'C:\Temp\'

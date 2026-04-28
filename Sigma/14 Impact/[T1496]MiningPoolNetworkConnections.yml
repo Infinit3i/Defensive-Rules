@@ -1,7 +1,8 @@
 title: Mining Pool Network Connections
 id: e13e67ab-6d46-4e4c-820e-9d2329e72b5a
 status: experimental
-description: Detects resource hijacking through network connections to cryptocurrency mining pools
+description: >-
+  Detects resource hijacking through network connections to cryptocurrency mining pools
 author: Infinit3i
 date: 2026/04/28
 references:
@@ -11,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   sel_mining_pools:
-    EventID: 3
-    DestinationHostname|contains:
+  EventID:
+  DestinationHostname|contains:
       - 'nanopool'
       - 'ethermine'
       - 'f2pool'
@@ -28,8 +29,8 @@ detection:
       - 'mining'
       - 'pool'
   sel_mining_ports:
-    EventID: 3
-    DestinationPort:
+  EventID:
+  DestinationPort:
       - 4444
       - 8080
       - 8008
@@ -39,13 +40,13 @@ detection:
       - 14444
       - 25
   sel_stratum_protocol:
-    EventID: 3
-    DestinationHostname|startswith:
+  EventID:
+  DestinationHostname|startswith:
       - 'stratum'
       - 'tcp'
       - 'ssl'
   filter_legitimate:
-    Image|contains:
+  Image|contains:
       - 'chrome.exe'
       - 'firefox.exe'
       - 'iexplore.exe'

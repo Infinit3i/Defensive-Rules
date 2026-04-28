@@ -3,7 +3,8 @@ title: Mimikatz LSASS Memory Access or Execution
 technique: T1003.001
 id: 2b8f9c1b-7a8e-4f02-9563-7d11fa0df8aa
 status: experimental
-description: Detects access to lsass.exe memory or usage of common Mimikatz commands like sekurlsa or logonpasswords.
+description: >-
+  Detects access to lsass.exe memory or usage of common Mimikatz commands like sekurlsa or logonpasswords.
 author: Infinit3i
 date: 2025/04/20
 logsource:
@@ -16,7 +17,7 @@ detection:
       - 1
       - 10
   selection_access:
-  TargetImage|endswith: '\lsass.exe'
+  TargetImage|endswith:
   selection_cmdline:
   CommandLine|contains:
       - 'sekurlsa'
@@ -35,13 +36,7 @@ falsepositives:
   - Antivirus scanners
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.credential_access
-  # MITRE ATT&CK technique
   - attack.t1003.001
-  # Platform/tool tags
   - windows
-  - sysmon
-  - attack.credential_access
-  - attack.t1003.001
   - sysmon

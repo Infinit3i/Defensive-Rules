@@ -1,7 +1,8 @@
 title: PAM Configuration Modification for Authentication Bypass
 id: f6g7h8i9-j0k1-2345-6789-012345fghijk
 status: experimental
-description: Detects modifications to PAM configuration files that could weaken authentication requirements
+description: >-
+  Detects modifications to PAM configuration files that could weaken authentication requirements
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,27 +13,27 @@ logsource:
   service: auditd
 detection:
   selection_pam_configs:
-  - type: PATH
-      name|contains:
-    - /etc/pam.d/common-auth
-    - /etc/pam.d/common-password
-    - /etc/pam.d/sshd
-    - /etc/pam.d/login
-    - /etc/pam.d/su
-    - /etc/pam.d/sudo
-    - /etc/pam.conf
+      - type: PATH
+  name|contains:
+      - /etc/pam.d/common-auth
+      - /etc/pam.d/common-password
+      - /etc/pam.d/sshd
+      - /etc/pam.d/login
+      - /etc/pam.d/su
+      - /etc/pam.d/sudo
+      - /etc/pam.conf
   selection_write_operations:
-  - type: SYSCALL
-      syscall: write
+      - type: SYSCALL
+  syscall:
   selection_suspicious_content:
-  - comm|contains:
-    - sufficient
-    - optional
-    - nullok_secure
-    - try_first_pass
-    - use_first_pass
-    - pam_permit
-    - pam_deny
+      - comm|contains:
+      - sufficient
+      - optional
+      - nullok_secure
+      - try_first_pass
+      - use_first_pass
+      - pam_permit
+      - pam_deny
   condition: selection_pam_configs and selection_write_operations and selection_suspicious_content
 level: high
 tags:

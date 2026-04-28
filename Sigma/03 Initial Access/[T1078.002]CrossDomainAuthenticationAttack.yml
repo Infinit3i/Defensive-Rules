@@ -1,7 +1,8 @@
 title: Cross-Domain Authentication Attack Detection
 id: c8d7e6f5-9a0b-1234-5678-9abcdef01234
 status: experimental
-description: Detects suspicious cross-domain authentication attempts indicating domain compromise
+description: >-
+  Detects suspicious cross-domain authentication attempts indicating domain compromise
 author: Infinit3i
 date: 2026/04/27
 modified: 2026/04/27
@@ -16,18 +17,17 @@ logsource:
   service: security
 detection:
   selection_event:
-    EventID: 4624
-    LogonType: 3
+  EventID:
+  LogonType:
   selection_domain_mismatch:
-    TargetDomainName|exists: true
-    WorkstationName|exists: true
+  TargetDomainName|exists:
+  WorkstationName|exists:
   filter_normal:
-    TargetDomainName|contains:
+  TargetDomainName|contains:
       - TargetUserName
   selection_suspicious_timing:
-    IpAddress|re: '^(?!10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.).*'
-  condition: selection_event and selection_domain_mismatch and not filter_normal and
-               selection_suspicious_timing
+  IpAddress|re:
+  condition: selection_event and selection_domain_mismatch and not filter_normal and selection_suspicious_timing
   timeframe: 10m
   count: 5
 level: high

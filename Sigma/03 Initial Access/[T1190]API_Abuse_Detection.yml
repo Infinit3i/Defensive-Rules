@@ -3,7 +3,8 @@ title: API Rate Limiting and Abuse Detection
 technique: T1190
 id: f8d9e1a2-3b4c-5d6e-7f8a-9b0c1d2e3f4a
 status: experimental
-description: Detects API abuse through excessive requests, authentication bypass attempts, and anomalous endpoint usage patterns
+description: >-
+  Detects API abuse through excessive requests, authentication bypass attempts, and anomalous endpoint usage patterns
 references:
   - https://attack.mitre.org/techniques/T1190/
 author: Infinit3i
@@ -34,15 +35,15 @@ detection:
       - '/api/v1/admin'
       - '/api/auth/bypass'
       - '/api/internal'
-  status_code: 200
-  method: 'GET'
+  status_code:
+  method:
   excessive_requests:
   method:
       - 'GET'
       - 'POST'
       - 'PUT'
       - 'DELETE'
-  uri|startswith: '/api/'
+  uri|startswith:
   condition: rate_limiting_bypass or auth_bypass or excessive_requests
 falsepositives:
   - Legitimate API testing and monitoring tools

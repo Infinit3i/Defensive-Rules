@@ -16,15 +16,15 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
+  EventID:
   removable_drives:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'E:\'
       - 'F:\'
       - 'G:\'
       - 'H:\'
   commands:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'copy'
       - 'xcopy'
       - 'robocopy'

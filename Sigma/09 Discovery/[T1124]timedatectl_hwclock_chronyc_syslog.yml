@@ -3,22 +3,17 @@ title: timedatectl hwclock or chronyc usage on Linux
 technique: T1124
 id: 5d6e7f80-9123-4567-89ab-cdef01234567
 status: experimental
-description: >
-  Detects Linux commands that query or set system time and NTP clients (timedatectl, hwclock, chronyc, ntpq) recorded in syslog or audit
-  logs indicating system time discovery or manipulation.
+description: >-
+  > Detects Linux commands that query or set system time and NTP clients (timedatectl, hwclock, chronyc, ntpq) recorded in syslog or audit logs indicating system time discovery or manipulation.
 references:
   - https://attack.mitre.org/techniques/T1124/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1124
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1124
   - tactic.discovery
   - platform:linux
   - technique:T1124

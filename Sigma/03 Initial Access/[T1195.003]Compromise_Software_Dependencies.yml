@@ -3,24 +3,17 @@ title: Compromised Software Dependencies Detection
 technique: T1195.003
 id: e8f5c2a9-7d4b-4e1f-a6c3-9f2e8d1c5a8b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects potential compromise of software dependencies by monitoring for
-  unusual package installations, dependency confusion attacks, or suspicious
-  library downloads that may indicate supply chain attacks.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects potential compromise of software dependencies by monitoring for unusual package installations, dependency confusion attacks, or suspicious library downloads that may indicate supply chain attacks.
 references:
   - https://attack.mitre.org/techniques/T1195/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1195.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1195.003
   - supply_chain
   - dependencies
   - packages

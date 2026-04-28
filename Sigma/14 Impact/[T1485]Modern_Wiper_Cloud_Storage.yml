@@ -2,7 +2,8 @@ title: Modern Wiper Malware Targeting Cloud Storage
 technique: T1485
 id: 6e4f7a8b-9c2d-5e3f-7a6e-4f8b2c5d9a3e
 status: experimental
-description: Detects modern wiper malware targeting cloud storage services. Monitors mass file deletion and storage API abuse.
+description: >-
+  Detects modern wiper malware targeting cloud storage services. Monitors mass file deletion and storage API abuse.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,8 +15,8 @@ logsource:
   service: sysmon
 detection:
   selection_cloud_sync_paths:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\OneDrive\'
       - '\Google Drive\'
       - '\Dropbox\'
@@ -23,38 +24,38 @@ detection:
       - '\iCloudDrive\'
       - '\pCloud\'
       - '\MEGA\'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.tmp'
       - '.lock'
       - '.conflict'
       - '.deleted'
   selection_mass_deletion:
-    EventID: 23  # File Delete
-    Image|contains:
+  EventID:
+  Image|contains:
       - 'wiper'
       - 'destroy'
       - 'shred'
       - 'erase'
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\OneDrive\'
       - '\Google Drive\'
       - '\Dropbox\'
   selection_sync_manipulation:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\OneDrive.exe'
       - '\GoogleDriveSync.exe'
       - '\Dropbox.exe'
       - '\Box.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '/shutdown'
       - '/reset'
       - '/unlink'
       - '/signout'
       - '/pause'
   selection_api_abuse:
-    EventID: 3
-    DestinationHostname|contains:
+  EventID:
+  DestinationHostname|contains:
       - 'onedrive.live.com'
       - 'drive.google.com'
       - 'dropbox.com'
@@ -62,10 +63,10 @@ detection:
       - 's3.amazonaws.com'
       - 'blob.core.windows.net'
       - 'storage.googleapis.com'
-    DestinationPort: 443
+  DestinationPort:
   selection_powershell_destruction:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'Remove-Item'
       - 'Clear-Content'
       - 'Set-Content'
@@ -77,42 +78,36 @@ detection:
       - '-Recurse'
       - '-Force'
   selection_registry_manipulation:
-    EventID: 13  # Registry value set
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'OneDrive'
       - 'GoogleDrive'
       - 'Dropbox'
       - 'Box'
-    Details|contains:
+  Details|contains:
       - 'false'
       - '0'
       - 'disabled'
   selection_credential_theft:
-    EventID: 10  # Process access
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\OneDrive.exe'
       - '\GoogleDriveSync.exe'
       - '\Dropbox.exe'
-    GrantedAccess: '0x1010'  # PROCESS_VM_READ
-  condition: (selection_mass_deletion and selection_cloud_sync_paths) or
-               (selection_sync_manipulation and selection_api_abuse) or
-               (selection_powershell_destruction and selection_registry_manipulation) or selection_credential_theft
+  GrantedAccess:
+  condition: |
+    (selection_mass_deletion and selection_cloud_sync_paths) or
+    (selection_sync_manipulation and selection_api_abuse) or
+    (selection_powershell_destruction and selection_registry_manipulation) or selection_credential_theft
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1485
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1485
   - attack.t1070.004
   - attack.credential_access
   - attack.t1555
-  - sysmon
-  - windows
   - wiper
   - cloud_storage
   - onedrive

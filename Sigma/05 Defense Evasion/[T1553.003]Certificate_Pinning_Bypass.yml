@@ -1,15 +1,17 @@
 title: Certificate Pinning Bypass Detection
 technique: T1553.003
 author: Infinit3i
+date: 2026/04/28
 id: a5d8f7c3-9e2b-4f1a-8c6d-7b9e3a2f5c8d
 status: experimental
-description: Detects attempts to bypass SSL/TLS certificate pinning mechanisms in applications to enable man-in-the-middle attacks or malware communication
+description: >-
+  Detects attempts to bypass SSL/TLS certificate pinning mechanisms in applications to enable man-in-the-middle attacks or malware communication
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_process_access:
-  EventID: 10
+  EventID:
   TargetImage|contains:
       - 'chrome.exe'
       - 'firefox.exe'
@@ -26,7 +28,7 @@ detection:
       - '0x1FFFFF'
       - '0x143A'
   selection_registry_modification:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - 'HKLM\SOFTWARE\Policies\Microsoft\SystemCertificates'
       - 'HKCU\SOFTWARE\Microsoft\SystemCertificates'
@@ -36,7 +38,7 @@ detection:
       - '\DisableRootAutoUpdate'
       - '\EnableCertPaddingCheck'
   selection_file_modification:
-  EventID: 11
+  EventID:
   TargetFilename|contains:
       - '\Local State\Local Storage'
       - '\User Data\Default\Local Storage'
@@ -47,8 +49,8 @@ detection:
       - '.sqlite'
       - '.json'
   selection_powershell_crypto:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'System.Net.ServicePointManager'
       - 'ServerCertificateValidationCallback'
@@ -59,27 +61,28 @@ detection:
       - '[System.Net.ServicePointManager]::CheckCertificateRevocationList'
       - '[Net.SecurityProtocolType]::Tls12'
   selection_dll_injection:
-  EventID: 7
+  EventID:
   ImageLoaded|endswith:
       - '\crypt32.dll'
       - '\wininet.dll'
       - '\schannel.dll'
-  ProcessId: 'ProcessId'
+  ProcessId:
   selection_network_anomaly:
-  EventID: 3
-  Protocol: 'tcp'
+  EventID:
+  Protocol:
   DestinationPort:
       - 443
       - 8443
-  Initiated: 'true'
+  Initiated:
   selection_certificate_store:
-  EventID: 11
+  EventID:
   TargetFilename|contains:
       - '\Microsoft\SystemCertificates\CA\Certificates'
       - '\Microsoft\SystemCertificates\ROOT\Certificates'
       - '\Microsoft\SystemCertificates\TrustedPublisher\Certificates'
-  condition: (selection_process_access and selection_dll_injection) or selection_registry_modification or (selection_file_modification and selection_n
-               etwork_anomaly) or selection_powershell_crypto or selection_certificate_store
+  condition: |
+    (selection_process_access and selection_dll_injection) or selection_registry_modification or (selection_file_modification and selection_n
+    etwork_anomaly) or selection_powershell_crypto or selection_certificate_store
 falsepositives:
   - Legitimate certificate management tools
   - Development and testing environments
@@ -87,19 +90,12 @@ falsepositives:
   - Corporate proxy configurations
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1553.003
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1553.003
   - attack.man_in_the_middle
   - attack.t1557
-  - sysmon
-  - windows
   - certificate_pinning
   - ssl_bypass
 references:

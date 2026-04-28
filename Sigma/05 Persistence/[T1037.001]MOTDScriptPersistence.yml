@@ -9,12 +9,12 @@ logsource:
   service: auditd
 detection:
   selection:
-    type: 'SYSCALL'
-    syscall:
+  type:
+  syscall:
       - 'openat'
       - 'write'
       - 'creat'
-    name|contains: '/etc/update-motd.d/'
+  name|contains:
   condition: selection
 level: medium
 tags:

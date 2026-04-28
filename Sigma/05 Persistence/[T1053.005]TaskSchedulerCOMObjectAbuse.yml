@@ -13,43 +13,42 @@ logsource:
   service: sysmon
 detection:
   com_taskscheduler:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\powershell.exe'
       - '\cscript.exe'
       - '\wscript.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskService'
       - 'ITaskService'
       - 'NewTask'
   com_registration:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'regsvr32'
       - 'COM+'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'taskschd.dll'
       - 'Task Scheduler'
   powershell_com:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - 'New-Object -ComObject'
       - '[System.Activator]::CreateInstance'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskScheduler'
   wmi_taskscheduler:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'Win32_ScheduledJob'
       - 'Win32_Process'
-    CommandLine|contains|all:
+  CommandLine|contains|all:
       - 'Create'
       - 'schtasks'
-  condition: com_taskscheduler or com_registration or
-               powershell_com or wmi_taskscheduler
+  condition: com_taskscheduler or com_registration or powershell_com or wmi_taskscheduler
 fields:
   - Image
   - CommandLine
@@ -63,17 +62,10 @@ falsepositives:
   - Monitoring and backup software
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1053.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.execution
   - attack.t1053
-  - attack.t1053.005
   - attack.t1059.001
-  - windows
-  - sysmon

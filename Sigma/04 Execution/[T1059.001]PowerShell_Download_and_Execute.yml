@@ -11,7 +11,7 @@ logsource:
   service: powershell-classic
 detection:
   selection_download:
-  EventID: 4104
+  EventID:
   Message|contains:
       - 'DownloadString'
       - 'DownloadFile'
@@ -23,7 +23,7 @@ detection:
       - 'Net.WebClient'
       - 'Start-BitsTransfer'
   selection_execute:
-  EventID: 4104
+  EventID:
   Message|contains:
       - 'Invoke-Expression'
       - 'iex'
@@ -35,7 +35,7 @@ detection:
       - 'cmd /c'
       - 'powershell -c'
   selection_fileless:
-  EventID: 4104
+  EventID:
   Message|contains:
       - 'FromBase64String'
       - 'EncodedCommand'
@@ -56,7 +56,8 @@ detection:
       - '.ml'
       - '.ga'
       - '.cf'
-  condition: (selection_download and selection_execute) or (selection_download and suspicious_domains) or selection_fileless
+  condition: |
+    (selection_download and selection_execute) or (selection_download and suspicious_domains) or selection_fileless
 fields:
   - Computer
   - User
@@ -69,14 +70,8 @@ falsepositives:
   - System administration
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1059.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.execution
-  - attack.t1059.001
   - powershell
-  - windows

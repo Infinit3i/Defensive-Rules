@@ -1,7 +1,8 @@
 title: OAuth Token Abuse in SaaS Applications
 id: c3d4e5f6-7890-1234-567b-cdef89012345
 status: experimental
-description: Detects suspicious OAuth token usage patterns across SaaS platforms indicating token abuse
+description: >-
+  Detects suspicious OAuth token usage patterns across SaaS platforms indicating token abuse
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,18 +15,18 @@ logsource:
   service: oauth
 detection:
   selection_token_usage:
-    event_type: token_validation
-    grant_type: authorization_code
+  event_type:
+  grant_type:
   selection_suspicious:
-    - ip_address|startswith:
+      - ip_address|startswith:
       - '10.'
       - '192.168.'
       - '172.'
-    - user_agent|contains:
+      - user_agent|contains:
       - 'curl'
       - 'python'
       - 'bot'
-    - scope|contains:
+      - scope|contains:
       - 'admin'
       - 'write'
       - 'delete'

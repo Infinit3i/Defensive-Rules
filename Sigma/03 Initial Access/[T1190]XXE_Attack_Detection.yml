@@ -3,7 +3,8 @@ title: XML External Entity Attack Detection
 technique: T1190
 id: a7b8c9d0-1e2f-3a4b-5c6d-7e8f9a0b1c2d
 status: experimental
-description: Detects XXE attacks through malicious XML payloads and external entity references in HTTP requests
+description: >-
+  Detects XXE attacks through malicious XML payloads and external entity references in HTTP requests
 references:
   - https://attack.mitre.org/techniques/T1190/
 author: Infinit3i
@@ -19,7 +20,7 @@ logsource:
   service: http
 detection:
   xxe_payload:
-  request_body_len|gt: 100
+  request_body_len|gt:
   request_body|contains:
       - '<!ENTITY'
       - 'SYSTEM "file://'

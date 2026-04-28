@@ -4,23 +4,16 @@ technique: T1011.001
 id: f6c8e4a9-7b5d-4e3f-f6c8-4e9a7b5d3f6b
 status: experimental
 description: >-
-  Detects data exfiltration over Bluetooth by monitoring for Bluetooth file
-  transfers, suspicious Bluetooth connections, or data transmission via
-  Bluetooth-enabled devices that may bypass network monitoring.
+  >- Detects data exfiltration over Bluetooth by monitoring for Bluetooth file transfers, suspicious Bluetooth connections, or data transmission via Bluetooth-enabled devices that may bypass network monitoring.
 references:
   - https://attack.mitre.org/techniques/T1011/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1011.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1011.001
   - bluetooth
   - wireless
   - file_transfer
@@ -29,19 +22,19 @@ logsource:
   service: system
 detection:
   bluetooth_service:
-  EventID: 7036
-  ServiceName|contains:
+    EventID:
+    ServiceName|contains:
       - 'bluetooth'
       - 'bth'
-  file_transfer:
-  EventID: 7045
-  ServiceName|contains:
+    file_transfer:
+    EventID:
+    ServiceName|contains:
       - 'obex'
       - 'ftp'
-  ServiceType: 'bluetooth'
-  bluetooth_connection:
-  EventID: 20001
-  DeviceInstanceId|contains: 'BTH'
+    ServiceType:
+    bluetooth_connection:
+    EventID:
+    DeviceInstanceId|contains:
   condition: bluetooth_service or file_transfer or bluetooth_connection
 falsepositives:
   - Legitimate Bluetooth file sharing

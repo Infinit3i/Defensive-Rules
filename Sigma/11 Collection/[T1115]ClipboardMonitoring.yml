@@ -16,14 +16,14 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-    EventID: 4104
+  EventID:
   monitoring:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'while($true)'
       - 'Start-Sleep'
       - 'Get-Clipboard'
   loops:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'for('
       - 'foreach'
       - 'do{'

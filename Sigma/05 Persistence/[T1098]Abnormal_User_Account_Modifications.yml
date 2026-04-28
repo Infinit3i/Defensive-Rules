@@ -3,21 +3,18 @@ title: Abnormal User Account Modifications
 technique: T1098
 id: e8b3fa21-9d45-4c2a-90d7-1234567890ab
 status: experimental
-description: "Detects abnormal modifications to user accounts, such as creation, modification, or deletion, that may indicate unauthorized account manipulation."
+description: >-
+  "Detects abnormal modifications to user accounts, such as creation, modification, or deletion, that may indicate unauthorized account manipulation."
 references:
   - https://attack.mitre.org/techniques/T1098/
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1098
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.account_manipulation
-  - attack.t1098
 logsource:
   product: linux
   service: syslog

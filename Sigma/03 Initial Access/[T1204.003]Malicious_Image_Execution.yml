@@ -3,25 +3,18 @@ title: Malicious Image File Execution
 technique: T1204.003
 id: a3f6e8c9-7b4d-4e2f-c5a8-9f6e8d5c8a4b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects execution of malicious code embedded in image files by monitoring
-  for steganography tools, image parsing vulnerabilities, or suspicious
-  processes launched from image file interactions.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects execution of malicious code embedded in image files by monitoring for steganography tools, image parsing vulnerabilities, or suspicious processes launched from image file interactions.
 references:
   - https://attack.mitre.org/techniques/T1204/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1204.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
   - attack.execution
-  - attack.t1204.003
   - steganography
   - image_file
 logsource:
@@ -34,7 +27,7 @@ detection:
       - '\mspaint.exe'
       - '\PhotoViewer.exe'
       - '\Photos.exe'
-  Image|endswith: '.exe'
+  Image|endswith:
   steganography_tools:
   Image|contains:
       - 'steghide'
@@ -46,7 +39,7 @@ detection:
       - '.png'
       - '.bmp'
       - '.gif'
-  Image|endswith: '.exe'
+  Image|endswith:
   condition: image_viewers or steganography_tools or suspicious_image_process
 falsepositives:
   - Legitimate image processing applications

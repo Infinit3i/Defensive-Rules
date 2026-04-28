@@ -3,31 +3,27 @@ title: Brute-Force SSH Attempts
 technique: T1110.001
 id: f9c8123a-4567-4e9b-a012-abcdef123456
 status: experimental
-description: "Detects repeated failed SSH login attempts using Zeek logs by identifying high volumes of connection attempts with 'failed' authentication results from a single source."
+description: >-
+  "Detects repeated failed SSH login attempts using Zeek logs by identifying high volumes of connection attempts with 'failed' authentication results from a single source."
 references:
   - https://attack.mitre.org/techniques/T1110/001/
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.credential_access
-  # MITRE ATT&CK technique
   - attack.t1110.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.credential_access
-  - attack.t1110.001
 logsource:
   product: zeek
   service: ssh
 detection:
   selection:
-  auth_success: "F"
+  auth_success:
   condition: selection
   timeframe: 5m
   threshold:
-  count: 5
+    count: 5
 falsepositives:
   - Mistyped credentials by users, poor password managers, or misconfigured automation.
 level: high

@@ -14,8 +14,8 @@ logsource:
   service: cloudshell
 detection:
   selection_cloud_shell:
-  OperationName: 'Microsoft.Portal/cloudShell/consoles/write'
-  ResourceType: 'Microsoft.Portal/cloudShell'
+  OperationName:
+  ResourceType:
   selection_suspicious_commands:
   properties.message|contains:
       - 'wget'
@@ -38,7 +38,8 @@ detection:
       - 'service'
       - '.bashrc'
       - '.profile'
-  condition: selection_cloud_shell and (selection_suspicious_commands or selection_file_operations or selection_persistence_setup)
+  condition: |
+    selection_cloud_shell and (selection_suspicious_commands or selection_file_operations or selection_persistence_setup)
 level: medium
 fields:
   - CallerIpAddress

@@ -12,14 +12,14 @@ logsource:
   service: powershell
 detection:
   selection_clm:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - '$ExecutionContext.SessionState.LanguageMode'
       - 'ConstrainedLanguage'
       - 'FullLanguage'
   selection_bypass:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'powershell.exe -version 2'
       - 'Add-Type'
       - 'reflection.assembly'
@@ -30,15 +30,9 @@ falsepositives:
   - Security testing
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1562.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1562.001
   - attack.defense_evasion
   - powershell
-  - windows

@@ -1,7 +1,8 @@
 title: Udev Rules Network Interface Persistence
 id: d4e5f6g7-h8i9-0123-4567-890123defghi
 status: experimental
-description: Detects udev rules targeting network interfaces for persistence through interface state changes
+description: >-
+  Detects udev rules targeting network interfaces for persistence through interface state changes
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,24 +13,24 @@ logsource:
   service: auditd
 detection:
   selection_udev_files:
-  - type: PATH
-      name|contains:
-    - /etc/udev/rules.d/
-    - /lib/udev/rules.d/
+      - type: PATH
+  name|contains:
+      - /etc/udev/rules.d/
+      - /lib/udev/rules.d/
   selection_network_subsystem:
-  - comm|contains:
-    - SUBSYSTEM=="net"
-    - ACTION=="add"
-    - ACTION=="change"
-    - KERNEL=="eth*"
-    - KERNEL=="wlan*"
-    - KERNEL=="tun*"
+      - comm|contains:
+      - SUBSYSTEM=="net"
+      - ACTION=="add"
+      - ACTION=="change"
+      - KERNEL=="eth*"
+      - KERNEL=="wlan*"
+      - KERNEL=="tun*"
   selection_command_execution:
-  - comm|contains:
-    - RUN+="/bin/
-    - RUN+="/usr/bin/
-    - PROGRAM="/bin/
-    - PROGRAM="/usr/bin/
+      - comm|contains:
+      - RUN+="/bin/
+      - RUN+="/usr/bin/
+      - PROGRAM="/bin/
+      - PROGRAM="/usr/bin/
   condition: selection_udev_files and selection_network_subsystem and selection_command_execution
 level: medium
 tags:

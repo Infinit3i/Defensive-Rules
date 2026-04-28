@@ -12,14 +12,14 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'ms-settings\Shell\Open\Command'
       - 'ms-settings\shell\open\command'
   selection_process:
-    EventID: 1
-    Image|endswith: '\ComputerDefaults.exe'
-    ParentImage|endswith:
+  EventID:
+  Image|endswith:
+  ParentImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\wscript.exe'
@@ -28,15 +28,8 @@ falsepositives:
   - Legitimate Windows settings changes
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1548.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1548.002
   - attack.defense_evasion
-  - sysmon
-  - windows

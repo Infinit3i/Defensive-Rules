@@ -4,24 +4,17 @@ technique: T1135
 id: e9f6c4a8-7d3b-4e5f-e9f6-4c8a7d3b5e9b
 status: experimental
 description: >-
-  Detects network share discovery activities by monitoring for share
-  enumeration commands, network scanning for SMB services, or reconnaissance
-  activities that may precede lateral movement attempts.
+  >- Detects network share discovery activities by monitoring for share enumeration commands, network scanning for SMB services, or reconnaissance activities that may precede lateral movement attempts.
 references:
   - https://attack.mitre.org/techniques/T1135/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1135
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
   - attack.discovery
-  - attack.t1135
   - network_shares
   - enumeration
 logsource:
@@ -30,18 +23,18 @@ logsource:
   category: process_creation
 detection:
   share_enum:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'net share'
       - 'net view'
       - 'dir \\'
-  smb_tools:
-  Image|endswith:
+    smb_tools:
+    Image|endswith:
       - '\smbclient.exe'
       - '\enum4linux.exe'
       - '\nbtscan.exe'
-  powershell_enum:
-  Image|endswith: '\powershell.exe'
-  CommandLine|contains:
+    powershell_enum:
+    Image|endswith:
+    CommandLine|contains:
       - 'Get-WmiObject'
       - 'Win32_Share'
       - 'Get-SmbShare'

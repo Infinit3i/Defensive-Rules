@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_apis:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'IsDebuggerPresent'
       - 'CheckRemoteDebuggerPresent'
@@ -25,8 +25,8 @@ detection:
       - 'NtSetInformationThread'
       - 'ThreadHideFromDebugger'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-Process | Where Name -like "*debug*"'
       - 'Get-WmiObject Win32_Process | Where Name -like "*debug*"'
@@ -34,7 +34,7 @@ detection:
       - '[Environment]::TickCount'
       - 'Stopwatch'
   selection_processes:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'tasklist | findstr debug'
       - 'wmic process get name | findstr debug'
@@ -70,6 +70,3 @@ tags:
   - windows
   - sysmon
   - attack.defense-evasion
-  - attack.t1622
-  - sysmon
-  - windows

@@ -1,7 +1,8 @@
 title: USB Autorun Execution Detection
 id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 status: experimental
-description: Detects suspicious autorun execution from removable media devices through autorun.inf files
+description: >-
+  Detects suspicious autorun execution from removable media devices through autorun.inf files
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,15 +12,15 @@ logsource:
   service: sysmon
 detection:
   selection_autorun:
-    EventID: 1
-    Image|contains:
+  EventID:
+  Image|contains:
       - '\autorun.exe'
       - '\setup.exe'
       - '\install.exe'
-    CommandLine|contains: 'autorun'
+  CommandLine|contains:
   selection_removable:
-    EventID: 1
-    Image|startswith:
+  EventID:
+  Image|startswith:
       - 'D:\'
       - 'E:\'
       - 'F:\'

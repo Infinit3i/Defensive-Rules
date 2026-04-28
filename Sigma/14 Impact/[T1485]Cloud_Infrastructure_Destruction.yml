@@ -2,7 +2,8 @@ title: Cloud Infrastructure Destruction Attacks
 technique: T1485
 id: 3e7f8a9b-2c4d-5f1e-8a6b-9c3d4e5f7a8b
 status: experimental
-description: Detects malicious destruction of cloud infrastructure including VM termination, storage deletion, network isolation, and resource exhaustion attacks targeting AWS, Azure, GCP platforms.
+description: >-
+  Detects malicious destruction of cloud infrastructure including VM termination, storage deletion, network isolation, and resource exhaustion attacks targeting AWS, Azure, GCP platforms.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,8 +15,8 @@ logsource:
   service: powershell
 detection:
   selection_aws_destruction:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'aws ec2 terminate-instances'
       - 'aws s3 rm'
       - 'aws s3api delete-bucket'
@@ -26,8 +27,8 @@ detection:
       - 'DeleteVolume'
       - 'DeleteSnapshot'
   selection_azure_destruction:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'az vm delete'
       - 'az storage account delete'
       - 'az sql db delete'
@@ -37,8 +38,8 @@ detection:
       - 'Remove-AzStorageAccount'
       - 'Remove-AzResourceGroup'
   selection_gcp_destruction:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'gcloud compute instances delete'
       - 'gcloud storage rm'
       - 'gcloud sql instances delete'
@@ -46,8 +47,8 @@ detection:
       - 'gcloud projects delete'
       - 'gsutil rm -r'
   selection_mass_operations:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - '--force'
       - '--yes'
       - '--quiet'
@@ -56,45 +57,40 @@ detection:
       - 'while'
       - 'for i in'
   selection_cli_tools:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\aws.exe'
       - '\az.exe'
       - '\gcloud.exe'
       - '\kubectl.exe'
       - '\terraform.exe'
       - '\powershell.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'delete'
       - 'destroy'
       - 'terminate'
       - 'remove'
       - 'rm'
   selection_network_calls:
-    EventID: 3
-    DestinationHostname|contains:
+  EventID:
+  DestinationHostname|contains:
       - 'amazonaws.com'
       - 'azure.com'
       - 'googleapis.com'
       - 'gcp.com'
-    DestinationPort: 443
-  condition: (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
+  DestinationPort:
+  condition: |
+    (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1485
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1485
   - attack.t1499
   - attack.resource_hijacking
   - attack.t1496
   - powershell
-  - windows
   - cloud
   - aws
   - azure

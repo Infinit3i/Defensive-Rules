@@ -9,16 +9,16 @@ logsource:
   service: sysmon
 detection:
   selection_cmd:
-    EventID: 1
-    Image|endswith: '\bitsadmin.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - '/create'
       - '/addfile'
       - '/setnotifycmdline'
       - '/resume'
   selection_powershell:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'Start-BitsTransfer'
       - 'Add-BitsFile'
       - 'Complete-BitsTransfer'

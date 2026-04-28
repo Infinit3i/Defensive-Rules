@@ -3,7 +3,8 @@ title: URL Shortener Service Abuse Detection
 technique: T1204.001
 id: 8f3a6e9c-4b7d-2e5f-a1c8-7f2e9d6c3a5b
 status: experimental
-description: Detects abuse of URL shortening services for malicious link distribution through browser traffic analysis and command line monitoring.
+description: >-
+  Detects abuse of URL shortening services for malicious link distribution through browser traffic analysis and command line monitoring.
 references:
   - https://attack.mitre.org/techniques/T1204/001/
 author: Infinit3i
@@ -36,7 +37,7 @@ detection:
       - '\brave.exe'
       - '\opera.exe'
   multiple_redirects:
-  EventID: 3
+  EventID:
   condition: shortener_domains and browser_process and multiple_redirects
 falsepositives:
   - Legitimate social media links

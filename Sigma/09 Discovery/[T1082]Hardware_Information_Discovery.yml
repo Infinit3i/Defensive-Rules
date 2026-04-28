@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'baseboard'
       - 'bios'
@@ -22,8 +22,8 @@ detection:
       - 'computersystem'
       - 'systemenclosure'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-WmiObject Win32_BaseBoard'
       - 'Get-WmiObject Win32_BIOS'
@@ -43,14 +43,7 @@ falsepositives:
   - IT asset management
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

@@ -9,10 +9,10 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
-    ParentImage|endswith: '\svchost.exe'
-    ParentCommandLine|contains: 'BITS'
-    Image|contains:
+  EventID:
+  ParentImage|endswith:
+  ParentCommandLine|contains:
+  Image|contains:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\rundll32.exe'

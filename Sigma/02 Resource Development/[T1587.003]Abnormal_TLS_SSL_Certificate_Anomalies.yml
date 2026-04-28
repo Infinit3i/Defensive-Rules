@@ -3,39 +3,34 @@ title: Abnormal TLS/SSL Certificate Anomalies
 technique: T1587.003
 id: a1b2c3d4-e5f6-7890-abcd-1234567890ef
 status: experimental
-description: >
-  "Detects suspicious TLS/SSL certificate characteristics from Zeek logs such as self-signed certs, mismatched subject/issuer, or uncommon
-  issuers—potential indicators of malware C2, unauthorized services, or MitM attacks."
+description: >-
+  > "Detects suspicious TLS/SSL certificate characteristics from Zeek logs such as self-signed certs, mismatched subject/issuer, or uncommon issuers—potential indicators of malware C2, unauthorized services, or MitM attacks."
 references:
   - https://attack.mitre.org/techniques/T1587/003/
   - https://attack.mitre.org/techniques/T1557/
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.resource_development
-  # MITRE ATT&CK technique
   - attack.t1587.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1587.003
   - attack.t1557
 logsource:
   product: zeek
   service: ssl
 detection:
   self_signed:
-  validation_status: "self signed certificate"
+  validation_status:
   bad_issuer:
   issuer|contains:
       - "CN=localhost"
       - "CN=example"
       - "CN=fake"
   mismatched_cn:
-  subject|startswith: "CN="
-  issuer|startswith: "CN="
-  subject|contains: "test"
+  subject|startswith:
+  issuer|startswith:
+  subject|contains:
   condition: self_signed OR bad_issuer OR mismatched_cn
 falsepositives:
   - Internal self-signed certs for testing or dev environments.

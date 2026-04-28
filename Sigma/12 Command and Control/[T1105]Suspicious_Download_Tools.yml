@@ -3,7 +3,8 @@ title: Suspicious Download Tools and Methods
 technique: T1105
 id: i9j0k1l2-m3n4-5678-9012-345678ijklmn
 status: experimental
-description: Detects suspicious file download methods and tools used for ingress tool transfer
+description: >-
+  Detects suspicious file download methods and tools used for ingress tool transfer
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,16 +12,16 @@ logsource:
   service: sysmon
 detection:
   selection_certutil:
-  EventID: 1
-  Image|endswith: '\certutil.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '-urlcache'
       - '-split'
       - '-f'
       - 'http'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Invoke-WebRequest'
       - 'iwr'
@@ -32,22 +33,22 @@ detection:
       - 'Net.WebClient'
       - 'Start-BitsTransfer'
   selection_bitsadmin:
-  EventID: 1
-  Image|endswith: '\bitsadmin.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '/transfer'
       - '/download'
       - '/addfile'
   selection_hh:
-  EventID: 1
-  Image|endswith: '\hh.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'http'
       - 'https'
       - '.chm'
   selection_mshta:
-  EventID: 1
-  Image|endswith: '\mshta.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'http'
       - 'https'
@@ -64,7 +65,8 @@ detection:
       - '.ml'
       - '.ga'
       - '.cf'
-  condition: (selection_certutil or selection_powershell or selection_bitsadmin or selection_hh or selection_mshta) and suspicious_urls
+  condition: |
+    (selection_certutil or selection_powershell or selection_bitsadmin or selection_hh or selection_mshta) and suspicious_urls
 fields:
   - Image
   - CommandLine
@@ -77,14 +79,8 @@ falsepositives:
   - Development tools
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.command-and-control
-  - attack.t1105
-  - sysmon
-  - windows

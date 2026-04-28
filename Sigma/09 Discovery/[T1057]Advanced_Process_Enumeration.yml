@@ -11,16 +11,16 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'process list'
       - 'process get'
       - 'process where'
       - 'process call'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-Process'
       - 'Get-WmiObject Win32_Process'
@@ -29,7 +29,7 @@ detection:
       - 'gcim Win32_Process'
       - 'ps'
   selection_advanced:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'tasklist /svc'
       - 'tasklist /m'
@@ -37,7 +37,7 @@ detection:
       - 'query process'
       - 'qprocess'
   selection_suspicious_filters:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'findstr /i antivirus'
       - 'findstr /i defender'
@@ -61,14 +61,7 @@ falsepositives:
   - System monitoring tools
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1057
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1057
-  - sysmon
   - windows
+  - sysmon

@@ -3,31 +3,24 @@ title: Suspicious Execution of wmiexec
 technique: T1047
 id: f07d8d74-1234-5678-9abc-def123456789
 status: experimental
-description: >
-  Detects potential malicious usage of wmiexec, a tool often employed by adversaries for lateral movement and remote command execution. The
-  rule looks for process creation events where the CommandLine field contains "wmiexec". Legitimate administrative use may trigger this, so
-  further investigation is recommended.
+description: >-
+  > Detects potential malicious usage of wmiexec, a tool often employed by adversaries for lateral movement and remote command execution. The rule looks for process creation events where the CommandLine field contains "wmiexec". Legitimate administrative use may trigger this, so further investigation is recommended.
 author: Infinit3i
 date: 2025-04-08
 references:
   - https://attack.mitre.org/techniques/T1047/
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.execution
   - attack.lateral_movement
-  - attack.t1047
 logsource:
   product: windows
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "wmiexec"
   condition: selection

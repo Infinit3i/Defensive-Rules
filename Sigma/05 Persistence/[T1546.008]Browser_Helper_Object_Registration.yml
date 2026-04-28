@@ -11,12 +11,12 @@ logsource:
   service: sysmon
 detection:
   selection_bho_reg:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
   selection_clsid_reg:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SOFTWARE\Classes\CLSID\'
   TargetObject|endswith:

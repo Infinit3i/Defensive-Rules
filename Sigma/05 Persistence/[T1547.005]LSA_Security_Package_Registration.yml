@@ -11,16 +11,16 @@ logsource:
   service: sysmon
 detection:
   selection_lsa_packages:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages'
       - '\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\Security Packages'
   selection_auth_packages:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Authentication Packages'
   selection_notification_packages:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Notification Packages'
   filter_system_process:
@@ -28,7 +28,8 @@ detection:
       - 'C:\Windows\System32\lsass.exe'
       - 'C:\Windows\System32\winlogon.exe'
       - 'C:\Windows\System32\svchost.exe'
-  condition: (selection_lsa_packages or selection_auth_packages or selection_notification_packages) and not filter_system_process
+  condition: |
+    (selection_lsa_packages or selection_auth_packages or selection_notification_packages) and not filter_system_process
 fields:
   - Image
   - TargetObject

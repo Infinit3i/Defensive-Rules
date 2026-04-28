@@ -3,7 +3,8 @@ title: Authentication Package Persistence Detection
 technique: T1547.002
 id: e9b4c7d1-3a8f-4e2b-9c5d-7f1a6e8b4c9d
 status: experimental
-description: Detects suspicious authentication package persistence through LSA modifications or DLL loading
+description: >-
+  Detects suspicious authentication package persistence through LSA modifications or DLL loading
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -12,7 +13,7 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-  EventID: 13
+  EventID:
   selection_lsa:
   TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Authentication Packages'
@@ -46,15 +47,8 @@ falsepositives:
   - Custom security solutions
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1547.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1547
-  - attack.t1547.002
-  - sysmon
-  - windows

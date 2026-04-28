@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_base:
-  EventID: 1
-  Image|endswith: '\rundll32.exe'
+  EventID:
+  Image|endswith:
   suspicious_dlls:
   CommandLine|contains:
       - 'javascript:'
@@ -55,7 +55,8 @@ detection:
       - '%TMP%'
       - 'C:\Users\*\AppData\Local\Temp'
       - 'C:\Windows\Temp'
-  condition: selection_base and (suspicious_dlls or suspicious_functions or remote_sources or encoded_commands or temp_paths)
+  condition: |
+    selection_base and (suspicious_dlls or suspicious_functions or remote_sources or encoded_commands or temp_paths)
 fields:
   - Image
   - CommandLine

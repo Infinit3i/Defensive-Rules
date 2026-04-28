@@ -3,20 +3,17 @@ title: System Information Discovery - systeminfo.exe Execution
 technique: T1082
 id: a8f3f9d6-9b2b-4f0d-8f2c-1c2e0a9b7f01
 status: experimental
-description: Detect execution of systeminfo.exe which is often used by attackers to enumerate OS and patch-level information.
+description: >-
+  Detect execution of systeminfo.exe which is often used by attackers to enumerate OS and patch-level information.
 author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1082/
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1082
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1082
   - tactic.discovery
   - platform:windows
 logsource:
@@ -24,10 +21,10 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
-  Image|endswith: '\systeminfo.exe'
+  EventID:
+  Image|endswith:
   commandline_indicators:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "systeminfo"
   condition: selection or commandline_indicators

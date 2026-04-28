@@ -12,25 +12,25 @@ logsource:
   service: sysmon
 detection:
   selection_file_create:
-    EventID: 11
-    TargetFilename|endswith: '.dll'
-    TargetFilename|contains: 'C:\Windows\System32\'
+  EventID:
+  TargetFilename|endswith:
+  TargetFilename|contains:
   selection_unsigned:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '\kernel32.dll'
       - '\ntdll.dll'
       - '\user32.dll'
       - '\advapi32.dll'
       - '\ole32.dll'
   selection_process:
-    EventID: 11
-    Image|contains:
+  EventID:
+  Image|contains:
       - '\Users\'
       - '\Temp\'
       - '\AppData\'
   filter_legitimate:
-    Image|startswith:
+  Image|startswith:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

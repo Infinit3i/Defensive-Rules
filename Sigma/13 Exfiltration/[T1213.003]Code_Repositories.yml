@@ -4,24 +4,17 @@ technique: T1213.003
 id: e8b5f3a6-9d7c-4e4f-e8b5-3f6a9d7c4e8b
 status: experimental
 description: >-
-  Detects suspicious data collection from code repositories by monitoring
-  for bulk repository cloning, mass file downloads, or unauthorized access
-  to source code repositories that may indicate intellectual property theft.
+  >- Detects suspicious data collection from code repositories by monitoring for bulk repository cloning, mass file downloads, or unauthorized access to source code repositories that may indicate intellectual property theft.
 references:
   - https://attack.mitre.org/techniques/T1213/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1213.003
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.collection
-  - attack.exfiltration
-  - attack.t1213.003
   - code_repository
   - source_code
 logsource:
@@ -29,20 +22,20 @@ logsource:
   service: http
 detection:
   git_clone:
-  uri|contains:
+    uri|contains:
       - '/git-upload-pack'
       - '/info/refs'
       - '.git/'
-  method: 'GET'
-  bulk_download:
-  host|endswith:
+    method:
+    bulk_download:
+    host|endswith:
       - '.github.com'
       - '.gitlab.com'
       - '.bitbucket.org'
-  orig_bytes|gte: 100000000
-  api_access:
-  uri|contains: '/api/'
-  user_agent|contains:
+    orig_bytes|gte:
+    api_access:
+    uri|contains:
+    user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'

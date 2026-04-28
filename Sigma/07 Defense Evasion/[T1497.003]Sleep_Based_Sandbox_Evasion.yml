@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
-  CommandLine|re: '.*(Sleep|sleep|timeout|ping.*-n|choice.*-t)\s+[3-9][0-9].*'
+  EventID:
+  CommandLine|re:
   condition: selection
 fields:
   - Image

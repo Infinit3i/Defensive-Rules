@@ -3,7 +3,8 @@ title: High uptime checks and conditional long delays
 technique: T1497.003
 id: 8b1d4f3c-5e6a-4f7b-9c8d-2e3f4a5b6c7d
 status: experimental
-description: Detect attempts to check system uptime or tick counts and then delay execution for long periods (indicates time-based sandbox evasion logic).
+description: >-
+  Detect attempts to check system uptime or tick counts and then delay execution for long periods (indicates time-based sandbox evasion logic).
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -18,7 +19,7 @@ logsource:
   service: sysmon
 detection:
   selection_uptime_check_ps:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Get-Uptime"
       - "Get-CimInstance Win32_OperatingSystem"
@@ -26,7 +27,7 @@ detection:
       - "GetTickCount"
       - "GetTickCount64"
   selection_then_sleep:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Start-Sleep -Seconds 600"
       - "Start-Sleep -Seconds 900"

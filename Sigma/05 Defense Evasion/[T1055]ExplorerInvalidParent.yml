@@ -3,7 +3,8 @@ title: Explorer Spawned by Suspicious Parent Process
 technique: T1055
 id: b2c3d4e5-f6a7-8901-bcde-f23456789012
 status: experimental
-description: Detects explorer.exe spawned by process other than winlogon.exe or userinit.exe which may indicate process injection
+description: >-
+  Detects explorer.exe spawned by process other than winlogon.exe or userinit.exe which may indicate process injection
 references:
   - https://attack.mitre.org/techniques/T1055/
   - https://docs.microsoft.com/en-us/windows/win32/services/interactive-services
@@ -14,9 +15,9 @@ logsource:
   product: windows
 detection:
   selection:
-    Image|endswith: '\explorer.exe'
+  Image|endswith:
   filter:
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\winlogon.exe'
       - '\userinit.exe'
   condition: selection and not filter
@@ -24,14 +25,7 @@ falsepositives:
   - Legitimate spawning by other system processes (rare)
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1055
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1055
-  - sysmon
-  - windows

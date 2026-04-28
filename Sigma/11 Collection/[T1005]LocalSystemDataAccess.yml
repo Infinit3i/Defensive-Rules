@@ -1,7 +1,8 @@
 title: Local System Data Collection via PowerShell
 id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
-description: Detects PowerShell commands attempting to collect data from local system directories
+description: >-
+  Detects PowerShell commands attempting to collect data from local system directories
 author: Infinit3i
 date: 2026/04/28
 references:
@@ -16,15 +17,15 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-    EventID: 4103
+  EventID:
   keywords:
-    Message|contains:
+  Message|contains:
       - 'Get-ChildItem'
       - 'gci'
       - 'dir'
       - 'ls'
   paths:
-    Message|contains:
+  Message|contains:
       - 'C:\Users'
       - 'Documents'
       - 'Desktop'

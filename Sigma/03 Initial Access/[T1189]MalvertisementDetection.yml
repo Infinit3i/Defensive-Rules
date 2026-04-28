@@ -11,25 +11,25 @@ logsource:
   service: http
 detection:
   selection_ads:
-    uri|contains:
+  uri|contains:
       - '/ads/'
       - '/ad?'
       - '/advertisement'
       - '/banners/'
-    host|contains:
+  host|contains:
       - 'ads'
       - 'banner'
       - 'popup'
   selection_payload:
-    response_body_len: '>50000'
-    status_code: 200
-    mime_type|contains:
+  response_body_len:
+  status_code:
+  mime_type|contains:
       - 'javascript'
       - 'flash'
       - 'java'
   selection_redirect:
-    referrer|contains: 'google.com'
-    status_code: 302
+  referrer|contains:
+  status_code:
   condition: selection_ads and (selection_payload or selection_redirect)
 falsepositives:
   - Legitimate advertising content

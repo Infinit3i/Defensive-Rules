@@ -14,34 +14,33 @@ logsource:
   service: sysmon
 detection:
   timing_evasion:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'timeout'
       - 'ping -n'
       - 'start /wait'
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\rundll32.exe'
       - '\regsvr32.exe'
   vm_detection:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'systeminfo'
       - 'wmic computersystem'
       - 'reg query'
-    Image|endswith:
+  Image|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
   sandbox_checks:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'vmware'
       - 'vbox'
       - 'sandbox'
-    Image|contains:
+  Image|contains:
       - 'temp'
       - 'appdata'
-  condition: timing_evasion or
-               (vm_detection and sandbox_checks)
+  condition: timing_evasion or (vm_detection and sandbox_checks)
 fields:
   - CommandLine
   - Image

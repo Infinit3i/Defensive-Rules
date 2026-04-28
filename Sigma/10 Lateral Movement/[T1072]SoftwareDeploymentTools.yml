@@ -14,25 +14,25 @@ logsource:
   service: sysmon
 detection:
   selection_psexec:
-  EventID: 1
-  Image|endswith: '\PsExec.exe'
-  CommandLine|contains: '\\*'
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
   selection_sccm:
-  EventID: 1
-  ParentImage|contains: 'ccmexec'
+  EventID:
+  ParentImage|contains:
   Image|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\cscript.exe'
   selection_wmi_deployment:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '/node:'
       - 'process call create'
       - 'Win32_Process'
   selection_deployment_shares:
-  EventID: 5140
+  EventID:
   ShareName|contains:
       - 'NETLOGON'
       - 'SYSVOL'

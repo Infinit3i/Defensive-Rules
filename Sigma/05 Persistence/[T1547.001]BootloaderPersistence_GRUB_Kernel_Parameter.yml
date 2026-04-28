@@ -1,7 +1,8 @@
 title: Bootloader Persistence via GRUB Kernel Parameter Injection
 id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
 status: experimental
-description: Detects suspicious kernel parameters added to GRUB configuration for persistence through init process modification
+description: >-
+  Detects suspicious kernel parameters added to GRUB configuration for persistence through init process modification
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,22 +13,22 @@ logsource:
   service: auditd
 detection:
   selection_grub_params:
-  - type: PATH
-      name|contains:
-    - /boot/grub/grub.cfg
-    - /boot/grub2/grub.cfg
+      - type: PATH
+  name|contains:
+      - /boot/grub/grub.cfg
+      - /boot/grub2/grub.cfg
   selection_suspicious_params:
-  - comm|contains:
-    - init=
-    - modprobe.blacklist=
-    - systemd.unit=
-    - rd.shell
-    - emergency
-    - single
-    - rescue
+      - comm|contains:
+      - init=
+      - modprobe.blacklist=
+      - systemd.unit=
+      - rd.shell
+      - emergency
+      - single
+      - rescue
   selection_file_content:
-  - type: SYSCALL
-      syscall: write
+      - type: SYSCALL
+  syscall:
   condition: selection_grub_params and selection_file_content and selection_suspicious_params
 level: high
 tags:

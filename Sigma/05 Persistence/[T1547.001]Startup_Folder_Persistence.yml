@@ -1,7 +1,8 @@
 title: Startup Folder Persistence Detection
 id: i9j0k1l2-m3n4-5678-9012-345678ijklmn
 status: experimental
-description: Detects malicious file placement in Windows Startup folders for persistence mechanisms
+description: >-
+  Detects malicious file placement in Windows Startup folders for persistence mechanisms
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,12 +12,12 @@ logsource:
   service: sysmon
 detection:
   selection_file:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\Start Menu\Programs\Startup\'
       - '\Start Menu\Programs\StartUp\'
   selection_extension:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.bat'
       - '.cmd'
@@ -29,10 +30,10 @@ detection:
       - '.ps1'
       - '.lnk'
   selection_location:
-    - TargetFilename|contains:
+      - TargetFilename|contains:
       - '\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
       - '\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\'
-    - Image|contains:
+      - Image|contains:
       - '\AppData\'
       - '\Temp\'
       - '\Users\Public\'

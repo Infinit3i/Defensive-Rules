@@ -4,23 +4,16 @@ technique: T1071.003
 id: c8f5e3a6-7b9d-4e4f-c8f5-3e6a7b9d4c8b
 status: experimental
 description: >-
-  Detects command and control communications via mail protocols by monitoring
-  for suspicious SMTP, IMAP, or POP3 activities that may be used for
-  email-based C2 communications or data staging.
+  >- Detects command and control communications via mail protocols by monitoring for suspicious SMTP, IMAP, or POP3 activities that may be used for email-based C2 communications or data staging.
 references:
   - https://attack.mitre.org/techniques/T1071/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1071.003
   - mail_protocols
   - smtp
   - imap
@@ -29,19 +22,19 @@ logsource:
   service: conn
 detection:
   mail_ports:
-  id.resp_p|contains:
+    id.resp_p|contains:
       - 25
       - 587
       - 993
       - 995
-  unusual_traffic:
-  service: 'ssl'
-  orig_bytes|gte: 10000
-  duration|gte: 300
-  automated_mail:
-  id.orig_h|count|lte: 5
-  id.resp_p: 25
-  orig_bytes|gte: 1000
+    unusual_traffic:
+    service:
+    orig_bytes|gte:
+    duration|gte:
+    automated_mail:
+    id.orig_h|count|lte:
+    id.resp_p:
+    orig_bytes|gte:
   condition: mail_ports and (unusual_traffic or automated_mail)
 falsepositives:
   - Legitimate email communications

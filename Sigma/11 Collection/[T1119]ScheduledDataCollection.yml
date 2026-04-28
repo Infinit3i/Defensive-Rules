@@ -16,18 +16,18 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
+  EventID:
   schtasks:
-    - Image|endswith: '\schtasks.exe'
-    - CommandLine|contains: '/create'
+      - Image|endswith: '\schtasks.exe'
+      - CommandLine|contains: '/create'
   collection_actions:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'robocopy'
       - 'xcopy'
       - 'powershell'
       - '.ps1'
   targets:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'Users'
       - 'Documents'
       - 'AppData'

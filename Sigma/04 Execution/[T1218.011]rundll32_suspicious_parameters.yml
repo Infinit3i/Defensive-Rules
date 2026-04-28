@@ -1,10 +1,10 @@
 ---
 title: Suspicious Rundll32 Execution with Unusual Parameters
 technique: T1218.011
-
 id: 5e89e2fa-21b3-4f09-9011-aaaa3333bbbb
 status: stable
-description: Detects potentially malicious use of rundll32.exe with uncommon parameters or DLL paths that may indicate proxy execution of code.
+description: >-
+  Detects potentially malicious use of rundll32.exe with uncommon parameters or DLL paths that may indicate proxy execution of code.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -15,7 +15,7 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith: '\rundll32.exe'
+  Image|endswith:
   filter_known:
   CommandLine|contains:
       - 'shell32.dll,Control_RunDLL'
@@ -32,25 +32,13 @@ falsepositives:
   - Software invoking valid DLLs
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1218.011
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1218.011
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.T1218
   - attack.T1218.011
   - execution
-  - windows
-  - sysmon
   - living-off-the-land
   - APT41
   - FIN7

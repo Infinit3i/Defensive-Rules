@@ -1,6 +1,7 @@
 title: Serverless Function Abuse for Initial Access
 technique: T1609
 author: Infinit3i
+date: 2026/04/28
 id: f20d37b8-6789-9012-3456-789abcdef012
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -12,47 +13,47 @@ logsource:
   service: cloudtrail
 detection:
   selection_suspicious_lambda_creation:
-    eventName: 'CreateFunction'
-    requestParameters.functionName|contains:
+  eventName:
+  requestParameters.functionName|contains:
       - 'shell'
       - 'cmd'
       - 'exec'
       - 'backdoor'
       - 'reverse'
       - 'pivot'
-    requestParameters.runtime|contains:
+  requestParameters.runtime|contains:
       - 'provided'
       - 'custom'
   selection_excessive_permissions:
-    eventName: 'CreateFunction'
-    requestParameters.role|contains:
+  eventName:
+  requestParameters.role|contains:
       - 'AdministratorAccess'
       - 'PowerUserAccess'
       - '*:*'
       - 'FullAccess'
   selection_suspicious_invocations:
-    eventName: 'Invoke'
-    responseElements.statusCode: 200
+  eventName:
+  responseElements.statusCode:
     # Functions invoked from unusual geographic locations
-    sourceIPAddress|cidr:
+  sourceIPAddress|cidr:
       - '10.0.0.0/8'
       - '172.16.0.0/12'
       - '192.168.0.0/16'
   selection_data_access_functions:
-    eventName: 'Invoke'
+  eventName:
     # Functions accessing sensitive AWS services
-    requestParameters.functionName|regex: '.*-(s3|rds|secrets|ssm|kms)-.*'
+  requestParameters.functionName|regex:
   selection_reverse_shell_indicators:
-    eventName: 'Invoke'
-    userAgent|contains:
+  eventName:
+  userAgent|contains:
       - 'curl'
       - 'wget'
       - 'nc'
       - 'netcat'
       - 'bash'
   selection_code_injection:
-    eventName: 'UpdateFunctionCode'
-    requestParameters.zipFile|contains:
+  eventName:
+  requestParameters.zipFile|contains:
       - 'eval('
       - 'exec('
       - 'system('
@@ -60,14 +61,15 @@ detection:
       - 'passthru'
       - 'proc_open'
   selection_environment_tampering:
-    eventName: 'UpdateFunctionConfiguration'
-    requestParameters.environment.variables|contains:
+  eventName:
+  requestParameters.environment.variables|contains:
       - 'AWS_ACCESS_KEY_ID'
       - 'AWS_SECRET_ACCESS_KEY'
       - 'PATH=/tmp'
-  condition: selection_suspicious_lambda_creation or selection_excessive_permissions or
-               selection_suspicious_invocations or selection_data_access_functions or
-               selection_reverse_shell_indicators or selection_code_injection or selection_environment_tampering
+  condition: |
+    selection_suspicious_lambda_creation or selection_excessive_permissions or
+    selection_suspicious_invocations or selection_data_access_functions or
+    selection_reverse_shell_indicators or selection_code_injection or selection_environment_tampering
 falsepositives:
   - Legitimate serverless applications with required permissions
   - Development and testing environments
@@ -75,15 +77,10 @@ falsepositives:
   - Administrative functions requiring elevated access
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1609
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1609
   - attack.execution
   - attack.t1059
   - attack.privilege_escalation

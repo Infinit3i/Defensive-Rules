@@ -1,7 +1,8 @@
 title: Web Server File Defacement Detection
 id: d5e29e90-1c5e-4a57-bd05-731fc662417e
 status: experimental
-description: Detects web server file modification indicating potential defacement through file system monitoring
+description: >-
+  Detects web server file modification indicating potential defacement through file system monitoring
 author: Infinit3i
 date: 2026/04/28
 logsource:
@@ -9,13 +10,13 @@ logsource:
   service: sysmon
 detection:
   selection_file_modify:
-    EventID: 2
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\wwwroot\'
       - '\htdocs\'
       - '\public_html\'
       - '\inetpub\wwwroot\'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.html'
       - '.htm'
       - '.php'
@@ -23,7 +24,7 @@ detection:
       - '.aspx'
       - '.jsp'
   filter_legitimate:
-    ProcessName|contains:
+  ProcessName|contains:
       - 'w3wp.exe'
       - 'iis'
       - 'apache'

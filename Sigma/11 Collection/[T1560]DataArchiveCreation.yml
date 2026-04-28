@@ -16,14 +16,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
+  EventID:
   archive_tools:
-    - Image|endswith: '\7z.exe'
-    - Image|endswith: '\winrar.exe'
-    - Image|endswith: '\zip.exe'
-    - CommandLine|contains: 'Compress-Archive'
+      - Image|endswith: '\7z.exe'
+      - Image|endswith: '\winrar.exe'
+      - Image|endswith: '\zip.exe'
+      - CommandLine|contains: 'Compress-Archive'
   multiple_files:
-    CommandLine|contains:
+  CommandLine|contains:
       - '-r'
       - '-recurse'
       - 'Documents'

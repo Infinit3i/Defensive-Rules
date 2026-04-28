@@ -12,19 +12,19 @@ logsource:
   service: sysmon
 detection:
   selection_wmi:
-    EventID: 1
-    ParentImage|endswith:
+  EventID:
+  ParentImage|endswith:
       - '\wmiprvse.exe'
       - '\wmiapsrv.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'net user'
       - 'net localgroup'
   selection_wmic:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - 'process call create'
       - 'service'
       - '/privileged'
@@ -34,15 +34,8 @@ falsepositives:
   - WMI-based monitoring tools
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1047
   - attack.execution
-  - sysmon
-  - windows

@@ -1,6 +1,7 @@
 title: Cloud Security Tool Disabling Detection
 technique: T1562.007
 author: Infinit3i
+date: 2026/04/28
 id: 475i82ad-b23e-4567-8901-cdef01234567
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -12,58 +13,59 @@ logsource:
   service: cloudtrail
 detection:
   selection_cloudtrail_disable:
-    eventName:
+  eventName:
       - 'StopLogging'
       - 'DeleteTrail'
       - 'PutEventSelectors'
-    responseElements.trail.includeGlobalServiceEvents: false
+  responseElements.trail.includeGlobalServiceEvents:
   selection_guardduty_disable:
-    eventName:
+  eventName:
       - 'DeleteDetector'
       - 'UpdateDetector'
       - 'DeleteIPSet'
       - 'DeleteThreatIntelSet'
-      # GuardDuty security service tampering
+    # GuardDuty security service tampering
   selection_security_hub_disable:
-    eventName:
+  eventName:
       - 'DisableSecurityHub'
       - 'DeleteInsight'
       - 'BatchDisableStandards'
-      # Security Hub disabling
+    # Security Hub disabling
   selection_config_disable:
-    eventName:
+  eventName:
       - 'StopConfigurationRecorder'
       - 'DeleteConfigurationRecorder'
       - 'DeleteDeliveryChannel'
-      # AWS Config service disabling
+    # AWS Config service disabling
   selection_vpc_flow_logs_disable:
-    eventName:
+  eventName:
       - 'DeleteFlowLogs'
       - 'ModifyVpcAttribute'
-    requestParameters.enableDnsHostnames: false
+  requestParameters.enableDnsHostnames:
   selection_cloudwatch_tampering:
-    eventName:
+  eventName:
       - 'DeleteLogGroup'
       - 'DeleteLogStream'
       - 'DeleteMetricAlarm'
-      # CloudWatch monitoring disabling
+    # CloudWatch monitoring disabling
   selection_iam_logging_disable:
-    eventName:
+  eventName:
       - 'DeleteAccessKey'
       - 'DeactivateMFADevice'
       - 'DeleteAccountPasswordPolicy'
-      # IAM security feature disabling
+    # IAM security feature disabling
   selection_network_security_disable:
-    eventName:
+  eventName:
       - 'DeleteSecurityGroup'
       - 'AuthorizeSecurityGroupIngress'
       - 'RevokeSecurityGroupEgress'
-    requestParameters.groupId: '*'
-    requestParameters.ipPermissions.cidrIp: '0.0.0.0/0'
-  condition: selection_cloudtrail_disable or selection_guardduty_disable or
-               selection_security_hub_disable or selection_config_disable or
-               selection_vpc_flow_logs_disable or selection_cloudwatch_tampering or
-               selection_iam_logging_disable or selection_network_security_disable
+  requestParameters.groupId:
+  requestParameters.ipPermissions.cidrIp:
+  condition: |
+    selection_cloudtrail_disable or selection_guardduty_disable or
+    selection_security_hub_disable or selection_config_disable or
+    selection_vpc_flow_logs_disable or selection_cloudwatch_tampering or
+    selection_iam_logging_disable or selection_network_security_disable
 falsepositives:
   - Legitimate administrative maintenance activities
   - Cost optimization efforts to disable unused services
@@ -72,15 +74,10 @@ falsepositives:
   - Compliance-driven security configuration changes
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1562.007
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1562.007
   - attack.defense_evasion
   - attack.t1562
   - attack.impact

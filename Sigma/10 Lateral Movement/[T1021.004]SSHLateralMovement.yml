@@ -14,7 +14,7 @@ logsource:
   service: syslog
 detection:
   selection_ssh_login:
-  program: sshd
+  program:
   message|contains:
       - 'Accepted password'
       - 'Accepted publickey'
@@ -25,8 +25,8 @@ detection:
       - '172.'
       - '192.168.'
   selection_rapid_connections:
-  program: sshd
-  message|contains: 'Connection from'
+  program:
+  message|contains:
   condition: selection_ssh_login and selection_internal_ssh
   timeframe: 5m
   count: 5

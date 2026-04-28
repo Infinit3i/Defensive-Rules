@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_sc:
-  EventID: 1
-  Image|endswith: '\sc.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'config'
       - 'start= disabled'
@@ -36,8 +36,8 @@ detection:
       - 'W32Time'
       - 'Workstation'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Set-Service'
       - 'Stop-Service'

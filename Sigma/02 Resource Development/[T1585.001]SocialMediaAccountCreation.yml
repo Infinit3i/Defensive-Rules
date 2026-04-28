@@ -1,7 +1,8 @@
 title: Suspicious Social Media Account Creation
 id: b2c3d4e5-f6a7-8901-2345-678901bcdefg
 status: experimental
-description: Detects suspicious patterns in social media account creation for impersonation attacks
+description: >-
+  Detects suspicious patterns in social media account creation for impersonation attacks
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,8 +15,8 @@ logsource:
   service: registration
 detection:
   selection_bulk_creation:
-  event_type: account_created
-  ip_address: '*'
+  event_type:
+  ip_address:
   selection_suspicious_names:
   display_name|contains:
       - 'CEO'

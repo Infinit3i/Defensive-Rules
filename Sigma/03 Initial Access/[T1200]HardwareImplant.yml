@@ -1,7 +1,8 @@
 title: Hardware Implant Device Detection
 id: i9j0k1l2-m3n4-5678-ijkl-901234567890
 status: experimental
-description: Detects suspicious hardware additions through USB device enumeration and network interface changes
+description: >-
+  >- Detects suspicious hardware additions through USB device enumeration and network interface changes
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,22 +12,21 @@ logsource:
   service: system
 detection:
   selection_usb:
-    EventID: 20001
-    Source: 'Microsoft-Windows-USB-USBPORT'
+    EventID:
+    Source:
     Message|contains:
       - 'USB'
       - 'device'
-  selection_network:
-    EventID: 4703
-    Source: 'Microsoft-Windows-Security-Auditing'
-    ProcessName|contains: 'svchost.exe'
-  selection_unknown:
-    EventID: 6005
+    selection_network:
+    EventID:
+    Source:
+    ProcessName|contains:
+    selection_unknown:
+    EventID:
     Message|contains:
       - 'unknown'
       - 'unrecognized'
       - 'generic'
-  timeframe: 30s
   condition: (selection_usb and selection_network) or selection_unknown
 falsepositives:
   - Legitimate hardware installations

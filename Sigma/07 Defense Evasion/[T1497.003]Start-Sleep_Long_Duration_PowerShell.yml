@@ -3,7 +3,8 @@ title: Start-Sleep long duration in PowerShell
 technique: T1497.003
 id: 6f9b2d1a-3c4e-4f5b-9a7c-0b1d2e3f4a5b
 status: experimental
-description: Detect PowerShell scriptblocks using Start-Sleep with unusually long durations commonly used to evade sandbox analysis.
+description: >-
+  Detect PowerShell scriptblocks using Start-Sleep with unusually long durations commonly used to evade sandbox analysis.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -18,7 +19,7 @@ logsource:
   service: powershell
 detection:
   selection_long_sleep:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Start-Sleep -Seconds 60"
       - "Start-Sleep -Seconds 120"
@@ -26,7 +27,7 @@ detection:
       - "Start-Sleep -Seconds 600"
       - "Start-Sleep -Seconds 900"
   selection_sleep_s:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Start-Sleep -s 60"
       - "Start-Sleep -s 300"

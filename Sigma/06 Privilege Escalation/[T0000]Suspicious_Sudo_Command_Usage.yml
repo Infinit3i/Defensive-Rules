@@ -3,21 +3,16 @@ title: Suspicious Sudo Command Usage
 technique: T0000
 id: c021bac1-4d2e-4ebc-9d0c-1a2b3c4d5e6f
 status: experimental
-description: >
-  "Detects suspicious sudo command usage from syslog events, where unusual or abnormal sudo commands (indicated by the presence of 'sudo:'
-  and 'COMMAND=') may indicate unauthorized privilege escalation attempts."
-references: []
+description: >-
+  > "Detects suspicious sudo command usage from syslog events, where unusual or abnormal sudo commands (indicated by the presence of 'sudo: ' and 'COMMAND=') may indicate unauthorized privilege escalation attempts.
+references:
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t0000
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
   - custom.t0000
 logsource:
   product: linux
@@ -25,7 +20,7 @@ logsource:
   category: authentication
 detection:
   selection:
-  Message|contains:
+    Message|contains:
       - "sudo:"
       - "COMMAND="
   condition: selection

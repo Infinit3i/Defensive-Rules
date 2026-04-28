@@ -4,23 +4,16 @@ technique: T1001.001
 id: c8e5f3a9-7d6b-4e4f-c8e5-3f9a7d6b4c8b
 status: experimental
 description: >-
-  Detects data obfuscation using junk data by monitoring for padded
-  communications, noise injection, or unnecessary data transmission
-  patterns that may be used to hide C2 communications.
+  >- Detects data obfuscation using junk data by monitoring for padded communications, noise injection, or unnecessary data transmission patterns that may be used to hide C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1001/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1001.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1001.001
   - junk_data
   - data_padding
   - obfuscation
@@ -29,14 +22,14 @@ logsource:
   service: http
 detection:
   large_requests:
-  method: 'POST'
-  request_body_len|gte: 10000
-  response_body_len|lte: 1000
-  padding_patterns:
-  request_body_len: response_body_len
-  ratio|gte: 10
-  repeated_data:
-  uri|contains:
+    method:
+    request_body_len|gte:
+    response_body_len|lte:
+    padding_patterns:
+    request_body_len:
+    ratio|gte:
+    repeated_data:
+    uri|contains:
       - 'AAAAAAA'
       - '0000000'
       - 'padding'

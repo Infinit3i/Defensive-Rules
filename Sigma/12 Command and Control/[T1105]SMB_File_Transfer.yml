@@ -10,7 +10,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'copy \\\\*'
       - 'xcopy \\\\*'
@@ -23,12 +23,8 @@ detection:
       - 'smbclient'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.command-and-control
-  - attack.t1105

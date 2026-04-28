@@ -9,9 +9,9 @@ logsource:
   service: syslog
 detection:
   selection_ssh_keygen:
-    program: "ssh-keygen"
-    message|contains: "generated"
-  selection_key_add:
+    program:
+    message|contains:
+    selection_key_add:
     program:
       - "cat"
       - "echo"
@@ -21,14 +21,12 @@ detection:
       - "ssh-rsa"
       - "ssh-ed25519"
       - "ssh-dss"
-  selection_suspicious_timing:
-    facility: "authpriv"
+    selection_suspicious_timing:
+    facility:
     message|contains:
       - "Accepted publickey"
       - "Failed publickey"
-  timeframe: 5m
-  condition: selection_key_add or
-               (selection_ssh_keygen and selection_suspicious_timing)
+  condition: selection_key_add or (selection_ssh_keygen and selection_suspicious_timing)
 level: medium
 tags:
   - attack.persistence

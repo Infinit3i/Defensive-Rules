@@ -21,9 +21,9 @@ detection:
       - 5903
       - 5904
       - 5905
-  protocol: tcp
+  protocol:
   selection_vnc_process:
-  EventID: 1
+  EventID:
   Image|contains:
       - 'vnc'
       - 'tightvnc'

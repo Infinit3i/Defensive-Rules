@@ -4,23 +4,16 @@ technique: T1656
 id: c7f4e9a6-9d8b-4e3f-c7f4-9e6a9d8b3c7b
 status: experimental
 description: >-
-  Detects account impersonation attempts by monitoring for suspicious logon
-  activities, unusual user behavior patterns, or authentication events that
-  may indicate an attacker impersonating legitimate users.
+  >- Detects account impersonation attempts by monitoring for suspicious logon activities, unusual user behavior patterns, or authentication events that may indicate an attacker impersonating legitimate users.
 references:
   - https://attack.mitre.org/techniques/T1656/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1656
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
-  - attack.t1656
   - impersonation
   - account_takeover
   - authentication
@@ -29,19 +22,19 @@ logsource:
   service: security
 detection:
   unusual_logon:
-  EventID: 4624
-  LogonType:
+    EventID:
+    LogonType:
       - 2
       - 3
       - 10
-  geographic_anomaly:
-  IpAddress|startswith:
+    geographic_anomaly:
+    IpAddress|startswith:
       - '192.168.'
       - '10.'
-  WorkstationName|contains: 'EXTERNAL'
-  service_impersonation:
-  EventID: 4648
-  TargetUserName|contains:
+    WorkstationName|contains:
+    service_impersonation:
+    EventID:
+    TargetUserName|contains:
       - 'admin'
       - 'service'
       - 'system'

@@ -1,7 +1,8 @@
 title: Registry RunOnce Cleanup Evasion Detection
 id: d4e5f6g7-h8i9-0123-4567-890123defghi
 status: experimental
-description: Detects evasive RunOnce persistence using cleanup commands and delayed execution techniques
+description: >-
+  Detects evasive RunOnce persistence using cleanup commands and delayed execution techniques
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,24 +12,24 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    ParentCommandLine|contains: 'RunOnce'
+  EventID:
+  ParentCommandLine|contains:
   selection_cleanup:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'reg delete'
       - 'Remove-ItemProperty'
       - 'del /f /q'
       - 'rmdir /s'
       - 'sdelete'
   selection_delay:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'ping -n'
       - 'timeout /t'
       - 'Start-Sleep'
       - 'waitfor'
       - 'choice /t'
   selection_chain:
-    CommandLine|contains:
+  CommandLine|contains:
       - '&&'
       - ';'
       - '||'

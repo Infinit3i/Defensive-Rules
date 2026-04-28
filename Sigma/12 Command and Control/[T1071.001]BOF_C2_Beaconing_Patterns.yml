@@ -3,9 +3,8 @@ title: BOF Command and Control Beaconing Patterns
 technique: T1071.001
 id: a1b2c3d4-e5f6-7890-bcde-f23456789012
 status: experimental
-description: >
-  Detects network patterns consistent with Beacon Object File (BOF) command and control communications.
-  BOFs often use HTTP/HTTPS for C2 with specific timing and payload characteristics.
+description: >-
+  > Detects network patterns consistent with Beacon Object File (BOF) command and control communications. BOFs often use HTTP/HTTPS for C2 with specific timing and payload characteristics.
 references:
   - https://attack.mitre.org/techniques/T1071.001/
   - https://www.cobaltstrike.com/help-malleable-c2
@@ -21,7 +20,7 @@ detection:
       - 'Mozilla/5.0 (compatible; MSIE'
       - 'Mozilla/4.0 (compatible; MSIE'
       - 'Mozilla/5.0 (Windows NT'
-  user_agent|endswith: 'Trident/7.0; rv:11.0) like Gecko'
+  user_agent|endswith:
   selection_uri_patterns:
   uri|contains:
       - '/jquery-'
@@ -37,30 +36,26 @@ detection:
       - 'Accept-Language: en-US,en'
       - 'Accept-Encoding: gzip, deflate'
   selection_timing:
-  status_code: 200
-  response_body_len: '<1000'
+  status_code:
+  response_body_len:
   selection_post_data:
-  method: 'POST'
-  request_body_len: '<500'
+  method:
+  request_body_len:
   uri|contains:
       - '/submit.php'
       - '/fakeurl.html'
       - '/updates.rss'
-  condition: (selection_user_agents and selection_uri_patterns) and (selection_headers or selection_timing or selection_post_data)
+  condition: |
+    (selection_user_agents and selection_uri_patterns) and (selection_headers or selection_timing or selection_post_data)
 falsepositives:
   - Legitimate web browsing with similar patterns
   - CDN and analytics traffic
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1071.001
   - network
   - zeek
   - cobalt_strike

@@ -4,23 +4,16 @@ technique: T1071.001
 id: a6f3e8c9-5b7d-4e2f-a6f3-8e9c5b7d2a6b
 status: experimental
 description: >-
-  Detects command and control communications via web protocols by monitoring
-  for suspicious HTTP/HTTPS traffic patterns, unusual user agents, or
-  web-based C2 communication channels.
+  >- Detects command and control communications via web protocols by monitoring for suspicious HTTP/HTTPS traffic patterns, unusual user agents, or web-based C2 communication channels.
 references:
   - https://attack.mitre.org/techniques/T1071/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1071.001
   - web_protocols
   - http
   - c2_communication
@@ -29,18 +22,18 @@ logsource:
   service: http
 detection:
   suspicious_ua:
-  user_agent|contains:
+    user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'powershell'
       - 'empire'
-  beacon_pattern:
-  method: 'POST'
-  request_body_len|lte: 100
-  response_body_len|lte: 100
-  encoded_communication:
-  uri|contains:
+    beacon_pattern:
+    method:
+    request_body_len|lte:
+    response_body_len|lte:
+    encoded_communication:
+    uri|contains:
       - 'base64'
       - '%20%20%20'
       - 'encoded'

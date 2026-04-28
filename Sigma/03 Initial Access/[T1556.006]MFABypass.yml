@@ -1,7 +1,8 @@
 title: Multi-Factor Authentication Bypass Detection
 id: o5p6q7r8-s9t0-1234-opqr-567890123456
 status: experimental
-description: Detects attempts to bypass MFA through authentication process modification and push bombing
+description: >-
+  >- Detects attempts to bypass MFA through authentication process modification and push bombing
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,22 +12,21 @@ logsource:
   service: activedirectory
 detection:
   selection_mfa:
-    Category: 'Authentication'
+    Category:
     OperationName|contains:
       - 'Sign-in activity'
       - 'User Risk Detection'
-  selection_bypass:
-    AuthenticationRequirement: 'multiFactorAuthentication'
-    ResultType: 'Success'
+    selection_bypass:
+    AuthenticationRequirement:
+    ResultType:
     RiskState|contains:
       - 'atRisk'
       - 'confirmedCompromised'
-  selection_suspicious:
-    Location|contains: 'Unknown'
+    selection_suspicious:
+    Location|contains:
     ClientAppUsed|contains:
       - 'Browser'
       - 'Modern Auth'
-  timeframe: 300s
   condition: selection_mfa and selection_bypass and selection_suspicious
 falsepositives:
   - Legitimate MFA exceptions

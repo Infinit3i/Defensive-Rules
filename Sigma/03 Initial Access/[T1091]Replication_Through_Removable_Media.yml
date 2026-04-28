@@ -3,24 +3,17 @@ title: Malware Replication Through Removable Media
 technique: T1091
 id: f6a4e8c2-9d7b-4f3e-a1c5-8e2f9c7d4a6b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects potential malware replication through removable media by monitoring
-  for automatic execution of suspicious files from USB devices, creation of
-  autorun files, or unusual file activities on removable drives.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects potential malware replication through removable media by monitoring for automatic execution of suspicious files from USB devices, creation of autorun files, or unusual file activities on removable drives.
 references:
   - https://attack.mitre.org/techniques/T1091/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1091
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1091
   - usb
   - removable_media
   - autorun
@@ -35,12 +28,12 @@ detection:
       - 'F:\'
       - 'G:\'
       - 'H:\'
-  Image|endswith: '.exe'
+  Image|endswith:
   autorun_creation:
   TargetFilename|endswith:
       - 'autorun.inf'
       - 'desktop.ini'
-  TargetFilename|contains: ':'
+  TargetFilename|contains:
   suspicious_files:
   TargetFilename|contains:
       - 'USB'

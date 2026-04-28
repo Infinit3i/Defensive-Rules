@@ -16,14 +16,14 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-    EventID: 4104
+  EventID:
   wmi_queries:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Win32_LogicalDisk'
       - 'Win32_Volume'
       - 'DriveType'
   removable_type:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'DriveType = 2'
       - 'Removable'
       - 'USB'

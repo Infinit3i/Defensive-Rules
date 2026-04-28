@@ -3,33 +3,27 @@ title: Abnormal Host-to-Host Communication Patterns
 technique: T1021
 id: a123bc45-6789-4def-9012-abcdef987654
 status: experimental
-description: >
-  "Detects abnormal internal host-to-host communication using Zeek conn logs, such as previously unseen IP pairs, unexpected protocols, or new lateral
-  connections that may indicate reconnaissance or lateral movement."
+description: >-
+  > "Detects abnormal internal host-to-host communication using Zeek conn logs, such as previously unseen IP pairs, unexpected protocols, or new lateral connections that may indicate reconnaissance or lateral movement."
 references:
   - https://attack.mitre.org/techniques/T1021/
   - https://attack.mitre.org/techniques/T1049/
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1021
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
   - attack.discovery
-  - attack.t1021
   - attack.t1049
 logsource:
   product: zeek
   service: conn
 detection:
   internal_pair:
-  id.orig_h|startswith: "192.168."
-  id.resp_h|startswith: "192.168."
+  id.orig_h|startswith:
+  id.resp_h|startswith:
   uncommon_service:
   service|contains:
       - "rdp"

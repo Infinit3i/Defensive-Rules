@@ -9,17 +9,17 @@ logsource:
   service: auditd
 detection:
   selection_write:
-    type: "SYSCALL"
-    syscall: ["openat", "open"]
-    a2: ["O_WRONLY", "O_RDWR", "O_APPEND", "O_CREAT"]
+  type:
+  syscall:
+  a2:
   selection_ssh_keys:
-    name:
+  name:
       - "*/.ssh/authorized_keys"
       - "*/.ssh/authorized_keys2"
       - "/home/*/.ssh/authorized_keys"
       - "/root/.ssh/authorized_keys"
   selection_remote:
-    auid: "4294967295"  # Remote/unknown user
+  auid:
   condition: selection_write and selection_ssh_keys
 level: high
 tags:

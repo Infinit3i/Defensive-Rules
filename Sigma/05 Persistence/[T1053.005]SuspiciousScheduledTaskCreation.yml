@@ -3,7 +3,8 @@ title: Suspicious Scheduled Task Creation
 technique: T1053.005
 id: a1b2c3d4-5e6f-7890-abcd-ef1234567890
 status: experimental
-description: Detects suspicious scheduled task creation through command line tools and unusual task configurations
+description: >-
+  Detects suspicious scheduled task creation through command line tools and unusual task configurations
 author: Infinit3i
 date: 2026-04-27
 references:
@@ -13,23 +14,23 @@ logsource:
   service: sysmon
 detection:
   schtasks_creation:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'schtasks /create'
       - 'Register-ScheduledTask'
-    CommandLine|contains|all:
+  CommandLine|contains|all:
       - '/tr'
       - '/sc'
   powershell_task:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - 'New-ScheduledTask'
       - 'Register-ScheduledTask'
       - 'New-ScheduledTaskAction'
   suspicious_locations:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - '/tr "C:\Users\'
       - '/tr "C:\Temp\'
       - '/tr "C:\ProgramData\'
@@ -47,15 +48,8 @@ falsepositives:
   - Software installation and update processes
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1053.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1053
-  - attack.t1053.005
-  - windows
-  - sysmon

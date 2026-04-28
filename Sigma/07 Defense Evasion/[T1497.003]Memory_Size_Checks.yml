@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'Win32_PhysicalMemory'
       - 'TotalPhysicalMemory'
@@ -21,12 +21,8 @@ detection:
       - 'sysctl hw.memsize'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.defense_evasion
-  # MITRE ATT&CK technique
   - attack.t1497.003
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense-evasion
-  - attack.t1497.003

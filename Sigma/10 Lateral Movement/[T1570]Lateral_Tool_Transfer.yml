@@ -4,23 +4,16 @@ technique: T1570
 id: c3f8e7a6-9d5b-4e2f-a6c3-8f7e9d5c3a6b
 status: experimental
 description: >-
-  Detects lateral tool transfer by monitoring for file transfers between
-  internal hosts, tool deployment activities, or suspicious binary movement
-  that may indicate attacker tool propagation across the network.
+  >- Detects lateral tool transfer by monitoring for file transfers between internal hosts, tool deployment activities, or suspicious binary movement that may indicate attacker tool propagation across the network.
 references:
   - https://attack.mitre.org/techniques/T1570/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1570
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
-  - attack.t1570
   - tool_transfer
   - file_transfer
   - network
@@ -30,23 +23,23 @@ logsource:
   category: file_create
 detection:
   executable_transfer:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
-  TargetFilename|startswith:
+    TargetFilename|startswith:
       - 'C:\Windows\Temp\'
       - 'C:\Temp\'
       - 'C:\Users\Public\'
-  network_tool:
-  TargetFilename|contains:
+    network_tool:
+    TargetFilename|contains:
       - 'psexec'
       - 'mimikatz'
       - 'pwdump'
       - 'procdump'
-  remote_source:
-  ProcessName|contains:
+    remote_source:
+    ProcessName|contains:
       - 'svchost.exe'
       - 'services.exe'
   condition: executable_transfer and (network_tool or remote_source)

@@ -3,7 +3,8 @@ title: Cloud Account Credential Use from Unregistered or Inactive Devices
 technique: T1078.004
 id: 9b3d5d64-b1f2-48f8-bb12-2222bbbb2222
 status: experimental
-description: Detects successful logins using valid cloud credentials from unregistered, unmanaged, or inactive devices — potentially indicating credential theft or reuse.
+description: >-
+  Detects successful logins using valid cloud credentials from unregistered, unmanaged, or inactive devices — potentially indicating credential theft or reuse.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -13,9 +14,9 @@ logsource:
   service: cloudtrail
 detection:
   selection:
-  eventName: "ConsoleLogin"
-  additionalEventData.MFAUsed: "No"
-  userIdentity.type: "IAMUser"
+  eventName:
+  additionalEventData.MFAUsed:
+  userIdentity.type:
   filter_known_devices:
   sourceIPAddress:
       - '10.*'
@@ -31,11 +32,8 @@ falsepositives:
   - Administrator troubleshooting sessions
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.credential_access
-  # MITRE ATT&CK technique
   - attack.t1078.004
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.T1078

@@ -3,24 +3,17 @@ title: Malicious Link Click from Email
 technique: T1566.002
 id: a8d3f7e2-9c4b-41f5-b2e8-7d6c3a9f1e4b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects potential malicious link clicks by monitoring browser process creation
-  with suspicious URLs or domains that may originate from phishing emails.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects potential malicious link clicks by monitoring browser process creation with suspicious URLs or domains that may originate from phishing emails.
 references:
   - https://attack.mitre.org/techniques/T1566/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1566.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1566.002
-  - windows
   - browser
   - phishing
 logsource:

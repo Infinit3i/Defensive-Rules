@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_set:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'set'
       - 'echo %'
@@ -20,7 +20,7 @@ detection:
       - 'dir env:'
       - 'printenv'
   selection_specific:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - '%COMPUTERNAME%'
       - '%USERNAME%'
@@ -44,14 +44,7 @@ falsepositives:
   - Batch scripts
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

@@ -3,7 +3,8 @@ title: Executable or Script Dropped in Persistence Path
 technique: T1547.001
 id: 9e212d9c-028d-4930-a186-19bdfde8ff87
 status: experimental
-description: Detects creation of executables or script files in suspicious persistence paths like AppData or Startup folders using Sysmon Event ID 11.
+description: >-
+  Detects creation of executables or script files in suspicious persistence paths like AppData or Startup folders using Sysmon Event ID 11.
 author: Infinit3i
 date: 2025/04/20
 logsource:
@@ -12,7 +13,7 @@ logsource:
   category: file_create
 detection:
   selection_event:
-  EventID: 11
+  EventID:
   selection_path:
   TargetFilename|contains:
       - '\AppData\'
@@ -33,14 +34,8 @@ falsepositives:
   - Software installations or legitimate automation
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1547.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1547
-  - attack.t1547.001
-  - sysmon

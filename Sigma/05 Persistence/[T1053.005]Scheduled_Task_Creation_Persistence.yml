@@ -1,7 +1,8 @@
 title: Scheduled Task Creation Persistence
 id: g7h8i9j0-k1l2-3456-7890-123456ghijkl
 status: experimental
-description: Detects suspicious scheduled task creation for persistence through schtasks and Task Scheduler COM
+description: >-
+  Detects suspicious scheduled task creation for persistence through schtasks and Task Scheduler COM
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,33 +12,33 @@ logsource:
   service: sysmon
 detection:
   selection_schtasks:
-    EventID: 1
-    Image|endswith: '\schtasks.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - '/create'
       - '/change'
   selection_taskschd:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskScheduler'
       - 'Register-ScheduledTask'
       - 'New-ScheduledTask'
   selection_suspicious:
-    - CommandLine|contains:
+      - CommandLine|contains:
       - '/tr'
       - '/ru system'
       - '/rl highest'
       - '/f'
       - 'SYSTEM'
       - 'NT AUTHORITY'
-    - CommandLine|contains:
+      - CommandLine|contains:
       - 'powershell'
       - 'cmd.exe'
       - 'rundll32'
       - 'regsvr32'
       - 'mshta'
-    - CommandLine|contains:
+      - CommandLine|contains:
       - '\AppData\'
       - '\Temp\'
       - '\Users\Public\'

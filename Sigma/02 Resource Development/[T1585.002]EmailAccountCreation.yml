@@ -14,8 +14,8 @@ logsource:
   service: registration
 detection:
   selection_bulk_registration:
-  event_type: account_created
-  ip_address: '*'
+  event_type:
+  ip_address:
   selection_suspicious_naming:
   email|contains:
       - 'noreply'
@@ -44,7 +44,8 @@ detection:
       - '@tempmail.org'
       - '@yopmail.com'
       - '@throwaway.email'
-  condition: (selection_bulk_registration and selection_suspicious_naming) or selection_domain_spoofing or selection_temporary_providers
+  condition: |
+    (selection_bulk_registration and selection_suspicious_naming) or selection_domain_spoofing or selection_temporary_providers
   timeframe: 1h
   count: 5
 level: medium

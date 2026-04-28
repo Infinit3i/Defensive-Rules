@@ -10,32 +10,32 @@ logsource:
   service: sysmon
 detection:
   sel_office_template:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\Microsoft Office\Office'
       - '\Microsoft\Office\'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '\STARTUP\'
       - '\XLSTART\'
       - '.dotm'
       - '.xltm'
       - '.pptm'
   sel_office_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\Software\Microsoft\Office\'
       - '\Software\Microsoft\VBA\'
-    TargetObject|endswith:
+  TargetObject|endswith:
       - '\Security\VBAWarnings'
       - '\Security\AccessVBOM'
       - '\Security\ExtensionHardening'
   sel_macro_process:
-    EventID: 1
-    ParentImage|endswith:
+  EventID:
+  ParentImage|endswith:
       - '\winword.exe'
       - '\excel.exe'
       - '\powerpnt.exe'
-    Image|endswith:
+  Image|endswith:
       - '\wscript.exe'
       - '\cscript.exe'
       - '\powershell.exe'
@@ -46,17 +46,10 @@ falsepositives:
   - Administrative Office configuration changes
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - attack.persistence
-  # MITRE ATT&CK technique
-  - attack.t1137
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.persistence
   - attack.t1137
-  - sysmon
   - windows
+  - sysmon
   - office
   - macro
 references:

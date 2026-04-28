@@ -3,24 +3,17 @@ title: Email Service Abuse for Initial Access
 technique: T1566.003
 id: e6b9c4f7-3a8e-4d2c-b1f5-7e4a9c2d8f6b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects abuse of legitimate email services for malicious purposes including
-  mass email sending, suspicious attachments, or phishing campaigns using
-  compromised or newly created accounts.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects abuse of legitimate email services for malicious purposes including mass email sending, suspicious attachments, or phishing campaigns using compromised or newly created accounts.
 references:
   - https://attack.mitre.org/techniques/T1566/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1566.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1566.003
   - email
   - phishing
   - service_abuse
@@ -29,10 +22,10 @@ logsource:
   service: exchange
 detection:
   mass_email:
-  Operation: 'Send'
-  RecipientCount|gte: 50
+  Operation:
+  RecipientCount|gte:
   suspicious_attachment:
-  Operation: 'Send'
+  Operation:
   AttachmentExtension|contains:
       - '.exe'
       - '.scr'
@@ -40,7 +33,7 @@ detection:
       - '.ps1'
       - '.vbs'
   external_sender:
-  Operation: 'Send'
+  Operation:
   SenderDomain|contains:
       - 'gmail.com'
       - 'yahoo.com'

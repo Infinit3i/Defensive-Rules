@@ -12,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   selection_file_create:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '\version.dll'
       - '\msvcr71.dll'
       - '\msvcr100.dll'
@@ -21,27 +21,20 @@ detection:
       - '\dwmapi.dll'
       - '\wininet.dll'
   selection_image_load:
-    EventID: 7
-    ImageLoaded|endswith:
+  EventID:
+  ImageLoaded|endswith:
       - '\version.dll'
       - '\msvcr71.dll'
       - '\dwmapi.dll'
-    Signed: 'false'
+  Signed:
   condition: selection_file_create or selection_image_load
 falsepositives:
   - Legitimate software installations
   - Development environments
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1574.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1574.001
   - attack.persistence
-  - sysmon
-  - windows

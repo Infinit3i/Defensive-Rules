@@ -12,34 +12,27 @@ logsource:
   service: sysmon
 detection:
   selection_file:
-    EventID: 11
-    TargetFilename|contains: '\System32\'
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|contains:
+  TargetFilename|endswith:
       - '.dll'
   selection_load:
-    EventID: 7
-    ImageLoaded|contains: '\System32\'
-    ImageLoaded|endswith: '.dll'
-    Signed: 'false'
+  EventID:
+  ImageLoaded|contains:
+  ImageLoaded|endswith:
+  Signed:
   selection_process:
-    EventID: 1
-    Image|contains: '\System32\'
-    ParentImage|endswith: '\services.exe'
+  EventID:
+  Image|contains:
+  ParentImage|endswith:
   condition: (selection_file or selection_load) and selection_process
 falsepositives:
   - Legitimate third-party services
   - Software updates
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1574.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1574.002
   - attack.persistence
-  - sysmon
-  - windows

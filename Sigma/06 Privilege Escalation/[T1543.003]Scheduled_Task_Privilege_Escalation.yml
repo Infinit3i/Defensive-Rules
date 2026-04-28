@@ -12,33 +12,26 @@ logsource:
   service: sysmon
 detection:
   selection_schtasks:
-    EventID: 1
-    Image|endswith: '\schtasks.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - '/ru system'
       - '/rl highest'
       - 'NT AUTHORITY\SYSTEM'
   selection_taskschd:
-    EventID: 1
-    ParentImage|endswith: '\taskschd.msc'
+  EventID:
+  ParentImage|endswith:
   selection_registry:
-    EventID: 13
-    TargetObject|contains: '\Schedule\TaskCache\Tasks\'
+  EventID:
+  TargetObject|contains:
   condition: selection_schtasks or selection_taskschd or selection_registry
 falsepositives:
   - Legitimate system administration
   - Software installation tasks
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1543.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1543.003
   - attack.persistence
-  - sysmon
-  - windows

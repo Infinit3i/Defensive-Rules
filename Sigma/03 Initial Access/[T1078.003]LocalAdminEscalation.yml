@@ -16,26 +16,25 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    User|contains: 'Administrators'
+  EventID:
+  User|contains:
   selection_elevation_tools:
-    Image|endswith:
+  Image|endswith:
       - '\psexec.exe'
       - '\runas.exe'
       - '\schtasks.exe'
       - '\at.exe'
       - '\wmic.exe'
   selection_bypass_uac:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'bypassuac'
       - 'fodhelper'
       - 'sdclt'
       - 'eventvwr'
       - 'computerdefaults'
   selection_local_admin:
-    User|re: '.*\\[Aa]dmin.*'
-  condition: selection_process and (selection_elevation_tools or selection_bypass_uac) and
-               selection_local_admin
+  User|re:
+  condition: selection_process and (selection_elevation_tools or selection_bypass_uac) and selection_local_admin
 level: high
 fields:
   - Image

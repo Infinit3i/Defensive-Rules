@@ -1,15 +1,17 @@
 title: Event Tracing for Windows (ETW) Tampering Detection
 technique: T1562.006
 author: Infinit3i
+date: 2026/04/28
 id: f9e6a7c4-8d2b-4a1e-9c5f-7b3a8e2d6f4c
 status: experimental
-description: Detects attempts to tamper with Event Tracing for Windows (ETW) to disable logging and evade detection by security monitoring tools
+description: >-
+  Detects attempts to tamper with Event Tracing for Windows (ETW) to disable logging and evade detection by security monitoring tools
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_etw_registry:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger'
       - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels'
@@ -22,8 +24,8 @@ detection:
       - 'DWORD (0x00000000)'
       - '0'
   selection_etw_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Set-EtwTraceProvider'
       - 'Remove-EtwTraceProvider'
@@ -32,8 +34,8 @@ detection:
       - 'Microsoft-Windows-PowerShell'
       - 'Microsoft-Windows-Kernel-EventTracing'
   selection_etw_wevtutil:
-  EventID: 1
-  Image|endswith: '\wevtutil.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'set-log'
       - 'sl'
@@ -43,8 +45,8 @@ detection:
       - 'Microsoft-Windows-WMI-Activity/Operational'
       - 'Microsoft-Windows-Sysmon/Operational'
   selection_etw_process_access:
-  EventID: 10
-  TargetImage|endswith: '\svchost.exe'
+  EventID:
+  TargetImage|endswith:
   CallTrace|contains:
       - 'advapi32.dll+EventRegister'
       - 'advapi32.dll+EventUnregister'
@@ -54,7 +56,7 @@ detection:
       - '0x1F3FFF'
       - '0x1FFFFF'
   selection_etw_api_calls:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'EtwEventWrite'
       - 'EtwEventRegister'
@@ -62,8 +64,8 @@ detection:
       - 'EtwTraceMessage'
       - 'TraceEvent'
   selection_etw_logman:
-  EventID: 1
-  Image|endswith: '\logman.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'stop'
       - 'delete'
@@ -73,20 +75,21 @@ detection:
       - 'EventLog-Application'
       - 'NT Kernel Logger'
   selection_etw_service_stop:
-  EventID: 7045
+  EventID:
   ServiceName|contains:
       - 'EventLog'
       - 'Wecsvc'
       - 'WinRM'
-  StartType: 'Disabled'
+  StartType:
   selection_etw_com:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'Microsoft.Diagnostics.Tracing'
       - 'System.Diagnostics.Eventing'
       - 'TraceLogging'
-  condition: selection_etw_registry or selection_etw_powershell or selection_etw_wevtutil or selection_etw_process_access or selection_etw_api_calls o
-               r selection_etw_logman or selection_etw_service_stop or selection_etw_com
+  condition: |
+    selection_etw_registry or selection_etw_powershell or selection_etw_wevtutil or selection_etw_process_access or selection_etw_api_calls o
+    r selection_etw_logman or selection_etw_service_stop or selection_etw_com
 falsepositives:
   - Legitimate system administration tasks
   - Performance troubleshooting activities
@@ -94,19 +97,12 @@ falsepositives:
   - Windows diagnostic tools
 level: critical
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1562.006
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1562.006
   - attack.execution
   - attack.t1059.001
-  - sysmon
-  - windows
   - etw_tampering
   - logging_evasion
 references:

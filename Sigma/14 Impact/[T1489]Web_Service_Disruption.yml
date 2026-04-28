@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'stop'
       - 'delete'
@@ -44,10 +44,7 @@ falsepositives:
   - Planned maintenance
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1489
-  # Platform/tool tags
   - windows
   - sysmon

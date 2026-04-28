@@ -4,23 +4,16 @@ technique: T1572
 id: b7d4e9f3-8c6a-4e5f-b7d4-9e3f8c6a5b7b
 status: experimental
 description: >-
-  Detects protocol tunneling by monitoring for encapsulated protocols,
-  suspicious tunneling tools, or unusual protocol usage patterns that
-  may be used to hide C2 communications within legitimate traffic.
+  >- Detects protocol tunneling by monitoring for encapsulated protocols, suspicious tunneling tools, or unusual protocol usage patterns that may be used to hide C2 communications within legitimate traffic.
 references:
   - https://attack.mitre.org/techniques/T1572/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1572
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1572
   - protocol_tunneling
   - encapsulation
   - traffic_hiding
@@ -30,19 +23,19 @@ logsource:
   category: process_creation
 detection:
   tunnel_tools:
-  Image|endswith:
+    Image|endswith:
       - '\ssh.exe'
       - '\plink.exe'
       - '\stunnel.exe'
       - '\chisel.exe'
-  tunnel_args:
-  CommandLine|contains:
+    tunnel_args:
+    CommandLine|contains:
       - '-L '
       - '-R '
       - '-D '
       - 'tunnel'
-  port_forwarding:
-  CommandLine|contains:
+    port_forwarding:
+    CommandLine|contains:
       - 'portproxy'
       - 'forward'
       - 'redirect'

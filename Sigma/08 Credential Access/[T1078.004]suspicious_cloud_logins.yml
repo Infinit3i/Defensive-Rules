@@ -3,7 +3,8 @@ title: Suspicious Cloud Account Logins from New Geolocations
 technique: T1078.004
 id: 7b5c7b43-fd62-4f6d-91a8-1111aaaa1111
 status: stable
-description: Detects cloud logins from unusual geolocations or impossible travel patterns, possibly indicating stolen credentials or compromised cloud accounts.
+description: >-
+  Detects cloud logins from unusual geolocations or impossible travel patterns, possibly indicating stolen credentials or compromised cloud accounts.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -13,7 +14,7 @@ logsource:
   service: signinlogs
 detection:
   selection:
-  ResultType: 0
+  ResultType:
   Location:
       - '*'
   filter_known_locations:
@@ -32,11 +33,8 @@ falsepositives:
   - VPN usage
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.credential_access
-  # MITRE ATT&CK technique
   - attack.t1078.004
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.T1078

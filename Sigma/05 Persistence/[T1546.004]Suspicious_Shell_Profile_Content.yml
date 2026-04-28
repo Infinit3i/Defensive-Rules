@@ -9,29 +9,29 @@ logsource:
   service: auditd
 detection:
   selection_files:
-    name:
+  name:
       - "*/.bashrc"
       - "*/.bash_profile"
       - "*/.zshrc"
       - "*/.profile"
       - "/etc/profile"
   selection_suspicious:
-    comm:
+  comm:
       - "echo"
       - "cat"
       - "tee"
-    exe:
+  exe:
       - "/bin/echo"
       - "/bin/cat"
       - "/usr/bin/tee"
   filter_legitimate:
-    proctitle|contains:
+  proctitle|contains:
       - "alias "
       - "export PATH"
       - "export LANG"
       - "PS1="
   suspicious_content:
-    proctitle|contains:
+  proctitle|contains:
       - "curl http"
       - "wget http"
       - "nc -l"
@@ -40,8 +40,7 @@ detection:
       - "/dev/tcp/"
       - "base64 -d"
       - "chmod +x"
-  condition: (selection_files and selection_suspicious and
-               suspicious_content) and not filter_legitimate
+  condition: (selection_files and selection_suspicious and suspicious_content) and not filter_legitimate
 level: high
 tags:
   - attack.persistence

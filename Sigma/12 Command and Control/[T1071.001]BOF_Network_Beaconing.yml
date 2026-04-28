@@ -14,22 +14,22 @@ logsource:
   service: http
 detection:
   regular_beacons:
-    method: 'GET'
-    uri|contains:
+  method:
+  uri|contains:
       - '/updates'
       - '/check'
       - '/ping'
   payload_patterns:
-    uri|contains:
+  uri|contains:
       - 'exec='
       - 'cmd='
       - 'run='
-    user_agent|contains:
+  user_agent|contains:
       - 'Mozilla/4.0'
       - 'curl'
   timing_pattern:
-    interval_variance|lte: 5
-    request_count|gte: 10
+  interval_variance|lte:
+  request_count|gte:
   condition: (regular_beacons or payload_patterns) and timing_pattern
 fields:
   - src_ip

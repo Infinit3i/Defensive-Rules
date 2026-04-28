@@ -16,17 +16,17 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
+  EventID:
   email_files:
-    CommandLine|contains:
+  CommandLine|contains:
       - '.pst'
       - '.ost'
       - '.edb'
       - 'MAPI'
   tools:
-    - Image|endswith: '\pst2ost.exe'
-    - Image|endswith: '\ost2pst.exe'
-    - CommandLine|contains: 'Export-Mailbox'
+      - Image|endswith: '\pst2ost.exe'
+      - Image|endswith: '\ost2pst.exe'
+      - CommandLine|contains: 'Export-Mailbox'
   condition: selection and (email_files or tools)
 falsepositives:
   - Email backup operations

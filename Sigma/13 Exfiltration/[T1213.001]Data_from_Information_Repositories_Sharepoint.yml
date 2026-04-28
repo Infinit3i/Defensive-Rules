@@ -4,24 +4,17 @@ technique: T1213.001
 id: c9f6e3a8-7d4b-4e5f-c9f6-3e8a7d4b5c9b
 status: experimental
 description: >-
-  Detects suspicious data collection from SharePoint repositories by
-  monitoring for bulk downloads, unusual access patterns, or automated
-  data retrieval that may indicate data harvesting activities.
+  >- Detects suspicious data collection from SharePoint repositories by monitoring for bulk downloads, unusual access patterns, or automated data retrieval that may indicate data harvesting activities.
 references:
   - https://attack.mitre.org/techniques/T1213/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1213.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.collection
-  - attack.exfiltration
-  - attack.t1213.001
   - sharepoint
   - data_collection
 logsource:
@@ -29,18 +22,18 @@ logsource:
   service: sharepoint
 detection:
   bulk_download:
-  Operation: 'FileDownloaded'
-  ItemType: 'File'
-  ObjectId|count|gte: 50
-  automated_access:
-  UserAgent|contains:
+    Operation:
+    ItemType:
+    ObjectId|count|gte:
+    automated_access:
+    UserAgent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'powershell'
-  sensitive_files:
-  Operation: 'FileAccessed'
-  SourceFileName|endswith:
+    sensitive_files:
+    Operation:
+    SourceFileName|endswith:
       - '.xlsx'
       - '.docx'
       - '.pdf'

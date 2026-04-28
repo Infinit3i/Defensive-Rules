@@ -1,7 +1,8 @@
 title: Bootkit Installation Detection
 id: t0u1v2w3-x4y5-6789-tuvw-012345678901
 status: experimental
-description: Detects bootkit installation through master boot record modifications and boot sector changes
+description: >-
+  Detects bootkit installation through master boot record modifications and boot sector changes
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_disk:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\diskpart.exe'
       - '\bcdedit.exe'
       - '\bootrec.exe'
   selection_commands:
-    CommandLine|contains:
+  CommandLine|contains:
       - '/set bootstatuspolicy'
       - 'recoveryenabled no'
       - 'ignoreallfailures'
       - 'fixmbr'
   selection_files:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'bootmgr'
       - 'ntldr'
       - 'boot.ini'

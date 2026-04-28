@@ -9,8 +9,8 @@ logsource:
   service: sysmon
 detection:
   selection_file_mod:
-    EventID: 2
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.doc'
       - '.docx'
       - '.xls'
@@ -20,29 +20,27 @@ detection:
       - '.png'
       - '.txt'
   selection_suspicious_process:
-    EventID: 1
-    Image|contains:
+  EventID:
+  Image|contains:
       - '\AppData\Local\Temp\'
       - '\Users\Public\'
       - '\ProgramData\'
-    CommandLine|contains:
+  CommandLine|contains:
       - '-enc '
       - 'crypto'
       - 'cipher'
       - 'aes'
       - 'rsa'
   selection_network_ransom:
-    EventID: 3
-    DestinationPort:
+  EventID:
+  DestinationPort:
       - 443
       - 80
       - 9050
-    Image|contains:
+  Image|contains:
       - '\AppData\Local\Temp\'
       - '\ProgramData\'
-  condition: selection_file_mod and
-               (selection_suspicious_process or
-        selection_network_ransom)
+  condition: selection_file_mod and (selection_suspicious_process or selection_network_ransom)
 level: critical
 tags:
   - attack.impact

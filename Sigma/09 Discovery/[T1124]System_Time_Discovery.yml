@@ -3,20 +3,17 @@ title: System Time Discovery via tzutil, w32tm, date/time, or Get-Date
 technique: T1124
 id: e4f0cd3e-9a8d-4c2a-a5d0-b2b1c3d4e5f6
 status: experimental
-description: Detect commands that query local system time or timezone, often used prior to time-based evasion or scheduling.
+description: >-
+  Detect commands that query local system time or timezone, often used prior to time-based evasion or scheduling.
 author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1124/
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1124
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1124
   - tactic.discovery
   - platform:windows
   - technique:T1124
@@ -26,26 +23,26 @@ logsource:
   service: sysmon
 detection:
   tzutil:
-  EventID: 1
-  Image|endswith: '\tzutil.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - " /g"
       - " /s "
   w32tm:
-  EventID: 1
-  Image|endswith: '\w32tm.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - "/query"
       - "/status"
       - "/configuration"
   date_time_cmd:
-  EventID: 1
-  Image|endswith: '\cmd.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - " time /t"
       - " date /t"
   ps_getdate:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'

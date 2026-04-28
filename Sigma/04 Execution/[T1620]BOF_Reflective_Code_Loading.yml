@@ -1,12 +1,10 @@
 ---
 title: Beacon Object File (BOF) Reflective Loading Detection
 technique: T1620
-
 id: f1a2b3c4-d5e6-7890-abcd-ef1234567890
 status: experimental
-description: >
-  Detects patterns consistent with Beacon Object File (BOF) reflective loading used by Cobalt Strike.
-  BOFs are position-independent code that executes in memory without touching disk.
+description: >-
+  > Detects patterns consistent with Beacon Object File (BOF) reflective loading used by Cobalt Strike. BOFs are position-independent code that executes in memory without touching disk.
 references:
   - https://attack.mitre.org/techniques/T1620/
   - https://www.cobaltstrike.com/help-beacon-object-files
@@ -18,7 +16,7 @@ logsource:
   product: windows
 detection:
   selection_apis:
-  Image|endswith: '\rundll32.exe'
+  Image|endswith:
   CommandLine|contains:
       - 'VirtualAlloc'
       - 'VirtualProtect'
@@ -33,36 +31,22 @@ detection:
       - 'UNKNOWN'
       - 'Unbacked'
   selection_memory:
-  EventID: 10
+  EventID:
   GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
-  CallTrace|contains: 'UNKNOWN'
+  CallTrace|contains:
   condition: any of selection_*
 falsepositives:
   - Legitimate software using similar memory manipulation techniques
   - Security tools performing memory analysis
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1620
-  # Platform/tool tags
   - windows
   - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1620
-  # Platform/tool tags
-  - windows
-  - sysmon
-  - attack.execution
-  - attack.t1620
   - attack.t1055
-  - sysmon
-  - windows
   - cobalt_strike
   - bof

@@ -12,38 +12,30 @@ logsource:
   service: sysmon
 detection:
   selection_pipe_create:
-    EventID: 17
-    PipeName|startswith:
+  EventID:
+  PipeName|startswith:
       - '\pipe\token'
       - '\pipe\impersonate'
       - '\pipe\privesc'
   selection_pipe_connect:
-    EventID: 18
-    PipeName|contains:
+  EventID:
+  PipeName|contains:
       - 'pipe'
-    Image|endswith:
+  Image|endswith:
       - '.exe'
   selection_api_call:
-    EventID: 10
-    CallTrace|contains:
+  EventID:
+  CallTrace|contains:
       - 'ImpersonateNamedPipeClient'
       - 'GetNamedPipeClientComputerName'
-  condition: selection_pipe_create or (selection_pipe_connect and
-               selection_api_call)
+  condition: selection_pipe_create or (selection_pipe_connect and selection_api_call)
 falsepositives:
   - Legitimate inter-process communication
   - System services
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1134.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1134.005
   - attack.lateral_movement
-  - sysmon
-  - windows

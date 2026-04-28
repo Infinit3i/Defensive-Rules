@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_injection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'NtCreateProcess'
       - 'NtCreateProcessEx'
@@ -20,7 +20,7 @@ detection:
       - 'ZwCreateProcess'
       - 'CreateRemoteProcess'
   selection_memory:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'NtAllocateVirtualMemory'
       - 'NtFreeVirtualMemory'
@@ -29,7 +29,7 @@ detection:
       - 'VirtualProtectEx'
       - 'NtMapViewOfSection'
   selection_threads:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'NtCreateThreadEx'
       - 'RtlCreateUserThread'
@@ -49,14 +49,7 @@ falsepositives:
   - System utilities
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1106
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.execution
   - attack.t1106
-  - sysmon
   - windows
+  - sysmon

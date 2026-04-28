@@ -14,15 +14,15 @@ logsource:
   service: sysmon
 detection:
   selection_openssl_activity:
-  EventID: 1
-  Image|endswith: '\openssl.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'req -new'
       - 'x509 -req'
       - 'genrsa'
       - 'genpkey'
   selection_cert_tools:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\certreq.exe'
       - '\makecert.exe'
@@ -32,7 +32,7 @@ detection:
       - '-submit'
       - '-install'
   selection_suspicious_subjects:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'CN=Microsoft'
       - 'CN=Google'
@@ -45,7 +45,7 @@ detection:
       - 'CN=secure'
       - 'CN=update'
   selection_cert_files:
-  EventID: 11
+  EventID:
   TargetFilename|endswith:
       - '.csr'
       - '.pem'
@@ -59,7 +59,8 @@ detection:
       - 'amazon'
       - 'login'
       - 'secure'
-  condition: selection_openssl_activity or selection_cert_tools or selection_suspicious_subjects or selection_cert_files
+  condition: |
+    selection_openssl_activity or selection_cert_tools or selection_suspicious_subjects or selection_cert_files
 level: medium
 fields:
   - Image

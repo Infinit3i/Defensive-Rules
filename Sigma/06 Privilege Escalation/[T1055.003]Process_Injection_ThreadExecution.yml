@@ -17,17 +17,17 @@ logsource:
   service: sysmon
 detection:
   selection_thread_hijack:
-    EventID: 8
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\services.exe'
   selection_remote_thread:
-    EventID: 10
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
-    CallTrace|contains:
+  CallTrace|contains:
       - 'SetThreadContext'
       - 'SuspendThread'
       - 'ResumeThread'

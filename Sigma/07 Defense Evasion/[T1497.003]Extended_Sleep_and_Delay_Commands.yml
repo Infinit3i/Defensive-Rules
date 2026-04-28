@@ -3,7 +3,8 @@ title: Extended Sleep and Delay Commands for Evasion
 technique: T1497.003
 id: d4e5f6g7-h8i9-0123-4567-890123defghi
 status: experimental
-description: Detects extended sleep, delay, or timeout commands often used for sandbox evasion
+description: >-
+  Detects extended sleep, delay, or timeout commands often used for sandbox evasion
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,22 +12,22 @@ logsource:
   service: sysmon
 detection:
   selection_timeout:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'timeout /t'
       - 'ping -n'
       - 'ping 127.0.0.1 -n'
       - 'ping localhost -n'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Start-Sleep'
       - 'sleep'
       - 'System.Threading.Thread.Sleep'
       - '[Threading.Thread]::Sleep'
   selection_batch:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\cmd.exe'
       - '\choice.exe'
@@ -40,7 +41,7 @@ detection:
       - '/n 30'
       - '/n 60'
   long_delays:
-  CommandLine|re: '.*(/t\s+|sleep\s+|Sleep\()\d{2,}.*'
+  CommandLine|re:
   condition: (selection_timeout or selection_powershell or selection_batch) and long_delays
 fields:
   - Image
@@ -54,14 +55,8 @@ falsepositives:
   - Backup scripts with delays
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.defense_evasion
-  # MITRE ATT&CK technique
   - attack.t1497.003
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense-evasion
-  - attack.t1497.003
-  - sysmon
-  - windows

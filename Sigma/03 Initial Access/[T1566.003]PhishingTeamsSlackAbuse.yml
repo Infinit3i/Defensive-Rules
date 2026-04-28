@@ -1,7 +1,8 @@
 title: Phishing via Microsoft Teams or Slack External Links
 id: a5e8f2c9-7b4d-3e6a-9c1f-d8b5a7e9c2f4
 status: experimental
-description: Detects phishing attempts through Teams/Slack messages containing suspicious external links
+description: >-
+  Detects phishing attempts through Teams/Slack messages containing suspicious external links
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,11 +12,11 @@ logsource:
   service: teams
 detection:
   selection_external_link:
-    MessageContent|contains:
+  MessageContent|contains:
       - 'http'
       - 'https'
   selection_suspicious_domains:
-    MessageContent|contains:
+  MessageContent|contains:
       - '.tk'
       - '.ml'
       - '.ga'
@@ -23,7 +24,7 @@ detection:
       - 'tinyurl.com'
       - 'cutt.ly'
   selection_urgency:
-    MessageContent|contains:
+  MessageContent|contains:
       - 'urgent'
       - 'immediate'
       - 'expires'
@@ -31,8 +32,9 @@ detection:
       - 'verify account'
       - 'click here'
   selection_external_sender:
-    SenderType: External
-  condition: selection_external_link and selection_external_sender and (selection_suspicious_domains or selection_urgency)
+  SenderType:
+  condition: |
+    selection_external_link and selection_external_sender and (selection_suspicious_domains or selection_urgency)
 level: medium
 tags:
   - attack.initial-access

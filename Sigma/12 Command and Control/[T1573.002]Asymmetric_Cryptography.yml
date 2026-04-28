@@ -4,23 +4,16 @@ technique: T1573.002
 id: f5c8e9a6-4b7d-4e3f-f5c8-9e6a4b7d3f5b
 status: experimental
 description: >-
-  Detects command and control communications using asymmetric cryptography
-  by monitoring for RSA/ECC key exchanges, certificate anomalies, or
-  public key cryptography patterns in C2 communications.
+  >- Detects command and control communications using asymmetric cryptography by monitoring for RSA/ECC key exchanges, certificate anomalies, or public key cryptography patterns in C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1573/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1573.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1573.002
   - asymmetric_cryptography
   - public_key
   - certificate
@@ -29,13 +22,13 @@ logsource:
   service: x509
 detection:
   unusual_key_size:
-  certificate.key_length|gte: 4096
-  certificate.key_type: 'rsa'
-  short_validity:
-  certificate.not_valid_before: certificate.not_valid_after
-  validity_period|lte: 30
-  suspicious_subject:
-  certificate.subject|contains:
+    certificate.key_length|gte:
+    certificate.key_type:
+    short_validity:
+    certificate.not_valid_before:
+    validity_period|lte:
+    suspicious_subject:
+    certificate.subject|contains:
       - 'CN=temp'
       - 'CN=test'
       - 'CN=localhost'

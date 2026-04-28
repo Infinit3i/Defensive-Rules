@@ -12,25 +12,25 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    ParentImage|endswith:
+  EventID:
+  ParentImage|endswith:
       - '\dllhost.exe'
       - '\rundll32.exe'
       - '\regsvr32.exe'
   selection_image_load:
-    EventID: 7
-    ImageLoaded|contains:
+  EventID:
+  ImageLoaded|contains:
       - '\Users\'
       - '\Temp\'
       - '\AppData\'
       - '\ProgramData\'
   selection_suspicious_cmdline:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - '/Processid:'
       - '/Embedding'
       - '-Embedding'
-    Image|endswith: '\dllhost.exe'
+  Image|endswith:
   condition: (selection_process and selection_image_load) or selection_suspicious_cmdline
 fields:
   - Image

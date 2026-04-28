@@ -10,17 +10,17 @@ logsource:
   service: sysmon
 detection:
   sel_wmi_consumer:
-    EventID: 20
-    Consumer|contains:
+  EventID:
+  Consumer|contains:
       - 'ActiveScriptEventConsumer'
       - 'CommandLineEventConsumer'
       - 'LogFileEventConsumer'
   sel_wmi_filter:
-    EventID: 19
-    EventNamespace: 'root\subscription'
+  EventID:
+  EventNamespace:
   sel_wmi_binding:
-    EventID: 21
-    Consumer|contains:
+  EventID:
+  Consumer|contains:
       - 'ActiveScript'
       - 'CommandLine'
   condition: sel_wmi_consumer or (sel_wmi_filter and sel_wmi_binding)
@@ -29,17 +29,10 @@ falsepositives:
   - Security monitoring software
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - attack.persistence
-  # MITRE ATT&CK technique
-  - attack.t1546.003
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.persistence
   - attack.t1546.003
-  - sysmon
   - windows
+  - sysmon
   - wmi
 references:
   - https://attack.mitre.org/techniques/T1546/003/

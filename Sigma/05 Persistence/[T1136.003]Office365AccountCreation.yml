@@ -14,10 +14,10 @@ logsource:
   service: auditlogs
 detection:
   selection_user_creation:
-  OperationName: 'Add user'
-  Category: UserManagement
+  OperationName:
+  Category:
   selection_bulk_creation:
-  OperationName: 'Bulk create users'
+  OperationName:
   selection_privileged_creation:
   OperationName:
       - 'Add member to role'
@@ -31,7 +31,8 @@ detection:
       - '@gmail.com'
       - '@outlook.com'
       - '@yahoo.com'
-  condition: (selection_user_creation or selection_bulk_creation) and (selection_privileged_creation or selection_external_domain)
+  condition: |
+    (selection_user_creation or selection_bulk_creation) and (selection_privileged_creation or selection_external_domain)
   timeframe: 1h
   count: 3
 level: high

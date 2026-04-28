@@ -3,20 +3,17 @@ title: PowerShell Get-Date or Get-TimeZone usage
 technique: T1124
 id: 3b4c5d6e-7f80-9012-3456-7890abcdef12
 status: experimental
-description: Detects PowerShell usage that queries system time, timezone, or UTC time (Get-Date, Get-TimeZone, Get-Culture) which may be used for time discovery or time-based evasion.
+description: >-
+  Detects PowerShell usage that queries system time, timezone, or UTC time (Get-Date, Get-TimeZone, Get-Culture) which may be used for time discovery or time-based evasion.
 references:
   - https://attack.mitre.org/techniques/T1124/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1124
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1124
   - tactic.discovery
   - platform:windows
   - technique:T1124
@@ -26,7 +23,7 @@ logsource:
   service: powershell
 detection:
   selection_scriptblock:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Get-Date"
       - "Get-TimeZone"
@@ -34,7 +31,7 @@ detection:
       - "Get-Uptime"
       - "Get-Date -UFormat"
   selection_proc:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'

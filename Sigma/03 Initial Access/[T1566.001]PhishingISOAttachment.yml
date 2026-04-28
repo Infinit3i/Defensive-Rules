@@ -1,7 +1,8 @@
 title: Phishing Email with ISO VHD Image Attachment
 id: 8b4d5e2a-9c3f-4a1b-b8e7-d6f4c9a2b5e8
 status: experimental
-description: Detects phishing emails with ISO/VHD image attachments commonly used to bypass email security controls
+description: >-
+  Detects phishing emails with ISO/VHD image attachments commonly used to bypass email security controls
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,19 +12,19 @@ logsource:
   service: exchange
 detection:
   selection_attachment:
-    AttachmentName|endswith:
+  AttachmentName|endswith:
       - '.iso'
       - '.vhd'
       - '.img'
       - '.dmg'
   selection_sender:
-    SenderDomain|contains:
+  SenderDomain|contains:
       - 'temp'
       - 'disposable'
       - 'guerrillamail'
       - '10minutemail'
   selection_subject:
-    Subject|contains:
+  Subject|contains:
       - 'urgent'
       - 'invoice'
       - 'payment'

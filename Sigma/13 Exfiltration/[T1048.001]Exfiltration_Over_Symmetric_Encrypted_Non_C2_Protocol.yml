@@ -4,23 +4,16 @@ technique: T1048.001
 id: b6f4e8c2-9d7a-4e3f-b6f4-8e2c9d7a3b6b
 status: experimental
 description: >-
-  Detects data exfiltration over symmetric encrypted non-C2 protocols by
-  monitoring for unusual encrypted communications, suspicious protocol usage,
-  or large data transfers over encrypted channels.
+  >- Detects data exfiltration over symmetric encrypted non-C2 protocols by monitoring for unusual encrypted communications, suspicious protocol usage, or large data transfers over encrypted channels.
 references:
   - https://attack.mitre.org/techniques/T1048/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1048.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1048.001
   - encrypted_protocol
   - symmetric_encryption
   - data_transfer
@@ -29,15 +22,15 @@ logsource:
   service: ssl
 detection:
   unusual_ssl:
-  cipher|contains:
+    cipher|contains:
       - 'AES'
       - 'ChaCha'
-  cert_subject|contains: 'self-signed'
-  large_encrypted:
-  orig_bytes|gte: 5000000
-  duration|gte: 300
-  suspicious_cert:
-  cert_subject|contains:
+    cert_subject|contains:
+    large_encrypted:
+    orig_bytes|gte:
+    duration|gte:
+    suspicious_cert:
+    cert_subject|contains:
       - 'localhost'
       - 'test'
       - 'temp'

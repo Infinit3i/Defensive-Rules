@@ -3,7 +3,8 @@ title: Service Creation for Persistence
 technique: T1543.003
 id: b2c3d4e5-6f78-9012-cdef-345678901234
 status: experimental
-description: Detects service creation with suspicious characteristics indicating persistence mechanisms
+description: >-
+  Detects service creation with suspicious characteristics indicating persistence mechanisms
 author: Infinit3i
 date: 2026-04-27
 references:
@@ -12,23 +13,23 @@ logsource:
   product: windows
 detection:
   service_creation:
-    EventID: 7045
-    ServiceType: 0x10
+  EventID:
+  ServiceType:
   sc_command:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'sc create'
       - 'sc config'
       - 'New-Service'
   powershell_service:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - 'New-Service'
       - 'Set-Service'
   suspicious_service_paths:
-    EventID: 7045
-    ImagePath|contains:
+  EventID:
+  ImagePath|contains:
       - 'C:\Users\'
       - 'C:\Temp\'
       - 'C:\ProgramData\'
@@ -36,8 +37,7 @@ detection:
       - '%TEMP%'
       - 'rundll32'
       - 'regsvr32'
-  condition: (service_creation or sc_command or powershell_service) and
-               suspicious_service_paths
+  condition: (service_creation or sc_command or powershell_service) and suspicious_service_paths
 fields:
   - ServiceName
   - ImagePath
@@ -51,15 +51,8 @@ falsepositives:
   - Third-party service management tools
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1543.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1543
-  - attack.t1543.003
-  - windows
-  - sysmon

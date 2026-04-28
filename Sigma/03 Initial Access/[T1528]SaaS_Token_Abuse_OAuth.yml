@@ -1,6 +1,7 @@
 title: SaaS OAuth Token Abuse and Session Hijacking
 technique: T1528
 author: Infinit3i
+date: 2026/04/28
 id: c9fa04e5-3456-6789-0123-456789abcdef
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -13,39 +14,40 @@ logsource:
   service: auditlogs
 detection:
   selection_oauth_token_abuse:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Add OAuth2PermissionGrant'
       - 'Consent to application'
       - 'Add service principal'
-    Result: 'success'
-    InitiatedBy.app.displayName|contains:
+  Result:
+  InitiatedBy.app.displayName|contains:
       - 'suspicious'
       - 'phishing'
       - 'malicious'
   selection_token_geographic_anomaly:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationDetails.succeeded: true
-  # Token used from multiple countries within short timeframe
+  ActivityDisplayName:
+  AuthenticationDetails.succeeded:
+    # Token used from multiple countries within short timeframe
   selection_rapid_api_calls:
-    Category: 'ApplicationManagement'
-    Result: 'success'
-  # High volume of API calls within minutes of OAuth consent
+  Category:
+  Result:
+    # High volume of API calls within minutes of OAuth consent
   selection_suspicious_oauth_apps:
-    ActivityDisplayName: 'Consent to application'
-    TargetResources.displayName|contains:
+  ActivityDisplayName:
+  TargetResources.displayName|contains:
       - 'Microsoft Office'
       - 'Office 365'
       - 'OneDrive'
       - 'SharePoint'
     # Apps mimicking legitimate Microsoft services
-    InitiatedBy.app.appId|contains:
-      # Known malicious OAuth app IDs would go here
+  InitiatedBy.app.appId|contains:
+    # Known malicious OAuth app IDs would go here
       - '00000000-0000-0000-0000-000000000000'
   selection_session_hijacking:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationDetails.succeeded: true
-  # Multiple concurrent sessions from different geographic locations
-  condition: selection_oauth_token_abuse or selection_token_geographic_anomaly or selection_rapid_api_calls or selection_suspicious_oauth_apps or selection_session_hijacking
+  ActivityDisplayName:
+  AuthenticationDetails.succeeded:
+    # Multiple concurrent sessions from different geographic locations
+  condition: |
+    selection_oauth_token_abuse or selection_token_geographic_anomaly or selection_rapid_api_calls or selection_suspicious_oauth_apps or selection_session_hijacking
 falsepositives:
   - Legitimate OAuth applications and integrations
   - Users traveling or using VPN services
@@ -53,15 +55,10 @@ falsepositives:
   - Corporate applications with broad permissions
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1528
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1528
   - attack.credential_access
   - attack.t1550.001
   - oauth

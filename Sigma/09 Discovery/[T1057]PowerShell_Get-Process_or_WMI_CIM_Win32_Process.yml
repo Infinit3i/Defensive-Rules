@@ -3,20 +3,17 @@ title: PowerShell Get-Process or WMI/CIM Win32_Process Discovery
 technique: T1057
 id: a1057a01-1111-4c11-8a57-000000000003
 status: experimental
-description: Detects PowerShell-based process discovery via Get-Process, Get-WmiObject Win32_Process, or Get-CimInstance Win32_Process.
+description: >-
+  Detects PowerShell-based process discovery via Get-Process, Get-WmiObject Win32_Process, or Get-CimInstance Win32_Process.
 references:
   - https://attack.mitre.org/techniques/T1057/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1057
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1057
   - tactic.discovery
   - platform:windows
   - technique:T1057
@@ -26,14 +23,14 @@ logsource:
   service: powershell
 detection:
   sel_scriptblock:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Get-Process"
       - "Get-WmiObject"
       - "Get-CimInstance"
       - "Win32_Process"
   sel_proc_create:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'

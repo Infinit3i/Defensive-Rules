@@ -9,11 +9,11 @@ logsource:
   service: auditd
 detection:
   selection:
-    type: 'EXECVE'
-    comm: 'git'
+  type:
+  comm:
   selection_hook:
-    type: 'EXECVE'
-    a0|contains: '/.git/hooks/'
+  type:
+  a0|contains:
   condition: selection or selection_hook
 level: low
 tags:

@@ -3,22 +3,17 @@ title: WebDAV_PROPFIND_Directory_Enumeration_Zeek
 technique: T1083
 id: 3c4d5e6f-7081-92a0-b1c2-3d4e5f6a7b8c
 status: experimental
-description: >
-  Detect WebDAV/HTTP directory enumeration via PROPFIND requests and directory traversal-like URIs (Depth header, PROPFIND method)
-  observed in Zeek/HTTP logs indicating remote directory discovery.
+description: >-
+  > Detect WebDAV/HTTP directory enumeration via PROPFIND requests and directory traversal-like URIs (Depth header, PROPFIND method) observed in Zeek/HTTP logs indicating remote directory discovery.
 references:
   - https://attack.mitre.org/techniques/T1083/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1083
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1083
   - tactic.discovery
   - platform:network
   - technique:T1083

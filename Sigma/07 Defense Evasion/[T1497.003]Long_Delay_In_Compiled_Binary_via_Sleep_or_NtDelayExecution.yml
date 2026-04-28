@@ -3,9 +3,8 @@ title: Long delay in compiled binaries via Sleep or NtDelayExecution
 technique: T1497.003
 id: 9c2e5a4d-6f7b-4g8h-0i1j-3k4l5m6n7o8p
 status: experimental
-description: >
-  Detect process creations of binaries whose commandline, scriptblock, or loaded modules contain Sleep calls, NtDelayExecution, or suspicious long-wait logic often used to evade
-  sandbox runtime limits.
+description: >-
+  > Detect process creations of binaries whose commandline, scriptblock, or loaded modules contain Sleep calls, NtDelayExecution, or suspicious long-wait logic often used to evade sandbox runtime limits.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -20,14 +19,14 @@ logsource:
   service: sysmon
 detection:
   selection_proc:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "sleep("
       - "Sleep("
       - "NtDelayExecution"
       - "NtDelayExecution("
   selection_image_load:
-  EventID: 7
+  EventID:
   TargetFilename|contains:
       - "\\Temp\\"
       - "\\AppData\\"

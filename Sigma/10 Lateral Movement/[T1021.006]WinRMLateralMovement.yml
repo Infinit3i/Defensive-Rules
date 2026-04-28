@@ -14,24 +14,25 @@ logsource:
   service: winrm
 detection:
   selection_winrm_connection:
-  EventID: 91
-  SourceName: 'Microsoft-Windows-WinRM'
+  EventID:
+  SourceName:
   selection_powershell_remoting:
-  EventID: 4103
-  Channel: 'Microsoft-Windows-PowerShell/Operational'
+  EventID:
+  Channel:
   Message|contains:
       - 'Enter-PSSession'
       - 'Invoke-Command'
       - 'New-PSSession'
   selection_winrs_execution:
-  EventID: 1
-  Image|endswith: '\winrs.exe'
-  CommandLine|contains: '-r:'
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
   selection_network_logon:
-  EventID: 4624
-  LogonType: 3
-  ProcessName: '*\wsmprovhost.exe'
-  condition: selection_winrm_connection or selection_powershell_remoting or selection_winrs_execution or selection_network_logon
+  EventID:
+  LogonType:
+  ProcessName:
+  condition: |
+    selection_winrm_connection or selection_powershell_remoting or selection_winrs_execution or selection_network_logon
 level: medium
 fields:
   - TargetUserName

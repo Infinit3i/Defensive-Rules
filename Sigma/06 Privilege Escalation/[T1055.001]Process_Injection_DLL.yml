@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_injection:
-    EventID: 8
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\csrss.exe'
       - '\services.exe'
   selection_process_access:
-    EventID: 10
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
-    CallTrace|contains:
+  CallTrace|contains:
       - 'WriteProcessMemory'
       - 'VirtualAllocEx'
       - 'CreateRemoteThread'
@@ -33,15 +33,8 @@ falsepositives:
   - System monitoring tools
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1055.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1055.001
   - attack.defense_evasion
-  - sysmon
-  - windows

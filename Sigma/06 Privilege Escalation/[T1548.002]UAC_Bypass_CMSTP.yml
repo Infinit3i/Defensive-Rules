@@ -12,36 +12,28 @@ logsource:
   service: sysmon
 detection:
   selection_cmstp:
-    EventID: 1
-    Image|endswith: '\cmstp.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - '/au'
       - '/s'
   selection_inf_file:
-    EventID: 11
-    TargetFilename|endswith: '.inf'
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|endswith:
+  TargetFilename|contains:
       - '\Temp\'
       - '\AppData\'
   selection_registry:
-    EventID: 13
-    TargetObject|contains: 'Connection Manager'
-  condition: selection_cmstp and (selection_inf_file or
-               selection_registry)
+  EventID:
+  TargetObject|contains:
+  condition: selection_cmstp and (selection_inf_file or selection_registry)
 falsepositives:
   - Legitimate VPN connection setups
   - Network profile installations
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1548.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1548.002
   - attack.defense_evasion
-  - sysmon
-  - windows

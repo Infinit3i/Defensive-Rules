@@ -1,7 +1,8 @@
 title: WMI Event Subscription Permanent Event Creation
 id: 8b7f9a2c-3d45-4e89-b123-456789abcdef
 status: experimental
-description: Detects creation of WMI event subscriptions for persistence through permanent WMI events
+description: >-
+  Detects creation of WMI event subscriptions for persistence through permanent WMI events
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,20 +13,20 @@ logsource:
   service: sysmon
 detection:
   selection_wmi_consumer:
-    EventID: 20
-    Destination:
+  EventID:
+  Destination:
       - '*ActiveScriptEventConsumer*'
       - '*CommandLineEventConsumer*'
       - '*NTEventLogEventConsumer*'
   selection_wmi_filter:
-    EventID: 21
-    Query|contains:
+  EventID:
+  Query|contains:
       - 'SELECT * FROM Win32_VolumeChangeEvent'
       - 'SELECT * FROM Win32_SystemConfigurationChangeEvent'
       - 'SELECT * FROM Win32_ProcessStartTrace'
   selection_wmi_binding:
-    EventID: 20
-    Consumer|contains:
+  EventID:
+  Consumer|contains:
       - 'CommandLineEventConsumer'
       - 'ActiveScriptEventConsumer'
   condition: selection_wmi_consumer or selection_wmi_filter or selection_wmi_binding

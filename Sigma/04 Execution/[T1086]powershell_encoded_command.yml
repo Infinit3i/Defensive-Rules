@@ -3,7 +3,8 @@ title: PowerShell Encoded Command Execution
 technique: T1086
 id: 8f1b6a27-62cb-44ce-9811-1111aaaapsh1
 status: stable
-description: Detects PowerShell command lines that contain base64-encoded commands, which adversaries often use to obfuscate malicious scripts or payloads.
+description: >-
+  Detects PowerShell command lines that contain base64-encoded commands, which adversaries often use to obfuscate malicious scripts or payloads.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -14,7 +15,7 @@ logsource:
   category: process_creation
 detection:
   selection_image:
-  Image|endswith: '\powershell.exe'
+  Image|endswith:
   selection_encoded:
   CommandLine|contains:
       - '-encodedCommand'
@@ -31,17 +32,12 @@ falsepositives:
   - System administrators using legitimate encoded commands for automation
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1086
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.T1086
   - execution
-  - windows
-  - sysmon
   - powershell
   - lolbin
   - APT29

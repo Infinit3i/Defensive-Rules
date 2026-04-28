@@ -12,18 +12,18 @@ logsource:
   service: auditd
 detection:
   selection_sudo:
-    type: 'SYSCALL'
-    comm: 'sudo'
-    success: 'yes'
+  type:
+  comm:
+  success:
   selection_timestamp:
-    type: 'USER_CMD'
-    msg|contains:
+  type:
+  msg|contains:
       - 'sudo -S'
       - 'sudo -A'
       - 'sudo -k'
   selection_unusual:
-    comm: 'sudo'
-    exe|contains:
+  comm:
+  exe|contains:
       - '/tmp/'
       - '/var/tmp/'
       - '/dev/shm/'
@@ -33,14 +33,9 @@ falsepositives:
   - Automated scripts
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1548.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1548.003
   - auditd
   - linux

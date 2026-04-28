@@ -1,6 +1,7 @@
 title: Cloud Identity Provider Attack Detection
 technique: T1199
 author: Infinit3i
+date: 2026/04/28
 id: 253g60eb-901c-2345-6789-abcdef012345
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -12,76 +13,77 @@ logsource:
   service: auditlogs
 detection:
   selection_federation_changes:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Set federation settings on domain'
       - 'Add federated domain'
       - 'Update federated domain'
       - 'Remove federated domain'
       - 'Set domain authentication'
-    Result: 'success'
+  Result:
   selection_saml_manipulation:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Update application'
       - 'Update service principal'
-    TargetResources.modifiedProperties.displayName|contains:
+  TargetResources.modifiedProperties.displayName|contains:
       - 'SamlMetadataUrl'
       - 'ReplyUrls'
       - 'SignOnUrl'
       - 'LogoutUrl'
-  # Modifications to SAML configuration
+    # Modifications to SAML configuration
   selection_identity_sync_attacks:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Add service principal'
       - 'Update application'
-    TargetResources.displayName|contains:
+  TargetResources.displayName|contains:
       - 'Azure AD Connect'
       - 'Directory Sync'
       - 'ADFS'
       - 'Identity Sync'
   selection_certificate_attacks:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Add application'
       - 'Update application'
       - 'Add service principal credentials'
-    TargetResources.modifiedProperties.displayName: 'KeyCredentials'
-  # Certificate-based authentication attacks
+  TargetResources.modifiedProperties.displayName:
+    # Certificate-based authentication attacks
   selection_suspicious_token_signing:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Update application'
       - 'Add application'
-    TargetResources.modifiedProperties.displayName|contains:
+  TargetResources.modifiedProperties.displayName|contains:
       - 'TokenEncryptionKeyId'
       - 'TokenSigningCertificates'
   selection_identity_provider_abuse:
-    ActivityDisplayName: 'Sign-in activity'
-    AuthenticationDetails.succeeded: true
-    AuthenticationProtocol:
+  ActivityDisplayName:
+  AuthenticationDetails.succeeded:
+  AuthenticationProtocol:
       - 'SAML2'
       - 'WS-Fed'
       - 'OAuth2'
     # Sign-ins through potentially compromised identity providers
-    UserPrincipalName|contains: '@federated.'
+  UserPrincipalName|contains:
   selection_privileged_federation_access:
-    ActivityDisplayName:
+  ActivityDisplayName:
       - 'Add member to role'
       - 'Add app role assignment'
-    TargetResources.displayName|contains:
+  TargetResources.displayName|contains:
       - 'Global Administrator'
       - 'Application Administrator'
       - 'Cloud Application Administrator'
-  # Privilege escalation through federation
+    # Privilege escalation through federation
   selection_adfs_configuration_changes:
-    ActivityDisplayName|contains:
+  ActivityDisplayName|contains:
       - 'ADFS'
       - 'Federation Service'
-    OperationType:
+  OperationType:
       - 'Update'
       - 'Add'
       - 'Delete'
-  condition: selection_federation_changes or selection_saml_manipulation or
-               selection_identity_sync_attacks or selection_certificate_attacks or
-               selection_suspicious_token_signing or selection_identity_provider_abuse or
-               selection_privileged_federation_access or selection_adfs_configuration_changes
+  condition: |
+    selection_federation_changes or selection_saml_manipulation or
+    selection_identity_sync_attacks or selection_certificate_attacks or
+    selection_suspicious_token_signing or selection_identity_provider_abuse or
+    selection_privileged_federation_access or selection_adfs_configuration_changes
 falsepositives:
   - Legitimate identity provider configuration changes
   - Planned federation setup and maintenance activities
@@ -90,17 +92,13 @@ falsepositives:
   - Administrative tasks by authorized personnel
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1199
-  # Platform/tool tags
   - azure
   - cloud
   - attack.t1606
   - attack.defense_evasion
   - attack.t1484
-  - azure
   - saml
   - federation
   - identity_provider

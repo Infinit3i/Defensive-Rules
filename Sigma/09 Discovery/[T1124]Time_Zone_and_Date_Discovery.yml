@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_time:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\time.exe'
       - '\date.exe'
@@ -25,14 +25,14 @@ detection:
       - 'w32tm /query'
       - 'w32tm /stripchart'
   selection_net_time:
-  EventID: 1
-  Image|endswith: '\net.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'net time'
       - 'net view'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-Date'
       - 'Get-TimeZone'
@@ -43,8 +43,8 @@ detection:
       - 'Get-WmiObject Win32_LocalTime'
       - 'Get-CimInstance Win32_TimeZone'
   selection_wmic:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'wmic timezone'
       - 'wmic os get localdatetime'
@@ -62,14 +62,7 @@ falsepositives:
   - Backup and logging scripts
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1124
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1124
-  - sysmon
   - windows
+  - sysmon

@@ -1,9 +1,9 @@
 title: Hypervisor Escape and VM Breakout Attempts
 technique: T1620
-
 id: a9e2f5c8-b7d4-4c1f-9e6a-2b8d5f1c3e7b
 status: experimental
-description: Detects attempts to escape from virtual machine guest environments to compromise the hypervisor or host system
+description: >-
+  Detects attempts to escape from virtual machine guest environments to compromise the hypervisor or host system
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_vmware_tools_abuse:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\vmtoolsd.exe'
       - '\vmwaretray.exe'
@@ -25,14 +25,14 @@ detection:
       - '-script'
       - 'guestinfo'
   selection_vm_backdoor:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'VMware backdoor'
       - 'in al, 0x5658'
       - 'vmware_backdoor'
       - 'hypervisor_cpuid'
   selection_shared_folders:
-  EventID: 11  # File create
+  EventID:
   TargetFilename|startswith:
       - '\\vmware-host\'
       - '\\vboxsrv\'
@@ -46,14 +46,14 @@ detection:
       - '.ps1'
       - '.vbs'
   selection_clipboard_access:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'GetClipboardData'
       - 'SetClipboardData'
       - 'OpenClipboard'
       - 'vmware-vmx'
   selection_vm_memory_access:
-  EventID: 10  # Process access
+  EventID:
   TargetImage|endswith:
       - '\vmware-vmx.exe'
       - '\VBoxHeadless.exe'
@@ -62,7 +62,7 @@ detection:
       - '0x1F0FFF'
       - '0x1FFFFF'
   selection_device_exploitation:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'CreateFile'
       - '\\\\.\\pipe\\'
@@ -70,7 +70,7 @@ detection:
       - '\\\\.\\vmci'
       - '\\\\.\\vmmouse'
   selection_dma_attack:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'physical memory'
       - 'DMA'
@@ -78,7 +78,7 @@ detection:
       - 'PCI'
       - 'memory mapping'
   selection_vm_communication:
-  EventID: 3  # Network connection
+  EventID:
   DestinationIp:
       - '169.254.1.1'  # VMware host-guest communication
       - '10.0.2.2'     # VirtualBox host
@@ -88,7 +88,7 @@ detection:
       - 902    # VMware vCenter
       - 903    # VMware console
   selection_hypercall:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'hypercall'
       - 'vmcall'
@@ -103,24 +103,11 @@ falsepositives:
   - VM performance monitoring
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1620
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1620
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.escape_virtualization
-  - attack.t1620
   - hypervisor_escape
   - vm_breakout
-  - sysmon
-  - windows
   - virtualization

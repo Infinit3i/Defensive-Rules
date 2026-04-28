@@ -13,57 +13,49 @@ logsource:
   service: sysmon
 detection:
   selection_wmi_exec:
-    EventID: 1
-    ParentImage|endswith: '\wmiprvse.exe'
-    IntegrityLevel:
+  EventID:
+  ParentImage|endswith:
+  IntegrityLevel:
       - 'High'
       - 'System'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'cmd.exe /c'
       - 'powershell.exe -'
       - 'rundll32.exe'
       - 'regsvr32.exe'
   selection_wmic_priv:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains|all:
+  EventID:
+  Image|endswith:
+  CommandLine|contains|all:
       - 'process'
       - 'call'
       - 'create'
-    CommandLine|contains:
+  CommandLine|contains:
       - '/node:'
       - '/user:'
       - '/password:'
       - 'runas'
   selection_bypass_indicators:
-    EventID: 1
-    ParentImage|endswith: '\wmiprvse.exe'
-    User|contains:
+  EventID:
+  ParentImage|endswith:
+  User|contains:
       - 'NT AUTHORITY\SYSTEM'
       - 'BUILTIN\Administrators'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'whoami /priv'
       - 'net localgroup administrators'
       - 'reg add HKLM'
       - 'bcdedit'
-  condition: selection_wmi_exec or selection_wmic_priv or
-               selection_bypass_indicators
+  condition: selection_wmi_exec or selection_wmic_priv or selection_bypass_indicators
 falsepositives:
   - Administrative remote management
   - Legitimate system maintenance scripts
   - Enterprise management solutions
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1047
   - attack.execution
   - attack.t1548.002
-  - sysmon
-  - windows

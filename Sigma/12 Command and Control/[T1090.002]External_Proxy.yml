@@ -4,23 +4,16 @@ technique: T1090.002
 id: d6a9f4e7-8c2b-4e5f-d6a9-4f7e8c2b5d6b
 status: experimental
 description: >-
-  Detects external proxy usage for command and control by monitoring for
-  connections to known proxy services, SOCKS proxy usage, or external
-  traffic redirection that may be used to hide C2 communications.
+  >- Detects external proxy usage for command and control by monitoring for connections to known proxy services, SOCKS proxy usage, or external traffic redirection that may be used to hide C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1090/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1090.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1090.002
   - external_proxy
   - socks
   - proxy_service
@@ -29,19 +22,19 @@ logsource:
   service: conn
 detection:
   proxy_ports:
-  id.resp_p|contains:
+    id.resp_p|contains:
       - 1080
       - 8080
       - 3128
       - 8888
-  socks_traffic:
-  service: 'unknown'
-  id.resp_p: 1080
-  orig_bytes|gte: 100
-  proxy_services:
-  service: 'http'
-  id.resp_p: 8080
-  orig_bytes|gte: 1000
+    socks_traffic:
+    service:
+    id.resp_p:
+    orig_bytes|gte:
+    proxy_services:
+    service:
+    id.resp_p:
+    orig_bytes|gte:
   condition: proxy_ports and (socks_traffic or proxy_services)
 falsepositives:
   - Legitimate proxy usage

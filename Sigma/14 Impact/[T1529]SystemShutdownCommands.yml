@@ -11,12 +11,12 @@ logsource:
   service: sysmon
 detection:
   selection_shutdown:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\shutdown.exe'
       - '\cmd.exe'
       - '\powershell.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'shutdown /s'
       - 'shutdown -s'
       - 'shutdown /r'
@@ -26,7 +26,7 @@ detection:
       - 'Stop-Computer'
       - 'Restart-Computer'
   selection_immediate:
-    CommandLine|contains:
+  CommandLine|contains:
       - '/t 0'
       - '-t 0'
       - '/f /s'

@@ -4,23 +4,16 @@ technique: T1090.003
 id: e7b4f8c9-5d3a-4e6f-e7b4-8f9c5d3a6e7b
 status: experimental
 description: >-
-  Detects multi-hop proxy usage for command and control by monitoring for
-  chained proxy connections, multiple proxy hops, or complex traffic
-  routing that may be used to obscure C2 communications.
+  >- Detects multi-hop proxy usage for command and control by monitoring for chained proxy connections, multiple proxy hops, or complex traffic routing that may be used to obscure C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1090/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1090.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1090.003
   - multi_hop_proxy
   - proxy_chain
   - traffic_obfuscation
@@ -29,16 +22,16 @@ logsource:
   service: conn
 detection:
   proxy_chain:
-  id.orig_h|count|gte: 3
-  service: 'unknown'
-  duration|gte: 300
-  multiple_hops:
-  id.resp_h|count|gte: 2
-  orig_bytes|gte: 1000
-  resp_bytes|gte: 1000
-  tor_indicators:
-  id.resp_p: 9050
-  service: 'unknown'
+    id.orig_h|count|gte:
+    service:
+    duration|gte:
+    multiple_hops:
+    id.resp_h|count|gte:
+    orig_bytes|gte:
+    resp_bytes|gte:
+    tor_indicators:
+    id.resp_p:
+    service:
   condition: proxy_chain or multiple_hops or tor_indicators
 falsepositives:
   - Complex network architectures

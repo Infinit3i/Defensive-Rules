@@ -3,7 +3,8 @@ title: DLL Loaded from Non-standard Directory
 technique: T1574.002
 id: 1f775e2d-1341-4e25-8bfb-8f5e7f488eb7
 status: experimental
-description: Detects DLL image load operations from suspicious directories like user folders, temp paths, or network shares. Based on Sysmon Event ID 7.
+description: >-
+  Detects DLL image load operations from suspicious directories like user folders, temp paths, or network shares. Based on Sysmon Event ID 7.
 author: Infinit3i
 date: 2025/04/20
 logsource:
@@ -12,7 +13,7 @@ logsource:
   category: image_load
 detection:
   selection_event:
-  EventID: 7
+  EventID:
   selection_path:
   ImageLoaded|startswith:
       - 'C:\Users\'
@@ -30,14 +31,8 @@ falsepositives:
   - Software updaters
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1574.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1574
-  - attack.t1574.002
-  - sysmon

@@ -1,7 +1,8 @@
 title: Network Denial of Service Traffic Flooding
 id: be51649c-095e-4f3a-a09a-81b5aaae99c3
 status: experimental
-description: Detects network denial of service through excessive traffic generation and flooding attacks
+description: >-
+  Detects network denial of service through excessive traffic generation and flooding attacks
 author: Infinit3i
 date: 2026/04/28
 references:
@@ -11,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   sel_ddos_tools:
-    EventID: 1
-    Image|contains:
+  EventID:
+  Image|contains:
       - 'hping'
       - 'nmap'
       - 'scapy'
@@ -26,8 +27,8 @@ detection:
       - 'loic'
       - 'hoic'
   sel_ddos_args:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - '--flood'
       - '--syn-flood'
       - '--udp-flood'
@@ -41,8 +42,8 @@ detection:
       - 'attack'
       - 'ddos'
   sel_network_stress:
-    EventID: 3
-    Initiated: 'true'
+  EventID:
+  Initiated:
   condition: sel_ddos_tools or sel_ddos_args
 level: high
 tags:

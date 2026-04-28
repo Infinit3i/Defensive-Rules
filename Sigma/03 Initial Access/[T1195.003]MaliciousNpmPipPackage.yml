@@ -1,7 +1,8 @@
 title: Malicious NPM or Pip Package Installation
 id: c8f2e6a9-4d7b-3e5c-a8f2-d6c9e3f7b2a5
 status: experimental
-description: Detects installation of malicious packages from NPM or PyPI with suspicious characteristics
+description: >-
+  Detects installation of malicious packages from NPM or PyPI with suspicious characteristics
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,32 +12,33 @@ logsource:
   service: install-monitor
 detection:
   selection_package_manager:
-    Command|startswith:
+  Command|startswith:
       - 'npm install'
       - 'pip install'
       - 'yarn add'
   selection_suspicious_package:
-    PackageName|contains:
+  PackageName|contains:
       - 'discord-token'
       - 'crypto-wallet'
       - 'password-stealer'
       - 'keylogger'
       - 'reverse-shell'
   selection_obfuscated_code:
-    PackageContent|contains:
+  PackageContent|contains:
       - 'eval('
       - 'exec('
       - 'base64'
       - 'atob('
       - 'fromCharCode'
   selection_network_requests:
-    PackageContent|contains:
+  PackageContent|contains:
       - 'requests.post'
       - 'fetch('
       - 'XMLHttpRequest'
       - 'webhook'
-  condition: selection_package_manager and (selection_suspicious_package or
-               (selection_obfuscated_code and selection_network_requests))
+  condition: |
+    selection_package_manager and (selection_suspicious_package or
+    (selection_obfuscated_code and selection_network_requests))
 level: critical
 tags:
   - attack.initial-access

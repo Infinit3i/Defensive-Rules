@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-  EventID: 7
+  EventID:
   ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
@@ -19,7 +19,7 @@ detection:
       - '.tmp'
       - '.dat'
   selection_process:
-  EventID: 7
+  EventID:
   Image|contains:
       - 'explorer.exe'
       - 'winlogon.exe'

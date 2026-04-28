@@ -9,27 +9,28 @@ logsource:
   service: auditd
 detection:
   selection_commands:
-    comm:
+  comm:
       - "insmod"
       - "modprobe"
       - "rmmod"
-    type: "SYSCALL"
-    syscall: "execve"
+  type:
+  syscall:
   selection_init_module:
-    type: "SYSCALL"
-    syscall: "init_module"
+  type:
+  syscall:
   selection_finit_module:
-    type: "SYSCALL"
-    syscall: "finit_module"
+  type:
+  syscall:
   selection_suspicious_paths:
-    a1|contains:
+  a1|contains:
       - "/tmp/"
       - "/var/tmp/"
       - "/dev/shm/"
       - "/home/"
-  condition: selection_commands or selection_init_module or
-               selection_finit_module or
-               (selection_commands and selection_suspicious_paths)
+  condition: |
+    selection_commands or selection_init_module or
+    selection_finit_module or
+    (selection_commands and selection_suspicious_paths)
 level: high
 tags:
   - attack.persistence

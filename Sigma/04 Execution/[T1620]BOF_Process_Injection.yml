@@ -14,21 +14,21 @@ logsource:
   service: sysmon
 detection:
   sel_mem_alloc:
-    EventID: 10
-    GrantedAccess:
+  EventID:
+  GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
       - '0x40'
-    CallTrace|contains: 'UNKNOWN'
+  CallTrace|contains:
   sel_target_proc:
-    TargetImage|endswith:
+  TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
       - '\lsass.exe'
   sel_apis:
-    CallTrace|contains:
+  CallTrace|contains:
       - 'VirtualAllocEx'
       - 'WriteProcessMemory'
       - 'CreateRemoteThread'

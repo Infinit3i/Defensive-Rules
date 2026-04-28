@@ -11,23 +11,23 @@ logsource:
   service: sysmon
 detection:
   selection_ipconfig:
-  EventID: 1
-  Image|endswith: '\ipconfig.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '/all'
       - '/displaydns'
       - '/flushdns'
   selection_netsh:
-  EventID: 1
-  Image|endswith: '\netsh.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'interface'
       - 'profile'
       - 'wlan'
       - 'advfirewall'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-NetIPConfiguration'
       - 'Get-NetAdapter'
@@ -46,14 +46,7 @@ falsepositives:
   - Network monitoring tools
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

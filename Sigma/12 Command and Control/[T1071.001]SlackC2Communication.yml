@@ -1,7 +1,8 @@
 title: Slack Command and Control Communication
 id: b2c3d4e5-6f78-9012-345a-bcdef6789012
 status: experimental
-description: Detects suspicious Slack usage patterns indicating command and control communication
+description: >-
+  Detects suspicious Slack usage patterns indicating command and control communication
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,16 +15,16 @@ logsource:
   service: audit
 detection:
   selection_automated:
-    action:
+  action:
       - 'message_posted'
       - 'file_uploaded'
-    user_agent|contains:
+  user_agent|contains:
       - 'bot'
       - 'curl'
       - 'python'
       - 'powershell'
   selection_suspicious_content:
-    message|contains:
+  message|contains:
       - 'base64'
       - 'powershell'
       - 'cmd.exe'

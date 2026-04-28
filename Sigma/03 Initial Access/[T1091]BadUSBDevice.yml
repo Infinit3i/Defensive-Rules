@@ -1,7 +1,8 @@
 title: BadUSB Device Detection via HID Activity
 id: b2c3d4e5-f6g7-8901-bcde-f23456789012
 status: experimental
-description: Detects potential BadUSB attacks through rapid HID keystroke injection patterns from USB devices
+description: >-
+  Detects potential BadUSB attacks through rapid HID keystroke injection patterns from USB devices
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,16 +12,16 @@ logsource:
   service: security
 detection:
   selection_hid:
-    EventID: 4648
-    LogonType: 2
-    ProcessName|contains:
+  EventID:
+  LogonType:
+  ProcessName|contains:
       - 'powershell.exe'
       - 'cmd.exe'
       - 'rundll32.exe'
   selection_timing:
-    EventID: 4624
-    LogonType: 2
-  timeframe: 5s
+  EventID:
+  LogonType:
+    timeframe:
   condition: selection_hid and selection_timing | count() > 10
 falsepositives:
   - Power users with rapid keyboard usage

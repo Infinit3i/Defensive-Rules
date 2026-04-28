@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'WSAStartup'
       - 'WSASocket'
@@ -42,14 +42,7 @@ falsepositives:
   - Download managers
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1106
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.execution
   - attack.t1106
-  - sysmon
   - windows
+  - sysmon

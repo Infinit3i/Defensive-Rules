@@ -3,9 +3,8 @@ title: CommandLine contains common debugger tool names (ollydbg, x64dbg, windbg)
 technique: T1622
 id: e2b3c4d5-6f70-8123-4567-fedcba987654
 status: experimental
-description: >
-  Detect process creations where command line or image indicate execution of common debugger tools or utilities used for reversing/debugging (e.g., ollydbg, x64dbg, windbg, IDA).
-  Useful to identify local debugging or adversary tooling.
+description: >-
+  > Detect process creations where command line or image indicate execution of common debugger tools or utilities used for reversing/debugging (e.g., ollydbg, x64dbg, windbg, IDA). Useful to identify local debugging or adversary tooling.
 references:
   - https://attack.mitre.org/techniques/T1622/
 author: Infinit3i
@@ -20,7 +19,7 @@ logsource:
   service: sysmon
 detection:
   selection_proc_create:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "ollydbg"
       - "x64dbg"
@@ -31,7 +30,7 @@ detection:
       - "scylla_x64"
       - "dbgview"
   selection_image:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\ollydbg.exe'
       - '\x64dbg.exe'

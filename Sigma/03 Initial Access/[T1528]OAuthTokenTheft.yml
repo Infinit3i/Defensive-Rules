@@ -1,7 +1,8 @@
 title: OAuth Application Token Theft Detection
 id: k1l2m3n4-o5p6-7890-klmn-123456789012
 status: experimental
-description: Detects stolen OAuth tokens through suspicious application authorization patterns and token usage
+description: >-
+  Detects stolen OAuth tokens through suspicious application authorization patterns and token usage
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,19 +12,19 @@ logsource:
   service: activedirectory
 detection:
   selection_oauth:
-    Category: 'ApplicationManagement'
-    OperationName|contains:
+  Category:
+  OperationName|contains:
       - 'Add application'
       - 'Update application'
       - 'Add service principal'
   selection_suspicious:
-    ResultType: 'Success'
-    InitiatedBy|contains: 'user'
-    TargetResources|contains:
+  ResultType:
+  InitiatedBy|contains:
+  TargetResources|contains:
       - 'Microsoft Graph'
       - 'Office 365'
   selection_permissions:
-    ModifiedProperties|contains:
+  ModifiedProperties|contains:
       - 'AppRoleAssignments'
       - 'Oauth2PermissionGrants'
   condition: selection_oauth and selection_suspicious and selection_permissions

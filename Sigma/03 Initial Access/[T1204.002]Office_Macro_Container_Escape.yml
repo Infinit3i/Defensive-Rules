@@ -3,7 +3,8 @@ title: Office Macro Containerized Payload Execution
 technique: T1204.002
 id: 6b2a9e4f-8c5d-7f3e-a4b8-9f6e3d8c5a2b
 status: experimental
-description: Detects Office macro execution that deploys containerized malware payloads through Docker or container runtime exploitation.
+description: >-
+  Detects Office macro execution that deploys containerized malware payloads through Docker or container runtime exploitation.
 references:
   - https://attack.mitre.org/techniques/T1204/002/
 author: Infinit3i

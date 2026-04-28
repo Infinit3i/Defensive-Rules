@@ -14,17 +14,17 @@ logsource:
   service: signin
 detection:
   selection_failed_attempts:
-  OperationName: 'Sign-in activity'
-  ResultType: 50126
+  OperationName:
+  ResultType:
   selection_impossible_travel:
-  OperationName: 'Sign-in activity'
-  RiskDetail: 'impossibleTravel'
+  OperationName:
+  RiskDetail:
   selection_tor_usage:
-  OperationName: 'Sign-in activity'
-  NetworkLocationDetails|contains: 'tor'
+  OperationName:
+  NetworkLocationDetails|contains:
   selection_new_country:
-  OperationName: 'Sign-in activity'
-  Location.countryOrRegion: '*'
+  OperationName:
+  Location.countryOrRegion:
   condition: selection_failed_attempts or selection_impossible_travel or selection_tor_usage
   timeframe: 1h
   count: 10

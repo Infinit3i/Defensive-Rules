@@ -10,20 +10,16 @@ logsource:
   service: http
 detection:
   selection:
-  request_body_len: '>100'
+  request_body_len:
   uri|contains:
       - '?data='
       - '&cmd='
       - 'payload='
-  post_data|re: '^[A-Za-z0-9+/]{20,}={0,2}$'
+  post_data|re:
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.command-and-control
-  - attack.t1071.001

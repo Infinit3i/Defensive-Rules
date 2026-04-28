@@ -3,7 +3,8 @@ title: Unusual Process Making Network Connection
 technique: T1105
 id: b8a8d7b1-77c4-42ea-8dd5-21290fefaa51
 status: experimental
-description: Detects outbound network activity from suspicious or abused processes like powershell.exe, regsvr32.exe, rundll32.exe, or mshta.exe using Sysmon Event ID 3.
+description: >-
+  Detects outbound network activity from suspicious or abused processes like powershell.exe, regsvr32.exe, rundll32.exe, or mshta.exe using Sysmon Event ID 3.
 author: Infinit3i
 date: 2025/04/20
 logsource:
@@ -12,7 +13,7 @@ logsource:
   category: network_connection
 detection:
   selection_event:
-  EventID: 3
+  EventID:
   selection_process:
   Image|endswith:
       - '\powershell.exe'
@@ -33,13 +34,7 @@ falsepositives:
   - Internal management scripts
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
-  - sysmon
-  - attack.command_and_control
-  - attack.t1105
   - sysmon

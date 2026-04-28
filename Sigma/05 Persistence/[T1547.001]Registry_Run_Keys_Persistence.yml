@@ -1,7 +1,8 @@
 title: Registry Run Keys Persistence Detection
 id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
-description: Detects suspicious process execution from Registry Run keys through registry modification events
+description: >-
+  Detects suspicious process execution from Registry Run keys through registry modification events
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,19 +12,19 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\Software\Microsoft\Windows\CurrentVersion\Run\'
       - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
   selection_suspicious:
-    - Details|contains:
+      - Details|contains:
       - 'powershell'
       - 'cmd.exe'
       - 'wscript'
       - 'cscript'
       - 'rundll32'
       - 'regsvr32'
-    - Details|endswith:
+      - Details|endswith:
       - '.exe -h'
       - '.exe --hidden'
       - '.bat'

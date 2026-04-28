@@ -16,19 +16,19 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-    EventID: 4104
+  EventID:
   hidden_attributes:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Hidden'
       - 'Set-ItemProperty'
       - 'attrib +h'
   file_operations:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Copy-Item'
       - 'Move-Item'
       - 'New-Item'
   staging_patterns:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'collected'
       - 'staging'
       - 'backup'

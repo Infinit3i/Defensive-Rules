@@ -3,21 +3,17 @@ title: Repeated Failed Login Attempts
 technique: T1110
 id: 4e7c2b3d-89fa-4cda-8123-abcdef123456
 status: experimental
-description: "Detects repeated failed SSH login attempts by monitoring syslog events containing 'Failed password for', aggregated over a short timeframe to indicate brute force activity."
+description: >-
+  "Detects repeated failed SSH login attempts by monitoring syslog events containing 'Failed password for', aggregated over a short timeframe to indicate brute force activity."
 references:
   - https://attack.mitre.org/techniques/T1110/
 author: Infinit3i
 date: 2025-04-08
 tags:
-  # MITRE ATT&CK tactic
   - attack.credential_access
-  # MITRE ATT&CK technique
   - attack.t1110
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.credential_access
-  - attack.t1110
 logsource:
   product: linux
   service: sshd
@@ -27,9 +23,9 @@ detection:
   Message|contains:
       - "Failed password for"
   # Note: The aggregation/threshold capability may depend on the Sigma runner implementation.
-  timeframe: 5m
+  timeframe: 
   threshold:
-  count: 5
+    count:
   condition: selection
 falsepositives:
   - Legitimate authentication errors due to mistyped passwords or transient network issues.

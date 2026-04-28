@@ -4,23 +4,16 @@ technique: T1071.002
 id: b7e4f9c2-6a8d-4e3f-b7e4-9f2c6a8d3b7b
 status: experimental
 description: >-
-  Detects command and control communications via file transfer protocols
-  by monitoring for suspicious FTP, SFTP, or SCP activities that may be
-  used for C2 communications or file staging.
+  >- Detects command and control communications via file transfer protocols by monitoring for suspicious FTP, SFTP, or SCP activities that may be used for C2 communications or file staging.
 references:
   - https://attack.mitre.org/techniques/T1071/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1071.002
   - file_transfer
   - ftp
   - sftp
@@ -29,19 +22,19 @@ logsource:
   service: conn
 detection:
   ftp_ports:
-  id.resp_p|contains:
+    id.resp_p|contains:
       - 21
       - 22
       - 990
       - 989
-  suspicious_transfer:
-  service: 'ftp'
-  orig_bytes|gte: 1000
-  resp_bytes|gte: 1000
-  encrypted_ftp:
-  service: 'ssh'
-  id.resp_p: 22
-  orig_bytes|lte: 10000
+    suspicious_transfer:
+    service:
+    orig_bytes|gte:
+    resp_bytes|gte:
+    encrypted_ftp:
+    service:
+    id.resp_p:
+    orig_bytes|lte:
   condition: ftp_ports and (suspicious_transfer or encrypted_ftp)
 falsepositives:
   - Legitimate file transfers

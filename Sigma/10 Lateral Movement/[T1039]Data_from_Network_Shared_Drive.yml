@@ -4,24 +4,17 @@ technique: T1039
 id: f3a7e9c5-8b6d-4e2f-f3a7-9e5c8b6d2f3b
 status: experimental
 description: >-
-  Detects suspicious data access from network shared drives by monitoring
-  for unusual file access patterns, bulk data retrieval, or unauthorized
-  access to sensitive shared resources during lateral movement.
+  >- Detects suspicious data access from network shared drives by monitoring for unusual file access patterns, bulk data retrieval, or unauthorized access to sensitive shared resources during lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1039/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1039
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
   - attack.collection
-  - attack.t1039
   - network_shares
   - data_access
 logsource:
@@ -29,18 +22,18 @@ logsource:
   service: security
 detection:
   share_access:
-  EventID: 5140
-  ShareName|endswith:
+    EventID:
+    ShareName|endswith:
       - '$'
       - 'SHARE'
       - 'DATA'
-  bulk_access:
-  EventID: 5145
-  AccessMask: '0x120089'
-  RelativeTargetName|count|gte: 10
-  sensitive_files:
-  EventID: 5145
-  RelativeTargetName|endswith:
+    bulk_access:
+    EventID:
+    AccessMask:
+    RelativeTargetName|count|gte:
+    sensitive_files:
+    EventID:
+    RelativeTargetName|endswith:
       - '.xlsx'
       - '.docx'
       - '.pdf'

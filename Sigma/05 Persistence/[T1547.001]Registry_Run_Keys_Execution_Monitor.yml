@@ -1,7 +1,8 @@
 title: Registry Run Keys Execution Monitor
 id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
 status: experimental
-description: Detects process execution initiated from Registry Run keys through parent-child process relationships
+description: >-
+  Detects process execution initiated from Registry Run keys through parent-child process relationships
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_parent:
-    EventID: 1
-    ParentImage|endswith: '\explorer.exe'
+  EventID:
+  ParentImage|endswith:
   selection_cmdline:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'HKLM\Software\Microsoft\Windows\CurrentVersion\Run'
       - 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
       - 'CurrentVersion\Run'
   selection_suspicious:
-    - Image|contains:
+      - Image|contains:
       - '\AppData\'
       - '\Temp\'
       - '\Users\Public\'
       - '\ProgramData\'
-    - CommandLine|contains:
+      - CommandLine|contains:
       - ' -enc '
       - ' -e '
       - 'powershell'

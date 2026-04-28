@@ -1,9 +1,9 @@
 title: CPUID-Based Virtual Machine Detection Evasion
 technique: T1497.001
-
 id: a3f8b2c1-e4d7-4a9b-8c6f-1e5a2b3d4c5f
 status: experimental
-description: Detects attempts to bypass virtual machine detection using CPUID instruction manipulation and timing analysis
+description: >-
+  Detects attempts to bypass virtual machine detection using CPUID instruction manipulation and timing analysis
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_cpuid_check:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\rundll32.exe'
       - '\regsvr32.exe'
@@ -26,7 +26,7 @@ detection:
       - 'cpu_vendor'
       - 'hypervisor_present'
   selection_timing_attack:
-  EventID: 1
+  EventID:
   CommandLine|contains|all:
       - 'timer'
       - 'performance'
@@ -37,7 +37,7 @@ detection:
       - 'timeGetTime'
       - 'clock_gettime'
   selection_vm_artifacts:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'vmware'
       - 'virtualbox'
@@ -47,14 +47,14 @@ detection:
       - 'hyper-v'
       - 'parallels'
   selection_registry_vm_check:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\HARDWARE\Description\System\BIOS'
       - '\HARDWARE\Description\System\SystemBiosVersion'
       - '\SYSTEM\CurrentControlSet\Services\Disk\Enum'
       - '\SYSTEM\ControlSet001\Services\Disk\Enum'
   selection_process_hollowing:
-  EventID: 10
+  EventID:
   GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
@@ -71,23 +71,10 @@ falsepositives:
   - Virtualization management tools
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1497.001
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1497.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
   - attack.t1497
-  - attack.t1497.001
-  - sysmon
-  - windows
   - vm_evasion

@@ -1,15 +1,17 @@
 title: AMSI Bypass Technique Detection
 technique: T1562.001
 author: Infinit3i
+date: 2026/04/28
 id: f7a9c4d2-8e3b-4f1a-9c5d-6b7e8a2f4c9d
 status: experimental
-description: Detects attempts to bypass Anti-Malware Scan Interface (AMSI) through various techniques including memory patching, COM hijacking, and reflection
+description: >-
+  Detects attempts to bypass Anti-Malware Scan Interface (AMSI) through various techniques including memory patching, COM hijacking, and reflection
 logsource:
   product: windows
   service: powershell-classic
 detection:
   selection_powershell_amsi:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - '[Ref].Assembly.GetType'
       - 'System.Management.Automation.AmsiUtils'
@@ -18,7 +20,7 @@ detection:
       - 'AmsiScanBuffer'
       - 'amsiSession'
   selection_amsi_bypass_strings:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - 'Add-Type -TypeDefinition'
       - '[Runtime.InteropServices.Marshal]::Copy'
@@ -27,26 +29,26 @@ detection:
       - 'LoadLibrary'
       - 'amsi.dll'
   selection_obfuscation:
-  EventID: 4104
+  EventID:
   ScriptBlockText|re:
       - '.*[aA][mM][sS][iI].*'
       - '.*\$[a-zA-Z0-9_]+\s*=\s*"[aAmMsS][mMsS][iI].*'
       - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
   selection_reflection:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains|all:
       - '[System.Reflection.BindingFlags]'
       - 'NonPublic'
       - 'Static'
       - 'GetField'
   selection_com_hijack:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - 'New-Object -ComObject'
       - 'WScript.Shell'
       - 'HKEY_CURRENT_USER\Software\Classes\CLSID'
   selection_memory_patch:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains|all:
       - 'System.Runtime.InteropServices.Marshal'
       - 'PtrToStructure'
@@ -57,27 +59,22 @@ detection:
       - 'Get-Help about_*'
       - 'Import-Module'
       - 'Test-Path'
-  condition: (selection_powershell_amsi or selection_amsi_bypass_strings or selection_obfuscation or selection_reflection or selection_com_hijack or s
-               election_memory_patch) and not filter_legitimate
+  condition: |
+    (selection_powershell_amsi or selection_amsi_bypass_strings or selection_obfuscation or selection_reflection or selection_com_hijack or s
+    election_memory_patch) and not filter_legitimate
 falsepositives:
   - Security research and educational content
   - Penetration testing frameworks
   - Red team exercises
 level: critical
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1562.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1562.001
   - attack.execution
   - attack.t1059.001
   - powershell
-  - windows
   - amsi_bypass
 references:
   - https://attack.mitre.org/techniques/T1562/001/

@@ -22,7 +22,7 @@ detection:
       - 'download'
       - 'execute'
   selection_file_uploads:
-  event_type: file_upload
+  event_type:
   file_extension:
       - '.exe'
       - '.bat'
@@ -41,7 +41,8 @@ detection:
       - 'python'
       - 'curl'
       - 'webhook'
-  condition: selection_encoded_messages or selection_file_uploads or (selection_external_links and selection_automated_posting)
+  condition: |
+    selection_encoded_messages or selection_file_uploads or (selection_external_links and selection_automated_posting)
 level: medium
 fields:
   - user_id

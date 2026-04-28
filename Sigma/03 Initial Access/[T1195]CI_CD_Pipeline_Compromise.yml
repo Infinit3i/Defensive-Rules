@@ -3,7 +3,8 @@ title: CI/CD Pipeline Supply Chain Compromise
 technique: T1195
 id: f2a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c
 status: experimental
-description: Detects compromise of CI/CD pipelines through malicious build scripts, unauthorized code injection, and pipeline manipulation
+description: >-
+  Detects compromise of CI/CD pipelines through malicious build scripts, unauthorized code injection, and pipeline manipulation
 references:
   - https://attack.mitre.org/techniques/T1195/
 author: Infinit3i
@@ -25,7 +26,7 @@ detection:
       - 'wget http'
       - 'nc -e'
       - 'bash -i'
-  facility: 'local0'
+  facility:
   unauthorized_dependencies:
   message|contains:
       - 'pip install'

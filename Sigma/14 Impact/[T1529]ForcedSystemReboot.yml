@@ -11,26 +11,26 @@ logsource:
   service: sysmon
 detection:
   selection_wmi:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\wmic.exe'
       - '\powershell.exe'
       - '\wmiprvse.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'Win32_OperatingSystem'
       - 'Reboot'
       - 'Shutdown'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - 'Get-WmiObject'
       - 'Invoke-WmiMethod'
       - 'Win32_OperatingSystem'
       - 'Restart-Computer -Force'
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Shutdown'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\shutdownwithoutlogon'
   condition: selection_wmi or selection_powershell or selection_registry

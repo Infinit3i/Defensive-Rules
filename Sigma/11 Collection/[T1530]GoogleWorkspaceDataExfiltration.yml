@@ -1,7 +1,8 @@
 title: Google Workspace Suspicious Data Access
 id: a7b8c9d0-1e2f-3456-789a-bcdef0123456
 status: experimental
-description: Detects suspicious data access patterns in Google Workspace indicating potential data exfiltration
+description: >-
+  Detects suspicious data access patterns in Google Workspace indicating potential data exfiltration
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,14 +15,14 @@ logsource:
   service: admin
 detection:
   selection_download:
-    event_name:
+  event_name:
       - 'download'
       - 'copy'
       - 'view'
   selection_volume:
-    event_name: download
+  event_name:
   selection_external:
-    actor.email|endswith:
+  actor.email|endswith:
       - '@gmail.com'
       - '@yahoo.com'
       - '@hotmail.com'

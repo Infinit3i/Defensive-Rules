@@ -12,28 +12,29 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    ParentCommandLine|contains: 'svchost.exe'
+  EventID:
+  ParentCommandLine|contains:
   selection_hijacked_binary:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\sethc.exe'
       - '\utilman.exe'
       - '\osk.exe'
       - '\narrator.exe'
       - '\magnify.exe'
-    ParentImage|endswith: '\winlogon.exe'
+  ParentImage|endswith:
   selection_suspicious_parent:
-    EventID: 1
-    ParentImage|contains:
+  EventID:
+  ParentImage|contains:
       - '\Temp\'
       - '\Users\'
       - '\AppData\'
   selection_registry_execution:
-    EventID: 1
-    CommandLine|contains: 'Image File Execution Options'
-  condition: (selection_process and selection_suspicious_parent) or
-               selection_hijacked_binary or selection_registry_execution
+  EventID:
+  CommandLine|contains:
+  condition: |
+    (selection_process and selection_suspicious_parent) or
+    selection_hijacked_binary or selection_registry_execution
 fields:
   - Image
   - CommandLine

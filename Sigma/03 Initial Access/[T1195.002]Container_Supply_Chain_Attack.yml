@@ -1,6 +1,7 @@
 title: Container Image Supply Chain Attack Detection
 technique: T1195.002
 author: Infinit3i
+date: 2026/04/28
 id: e1fc26a7-5678-8901-2345-6789abcdef01
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -13,53 +14,54 @@ logsource:
   service: audit
 detection:
   selection_suspicious_image_source:
-    verb: 'create'
-    objectRef.resource: 'pods'
-    requestObject.spec.containers.image|contains:
+  verb:
+  objectRef.resource:
+  requestObject.spec.containers.image|contains:
       - 'dockerhub.com'
       - 'ghcr.io'
       - 'quay.io'
     # Images from public registries without organization control
-    requestObject.spec.containers.image|endswith:
+  requestObject.spec.containers.image|endswith:
       - ':latest'
       - ':main'
       - ':master'
-      # Using mutable tags instead of specific versions
+    # Using mutable tags instead of specific versions
   selection_privileged_containers:
-    verb: 'create'
-    objectRef.resource: 'pods'
-    requestObject.spec.containers.securityContext.privileged: true
-    requestObject.spec.containers.securityContext.runAsRoot: true
+  verb:
+  objectRef.resource:
+  requestObject.spec.containers.securityContext.privileged:
+  requestObject.spec.containers.securityContext.runAsRoot:
   selection_excessive_capabilities:
-    verb: 'create'
-    objectRef.resource: 'pods'
-    requestObject.spec.containers.securityContext.capabilities.add|contains:
+  verb:
+  objectRef.resource:
+  requestObject.spec.containers.securityContext.capabilities.add|contains:
       - 'SYS_ADMIN'
       - 'NET_ADMIN'
       - 'SYS_PTRACE'
       - 'SYS_MODULE'
   selection_suspicious_registry:
-    verb: 'create'
-    objectRef.resource: 'pods'
-    requestObject.spec.containers.image|contains:
+  verb:
+  objectRef.resource:
+  requestObject.spec.containers.image|contains:
       - '.onion'
       - 'tor'
       - 'anonymous'
       - 'proxy'
   selection_untrusted_namespace:
-    verb: 'create'
-    objectRef.resource: 'pods'
-    objectRef.namespace:
+  verb:
+  objectRef.resource:
+  objectRef.namespace:
       - 'default'
       - 'kube-public'
-  # Deployments in default or public namespaces
+    # Deployments in default or public namespaces
   selection_image_without_digest:
-    verb: 'create'
-    objectRef.resource: 'pods'
-  # Images without SHA256 digest verification
-  condition: selection_suspicious_image_source or selection_privileged_containers or
-               selection_excessive_capabilities or selection_suspicious_registry or
-               selection_untrusted_namespace or selection_image_without_digest
+  verb:
+  objectRef.resource:
+    # Images without SHA256 digest verification
+  condition: |
+    selection_suspicious_image_source or selection_privileged_containers or
+    selection_excessive_capabilities or selection_suspicious_registry or
+    selection_untrusted_namespace or selection_image_without_digest
 falsepositives:
   - Legitimate development and testing environments
   - Approved third-party containers with proper security review
@@ -67,15 +69,10 @@ falsepositives:
   - Legacy applications in migration process
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1195.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1195.002
   - attack.execution
   - attack.t1610
   - attack.privilege_escalation

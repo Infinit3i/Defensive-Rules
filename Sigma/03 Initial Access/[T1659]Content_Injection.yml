@@ -3,24 +3,17 @@ title: Content Injection Attack Detection
 technique: T1659
 id: c7e4f9a3-8d2b-4e5f-a1c6-9f3e8d2c5a7b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects content injection attacks by monitoring for malicious script
-  injection, HTML manipulation, or content spoofing attempts that may
-  be used to compromise users or deliver malicious payloads.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects content injection attacks by monitoring for malicious script injection, HTML manipulation, or content spoofing attempts that may be used to compromise users or deliver malicious payloads.
 references:
   - https://attack.mitre.org/techniques/T1659/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1659
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1659
   - content_injection
   - xss
   - html_injection

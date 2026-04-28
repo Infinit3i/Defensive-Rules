@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-  EventID: 1
-  Image|endswith: '\reg.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'query'
       - 'HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
@@ -20,8 +20,8 @@ detection:
       - 'HKLM\\HARDWARE\\DESCRIPTION\\System'
       - 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-ItemProperty'
       - 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
@@ -40,14 +40,7 @@ falsepositives:
   - System monitoring
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

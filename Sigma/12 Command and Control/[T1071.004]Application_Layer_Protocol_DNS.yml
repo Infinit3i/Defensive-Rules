@@ -4,23 +4,16 @@ technique: T1071.004
 id: d9a6f4e7-8c2b-4e5f-d9a6-4f7e8c2b5d9b
 status: experimental
 description: >-
-  Detects command and control communications via DNS protocol by monitoring
-  for DNS tunneling, suspicious DNS queries, or unusual DNS traffic patterns
-  that may indicate DNS-based C2 communications.
+  >- Detects command and control communications via DNS protocol by monitoring for DNS tunneling, suspicious DNS queries, or unusual DNS traffic patterns that may indicate DNS-based C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1071/004/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.004
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1071.004
   - dns
   - dns_tunneling
   - c2_communication
@@ -29,16 +22,16 @@ logsource:
   service: dns
 detection:
   long_queries:
-  query|length|gte: 50
-  qtype_name: 'TXT'
-  suspicious_domains:
-  query|contains:
+    query|length|gte:
+    qtype_name:
+    suspicious_domains:
+    query|contains:
       - '.tk'
       - '.ml'
       - '.cf'
       - '.ga'
-  base64_encoded:
-  query|contains:
+    base64_encoded:
+    query|contains:
       - 'A=='
       - 'Q=='
       - 'g=='

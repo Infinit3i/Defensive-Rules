@@ -4,23 +4,16 @@ technique: T1080
 id: f6c9e4a7-8d3b-4e5f-a6f9-9e4c8d3b6a7b
 status: experimental
 description: >-
-  Detects tainting of shared content by monitoring for malicious modifications
-  to shared files, network shares, or collaborative platforms that may be
-  used to spread malware or gain access to other systems.
+  >- Detects tainting of shared content by monitoring for malicious modifications to shared files, network shares, or collaborative platforms that may be used to spread malware or gain access to other systems.
 references:
   - https://attack.mitre.org/techniques/T1080/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1080
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
-  - attack.t1080
   - shared_content
   - file_modification
   - network_share
@@ -30,19 +23,19 @@ logsource:
   category: file_create
 detection:
   shared_location:
-  TargetFilename|startswith:
+    TargetFilename|startswith:
       - '\\\'
       - 'C:\Share\'
       - 'C:\Public\'
-  suspicious_extension:
-  TargetFilename|endswith:
+    suspicious_extension:
+    TargetFilename|endswith:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.vbs'
       - '.ps1'
-  document_macro:
-  TargetFilename|endswith:
+    document_macro:
+    TargetFilename|endswith:
       - '.docm'
       - '.xlsm'
       - '.pptm'

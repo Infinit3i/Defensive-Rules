@@ -3,20 +3,17 @@ title: Tasklist Process Enumeration
 technique: T1057
 id: a1057a01-1111-4c11-8a57-000000000001
 status: experimental
-description: Detects cmd-based process discovery using tasklist with common enumeration flags (e.g., /v, /svc, /fo, /m).
+description: >-
+  Detects cmd-based process discovery using tasklist with common enumeration flags (e.g., /v, /svc, /fo, /m).
 references:
   - https://attack.mitre.org/techniques/T1057/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1057
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1057
   - tactic.discovery
   - platform:windows
   - technique:T1057
@@ -26,10 +23,10 @@ logsource:
   service: sysmon
 detection:
   selection_tasklist:
-  EventID: 1
-  Image|endswith: '\tasklist.exe'
+  EventID:
+  Image|endswith:
   selection_cmdline:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "tasklist"
       - "tasklist /v"

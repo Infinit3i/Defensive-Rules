@@ -3,25 +3,18 @@ title: User Execution of Malicious Files
 technique: T1204.002
 id: f4b7e9c6-8a3d-4e5f-a2c7-9f5e8d4c7a9b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects user execution of potentially malicious files by monitoring for
-  execution of suspicious file types, files from untrusted locations, or
-  unsigned executables that may indicate malware execution.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects user execution of potentially malicious files by monitoring for execution of suspicious file types, files from untrusted locations, or unsigned executables that may indicate malware execution.
 references:
   - https://attack.mitre.org/techniques/T1204/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1204.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
   - attack.execution
-  - attack.t1204.002
   - malicious_file
   - user_execution
 logsource:
@@ -41,7 +34,7 @@ detection:
       - 'C:\Users\'
       - 'C:\Temp\'
       - 'C:\Windows\Temp\'
-  Image|endswith: '.exe'
+  Image|endswith:
   download_execution:
   Image|contains:
       - '\Downloads\'

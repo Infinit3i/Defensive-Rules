@@ -3,7 +3,8 @@ title: Accessibility Feature Hijacking Persistence
 technique: T1546.008
 id: f3c8d5a7-1b9e-4f6a-8c2d-5e7f9a1c4b8d
 status: experimental
-description: Detects hijacking of accessibility features for persistence through registry or file system modifications
+description: >-
+  Detects hijacking of accessibility features for persistence through registry or file system modifications
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,7 +12,7 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
@@ -20,7 +21,7 @@ detection:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
   selection_file:
-  EventID: 11
+  EventID:
   TargetFilename|contains:
       - '\Windows\System32\sethc.exe'
       - '\Windows\System32\utilman.exe'
@@ -47,15 +48,8 @@ falsepositives:
   - Administrative debugging setups
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1546.008
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1546
-  - attack.t1546.008
-  - sysmon
-  - windows

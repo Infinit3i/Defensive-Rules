@@ -1,15 +1,17 @@
 title: Supply Chain Compromise Indicators Detection
 technique: T1195.002
 author: Infinit3i
+date: 2026/04/28
 id: b8a4f6c2-7d9e-4b3a-8f1c-5e7a9b2d4c6f
 status: experimental
-description: Detects indicators of supply chain compromises including suspicious software updates, package managers, and trusted binary modifications
+description: >-
+  Detects indicators of supply chain compromises including suspicious software updates, package managers, and trusted binary modifications
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_suspicious_updates:
-  EventID: 1
+  EventID:
   ParentImage|endswith:
       - '\Windows\System32\wuauclt.exe'
       - '\Windows\System32\svchost.exe'
@@ -21,7 +23,7 @@ detection:
       - 'http://'
       - 'https://'
   selection_package_managers:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\npm.exe'
       - '\pip.exe'
@@ -36,24 +38,24 @@ detection:
       - 'update'
       - 'upgrade'
   selection_trusted_binary_modification:
-  EventID: 11
+  EventID:
   TargetFilename|endswith:
       - '\Windows\System32\*.exe'
       - '\Windows\SysWOW64\*.exe'
       - '\Program Files\*.exe'
       - '\Program Files (x86)\*.exe'
   selection_certificate_anomaly:
-  EventID: 7
-  Signed: 'true'
+  EventID:
+  Signed:
   Signature|contains:
       - 'CN=Microsoft'
       - 'CN=Adobe'
       - 'CN=Oracle'
       - 'CN=Apple'
-  SignatureStatus: 'Valid'
+  SignatureStatus:
   selection_network_suspicious:
-  EventID: 3
-  Protocol: 'tcp'
+  EventID:
+  Protocol:
   DestinationPort:
       - 80
       - 443
@@ -63,22 +65,22 @@ detection:
       - '\explorer.exe'
       - '\winlogon.exe'
   selection_registry_persistence:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
       - 'HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'
       - 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
       - 'HKLM\SYSTEM\CurrentControlSet\Services'
   selection_file_hash_mismatch:
-  EventID: 15
-  Hash|re: 'MD5=[A-F0-9]{32}'
+  EventID:
+  Hash|re:
   TargetFilename|endswith:
       - '\System32\*.exe'
       - '\System32\*.dll'
       - '\SysWOW64\*.exe'
       - '\SysWOW64\*.dll'
   selection_process_creation_trusted:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\notepad.exe'
       - '\calc.exe'
@@ -95,14 +97,15 @@ detection:
       - 'wget'
       - 'invoke-webrequest'
   selection_dll_sideloading:
-  EventID: 7
-  ImageLoaded|re: '.*\\[a-zA-Z0-9_-]+\.dll$'
-  Signed: 'false'
-  ProcessId: 'ProcessId'
-  condition: selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or
-             (selection_trusted_binary_modification and selection_file_hash_mismatch) or
-             (selection_certificate_anomaly and selection_registry_persistence) or
-             (selection_process_creation_trusted and selection_dll_sideloading)
+  EventID:
+  ImageLoaded|re:
+  Signed:
+  ProcessId:
+  condition: |
+    selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or
+    (selection_trusted_binary_modification and selection_file_hash_mismatch) or
+    (selection_certificate_anomaly and selection_registry_persistence) or
+    (selection_process_creation_trusted and selection_dll_sideloading)
 falsepositives:
   - Legitimate software updates and installations
   - Normal package manager operations
@@ -110,21 +113,14 @@ falsepositives:
   - Development environment activities
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1195.002
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.initial_access
-  - attack.t1195.002
   - attack.defense_evasion
   - attack.t1027
   - attack.persistence
   - attack.t1547
-  - sysmon
-  - windows
   - supply_chain
 references:
   - https://attack.mitre.org/techniques/T1195/002/

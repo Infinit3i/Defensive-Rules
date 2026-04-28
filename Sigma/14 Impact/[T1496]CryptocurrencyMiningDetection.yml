@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   sel_mining_processes:
-    EventID: 1
-    Image|contains:
+  EventID:
+  Image|contains:
       - 'xmrig'
       - 'ethminer'
       - 'cgminer'
@@ -28,8 +28,8 @@ detection:
       - 'teamredminer'
       - 'srbminer'
   sel_mining_args:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - '--donate-level'
       - '--pool'
       - '--wallet'

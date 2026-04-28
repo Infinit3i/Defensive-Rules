@@ -3,20 +3,17 @@ title: System Information Discovery - ipconfig / hostname / net config execution
 technique: T1082
 id: 4b2c1f8e-d5a4-426f-bf7c-c1d2e3f4a5b6
 status: experimental
-description: Detect execution of common network/host discovery commands such as ipconfig, hostname or net config which can be used to enumerate host and network configuration.
+description: >-
+  Detect execution of common network/host discovery commands such as ipconfig, hostname or net config which can be used to enumerate host and network configuration.
 author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1082/
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1082
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1082
   - tactic.discovery
   - platform:windows
 logsource:
@@ -24,7 +21,7 @@ logsource:
   service: sysmon
 detection:
   selection_network_commands:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "ipconfig"
       - "ipconfig /all"
@@ -32,7 +29,7 @@ detection:
       - "net config"
       - "net view"
   selection_images:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\ipconfig.exe'
       - '\hostname.exe'

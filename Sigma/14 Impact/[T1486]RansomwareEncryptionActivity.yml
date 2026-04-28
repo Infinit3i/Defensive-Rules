@@ -1,7 +1,8 @@
 title: Ransomware Encryption Activity
 id: b9c0d1e2-4f5a-6b7c-8d9e-0f1a2b3c4d5e
 status: experimental
-description: Detects ransomware encryption activity through file extension changes and crypto processes
+description: >-
+  Detects ransomware encryption activity through file extension changes and crypto processes
 author: Infinit3i
 date: 2026/04/28
 logsource:
@@ -9,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection_encrypt_ext:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.locked'
       - '.encrypted'
       - '.crypto'
@@ -20,28 +21,26 @@ detection:
       - '.wcry'
       - '.wncry'
   selection_ransom_note:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'README'
       - 'DECRYPT'
       - 'RECOVERY'
       - 'HELP_DECRYPT'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.txt'
       - '.html'
       - '.htm'
   selection_crypto_process:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\bcdedit.exe'
       - '\vssadmin.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'delete shadows'
       - 'set recoveryenabled no'
       - 'set bootstatuspolicy ignoreallfailures'
-  condition: selection_encrypt_ext or
-               selection_ransom_note or
-               selection_crypto_process
+  condition: selection_encrypt_ext or selection_ransom_note or selection_crypto_process
 level: critical
 tags:
   - attack.impact

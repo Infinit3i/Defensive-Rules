@@ -4,23 +4,16 @@ technique: T1573.001
 id: e4b7f8c5-9d3a-4e6f-e4b7-8f5c9d3a6e4b
 status: experimental
 description: >-
-  Detects command and control communications using symmetric cryptography
-  by monitoring for encrypted traffic patterns, symmetric cipher usage, or
-  encrypted C2 channels that may indicate protected communications.
+  >- Detects command and control communications using symmetric cryptography by monitoring for encrypted traffic patterns, symmetric cipher usage, or encrypted C2 channels that may indicate protected communications.
 references:
   - https://attack.mitre.org/techniques/T1573/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1573.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1573.001
   - symmetric_cryptography
   - encryption
   - c2_communication
@@ -29,18 +22,18 @@ logsource:
   service: ssl
 detection:
   symmetric_ciphers:
-  cipher|contains:
+    cipher|contains:
       - 'AES'
       - 'ChaCha'
       - 'DES'
-  weak_encryption:
-  cipher|contains:
+    weak_encryption:
+    cipher|contains:
       - 'RC4'
       - 'DES'
-  version: 'TLSv10'
-  self_signed_cert:
-  cert_subject|contains: 'self-signed'
-  established: true
+    version:
+    self_signed_cert:
+    cert_subject|contains:
+    established:
   condition: symmetric_ciphers or weak_encryption or self_signed_cert
 falsepositives:
   - Legitimate encrypted communications

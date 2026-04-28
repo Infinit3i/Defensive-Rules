@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_shared_file_modify:
-  EventID: 11
+  EventID:
   TargetFilename|contains:
       - '\\*\NETLOGON\'
       - '\\*\SYSVOL\'
@@ -28,16 +28,16 @@ detection:
       - '.vbs'
       - '.scr'
   selection_network_share_write:
-  EventID: 5145
-  AccessMask: '0x120089'
+  EventID:
+  AccessMask:
   RelativeTargetName|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
   selection_shortcut_modification:
-  EventID: 11
-  TargetFilename|endswith: '.lnk'
+  EventID:
+  TargetFilename|endswith:
   TargetFilename|contains:
       - '\\Desktop\'
       - '\\Start Menu\'

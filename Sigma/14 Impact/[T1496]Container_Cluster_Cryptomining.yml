@@ -2,7 +2,8 @@ title: Container Cluster Compromise and Cryptocurrency Mining
 technique: T1496
 id: 9b4e6f2a-7c8d-3e5f-1a9b-4d6e8f2c5a7b
 status: experimental
-description: Detects container cluster compromise for cryptocurrency mining. Monitors unauthorized deployments and resource hijacking.
+description: >-
+  Detects container cluster compromise for cryptocurrency mining. Monitors unauthorized deployments and resource hijacking.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,20 +15,20 @@ logsource:
   service: auditd
 detection:
   selection_container_tools:
-    type: EXECVE
-    exe:
+  type:
+  exe:
       - '/usr/bin/docker'
       - '/usr/bin/kubectl'
       - '/usr/bin/podman'
       - '/usr/bin/containerd'
-    a0|contains:
+  a0|contains:
       - 'run'
       - 'exec'
       - 'apply'
       - 'create'
   selection_mining_software:
-    type: EXECVE
-    exe|endswith:
+  type:
+  exe|endswith:
       - 'xmrig'
       - 'cpuminer'
       - 'cgminer'
@@ -36,7 +37,7 @@ detection:
       - 'claymore'
       - 't-rex'
       - 'phoenixminer'
-    a1|contains:
+  a1|contains:
       - '--donate-level'
       - '--pool'
       - '--wallet'
@@ -44,8 +45,8 @@ detection:
       - '--cuda'
       - '--opencl'
   selection_container_images:
-    type: EXECVE
-    a2|contains:
+  type:
+  a2|contains:
       - 'alpine/xmrig'
       - 'ubuntu/mining'
       - 'crypto/miner'
@@ -54,43 +55,39 @@ detection:
       - 'ethereum'
       - 'mining'
   selection_kubernetes_deployments:
-    type: EXECVE
-    exe: '/usr/bin/kubectl'
-    a1|contains:
+  type:
+  exe:
+  a1|contains:
       - 'apply'
       - 'create'
       - 'run'
-    a3|contains:
+  a3|contains:
       - 'deployment'
       - 'daemonset'
       - 'job'
       - 'cronjob'
   selection_resource_requests:
-    type: EXECVE
-    a0|contains:
+  type:
+  a0|contains:
       - '--cpu='
       - '--memory='
       - '--gpus='
       - 'resources.requests'
       - 'resources.limits'
   selection_network_mining:
-    type: SYSCALL
-    syscall: 42  # connect
-    success: true
-  condition: (selection_container_tools and selection_mining_software) or
-               (selection_kubernetes_deployments and selection_container_images) or
-               (selection_container_tools and selection_resource_requests and selection_network_mining)
+  type:
+  syscall:
+  success:
+  condition: |
+    (selection_container_tools and selection_mining_software) or
+    (selection_kubernetes_deployments and selection_container_images) or
+    (selection_container_tools and selection_resource_requests and selection_network_mining)
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1496
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1496
   - attack.resource_hijacking
   - attack.t1610
   - attack.deploy_container

@@ -23,8 +23,8 @@ detection:
       - 'WinHTTP'
       - ''  # Empty user agent
   selection_post_patterns:
-  method: 'POST'
-  request_body_len: '>1024'  # Large POST requests
+  method:
+  request_body_len:
   selection_suspicious_paths:
   uri|contains:
       - '/admin'
@@ -38,10 +38,11 @@ detection:
       - '.aspx?id='
       - '.jsp?id='
   selection_beaconing:
-  request_body_len: '<100'  # Small consistent requests
-  status_code: '200'
-  timing_patterns: {}  # Placeholder for beaconing detection logic
-  condition: (selection_user_agents or selection_suspicious_paths) and (selection_post_patterns or selection_beaconing)
+  request_body_len:
+  status_code:
+  timing_patterns:
+  condition: |
+    (selection_user_agents or selection_suspicious_paths) and (selection_post_patterns or selection_beaconing)
 fields:
   - src_ip
   - dst_ip
@@ -56,14 +57,10 @@ falsepositives:
   - API clients
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1071.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.command-and-control
-  - attack.t1071.001
   - zeek
   - network

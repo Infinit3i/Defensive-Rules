@@ -4,23 +4,16 @@ technique: T1029
 id: c9f5e3a7-8d6b-4e2f-c9f5-3e7a8d6b2c9b
 status: experimental
 description: >-
-  Detects scheduled data transfers by monitoring for automated file transfers,
-  recurring upload patterns, or scheduled tasks that may be used to
-  systematically exfiltrate data over time.
+  >- Detects scheduled data transfers by monitoring for automated file transfers, recurring upload patterns, or scheduled tasks that may be used to systematically exfiltrate data over time.
 references:
   - https://attack.mitre.org/techniques/T1029/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1029
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1029
   - scheduled_transfer
   - automation
   - data_transfer
@@ -29,21 +22,21 @@ logsource:
   service: taskscheduler
 detection:
   scheduled_upload:
-  EventID: 129
-  TaskName|contains:
+    EventID:
+    TaskName|contains:
       - 'upload'
       - 'sync'
       - 'backup'
       - 'transfer'
-  recurring_task:
-  EventID: 200
-  ActionName|contains:
+    recurring_task:
+    EventID:
+    ActionName|contains:
       - 'curl'
       - 'wget'
       - 'powershell'
-  network_task:
-  EventID: 201
-  TaskName|contains:
+    network_task:
+    EventID:
+    TaskName|contains:
       - 'ftp'
       - 'http'
       - 'sftp'

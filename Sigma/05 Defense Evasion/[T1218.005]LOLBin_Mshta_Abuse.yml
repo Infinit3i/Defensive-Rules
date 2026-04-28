@@ -1,16 +1,18 @@
 title: Living-off-the-Land Binary MSHTA Suspicious Execution
 technique: T1218.005
 author: Infinit3i
+date: 2026/04/28
 id: e7f5a9c3-6d2b-4a8e-9f1c-7b5d8a3e6f2a
 status: experimental
-description: Detects suspicious use of mshta.exe to execute JavaScript, VBScript, or download and execute remote content for defense evasion
+description: >-
+  Detects suspicious use of mshta.exe to execute JavaScript, VBScript, or download and execute remote content for defense evasion
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_process:
-  EventID: 1
-  Image|endswith: '\mshta.exe'
+  EventID:
+  Image|endswith:
   selection_suspicious_args:
   CommandLine|contains:
       - 'javascript:'
@@ -44,36 +46,30 @@ detection:
       - '\powerpnt.exe'
       - '\outlook.exe'
   selection_network_connection:
-  EventID: 3
-  Image|endswith: '\mshta.exe'
-  Protocol: 'tcp'
-  Initiated: 'true'
+  EventID:
+  Image|endswith:
+  Protocol:
+  Initiated:
   filter_legitimate:
   CommandLine|contains:
       - 'res://ieframe.dll'
       - 'res://mshtml.dll'
-  condition: selection_process and (selection_suspicious_args or selection_encoded_content or
-             selection_network_download or selection_parent_suspicious or
-             selection_network_connection) and not filter_legitimate
+  condition: |
+    selection_process and (selection_suspicious_args or selection_encoded_content or
+    selection_network_download or selection_parent_suspicious or
+    selection_network_connection) and not filter_legitimate
 falsepositives:
   - Legitimate HTML applications
   - Corporate intranet applications
   - Administrative tools using HTA files
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1218.005
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1218.005
   - attack.execution
   - attack.t1059
-  - sysmon
-  - windows
   - lolbins
   - mshta
 references:

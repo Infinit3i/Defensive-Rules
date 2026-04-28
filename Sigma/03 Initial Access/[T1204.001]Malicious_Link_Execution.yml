@@ -3,25 +3,18 @@ title: User Execution of Malicious Links
 technique: T1204.001
 id: e9a5f8c3-7d4b-4e6f-a2c1-9f4e8d3c6a8b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects user execution of malicious links by monitoring for browser
-  processes launched with suspicious URLs, click-through patterns, or
-  downloads initiated from potentially malicious web content.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects user execution of malicious links by monitoring for browser processes launched with suspicious URLs, click-through patterns, or downloads initiated from potentially malicious web content.
 references:
   - https://attack.mitre.org/techniques/T1204/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1204.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
   - attack.execution
-  - attack.t1204.001
   - browser
   - malicious_link
 logsource:

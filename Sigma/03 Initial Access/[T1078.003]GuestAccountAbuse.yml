@@ -1,7 +1,8 @@
 title: Guest Account Abuse and Privilege Escalation
 id: f1e2d3c4-b5a6-7890-1234-56789abcdef0
 status: experimental
-description: Detects abuse of guest accounts for initial access and privilege escalation attempts
+description: >-
+  Detects abuse of guest accounts for initial access and privilege escalation attempts
 author: Infinit3i
 date: 2026/04/27
 modified: 2026/04/27
@@ -16,29 +17,30 @@ logsource:
   service: security
 detection:
   selection_guest_logon:
-    EventID: 4624
-    TargetUserName|contains:
+  EventID:
+  TargetUserName|contains:
       - 'guest'
       - 'Guest'
       - 'IUSR'
   selection_suspicious_activity:
-    EventID:
+  EventID:
       - 4648  # Explicit credential use
       - 4672  # Special privileges assigned
       - 4673  # Privileged service called
   selection_network_access:
-    LogonType:
+  LogonType:
       - 3   # Network
       - 8   # NetworkCleartext
       - 9   # NewCredentials
   selection_privilege_escalation:
-    PrivilegeList|contains:
+  PrivilegeList|contains:
       - 'SeDebugPrivilege'
       - 'SeImpersonatePrivilege'
       - 'SeTakeOwnershipPrivilege'
       - 'SeBackupPrivilege'
-  condition: selection_guest_logon and (selection_suspicious_activity or
-               selection_network_access or selection_privilege_escalation)
+  condition: |
+    selection_guest_logon and (selection_suspicious_activity or
+    selection_network_access or selection_privilege_escalation)
 level: high
 fields:
   - TargetUserName

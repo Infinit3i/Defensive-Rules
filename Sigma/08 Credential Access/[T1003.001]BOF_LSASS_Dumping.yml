@@ -14,22 +14,22 @@ logsource:
   service: sysmon
 detection:
   lsass_access:
-    EventID: 10
-    TargetImage|endswith: '\lsass.exe'
-    GrantedAccess:
+  EventID:
+  TargetImage|endswith:
+  GrantedAccess:
       - '0x1010'
       - '0x1038'
       - '0x40'
   bof_indicators:
-    SourceImage|contains:
+  SourceImage|contains:
       - 'rundll32.exe'
       - 'regsvr32.exe'
-    CallTrace|contains:
+  CallTrace|contains:
       - 'UNKNOWN'
       - 'ntdll.dll'
   memory_patterns:
-    EventID: 7
-    ImageLoaded|contains:
+  EventID:
+  ImageLoaded|contains:
       - 'dbgcore.dll'
       - 'dbghelp.dll'
   condition: lsass_access and (bof_indicators or memory_patterns)

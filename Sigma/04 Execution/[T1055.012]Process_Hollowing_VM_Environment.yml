@@ -1,9 +1,9 @@
 title: Process Hollowing in Virtualized Environments
 technique: T1055.012
-
 id: c5f2a8b1-d3e7-4c9a-8f6b-1a4d2e5c3b7f
 status: experimental
-description: Detects process hollowing techniques specifically designed to evade detection in virtual machine environments
+description: >-
+  Detects process hollowing techniques specifically designed to evade detection in virtual machine environments
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_process_creation:
-  EventID: 1
+  EventID:
   ParentImage|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
@@ -29,7 +29,7 @@ detection:
       - '-s'
       - 'silent'
   selection_process_access:
-  EventID: 10
+  EventID:
   SourceImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
@@ -46,7 +46,7 @@ detection:
       - '0x1410'
       - '0x1438'
   selection_image_load:
-  EventID: 7
+  EventID:
   Image|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
@@ -55,9 +55,9 @@ detection:
       - '\ntdll.dll'
       - '\kernel32.dll'
       - '\kernelbase.dll'
-  Signed: 'false'
+  Signed:
   selection_vm_timing:
-  EventID: 1
+  EventID:
   CommandLine|contains|all:
       - 'sleep'
       - 'delay'
@@ -67,7 +67,7 @@ detection:
       - '120000'
       - '180000'
   selection_api_calls:
-  EventID: 10
+  EventID:
   CallTrace|contains:
       - 'CreateRemoteThread'
       - 'WriteProcessMemory'
@@ -75,32 +75,20 @@ detection:
       - 'NtUnmapViewOfSection'
       - 'NtMapViewOfSection'
       - 'ZwUnmapViewOfSection'
-  condition: selection_process_creation and (selection_process_access or selection_image_load) and (selection_vm_timing or selection_api_calls)
+  condition: |
+    selection_process_creation and (selection_process_access or selection_image_load) and (selection_vm_timing or selection_api_calls)
 falsepositives:
   - Legitimate software installation
   - System maintenance operations
   - Antivirus software behavior
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1055.012
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1055.012
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
   - attack.privilege_escalation
   - attack.t1055
-  - attack.t1055.012
   - process_hollowing
   - vm_evasion
-  - sysmon
-  - windows

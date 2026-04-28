@@ -12,38 +12,30 @@ logsource:
   service: sysmon
 detection:
   selection_api_call:
-    EventID: 10
-    CallTrace|contains:
+  EventID:
+  CallTrace|contains:
       - 'CreateProcessWithTokenW'
       - 'CreateProcessAsUserW'
       - 'DuplicateTokenEx'
   selection_process:
-    EventID: 1
-    LogonId: '0x3e7'
-    IntegrityLevel: 'System'
-    ParentImage|endswith:
+  EventID:
+  LogonId:
+  IntegrityLevel:
+  ParentImage|endswith:
       - '.exe'
   selection_token_access:
-    EventID: 10
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
-    GrantedAccess: '0x1400'
-  condition: selection_api_call and (selection_process or
-               selection_token_access)
+  GrantedAccess:
+  condition: selection_api_call and (selection_process or selection_token_access)
 falsepositives:
   - Legitimate service processes
   - System authentication
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.privilege_escalation
-  # MITRE ATT&CK technique
-  - attack.t1134.002
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.privilege_escalation
   - attack.t1134.002
-  - sysmon
   - windows
+  - sysmon

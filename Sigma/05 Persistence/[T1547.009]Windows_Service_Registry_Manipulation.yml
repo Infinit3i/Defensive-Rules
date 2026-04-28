@@ -1,7 +1,8 @@
 title: Windows Service Registry Manipulation
 id: f6g7h8i9-j0k1-2345-6789-012345fghijk
 status: experimental
-description: Detects direct registry manipulation for service persistence bypassing standard service creation APIs
+description: >-
+  Detects direct registry manipulation for service persistence bypassing standard service creation APIs
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,17 +12,17 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-    EventID: 13
-    TargetObject|contains: '\System\CurrentControlSet\Services\'
+  EventID:
+  TargetObject|contains:
   selection_values:
-    TargetObject|endswith:
+  TargetObject|endswith:
       - '\ImagePath'
       - '\ServiceDll'
       - '\Parameters\ServiceDll'
       - '\Start'
       - '\Type'
   selection_suspicious:
-    - Details|contains:
+      - Details|contains:
       - 'powershell'
       - 'cmd.exe'
       - 'rundll32'
@@ -29,12 +30,12 @@ detection:
       - 'mshta'
       - 'wscript'
       - 'cscript'
-    - Details|contains:
+      - Details|contains:
       - '\AppData\'
       - '\Temp\'
       - '\Users\Public\'
       - '\ProgramData\'
-    - Details|endswith:
+      - Details|endswith:
       - '.bat'
       - '.vbs'
       - '.js'

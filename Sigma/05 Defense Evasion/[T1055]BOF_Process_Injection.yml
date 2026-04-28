@@ -3,9 +3,8 @@ title: BOF Process Injection and Memory Manipulation
 technique: T1055
 id: b1c2d3e4-f5a6-7890-cdef-345678901234
 status: experimental
-description: >
-  Detects process injection techniques commonly used by Beacon Object Files (BOFs).
-  BOFs often inject into legitimate processes to evade detection and maintain persistence.
+description: >-
+  > Detects process injection techniques commonly used by Beacon Object Files (BOFs). BOFs often inject into legitimate processes to evade detection and maintain persistence.
 references:
   - https://attack.mitre.org/techniques/T1055/
   - https://www.cobaltstrike.com/help-process-injection
@@ -17,7 +16,7 @@ logsource:
   service: sysmon
 detection:
   selection_injection:
-  EventID: 10
+  EventID:
   TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
@@ -30,19 +29,19 @@ detection:
       - '0x1410'
       - '0x1038'
   selection_memory:
-  EventID: 7
-  ImageLoaded|contains: 'UNKNOWN'
-  Signed: 'false'
+  EventID:
+  ImageLoaded|contains:
+  Signed:
   selection_thread:
-  EventID: 8
+  EventID:
   TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
-  StartModule: 'null'
+  StartModule:
   selection_hollowing:
-  EventID: 1
-  ParentImage|endswith: '\rundll32.exe'
+  EventID:
+  ParentImage|endswith:
   CommandLine|contains:
       - 'VirtualAlloc'
       - 'WriteProcessMemory'
@@ -52,7 +51,7 @@ detection:
       - 'C:\Program Files\'
       - 'C:\Program Files (x86)\'
       - 'C:\Windows\System32\'
-  Signed: 'true'
+  Signed:
   condition: (any of selection_*) and not filter_legit
 falsepositives:
   - Legitimate security software
@@ -60,18 +59,11 @@ falsepositives:
   - Debugging applications
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1055
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1055
   - attack.t1055.001
   - attack.t1055.002
-  - sysmon
-  - windows
   - cobalt_strike
   - bof

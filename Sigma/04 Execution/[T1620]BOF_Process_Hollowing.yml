@@ -14,38 +14,37 @@ logsource:
   service: sysmon
 detection:
   sel_create_proc:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
-    ParentCommandLine|contains:
+  ParentCommandLine|contains:
       - 'CREATE_SUSPENDED'
       - 'SUSPENDED'
   sel_mem_write:
-    EventID: 10
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
-    GrantedAccess:
+  GrantedAccess:
       - '0x1F0FFF'
       - '0x143A'
-    CallTrace|contains: 'UNKNOWN'
+  CallTrace|contains:
   sel_thread_resume:
-    EventID: 8
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
   sel_apis:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'NtUnmapViewOfSection'
       - 'VirtualAllocEx'
       - 'WriteProcessMemory'
       - 'ResumeThread'
-  condition: sel_create_proc and sel_mem_write and
-               (sel_thread_resume or sel_apis)
+  condition: sel_create_proc and sel_mem_write and (sel_thread_resume or sel_apis)
 falsepositives:
   - Debuggers and process analysis tools
   - Some antivirus software behavior

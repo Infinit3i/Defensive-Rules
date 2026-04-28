@@ -3,7 +3,8 @@ title: CSRSS Spawned by Suspicious Parent Process
 technique: T1055
 id: d4e5f6a7-b8c9-0123-def4-456789012345
 status: experimental
-description: Detects csrss.exe spawned by process other than smss.exe which indicates process masquerading or injection
+description: >-
+  Detects csrss.exe spawned by process other than smss.exe which indicates process masquerading or injection
 references:
   - https://attack.mitre.org/techniques/T1055/
   - https://attack.mitre.org/techniques/T1036/
@@ -14,23 +15,16 @@ logsource:
   product: windows
 detection:
   selection:
-    Image|endswith: '\csrss.exe'
+  Image|endswith:
   filter:
-    ParentImage|endswith: '\smss.exe'
+  ParentImage|endswith:
   condition: selection and not filter
 falsepositives:
   - None known - CSRSS should always be spawned by smss.exe
 level: critical
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1055
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1055
   - attack.t1036
-  - sysmon
-  - windows

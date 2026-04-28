@@ -9,19 +9,19 @@ logsource:
   service: sysmon
 detection:
   selection_delete:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\del.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'del /s /q'
       - 'rmdir /s /q'
       - 'Remove-Item -Recurse -Force'
       - 'Get-ChildItem | Remove-Item'
   selection_file_count:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.txt'
       - '.doc'
       - '.docx'

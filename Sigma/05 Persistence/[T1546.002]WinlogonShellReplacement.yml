@@ -3,7 +3,8 @@ title: Winlogon Shell Replacement Persistence
 technique: T1546.002
 id: d7a3b8c4-2f5e-4a9b-8c6d-3e1f7a9c2b5e
 status: experimental
-description: Detects suspicious modifications to Winlogon Shell registry key for persistence through shell replacement
+description: >-
+  Detects suspicious modifications to Winlogon Shell registry key for persistence through shell replacement
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -12,7 +13,7 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-  EventID: 13
+  EventID:
   selection_shell:
   TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell'
@@ -44,15 +45,8 @@ falsepositives:
   - Remote desktop configurations
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1546.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.t1546
-  - attack.t1546.002
-  - sysmon
-  - windows

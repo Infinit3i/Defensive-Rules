@@ -1,7 +1,8 @@
 title: SIEM Evasion Through Log Manipulation
 id: r8s9t0u1-v2w3-4567-rstu-890123456789
 status: experimental
-description: Detects attempts to evade SIEM detection through log source manipulation and forwarding disruption
+description: >-
+  Detects attempts to evade SIEM detection through log source manipulation and forwarding disruption
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_services:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\sc.exe'
       - '\net.exe'
       - '\wevtutil.exe'
   selection_commands:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'stop winlogbeat'
       - 'disable splunk'
       - 'clear eventlog'
       - 'wevtutil cl'
   selection_config:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'winlogbeat.yml'
       - 'splunk'
       - 'nxlog.conf'

@@ -12,33 +12,25 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'AppCertDlls'
       - 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls'
   selection_dll_load:
-    EventID: 7
-    ImageLoaded|contains: 'AppCert'
-    Signed: 'false'
+  EventID:
+  ImageLoaded|contains:
+  Signed:
   selection_process:
-    EventID: 1
-    CommandLine|contains: 'AppCertDlls'
-  condition: selection_registry or selection_dll_load or
-               selection_process
+  EventID:
+  CommandLine|contains:
+  condition: selection_registry or selection_dll_load or selection_process
 falsepositives:
   - Legitimate application certification tools
   - Security software installations
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1546.008
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1546.008
   - attack.persistence
-  - sysmon
-  - windows

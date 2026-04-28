@@ -1,7 +1,8 @@
 title: Office Add-in Persistence via Registry Installation
 id: 7a8b9c12-4d5e-6f78-9012-3456789abcde
 status: experimental
-description: Detects Office add-in registration through registry modifications for persistence
+description: >-
+  Detects Office add-in registration through registry modifications for persistence
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -9,14 +10,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Office\'
       - '\Word\Addins\'
       - '\Excel\Addins\'
       - '\PowerPoint\Addins\'
       - '\Outlook\Addins\'
-    Details|contains:
+  Details|contains:
       - '.dll'
       - '.xll'
       - '.wll'

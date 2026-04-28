@@ -1,7 +1,8 @@
 title: At Job Network Download and Execute
 id: h8i9j0k1-l2m3-4567-8901-234567hijklm
 status: experimental
-description: Detects at jobs that download and execute files from remote sources for persistence
+description: >-
+  Detects at jobs that download and execute files from remote sources for persistence
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,25 +13,26 @@ logsource:
   service: auditd
 detection:
   selection_at_process:
-  - type: EXECVE
-      a0|contains:
-    - /usr/bin/at
-    - /bin/at
-    - atd
+      - type: EXECVE
+  a0|contains:
+      - /usr/bin/at
+      - /bin/at
+      - atd
   selection_network_tools:
-  - a1|contains:
-    - wget
-    - curl
-    - ftp
-    - sftp
-    - rsync
-    - scp
+      - a1|contains:
+      - wget
+      - curl
+      - ftp
+      - sftp
+      - rsync
+      - scp
   selection_execution_pattern:
-  - a1|re: '.*[|&;]\s*(chmod|bash|sh|python|perl)'
+      - a1|re: '.*[|&;]\s*(chmod|bash|sh|python|perl)'
   selection_at_spool:
-  - type: PATH
-      name|startswith: /var/spool/at/
-  condition: (selection_at_process and selection_network_tools and selection_execution_pattern) or selection_at_spool
+      - type: PATH
+  name|startswith:
+  condition: |
+    (selection_at_process and selection_network_tools and selection_execution_pattern) or selection_at_spool
 level: high
 tags:
   - attack.persistence

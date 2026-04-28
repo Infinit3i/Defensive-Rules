@@ -3,20 +3,17 @@ title: HTTP file downloads — Zeek detection by URI/user-agent/filename
 technique: T1105
 id: d1105a01-0003-4c11-8a05-000000000003
 status: experimental
-description: Detect HTTP file downloads (common tool installers, payload names) via Zeek by matching URIs, filenames, or suspicious User-Agent strings often used when retrieving adversary tools.
+description: >-
+  Detect HTTP file downloads (common tool installers, payload names) via Zeek by matching URIs, filenames, or suspicious User-Agent strings often used when retrieving adversary tools.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1105
   - tactic.command-and-control
   - platform:network
   - technique:T1105
@@ -25,8 +22,8 @@ tags:
   - Cobalt_Strike
 associated_groups: []
 associated_malware:
-  - Metasploit
-  - Cobalt Strike
+- Metasploit
+- Cobalt Strike
 logsource:
   product: network
   service: zeek

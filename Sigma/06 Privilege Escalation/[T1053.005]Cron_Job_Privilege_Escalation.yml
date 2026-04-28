@@ -12,37 +12,31 @@ logsource:
   service: auditd
 detection:
   selection_crontab:
-    type: 'SYSCALL'
-    comm: 'crontab'
-    success: 'yes'
+  type:
+  comm:
+  success:
   selection_file_write:
-    type: 'PATH'
-    name|contains:
+  type:
+  name|contains:
       - '/etc/crontab'
       - '/var/spool/cron'
       - '/etc/cron.d'
   selection_suspicious:
-    comm: 'crontab'
-    exe|contains:
+  comm:
+  exe|contains:
       - '/tmp/'
       - '/var/tmp/'
       - '/dev/shm/'
-  condition: (selection_crontab and selection_file_write) or
-               selection_suspicious
+  condition: (selection_crontab and selection_file_write) or selection_suspicious
 falsepositives:
   - Legitimate system administration
   - Automated backup scripts
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1053.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1053.005
   - attack.persistence
   - auditd
   - linux

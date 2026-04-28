@@ -3,7 +3,8 @@ title: System Information Discovery via whoami and hostname
 technique: T1082
 id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
-description: Detects system information discovery attempts using whoami, hostname, and similar commands
+description: >-
+  Detects system information discovery attempts using whoami, hostname, and similar commands
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,7 +12,7 @@ logsource:
   service: sysmon
 detection:
   selection_whoami:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\whoami.exe'
       - '\hostname.exe'
@@ -22,8 +23,8 @@ detection:
       - '/groups'
       - '/priv'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '$env:username'
       - '$env:computername'
@@ -41,14 +42,7 @@ falsepositives:
   - Software installation scripts
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

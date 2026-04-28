@@ -1,23 +1,25 @@
 title: Process Doppelganging Attack Detection
 technique: T1055.013
 author: Infinit3i
+date: 2026/04/28
 id: c9e2f4a8-7b5d-4a1c-8e9f-3c7a6b2d4f8e
 status: experimental
-description: Detects Process Doppelganging technique where attackers use NTFS transactions to replace legitimate process images with malicious code during process creation
+description: >-
+  Detects Process Doppelganging technique where attackers use NTFS transactions to replace legitimate process images with malicious code during process creation
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_process_create:
-  EventID: 1
+  EventID:
   selection_file_create:
-  EventID: 11
-  TargetFilename|contains: '\*.tmp'
+  EventID:
+  TargetFilename|contains:
   selection_file_transaction:
-  EventID: 15
-  Hash|contains: '*'
+  EventID:
+  Hash|contains:
   selection_process_access:
-  EventID: 10
+  EventID:
   GrantedAccess:
       - '0x1F3FFF'
       - '0x1FFFFF'
@@ -27,47 +29,41 @@ detection:
       - 'ntdll.dll+NtCreateProcessEx'
       - 'ntdll.dll+RtlSetCurrentTransaction'
   suspicious_process_characteristics:
-  - ParentImage|endswith:
-    - '\explorer.exe'
-    - '\winlogon.exe'
-  - Image|endswith:
-    - '\svchost.exe'
-    - '\lsass.exe'
-    - '\csrss.exe'
-    - '\winlogon.exe'
-    - '\dwm.exe'
-  - IntegrityLevel: 'High'
+      - ParentImage|endswith:
+      - '\explorer.exe'
+      - '\winlogon.exe'
+      - Image|endswith:
+      - '\svchost.exe'
+      - '\lsass.exe'
+      - '\csrss.exe'
+      - '\winlogon.exe'
+      - '\dwm.exe'
+      - IntegrityLevel: 'High'
   selection_registry_transaction:
-  EventID: 13
+  EventID:
   TargetObject|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Services'
       - 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options'
   network_callback:
-  EventID: 3
-  Initiated: 'true'
-  Protocol: 'tcp'
-  condition: (selection_process_create and selection_file_create and selection_file_transaction) or
-             (selection_process_access and suspicious_process_characteristics) or
-             (selection_registry_transaction and network_callback)
+  EventID:
+  Initiated:
+  Protocol:
+  condition: |
+    (selection_process_create and selection_file_create and selection_file_transaction) or
+    (selection_process_access and suspicious_process_characteristics) or
+    (selection_registry_transaction and network_callback)
 falsepositives:
   - Legitimate software using NTFS transactions
   - System recovery operations
   - Backup and restore utilities
 level: critical
 tags:
-  # MITRE ATT&CK tactic
-  - 
-  # MITRE ATT&CK technique
   - attack.t1055.013
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
-  - attack.t1055.013
   - attack.execution
   - attack.t1055
-  - sysmon
-  - windows
   - process_doppelganging
 references:
   - https://attack.mitre.org/techniques/T1055/013/

@@ -4,23 +4,16 @@ technique: T1550.003
 id: e6b9f2a7-8d5c-4e4f-e6b9-7f2a8d5c4e6b
 status: experimental
 description: >-
-  Detects pass the ticket attacks by monitoring for Kerberos authentication
-  anomalies, suspicious ticket usage patterns, or unusual Kerberos events
-  that may indicate ticket theft and reuse for lateral movement.
+  >- Detects pass the ticket attacks by monitoring for Kerberos authentication anomalies, suspicious ticket usage patterns, or unusual Kerberos events that may indicate ticket theft and reuse for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1550/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1550.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
-  - attack.t1550.003
   - pass_the_ticket
   - kerberos
   - ticket_theft
@@ -29,20 +22,20 @@ logsource:
   service: security
 detection:
   kerberos_logon:
-  EventID: 4624
-  LogonType: 3
-  AuthenticationPackageName: 'Kerberos'
-  unusual_ticket:
-  EventID: 4769
-  TicketEncryptionType: '0x17'
-  IpAddress|startswith:
+    EventID:
+    LogonType:
+    AuthenticationPackageName:
+    unusual_ticket:
+    EventID:
+    TicketEncryptionType:
+    IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  ticket_reuse:
-  EventID: 4768
-  TargetUserName|endswith: '$'
-  ClientAddress: '::1'
+    ticket_reuse:
+    EventID:
+    TargetUserName|endswith:
+    ClientAddress:
   condition: kerberos_logon and (unusual_ticket or ticket_reuse)
 falsepositives:
   - Normal Kerberos authentication

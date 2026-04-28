@@ -12,37 +12,31 @@ logsource:
   service: auditd
 detection:
   selection_ptrace:
-    type: 'SYSCALL'
-    syscall: 'ptrace'
-    success: 'yes'
+  type:
+  syscall:
+  success:
   selection_attach:
-    a0: '0x10'
-    a1: '!= 0'
+  a0:
+  a1:
   selection_suspicious:
-    comm: 'gdb'
-    ppid: '!= 1'
+  comm:
+  ppid:
   selection_injection:
-    syscall: 'ptrace'
-    a0|contains:
+  syscall:
+  a0|contains:
       - '0x4'
       - '0x5'
       - '0x6'
-  condition: selection_ptrace and (selection_attach or selection_injection)
-               and not selection_suspicious
+  condition: selection_ptrace and (selection_attach or selection_injection) and not selection_suspicious
 falsepositives:
   - Legitimate debugging sessions
   - System monitoring tools
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1055.008
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1055.008
   - attack.defense_evasion
   - auditd
   - linux

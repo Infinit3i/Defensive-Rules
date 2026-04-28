@@ -1,9 +1,11 @@
 title: AI-Generated Phishing Content Detection
 technique: T1566.001
 author: Infinit3i
+date: 2026/04/28
 id: 4e7f8c2a-9b3d-4f1e-8a6c-5d7b9e4f2a8c
 status: experimental
-description: Detects network indicators of AI-generated phishing campaigns with modern language model characteristics
+description: >-
+  Detects network indicators of AI-generated phishing campaigns with modern language model characteristics
 logsource:
   product: proxy
   service: web
@@ -31,7 +33,7 @@ detection:
       - '/verify'
       - '/confirm'
   selection_typosquatting:
-  c-uri|re: '.*(microsoft|google|amazon|apple|meta|paypal|bank)[0-9-].*'
+  c-uri|re:
   selection_suspicious_tlds:
   c-uri|contains:
       - '.tk'
@@ -41,22 +43,18 @@ detection:
       - '.top'
       - '.click'
   selection_post_data:
-  cs-method: 'POST'
-  cs-bytes|gt: 100
-  condition: (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
+  cs-method:
+  cs-bytes|gt:
+  condition: |
+    (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1566.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.initial_access
-  - attack.t1566.001
   - attack.t1566.002
-  - attack.command_and_control
   - attack.t1071.001
   - ai_generated
   - phishing

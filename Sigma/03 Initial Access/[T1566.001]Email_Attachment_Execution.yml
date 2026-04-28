@@ -3,25 +3,17 @@ title: Suspicious Email Attachment Execution
 technique: T1566.001
 id: f4c2e8a7-1b39-4df2-8c5e-3a7b9c4d6f8e
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects execution of potentially malicious email attachments by monitoring
-  process creation events for common attachment file types executed from
-  temporary directories or email client locations.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects execution of potentially malicious email attachments by monitoring process creation events for common attachment file types executed from temporary directories or email client locations.
 references:
   - https://attack.mitre.org/techniques/T1566/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1566.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1566.001
-  - windows
   - email
   - attachment
 logsource:

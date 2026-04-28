@@ -1,7 +1,8 @@
 title: Suspicious Domain Registration Activity
 id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
-description: Detects suspicious domain registration patterns indicating resource development for attacks
+description: >-
+  Detects suspicious domain registration patterns indicating resource development for attacks
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -32,7 +33,7 @@ detection:
       - 'amaz0n'
       - 'app1e'
   selection_bulk_registration:
-  registrant_email: '*'
+  registrant_email:
   condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
   timeframe: 24h
   count: 5

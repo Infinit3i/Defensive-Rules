@@ -3,27 +3,24 @@ title: Linux curl/wget/scp/rsync downloads in syslog
 technique: T1105
 id: d1105a01-0004-4c11-8a05-000000000004
 status: experimental
-description: Detect use of curl, wget, scp, sftp or rsync to retrieve files from remote hosts recorded in syslog/audit — common ingress tool transfer on Linux hosts.
+description: >-
+  Detect use of curl, wget, scp, sftp or rsync to retrieve files from remote hosts recorded in syslog/audit — common ingress tool transfer on Linux hosts.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1105
   - tactic.command-and-control
   - platform:linux
   - technique:T1105
   - mitre_version:16.1
   - Lazarus
 associated_groups:
-  - Lazarus
+- Lazarus
 associated_malware: []
 logsource:
   product: linux

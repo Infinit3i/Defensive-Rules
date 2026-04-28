@@ -11,22 +11,22 @@ logsource:
   service: system
 detection:
   selection_firmware:
-    EventID: 6009
-    Source: 'EventLog'
-    Message|contains:
+  EventID:
+  Source:
+  Message|contains:
       - 'firmware'
       - 'BIOS'
       - 'UEFI'
   selection_boot:
-    EventID: 12
-    Source: 'Microsoft-Windows-Kernel-General'
-    ProcessName|contains:
+  EventID:
+  Source:
+  ProcessName|contains:
       - 'bootmgr'
       - 'winload'
   selection_suspicious:
-    EventID: 41
-    Source: 'Microsoft-Windows-Kernel-Power'
-    BugcheckCode: '*'
+  EventID:
+  Source:
+  BugcheckCode:
   condition: selection_firmware or selection_boot or selection_suspicious
 falsepositives:
   - Legitimate firmware updates

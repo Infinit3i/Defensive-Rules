@@ -1,9 +1,9 @@
 title: Time-Based Anti-Analysis and Sandbox Evasion
 technique: T1497.003
-
 id: d6a3b9c4-e1f8-4d2b-9c7a-3e5f1b8d4c6a
 status: experimental
-description: Detects malware using timing-based techniques to evade automated analysis and sandbox environments
+description: >-
+  Detects malware using timing-based techniques to evade automated analysis and sandbox environments
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -14,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_timing_functions:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'QueryPerformanceCounter'
       - 'GetTickCount'
@@ -24,7 +24,7 @@ detection:
       - 'clock_gettime'
       - 'gettimeofday'
   selection_sleep_delays:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'Sleep('
       - 'sleep '
@@ -32,9 +32,9 @@ detection:
       - 'nanosleep'
       - 'select('
       - 'WaitForSingleObject'
-  CommandLine|re: '.*[sS]leep\s*\(\s*[1-9][0-9]{4,}\s*\)'  # Sleep with 5+ digit numbers
+  CommandLine|re:
   selection_date_checks:
-  EventID: 1
+  EventID:
   CommandLine|contains|all:
       - 'date'
       - 'time'
@@ -45,15 +45,15 @@ detection:
       - 'GetDateFormat'
       - 'GetTimeFormat'
   selection_execution_delay:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'ping 127.0.0.1'
       - 'ping localhost'
       - 'timeout'
       - 'waitfor'
-  CommandLine|re: '.*ping\s+127\.0\.0\.1\s+-n\s+[1-9][0-9]+'  # ping with high count
+  CommandLine|re:
   selection_vm_specific_timing:
-  EventID: 1
+  EventID:
   CommandLine|contains|all:
       - 'rdtsc'
       - 'cpu'
@@ -63,7 +63,7 @@ detection:
       - 'performance'
       - 'benchmark'
   selection_user_interaction:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'GetCursorPos'
       - 'GetAsyncKeyState'
@@ -76,7 +76,7 @@ detection:
   EventID:
       - 11
       - 2  # File creation time change
-  TargetFilename|endswith: '.tmp'
+  TargetFilename|endswith:
   condition: 2 of selection_*
 falsepositives:
   - Legitimate applications with timing requirements
@@ -85,24 +85,11 @@ falsepositives:
   - Games and multimedia applications
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1497.003
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1497.003
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
   - attack.t1497
-  - attack.t1497.003
   - timing_attack
   - sandbox_evasion
-  - sysmon
-  - windows

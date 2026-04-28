@@ -13,16 +13,16 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    Image|endswith: '\fodhelper.exe'
-    ParentImage|endswith:
+  EventID:
+  Image|endswith:
+  ParentImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\wscript.exe'
       - '\cscript.exe'
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'ms-settings\shell\open\command'
       - 'Classes\ms-settings'
   condition: selection_process or selection_registry
@@ -32,15 +32,8 @@ falsepositives:
   - Software installation processes
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1548.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1548.002
   - attack.defense_evasion
-  - sysmon
-  - windows

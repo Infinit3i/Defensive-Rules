@@ -3,7 +3,8 @@ title: Stepped timer loops or exponential backoff used as long delay
 technique: T1497.003
 id: a0f3b6c7-1d2e-4f5a-9b8c-0d1e2f3a4b5c
 status: experimental
-description: Detect patterns indicative of scripted stepped waits or exponential backoff loops (incremental sleep/ping loops) used to extend execution time beyond sandbox limits.
+description: >-
+  Detect patterns indicative of scripted stepped waits or exponential backoff loops (incremental sleep/ping loops) used to extend execution time beyond sandbox limits.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -18,13 +19,13 @@ logsource:
   service: powershell
 detection:
   selection_backoff_loop:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains|all:
       - "for("
       - "Start-Sleep"
       - "$i++"
   selection_incremental_sleep:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Start-Sleep ($i)"
       - "Start-Sleep -Seconds $i"

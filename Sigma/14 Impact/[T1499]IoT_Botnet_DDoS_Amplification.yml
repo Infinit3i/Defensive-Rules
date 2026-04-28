@@ -2,7 +2,8 @@ title: IoT Botnet Recruitment and DDoS Amplification
 technique: T1499
 id: 2f7e9a4b-8c5d-6e3f-4a2f-7e9a5c8d6b3f
 status: experimental
-description: Detects IoT device recruitment into botnets and DDoS amplification attacks targeting DNS, NTP, SSDP, and other UDP-based services for traffic amplification and infrastructure disruption.
+description: >-
+  Detects IoT device recruitment into botnets and DDoS amplification attacks targeting DNS, NTP, SSDP, and other UDP-based services for traffic amplification and infrastructure disruption.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,71 +15,67 @@ logsource:
   service: conn
 detection:
   selection_iot_scanning:
-    proto: tcp
-    service: ssh
-    conn_state: REJ
-    resp_h|contains:
+  proto:
+  service:
+  conn_state:
+  resp_h|contains:
       - '192.168.'
       - '10.'
       - '172.16.'
-    orig_bytes: '<100'
-    duration: '<1'
+  orig_bytes:
+  duration:
   selection_telnet_bruteforce:
-    proto: tcp
-    id.resp_p: 23
-    conn_state:
+  proto:
+  id.resp_p:
+  conn_state:
       - 'SF'
       - 'REJ'
-    duration: '<5'
+  duration:
   selection_mirai_payloads:
-    proto: tcp
-    id.resp_p:
+  proto:
+  id.resp_p:
       - 22
       - 23
       - 2323
       - 8080
       - 8888
-    history|contains:
+  history|contains:
       - 'Sh'  # Successful connection
-    orig_bytes: '>100'
-    resp_bytes: '>100'
+  orig_bytes:
+  resp_bytes:
   selection_amplification_dns:
-    proto: udp
-    id.resp_p: 53
-    query_type: ANY
-    orig_bytes: '<100'
-    resp_bytes: '>1000'  # Amplification ratio
+  proto:
+  id.resp_p:
+  query_type:
+  orig_bytes:
+  resp_bytes:
   selection_amplification_ntp:
-    proto: udp
-    id.resp_p: 123
-    orig_bytes: '<100'
-    resp_bytes: '>1000'
+  proto:
+  id.resp_p:
+  orig_bytes:
+  resp_bytes:
   selection_amplification_ssdp:
-    proto: udp
-    id.resp_p: 1900
-    orig_bytes: '<200'
-    resp_bytes: '>1000'
+  proto:
+  id.resp_p:
+  orig_bytes:
+  resp_bytes:
   selection_mass_targeting:
-    proto:
+  proto:
       - 'tcp'
       - 'udp'
-    orig_h: '*'
-    missed_bytes: 0
-    local_orig: false
-    local_resp: false
-  condition: (selection_iot_scanning or selection_telnet_bruteforce or selection_mirai_payloads) or
-               (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
+  orig_h:
+  missed_bytes:
+  local_orig:
+  local_resp:
+  condition: |
+    (selection_iot_scanning or selection_telnet_bruteforce or selection_mirai_payloads) or
+    (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1499
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1499
   - attack.t1499.004
   - attack.resource_hijacking
   - attack.t1496

@@ -4,24 +4,17 @@ technique: T1114.001
 id: f9c6e4a7-8b3d-4e5f-f9c6-4e7a8b3d5f9b
 status: experimental
 description: >-
-  Detects local email collection activities by monitoring for email database
-  access, PST file operations, or mailbox enumeration that may indicate
-  attempts to collect email data for exfiltration.
+  >- Detects local email collection activities by monitoring for email database access, PST file operations, or mailbox enumeration that may indicate attempts to collect email data for exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1114/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1114.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.collection
-  - attack.exfiltration
-  - attack.t1114.001
   - email
   - mailbox
 logsource:
@@ -30,17 +23,17 @@ logsource:
   category: file_access
 detection:
   pst_access:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.pst'
       - '.ost'
       - '.edb'
-  outlook_db:
-  TargetFilename|contains:
+    outlook_db:
+    TargetFilename|contains:
       - '\Outlook\'
       - '\Microsoft\Outlook\'
-  email_export:
-  Image|endswith: '\outlook.exe'
-  CommandLine|contains:
+    email_export:
+    Image|endswith:
+    CommandLine|contains:
       - '/export'
       - '/backup'
   condition: pst_access or outlook_db or email_export

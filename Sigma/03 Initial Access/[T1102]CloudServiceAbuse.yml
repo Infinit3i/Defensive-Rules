@@ -1,7 +1,8 @@
 title: Malicious Cloud Service C2 Communication
 id: c3d4e5f6-g7h8-9012-cdef-345678901234
 status: experimental
-description: Detects command and control communication through legitimate cloud services like Dropbox or Google Drive
+description: >-
+  Detects command and control communication through legitimate cloud services like Dropbox or Google Drive
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,21 +12,21 @@ logsource:
   service: http
 detection:
   selection_domains:
-    host|contains:
+  host|contains:
       - 'dropbox.com'
       - 'drive.google.com'
       - 'onedrive.live.com'
       - 'box.com'
       - 'mega.nz'
   selection_suspicious:
-    uri|contains:
+  uri|contains:
       - '/download'
       - '/files'
       - '/shared'
-    method: 'GET'
+  method:
   selection_frequency:
-    status_code: 200
-  timeframe: 60s
+  status_code:
+    timeframe:
   condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
 falsepositives:
   - Legitimate cloud storage synchronization

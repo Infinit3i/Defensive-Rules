@@ -14,30 +14,29 @@ logsource:
   service: sysmon
 detection:
   sel_process:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\rundll32.exe'
       - '\regsvr32.exe'
       - '\powershell.exe'
   sel_dll_load:
-    EventID: 7
-    ImageLoaded|contains: 'UNKNOWN'
-    Signed: 'false'
+  EventID:
+  ImageLoaded|contains:
+  Signed:
   sel_memory:
-    EventID: 10
-    GrantedAccess: '0x1F0FFF'
-    CallTrace|contains:
+  EventID:
+  GrantedAccess:
+  CallTrace|contains:
       - 'ReflectiveLoader'
       - 'DllMain'
       - 'UNKNOWN'
   sel_cmdline:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'ReflectivePick'
       - 'ReflectiveLoader'
       - 'LoadLibrary'
       - 'GetProcAddress'
-  condition: (sel_process and sel_dll_load) or
-               (sel_memory and sel_cmdline)
+  condition: (sel_process and sel_dll_load) or (sel_memory and sel_cmdline)
 falsepositives:
   - Legitimate software using reflective loading
   - Penetration testing tools

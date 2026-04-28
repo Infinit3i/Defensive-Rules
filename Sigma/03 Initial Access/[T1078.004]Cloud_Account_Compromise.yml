@@ -1,6 +1,7 @@
 title: Cloud Account Compromise Detection
 technique: T1078.004
 author: Infinit3i
+date: 2026/04/28
 id: 364h71fc-a12d-3456-7890-bcdef0123456
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -12,58 +13,59 @@ logsource:
   service: signinlogs
 detection:
   selection_impossible_travel:
-    EventName: 'SigninLogs'
-    ResultType: 0
-  # Login from geographic locations impossible to reach in timeframe
+  EventName:
+  ResultType:
+    # Login from geographic locations impossible to reach in timeframe
   selection_multiple_failed_then_success:
-    EventName: 'SigninLogs'
-    UserPrincipalName: '*'
+  EventName:
+  UserPrincipalName:
   # Pattern: multiple failed attempts followed by successful login
   selection_off_hours_access:
-    EventName: 'SigninLogs'
-    ResultType: 0
-  # Access outside typical business hours for user's timezone
+  EventName:
+  ResultType:
+    # Access outside typical business hours for user's timezone
   selection_new_device_access:
-    EventName: 'SigninLogs'
-    ResultType: 0
-    DeviceDetail.isCompliant: false
-    DeviceDetail.isManaged: false
-  # Access from unmanaged/non-compliant devices
+  EventName:
+  ResultType:
+  DeviceDetail.isCompliant:
+  DeviceDetail.isManaged:
+    # Access from unmanaged/non-compliant devices
   selection_privilege_changes:
-    EventName: 'AuditLogs'
-    ActivityDisplayName:
+  EventName:
+  ActivityDisplayName:
       - 'Add member to role'
       - 'Remove member from role'
       - 'Update role'
-    TargetResources.userPrincipalName: '*'
-  # Unexpected privilege changes
+  TargetResources.userPrincipalName:
+    # Unexpected privilege changes
   selection_resource_enumeration:
-    EventName: 'AuditLogs'
-    ActivityDisplayName:
+  EventName:
+  ActivityDisplayName:
       - 'List applications'
       - 'List service principals'
       - 'List users'
       - 'List groups'
-  # Rapid enumeration activities post-login
+    # Rapid enumeration activities post-login
   selection_suspicious_app_access:
-    EventName: 'SigninLogs'
-    ResultType: 0
-    AppDisplayName|contains:
+  EventName:
+  ResultType:
+  AppDisplayName|contains:
       - 'Graph'
       - 'Exchange'
       - 'SharePoint'
       - 'PowerBI'
-  # Access to high-value applications
+    # Access to high-value applications
   selection_api_abuse:
-    EventName: 'AuditLogs'
-    ActivityDisplayName|contains:
+  EventName:
+  ActivityDisplayName|contains:
       - 'API'
       - 'Graph'
-  # Unusual API usage patterns
-  condition: selection_impossible_travel or selection_multiple_failed_then_success or
-               selection_off_hours_access or selection_new_device_access or
-               selection_privilege_changes or selection_resource_enumeration or
-               selection_suspicious_app_access or selection_api_abuse
+    # Unusual API usage patterns
+  condition: |
+    selection_impossible_travel or selection_multiple_failed_then_success or
+    selection_off_hours_access or selection_new_device_access or
+    selection_privilege_changes or selection_resource_enumeration or
+    selection_suspicious_app_access or selection_api_abuse
 falsepositives:
   - Legitimate users traveling or working from new locations
   - Authorized administrative activities
@@ -72,15 +74,10 @@ falsepositives:
   - Authorized application integrations and API usage
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1078.004
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1078.004
   - attack.privilege_escalation
   - attack.t1484
   - attack.discovery

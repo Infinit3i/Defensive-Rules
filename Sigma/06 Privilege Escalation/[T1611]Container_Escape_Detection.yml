@@ -12,36 +12,31 @@ logsource:
   service: auditd
 detection:
   selection_mount:
-    type: 'SYSCALL'
-    syscall: 'mount'
-    a0|contains:
+  type:
+  syscall:
+  a0|contains:
       - '/proc'
       - '/sys'
       - '/dev'
   selection_chroot:
-    type: 'SYSCALL'
-    syscall:
+  type:
+  syscall:
       - 'chroot'
       - 'pivot_root'
   selection_capabilities:
-    type: 'SYSCALL'
-    syscall: 'capset'
-    success: 'yes'
+  type:
+  syscall:
+  success:
   condition: selection_mount or selection_chroot or selection_capabilities
 falsepositives:
   - Legitimate container operations
   - System maintenance
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1611
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1611
   - auditd
   - linux
   - container

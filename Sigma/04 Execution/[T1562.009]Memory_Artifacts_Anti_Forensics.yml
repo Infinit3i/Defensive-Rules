@@ -2,7 +2,8 @@ title: Memory Artifacts Anti-Forensics and Evidence Destruction
 technique: T1562.009
 id: b5d3c7f1-e8a4-4f2b-9c6d-1a5e3b7c9f2a
 status: experimental
-description: Detects attempts to destroy or obfuscate memory artifacts to evade forensic analysis and incident response
+description: >-
+  Detects attempts to destroy or obfuscate memory artifacts to evade forensic analysis and incident response
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -13,7 +14,7 @@ logsource:
   service: sysmon
 detection:
   selection_memory_dump:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'procdump'
       - 'dumpit'
@@ -22,7 +23,7 @@ detection:
       - 'rekall'
       - 'comae'
   selection_memory_manipulation:
-  EventID: 10  # Process access
+  EventID:
   GrantedAccess:
       - '0x1F0FFF'  # PROCESS_ALL_ACCESS
       - '0x1FFFFF'  # PROCESS_ALL_ACCESS (extended)
@@ -35,7 +36,7 @@ detection:
       - 'ReadProcessMemory'
       - 'VirtualProtectEx'
   selection_heap_spray:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'HeapAlloc'
       - 'HeapFree'
@@ -44,14 +45,14 @@ detection:
       - 'LocalAlloc'
       - 'GlobalAlloc'
   selection_code_cave:
-  EventID: 7  # Image loaded
+  EventID:
   ImageLoaded|endswith:
       - '\ntdll.dll'
       - '\kernel32.dll'
       - '\kernelbase.dll'
-  Signed: 'false'
+  Signed:
   selection_process_overwrite:
-  EventID: 1
+  EventID:
   ParentImage|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
@@ -60,9 +61,9 @@ detection:
       - '\svchost.exe'
       - '\rundll32.exe'
       - '\dllhost.exe'
-  CommandLine: ''  # Empty command line may indicate hollowing
+  CommandLine:
   selection_memory_clearing:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'RtlZeroMemory'
       - 'SecureZeroMemory'
@@ -70,7 +71,7 @@ detection:
       - 'ZeroMemory'
       - 'RtlSecureZeroMemory'
   selection_debugger_evasion:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'IsDebuggerPresent'
       - 'CheckRemoteDebuggerPresent'
@@ -83,7 +84,7 @@ detection:
       - 'immunity'
       - 'ida'
   selection_vm_memory_detection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'GlobalMemoryStatusEx'
       - 'GetPhysicallyInstalledSystemMemory'
@@ -92,7 +93,7 @@ detection:
       - 'memory'
       - 'size'
   selection_hook_removal:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'SetWindowsHookEx'
       - 'UnhookWindowsHookEx'
@@ -106,18 +107,12 @@ falsepositives:
   - Antivirus memory scanning
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1562.009
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.defense_evasion
   - attack.t1562
-  - attack.t1562.009
   - memory_manipulation
   - anti_forensics
   - evidence_destruction
-  - sysmon
-  - windows

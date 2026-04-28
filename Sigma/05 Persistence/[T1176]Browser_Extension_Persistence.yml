@@ -10,23 +10,23 @@ logsource:
   service: sysmon
 detection:
   sel_chrome_ext:
-    EventID: 11
-    TargetFilename|contains: '\Chrome\User Data\'
-    TargetFilename|endswith: '\manifest.json'
+  EventID:
+  TargetFilename|contains:
+  TargetFilename|endswith:
   sel_firefox_ext:
-    EventID: 11
-    TargetFilename|contains: '\Firefox\Profiles\'
-    TargetFilename|endswith: '.xpi'
+  EventID:
+  TargetFilename|contains:
+  TargetFilename|endswith:
   sel_edge_ext:
-    EventID: 11
-    TargetFilename|contains: '\Edge\User Data\Default\Extensions\'
+  EventID:
+  TargetFilename|contains:
   sel_browser_cmd:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '--load-extension'
       - '--install-extension'
       - 'extensions.install'
@@ -36,17 +36,10 @@ falsepositives:
   - Administrative browser configuration
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.persistence
-  # MITRE ATT&CK technique
-  - attack.t1176
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.persistence
   - attack.t1176
-  - sysmon
   - windows
+  - sysmon
   - browser
 references:
   - https://attack.mitre.org/techniques/T1176/

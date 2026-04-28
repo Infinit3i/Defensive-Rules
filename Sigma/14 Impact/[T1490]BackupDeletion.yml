@@ -1,7 +1,8 @@
 title: Windows Backup Deletion via Command Line
 id: aad4de15-59dd-4f97-9b67-db584e95e61a
 status: experimental
-description: Detects backup deletion attempts through command line tools targeting system recovery capabilities
+description: >-
+  Detects backup deletion attempts through command line tools targeting system recovery capabilities
 author: Infinit3i
 date: 2026/04/28
 logsource:
@@ -9,19 +10,19 @@ logsource:
   service: sysmon
 detection:
   selection_wbadmin:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'wbadmin delete backup'
       - 'wbadmin delete catalog'
       - 'wbadmin delete systemstatebackup'
   selection_vssadmin:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'vssadmin delete shadows'
       - 'vssadmin delete backup'
   selection_diskshadow:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'diskshadow delete'
   condition: selection_wbadmin or selection_vssadmin or selection_diskshadow
 falsepositives:

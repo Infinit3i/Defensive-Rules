@@ -9,21 +9,20 @@ logsource:
   service: auditd
 detection:
   selection_write:
-    type: "SYSCALL"
-    syscall: "openat"
-    a2: ["O_WRONLY", "O_RDWR", "O_CREAT"]
+  type:
+  syscall:
+  a2:
   selection_paths:
-    name:
+  name:
       - "/etc/init.d/*"
       - "/etc/rc*.d/*"
       - "/etc/rc.local"
       - "/etc/rc.d/*"
   selection_chmod:
-    type: "SYSCALL"
-    syscall: "chmod"
-    a1: "755"
-  condition: (selection_write and selection_paths) or
-               (selection_chmod and selection_paths)
+  type:
+  syscall:
+  a1:
+  condition: (selection_write and selection_paths) or (selection_chmod and selection_paths)
 level: high
 tags:
   - attack.persistence

@@ -3,22 +3,17 @@ title: PowerShell BITSJob or Invoke-WebRequest file downloads
 technique: T1105
 id: d1105a01-0002-4c11-8a05-000000000002
 status: experimental
-description: >
-  Detect PowerShell using BITS (Start-BitsTransfer / BITSJob) or Invoke-WebRequest/Invoke-RestMethod to download executables or archives into
-  user-writable paths — often used for ingress tool transfer.
+description: >-
+  > Detect PowerShell using BITS (Start-BitsTransfer / BITSJob) or Invoke-WebRequest/Invoke-RestMethod to download executables or archives into user-writable paths — often used for ingress tool transfer.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1105
   - tactic.command-and-control
   - platform:windows
   - technique:T1105
@@ -27,25 +22,25 @@ tags:
   - Invoke-WebRequest
 associated_groups: []
 associated_malware:
-  - PowerShell Empire
+- PowerShell Empire
 logsource:
   product: windows
   service: powershell
 detection:
   selection_bits:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Start-BitsTransfer"
       - "Add-BitsFile"
       - "Complete-BitsTransfer"
   selection_invoke:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "Invoke-WebRequest"
       - "Invoke-RestMethod"
       - "-OutFile"
   selection_target_path:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\powershell.exe'
   CommandLine|contains:

@@ -4,24 +4,17 @@ technique: T1560.001
 id: c7f4e8a2-8d6b-4e9f-c7f4-8e2a8d6b9c7b
 status: experimental
 description: >-
-  Detects data archiving via utilities by monitoring for compression tool
-  usage, archive creation activities, or file packaging operations that
-  may be used to prepare data for exfiltration.
+  >- Detects data archiving via utilities by monitoring for compression tool usage, archive creation activities, or file packaging operations that may be used to prepare data for exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1560/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1560.001
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.collection
-  - attack.exfiltration
-  - attack.t1560.001
   - archive
   - compression
 logsource:
@@ -30,19 +23,19 @@ logsource:
   category: process_creation
 detection:
   archive_tools:
-  Image|endswith:
+    Image|endswith:
       - '\7z.exe'
       - '\winrar.exe'
       - '\zip.exe'
       - '\tar.exe'
-  archive_creation:
-  CommandLine|contains:
+    archive_creation:
+    CommandLine|contains:
       - ' a '
       - ' -a '
       - 'create'
       - 'compress'
-  sensitive_directories:
-  CommandLine|contains:
+    sensitive_directories:
+    CommandLine|contains:
       - 'C:\Users\'
       - 'Documents'
       - 'Desktop'

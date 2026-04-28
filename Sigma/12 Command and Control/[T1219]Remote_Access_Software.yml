@@ -4,23 +4,16 @@ technique: T1219
 id: a6c9f4e8-7b5d-4e2f-a6c9-4f8e7b5d2a6b
 status: experimental
 description: >-
-  Detects remote access software usage for command and control by monitoring
-  for TeamViewer, VNC, RDP, or other remote access tools that may be
-  abused for unauthorized system access and C2 communications.
+  >- Detects remote access software usage for command and control by monitoring for TeamViewer, VNC, RDP, or other remote access tools that may be abused for unauthorized system access and C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1219/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1219
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1219
   - remote_access
   - teamviewer
   - vnc
@@ -30,19 +23,19 @@ logsource:
   category: process_creation
 detection:
   remote_tools:
-  Image|endswith:
+    Image|endswith:
       - '\teamviewer.exe'
       - '\vnc.exe'
       - '\anydesk.exe'
       - '\logmein.exe'
-  suspicious_args:
-  CommandLine|contains:
+    suspicious_args:
+    CommandLine|contains:
       - '/password'
       - '/connect'
       - '/silent'
       - '/hide'
-  network_access:
-  Image|contains:
+    network_access:
+    Image|contains:
       - 'remote'
       - 'access'
       - 'desktop'

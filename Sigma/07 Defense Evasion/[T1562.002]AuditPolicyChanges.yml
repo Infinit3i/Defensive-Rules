@@ -3,16 +3,17 @@ title: Audit Policy Change or Clearing Attempt
 technique: T1562.002
 id: 8f94eb0d-3aa2-4a9a-953d-cafbe548732f
 status: experimental
-description: Detects audit policy changes (Event ID 4719) and correlates with suspicious tools that modify or clear logs (auditpol, secedit, wevtutil).
+description: >-
+  Detects audit policy changes (Event ID 4719) and correlates with suspicious tools that modify or clear logs (auditpol, secedit, wevtutil).
 author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
 detection:
   windows_event:
-  EventID: 4719
+  EventID:
   sysmon_process:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'auditpol'
       - 'secedit'

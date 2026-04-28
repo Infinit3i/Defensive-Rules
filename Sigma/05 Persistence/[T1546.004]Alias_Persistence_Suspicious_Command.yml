@@ -1,7 +1,8 @@
 title: Alias Persistence with Suspicious Command Redirection
 id: j0k1l2m3-n4o5-6789-0123-456789jklmno
 status: experimental
-description: Detects creation of shell aliases that redirect common commands to malicious scripts or executables
+description: >-
+  Detects creation of shell aliases that redirect common commands to malicious scripts or executables
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,28 +13,28 @@ logsource:
   service: auditd
 detection:
   selection_shell_configs:
-  - type: PATH
-      name|endswith:
-    - .bashrc
-    - .zshrc
-    - .bash_aliases
-    - .aliases
+      - type: PATH
+  name|endswith:
+      - .bashrc
+      - .zshrc
+      - .bash_aliases
+      - .aliases
   selection_file_modification:
-  - type: SYSCALL
-      syscall: openat
-      a2: 577  # O_WRONLY|O_CREAT
+      - type: SYSCALL
+  syscall:
+  a2:
   selection_malicious_alias:
-  - comm|contains:
-    - /tmp/
-    - /dev/shm/
-    - /var/tmp/
-    - base64
-    - nc -e
-    - /dev/tcp/
-    - python -c
-    - perl -e
-    - bash -i
-    - sh -i
+      - comm|contains:
+      - /tmp/
+      - /dev/shm/
+      - /var/tmp/
+      - base64
+      - nc -e
+      - /dev/tcp/
+      - python -c
+      - perl -e
+      - bash -i
+      - sh -i
   condition: selection_shell_configs and selection_file_modification and selection_malicious_alias
 level: high
 tags:

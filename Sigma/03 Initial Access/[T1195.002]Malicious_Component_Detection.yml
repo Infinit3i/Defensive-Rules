@@ -3,7 +3,8 @@ title: Malicious Hardware Component Detection
 technique: T1195.002
 id: c5d6e7f8-9a0b-1c2d-3e4f-5a6b7c8d9e0f
 status: experimental
-description: Detects insertion of malicious hardware components through PCI device enumeration and driver loading anomalies
+description: >-
+  Detects insertion of malicious hardware components through PCI device enumeration and driver loading anomalies
 references:
   - https://attack.mitre.org/techniques/T1195/002/
 author: Infinit3i
@@ -20,14 +21,14 @@ logsource:
   service: system
 detection:
   unknown_pci_device:
-  EventID: 7000
+  EventID:
   EventData|contains:
       - 'PCI\VEN_'
   ServiceName|contains:
       - 'Unknown'
       - 'Generic'
   suspicious_driver:
-  EventID: 7045
+  EventID:
   ServiceName|contains:
       - 'pci'
       - 'device'
@@ -37,14 +38,14 @@ detection:
       - '\users\'
       - '\programdata\'
   hardware_enumeration:
-  EventID: 7026
+  EventID:
   EventData|contains:
       - 'Hardware'
       - 'Device'
       - 'PCI'
   device_installation:
-  EventID: 20001
-  DeviceInstanceId|startswith: 'PCI\'
+  EventID:
+  DeviceInstanceId|startswith:
   DriverName|contains:
       - 'generic'
       - 'unknown'

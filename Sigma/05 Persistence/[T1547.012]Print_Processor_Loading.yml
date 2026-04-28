@@ -3,7 +3,8 @@ title: Print Processor Suspicious DLL Loading
 technique: T1547.012
 id: d3e4f5a6-0b1c-7d8e-2f9a-5b6c7d8e9f0a
 status: experimental
-description: Detects suspicious DLL loading by print spooler indicating malicious print processor
+description: >-
+  Detects suspicious DLL loading by print spooler indicating malicious print processor
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,16 +12,16 @@ logsource:
   service: sysmon
 detection:
   selection_spoolsv_process:
-  EventID: 7
-  Image|endswith: '\spoolsv.exe'
+  EventID:
+  Image|endswith:
   selection_suspicious_dll:
-  EventID: 7
+  EventID:
   ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '\Users\Public\'
-  ImageLoaded|endswith: '.dll'
+  ImageLoaded|endswith:
   filter_legitimate_processors:
   ImageLoaded|contains:
       - 'C:\Windows\System32\'

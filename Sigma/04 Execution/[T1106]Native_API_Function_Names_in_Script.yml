@@ -3,22 +3,17 @@ title: Native API function names observed in scripts or commandlines
 technique: T1106
 id: 3b8d4f1e-7c2a-4d45-9f6b-0e9a1c2b3d4f
 status: experimental
-description: >
-  Detect references to common native NT API function names (Nt*/Zw* like NtQueryInformationProcess, ZwCreateThread) inside script blocks,
-  commandlines, or process creation events indicating direct native API usage.
+description: >-
+  > Detect references to common native NT API function names (Nt*/Zw* like NtQueryInformationProcess, ZwCreateThread) inside script blocks, commandlines, or process creation events indicating direct native API usage.
 author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1106/
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1106
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1106
   - tactic.execution
   - platform:windows
   - technique:T1106
@@ -28,7 +23,7 @@ logsource:
   service: sysmon
 detection:
   selection_proc:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"
@@ -37,7 +32,7 @@ detection:
       - "NtCreateThread"
       - "ZwCreateThread"
   selection_ps:
-  EventID: 4104
+  EventID:
   ScriptBlockText|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"

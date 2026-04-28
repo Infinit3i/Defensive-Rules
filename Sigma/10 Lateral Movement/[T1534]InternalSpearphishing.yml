@@ -14,8 +14,8 @@ logsource:
   service: exchange
 detection:
   selection_internal_email:
-  sender_domain: 'internal.company.com'
-  recipient_domain: 'internal.company.com'
+  sender_domain:
+  recipient_domain:
   selection_suspicious_attachments:
   attachment_type:
       - '.exe'
@@ -41,7 +41,8 @@ detection:
       - 'bit.ly'
       - 'tinyurl'
       - 'shortened'
-  condition: selection_internal_email and (selection_suspicious_attachments or selection_phishing_keywords or selection_external_links)
+  condition: |
+    selection_internal_email and (selection_suspicious_attachments or selection_phishing_keywords or selection_external_links)
 level: high
 fields:
   - sender

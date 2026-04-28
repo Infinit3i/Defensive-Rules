@@ -3,22 +3,17 @@ title: System Information Discovery - reg query for ComputerName / Hardware info
 technique: T1082
 id: 7f1a4d50-6a9c-4b8d-9a2f-0b3e2c4d5e6f
 status: experimental
-description: >
-  Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName,
-  SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host metadata.
+description: >-
+  > Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName, SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host metadata.
 author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1082/
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1082
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1082
   - tactic.discovery
   - platform:windows
 logsource:
@@ -26,10 +21,10 @@ logsource:
   service: sysmon
 detection:
   selection_reg_image:
-  EventID: 1
-  Image|endswith: '\reg.exe'
+  EventID:
+  Image|endswith:
   selection_reg_keys:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName"
       - "HKLM\\HARDWARE\\DESCRIPTION\\System"

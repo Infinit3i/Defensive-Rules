@@ -10,7 +10,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'pstree'
       - 'Get-Process | Select ProcessName,Id,Parent'
@@ -20,12 +20,7 @@ detection:
       - 'ps axjf'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1057
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.discovery
-  - attack.t1057

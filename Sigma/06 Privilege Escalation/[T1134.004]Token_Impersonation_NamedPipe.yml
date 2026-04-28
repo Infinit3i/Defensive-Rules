@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_pipe:
-    EventID: 18
-    PipeName|startswith:
+  EventID:
+  PipeName|startswith:
       - '\pipe\spoolss'
       - '\pipe\samr'
       - '\pipe\lsarpc'
       - '\pipe\netlogon'
   selection_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'ImpersonateNamedPipeClient'
       - 'CreateNamedPipe'
-    Image|endswith:
+  Image|endswith:
       - '.exe'
   condition: selection_pipe or selection_process
 falsepositives:
@@ -31,15 +31,8 @@ falsepositives:
   - Print spooler operations
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1134.004
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1134.004
   - attack.lateral_movement
-  - sysmon
-  - windows

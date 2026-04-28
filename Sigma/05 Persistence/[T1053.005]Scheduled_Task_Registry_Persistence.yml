@@ -1,7 +1,8 @@
 title: Scheduled Task Registry Persistence
 id: h8i9j0k1-l2m3-4567-8901-234567hijklm
 status: experimental
-description: Detects scheduled task persistence through direct Task Scheduler registry manipulation bypassing APIs
+description: >-
+  Detects scheduled task persistence through direct Task Scheduler registry manipulation bypassing APIs
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,28 +12,28 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\'
       - '\System\CurrentControlSet\Services\Schedule\JobSet\'
   selection_task_files:
-    EventID: 11
-    TargetFilename|contains: '\System32\Tasks\'
+  EventID:
+  TargetFilename|contains:
   selection_suspicious:
-    - Details|contains:
+      - Details|contains:
       - 'powershell'
       - 'cmd.exe'
       - 'rundll32'
       - 'mshta'
       - 'wscript'
       - 'cscript'
-    - TargetFilename|contains:
+      - TargetFilename|contains:
       - '\AppData\'
       - '\Temp\'
       - '\Users\Public\'
       - '\ProgramData\'
-    - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
-    - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
+      - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
+      - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
   condition: (selection_reg or selection_task_files) and selection_suspicious
 falsepositives:
   - System task scheduler operations

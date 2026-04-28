@@ -4,23 +4,16 @@ technique: T1550.005
 id: b9e6f3a2-8c5d-4e7f-b9e6-3f2a8c5d7b9b
 status: experimental
 description: >-
-  Detects abuse of SAML tokens by monitoring for suspicious SAML assertion
-  usage, token manipulation, or unauthorized access using compromised or
-  forged SAML tokens for lateral movement in federated environments.
+  >- Detects abuse of SAML tokens by monitoring for suspicious SAML assertion usage, token manipulation, or unauthorized access using compromised or forged SAML tokens for lateral movement in federated environments.
 references:
   - https://attack.mitre.org/techniques/T1550/005/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.lateral_movement
-  # MITRE ATT&CK technique
   - attack.t1550.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.lateral_movement
-  - attack.t1550.005
   - saml
   - federation
   - token_abuse
@@ -29,16 +22,16 @@ logsource:
   service: signinlogs
 detection:
   saml_logon:
-  AuthenticationProtocol: 'saml'
-  TokenIssuerType: 'AzureAD'
-  suspicious_issuer:
-  TokenIssuerName|contains:
+    AuthenticationProtocol:
+    TokenIssuerType:
+    suspicious_issuer:
+    TokenIssuerName|contains:
       - 'adfs'
       - 'sso'
       - 'federation'
-  unusual_attributes:
-  ConditionalAccessStatus: 'notApplied'
-  RiskLevelAggregated: 'high'
+    unusual_attributes:
+    ConditionalAccessStatus:
+    RiskLevelAggregated:
   condition: saml_logon and (suspicious_issuer or unusual_attributes)
 falsepositives:
   - Legitimate federated authentication

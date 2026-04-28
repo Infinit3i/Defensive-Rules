@@ -2,7 +2,8 @@ title: Quantum-Resistant Cryptographic Ransomware
 technique: T1486
 id: 3d9e7f4a-6b8c-5e2f-9d3e-7f4a8c6b5e2f
 status: experimental
-description: Detects next-generation ransomware using quantum-resistant cryptographic algorithms (post-quantum cryptography) to future-proof encryption against quantum computing threats.
+description: >-
+  Detects next-generation ransomware using quantum-resistant cryptographic algorithms (post-quantum cryptography) to future-proof encryption against quantum computing threats.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,11 +15,11 @@ logsource:
   service: sysmon
 detection:
   selection_pqc_libraries:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\python.exe'
       - '\openssl.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'kyber'
       - 'dilithium'
       - 'falcon'
@@ -30,8 +31,8 @@ detection:
       - 'ntru'
       - 'rainbow'
   selection_quantum_encryption:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.qenc'
       - '.pqc'
       - '.quantum'
@@ -39,13 +40,13 @@ detection:
       - '.dilithium'
       - '.falcon'
       - '.locked'
-    Image|contains:
+  Image|contains:
       - 'encrypt'
       - 'crypto'
       - 'quantum'
   selection_crypto_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'CRYSTALS-Kyber'
       - 'CRYSTALS-Dilithium'
       - 'FALCON'
@@ -54,66 +55,60 @@ detection:
       - 'BIKE'
       - 'HQC'
   selection_ransom_note:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.txt'
       - '.html'
       - '.md'
-    TargetFilename|contains:
+  TargetFilename|contains:
       - 'RANSOM'
       - 'DECRYPT'
       - 'QUANTUM'
       - 'PAYMENT'
       - 'RECOVERY'
   selection_mass_encryption:
-    EventID: 11
-    Image|contains:
+  EventID:
+  Image|contains:
       - 'encrypt'
       - 'cipher'
       - 'crypto'
       - 'quantum'
-    ProcessId: '*'
+  ProcessId:
   selection_network_c2:
-    EventID: 3
-    DestinationPort:
+  EventID:
+  DestinationPort:
       - 443
       - 8080
       - 9050  # Tor
       - 4444
-    Image|contains:
+  Image|contains:
       - 'python'
       - 'powershell'
       - 'cmd'
   selection_crypto_apis:
-    EventID: 7  # Image loaded
-    ImageLoaded|endswith:
+  EventID:
+  ImageLoaded|endswith:
       - '\bcrypt.dll'
       - '\ncrypt.dll'
       - '\crypt32.dll'
-    ProcessName|contains:
+  ProcessName|contains:
       - 'encrypt'
       - 'crypto'
       - 'quantum'
-  condition: (selection_pqc_libraries and selection_quantum_encryption) or
-               (selection_crypto_process and selection_mass_encryption) or
-               (selection_ransom_note and selection_crypto_apis and selection_network_c2)
+  condition: |
+    (selection_pqc_libraries and selection_quantum_encryption) or
+    (selection_crypto_process and selection_mass_encryption) or
+    (selection_ransom_note and selection_crypto_apis and selection_network_c2)
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1486
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1486
   - attack.persistence
   - attack.t1547
   - attack.command_and_control
   - attack.t1071.001
-  - sysmon
-  - windows
   - ransomware
   - quantum_cryptography
   - post_quantum

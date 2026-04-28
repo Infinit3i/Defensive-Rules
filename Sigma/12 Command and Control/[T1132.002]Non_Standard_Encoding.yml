@@ -4,23 +4,16 @@ technique: T1132.002
 id: a9c6f4e7-8d5b-4e3f-a9c6-4f7e8d5b3a9b
 status: experimental
 description: >-
-  Detects non-standard encoding usage by monitoring for custom encoding
-  schemes, unusual character sets, or proprietary encoding methods that
-  may be used to obfuscate C2 communications and evade detection.
+  >- Detects non-standard encoding usage by monitoring for custom encoding schemes, unusual character sets, or proprietary encoding methods that may be used to obfuscate C2 communications and evade detection.
 references:
   - https://attack.mitre.org/techniques/T1132/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1132.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1132.002
   - non_standard_encoding
   - custom_encoding
   - obfuscation
@@ -29,15 +22,15 @@ logsource:
   service: http
 detection:
   unusual_charset:
-  uri|contains:
+    uri|contains:
       - 'charset=unknown'
       - 'custom'
       - 'proprietary'
-  binary_data:
-  content_type: 'application/octet-stream'
-  request_body_len|gte: 1000
-  encoded_patterns:
-  uri|regex: '^[!@#$%^&*()_+{}|:<>?]{10,}$'
+    binary_data:
+    content_type:
+    request_body_len|gte:
+    encoded_patterns:
+    uri|regex:
   condition: unusual_charset or binary_data or encoded_patterns
 falsepositives:
   - Custom applications

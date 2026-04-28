@@ -1,7 +1,8 @@
 title: MFA Push Bombing Attack Detection
 id: p6q7r8s9-t0u1-2345-pqrs-678901234567
 status: experimental
-description: Detects MFA push bombing attacks through repeated authentication attempts and rapid push notifications
+description: >-
+  Detects MFA push bombing attacks through repeated authentication attempts and rapid push notifications
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,17 +12,17 @@ logsource:
   service: activedirectory
 detection:
   selection_push:
-    Category: 'Authentication'
-    OperationName: 'Sign-in activity'
-    AuthenticationMethod: 'Phone App Notification'
+  Category:
+  OperationName:
+  AuthenticationMethod:
   selection_repeated:
-    ResultType:
+  ResultType:
       - 'Failure'
       - 'Success'
-    UserPrincipalName: '*'
+  UserPrincipalName:
   selection_timing:
-    TimeGenerated: '*'
-  timeframe: 120s
+  TimeGenerated:
+    timeframe:
   condition: selection_push and selection_repeated | count() > 5
 falsepositives:
   - Users accidentally triggering multiple MFA prompts

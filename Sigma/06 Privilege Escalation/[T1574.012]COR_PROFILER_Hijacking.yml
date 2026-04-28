@@ -12,37 +12,29 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'COR_PROFILER'
       - 'COR_PROFILER_PATH'
   selection_environment:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'COR_ENABLE_PROFILING=1'
       - 'COR_PROFILER='
       - 'COR_PROFILER_PATH='
   selection_dotnet:
-    EventID: 7
-    Image|contains: '.NET'
-    ImageLoaded|endswith: '.dll'
-    Signed: 'false'
-  condition: selection_registry or selection_environment or
-               selection_dotnet
+  EventID:
+  Image|contains:
+  ImageLoaded|endswith:
+  Signed:
+  condition: selection_registry or selection_environment or selection_dotnet
 falsepositives:
   - Legitimate .NET profiling tools
   - Development environments
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1574.012
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1574.012
   - attack.defense_evasion
-  - sysmon
-  - windows

@@ -4,23 +4,16 @@ technique: T1011.002
 id: a7d9f5c8-6b3e-4e2f-a7d9-5f8c6b3e2a7b
 status: experimental
 description: >-
-  Detects data exfiltration over Wi-Fi by monitoring for suspicious wireless
-  network connections, ad-hoc Wi-Fi networks, or data transfers via
-  unauthorized wireless access points.
+  >- Detects data exfiltration over Wi-Fi by monitoring for suspicious wireless network connections, ad-hoc Wi-Fi networks, or data transfers via unauthorized wireless access points.
 references:
   - https://attack.mitre.org/techniques/T1011/002/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1011.002
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1011.002
   - wifi
   - wireless
   - access_point
@@ -29,19 +22,19 @@ logsource:
   service: wlansvc
 detection:
   wifi_connection:
-  EventID: 8001
-  SSID|contains:
+    EventID:
+    SSID|contains:
       - 'free'
       - 'guest'
       - 'open'
       - 'public'
-  adhoc_network:
-  EventID: 8002
-  NetworkType: 'adhoc'
-  suspicious_ap:
-  EventID: 8003
-  SecurityType: 'none'
-  SignalStrength|gte: 80
+    adhoc_network:
+    EventID:
+    NetworkType:
+    suspicious_ap:
+    EventID:
+    SecurityType:
+    SignalStrength|gte:
   condition: wifi_connection or adhoc_network or suspicious_ap
 falsepositives:
   - Legitimate public Wi-Fi usage

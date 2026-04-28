@@ -3,9 +3,8 @@ title: ptrace/syscall or gdb invocation detected in syslog/auditd
 technique: T1622
 id: f3c4d5e6-7f01-2345-6789-0abcdef12345
 status: experimental
-description: >
-  Detect Linux host events indicating ptrace usage, gdb invocation, or auditd syscall logs for ptrace (possible debugger detection/evasion behavior).
-  Monitors syslog/auditd messages for ptrace/gdb/strace/gcore related activity.
+description: >-
+  > Detect Linux host events indicating ptrace usage, gdb invocation, or auditd syscall logs for ptrace (possible debugger detection/evasion behavior). Monitors syslog/auditd messages for ptrace/gdb/strace/gcore related activity.
 references:
   - https://attack.mitre.org/techniques/T1622/
 author: Infinit3i

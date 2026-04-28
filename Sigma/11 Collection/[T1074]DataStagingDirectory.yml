@@ -16,21 +16,21 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
+  EventID:
   staging_dirs:
-    CommandLine|contains:
+  CommandLine|contains:
       - '\temp\'
       - '\tmp\'
       - 'C:\Windows\Temp'
       - '$env:TEMP'
   copy_operations:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'copy'
       - 'xcopy'
       - 'robocopy'
       - 'move'
   source_dirs:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'Users'
       - 'Documents'
       - 'Desktop'

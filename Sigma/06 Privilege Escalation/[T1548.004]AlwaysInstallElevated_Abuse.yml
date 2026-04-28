@@ -12,31 +12,24 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - 'AlwaysInstallElevated'
-    Details: 'DWORD (0x00000001)'
+  Details:
   selection_msiexec:
-    EventID: 1
-    Image|endswith: '\msiexec.exe'
-    CommandLine|contains:
+  EventID:
+  Image|endswith:
+  CommandLine|contains:
       - '/i'
       - '/package'
-    IntegrityLevel: 'High'
+  IntegrityLevel:
   condition: selection_registry or selection_msiexec
 falsepositives:
   - Legitimate software installations
   - Administrative package deployments
 level: high
 tags:
-  # MITRE ATT&CK tactic
-  - attack.privilege_escalation
-  # MITRE ATT&CK technique
-  - attack.t1548.004
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.privilege_escalation
   - attack.t1548.004
-  - sysmon
   - windows
+  - sysmon

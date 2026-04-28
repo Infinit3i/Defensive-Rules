@@ -13,52 +13,46 @@ logsource:
   service: sysmon
 detection:
   selection_event_consumer:
-    EventID: 1
-    ParentImage|endswith: '\wmiprvse.exe'
-    CommandLine|contains:
+  EventID:
+  ParentImage|endswith:
+  CommandLine|contains:
       - '__EventConsumer'
       - 'CommandLineEventConsumer'
       - 'ActiveScriptEventConsumer'
       - 'LogFileEventConsumer'
   selection_event_filter:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains|all:
+  EventID:
+  Image|endswith:
+  CommandLine|contains|all:
       - '__EventFilter'
       - 'CREATE'
   selection_binding:
-    EventID: 1
-    CommandLine|contains|all:
+  EventID:
+  CommandLine|contains|all:
       - '__FilterToConsumerBinding'
       - 'Consumer'
       - 'Filter'
   selection_privileged_execution:
-    EventID: 1
-    ParentImage|endswith: '\wmiprvse.exe'
-    IntegrityLevel: 'System'
-    CommandLine|contains:
+  EventID:
+  ParentImage|endswith:
+  IntegrityLevel:
+  CommandLine|contains:
       - 'whoami'
       - 'net user'
       - 'reg add'
       - 'schtasks'
-  condition: (selection_event_consumer or selection_event_filter or
-               selection_binding) or selection_privileged_execution
+  condition: |
+    (selection_event_consumer or selection_event_filter or
+    selection_binding) or selection_privileged_execution
 falsepositives:
   - Legitimate WMI monitoring solutions
   - System management tools
   - Security software with WMI components
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1047
   - attack.persistence
   - attack.t1546.003
-  - sysmon
-  - windows

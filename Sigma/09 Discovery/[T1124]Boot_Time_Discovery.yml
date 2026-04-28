@@ -10,7 +10,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'systeminfo | findstr /i "boot time"'
       - 'Get-CimInstance Win32_OperatingSystem | Select LastBootUpTime'
@@ -21,12 +21,7 @@ detection:
       - 'sysctl kern.boottime'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1124
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.discovery
-  - attack.t1124

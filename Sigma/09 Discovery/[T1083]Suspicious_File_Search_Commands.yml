@@ -3,7 +3,8 @@ title: Suspicious File and Directory Search Commands
 technique: T1083
 id: f6g7h8i9-j0k1-2345-6789-012345fghijk
 status: experimental
-description: Detects suspicious file and directory enumeration commands often used by attackers
+description: >-
+  Detects suspicious file and directory enumeration commands often used by attackers
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,7 +12,7 @@ logsource:
   service: sysmon
 detection:
   selection_dir:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\cmd.exe'
       - '\dir.exe'
@@ -29,15 +30,15 @@ detection:
       - 'dir *secret*'
       - 'dir *backup*'
   selection_where:
-  EventID: 1
-  Image|endswith: '\where.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'where /r'
       - 'where *.exe'
       - 'where *.bat'
       - 'where *.ps1'
   selection_findstr:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\findstr.exe'
       - '\find.exe'
@@ -49,8 +50,8 @@ detection:
       - '/i secret'
       - '/i key'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-ChildItem -Recurse'
       - 'gci -r'
@@ -79,14 +80,7 @@ falsepositives:
   - Backup scripts
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1083
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1083
-  - sysmon
   - windows
+  - sysmon

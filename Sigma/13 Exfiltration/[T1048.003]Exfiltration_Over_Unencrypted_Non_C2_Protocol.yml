@@ -4,23 +4,16 @@ technique: T1048.003
 id: d8b6f4a7-9e3c-4e5f-d8b6-4f7a9e3c5d8b
 status: experimental
 description: >-
-  Detects data exfiltration over unencrypted non-C2 protocols by monitoring
-  for large data transfers over HTTP, FTP, SMTP, or other unencrypted
-  protocols that may indicate data exfiltration attempts.
+  >- Detects data exfiltration over unencrypted non-C2 protocols by monitoring for large data transfers over HTTP, FTP, SMTP, or other unencrypted protocols that may indicate data exfiltration attempts.
 references:
   - https://attack.mitre.org/techniques/T1048/003/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1048.003
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1048.003
   - unencrypted_protocol
   - data_transfer
   - cleartext
@@ -29,16 +22,16 @@ logsource:
   service: http
 detection:
   large_post:
-  method: 'POST'
-  request_body_len|gte: 1000000
-  file_upload:
-  uri|contains:
+    method:
+    request_body_len|gte:
+    file_upload:
+    uri|contains:
       - '/upload'
       - '/submit'
       - '/data'
-  method: 'POST'
-  suspicious_content:
-  content_type|contains:
+    method:
+    suspicious_content:
+    content_type|contains:
       - 'application/octet-stream'
       - 'multipart/form-data'
   condition: large_post or (file_upload and suspicious_content)

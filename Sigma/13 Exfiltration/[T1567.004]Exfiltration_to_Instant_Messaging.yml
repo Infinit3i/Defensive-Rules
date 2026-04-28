@@ -4,23 +4,16 @@ technique: T1567.004
 id: b4c7f8e5-9a6d-4e2f-b4c7-8f5e9a6d2b4b
 status: experimental
 description: >-
-  Detects data exfiltration to instant messaging platforms by monitoring
-  for large uploads to messaging services, file sharing through chat
-  applications, or suspicious messaging activity that may indicate data theft.
+  >- Detects data exfiltration to instant messaging platforms by monitoring for large uploads to messaging services, file sharing through chat applications, or suspicious messaging activity that may indicate data theft.
 references:
   - https://attack.mitre.org/techniques/T1567/004/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1567.004
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1567.004
   - instant_messaging
   - chat_applications
   - file_sharing
@@ -29,25 +22,25 @@ logsource:
   service: http
 detection:
   messaging_platforms:
-  host|endswith:
+    host|endswith:
       - '.telegram.org'
       - '.discord.com'
       - '.slack.com'
       - '.whatsapp.com'
       - '.messenger.com'
-  file_upload:
-  method: 'POST'
-  request_body_len|gte: 1000000
-  uri|contains:
+    file_upload:
+    method:
+    request_body_len|gte:
+    uri|contains:
       - '/upload'
       - '/file'
       - '/attach'
-  api_messaging:
-  uri|contains:
+    api_messaging:
+    uri|contains:
       - '/api/v'
       - '/webhooks'
       - '/bot'
-  method: 'POST'
+    method:
   condition: messaging_platforms and (file_upload or api_messaging)
 falsepositives:
   - Legitimate business communications

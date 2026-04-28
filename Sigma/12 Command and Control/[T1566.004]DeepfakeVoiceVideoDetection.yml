@@ -1,9 +1,11 @@
 title: Deepfake Voice and Video Call Social Engineering Indicators
 technique: T1566.004
 author: Infinit3i
+date: 2026/04/28
 id: 6a9e7c3f-8d2b-4f5a-9c7e-3f8a6b4d7e9c
 status: experimental
-description: Detects network indicators of deepfake voice/video-based social engineering attacks through communication platforms
+description: >-
+  Detects network indicators of deepfake voice/video-based social engineering attacks through communication platforms
 logsource:
   product: proxy
   service: web
@@ -27,8 +29,8 @@ detection:
       - '/call'
       - '/conference'
   selection_high_bandwidth:
-  sc-bytes|gt: 10485760  # > 10MB indicating video/audio streams
-  cs-bytes|gt: 1048576   # > 1MB upload
+  sc-bytes|gt:
+  cs-bytes|gt:
   selection_suspicious_patterns:
   c-useragent|contains:
       - 'deepfake'
@@ -43,21 +45,17 @@ detection:
       - 'replica.ai'
       - 'speechify'
   selection_unusual_timing:
-  time|gt: 22:00:00  # Calls outside business hours
-  time|lt: 06:00:00
-  condition: selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
+  time|gt:
+  time|lt:
+  condition: |
+    selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1566.004
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.initial_access
-  - attack.t1566.004
-  - attack.command_and_control
   - attack.t1071.001
   - deepfake
   - voice_cloning

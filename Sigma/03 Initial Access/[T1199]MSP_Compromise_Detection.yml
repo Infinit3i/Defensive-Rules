@@ -3,7 +3,8 @@ title: Managed Service Provider Compromise Detection
 technique: T1199
 id: d4e5f6a7-8b9c-0d1e-2f3a-4b5c6d7e8f9a
 status: experimental
-description: Detects compromise of managed service provider accounts through anomalous administrative activities and privilege escalation
+description: >-
+  Detects compromise of managed service provider accounts through anomalous administrative activities and privilege escalation
 references:
   - https://attack.mitre.org/techniques/T1199/
 author: Infinit3i
@@ -19,7 +20,7 @@ logsource:
   service: security
 detection:
   msp_account_activity:
-  EventID: 4624
+  EventID:
   TargetUserName|contains:
       - 'admin@msp'
       - 'svc-msp'
@@ -29,7 +30,7 @@ detection:
       - 2
       - 10
   privilege_escalation:
-  EventID: 4672
+  EventID:
   PrivilegeList|contains:
       - 'SeTakeOwnershipPrivilege'
       - 'SeBackupPrivilege'

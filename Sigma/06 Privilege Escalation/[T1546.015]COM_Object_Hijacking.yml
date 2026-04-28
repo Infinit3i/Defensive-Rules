@@ -12,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\CLSID\'
       - '\InprocServer32\'
       - '\LocalServer32\'
-    Details|endswith:
+  Details|endswith:
       - '.dll'
       - '.exe'
   selection_process:
-    EventID: 1
-    ParentImage|endswith:
+  EventID:
+  ParentImage|endswith:
       - '\explorer.exe'
       - '\dllhost.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '/Processid:'
       - '-Embedding'
   condition: selection_registry or selection_process
@@ -34,15 +34,8 @@ falsepositives:
   - COM object registrations
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1546.015
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1546.015
   - attack.persistence
-  - sysmon
-  - windows

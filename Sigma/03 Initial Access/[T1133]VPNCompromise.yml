@@ -1,7 +1,8 @@
 title: VPN Service Compromise Detection
 id: e5f6g7h8-i9j0-1234-efgh-567890123456
 status: experimental
-description: Detects unauthorized VPN access patterns indicating compromised VPN credentials or services
+description: >-
+  Detects unauthorized VPN access patterns indicating compromised VPN credentials or services
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,22 +12,22 @@ logsource:
   service: security
 detection:
   selection_vpn:
-    EventID: 4624
-    LogonType: 3
-    ProcessName|contains:
+  EventID:
+  LogonType:
+  ProcessName|contains:
       - 'openvpn'
       - 'vpnclient'
       - 'anyconnect'
       - 'forticlient'
   selection_suspicious:
-    SourceNetworkAddress|startswith:
+  SourceNetworkAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    TargetUserName|contains: '$'
+  TargetUserName|contains:
   selection_timing:
-    EventID: 4625
-  timeframe: 300s
+  EventID:
+    timeframe:
   condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
 falsepositives:
   - Legitimate VPN connections from remote workers

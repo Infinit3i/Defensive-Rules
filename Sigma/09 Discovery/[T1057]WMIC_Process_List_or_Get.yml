@@ -3,20 +3,17 @@ title: WMIC Process List or Get
 technique: T1057
 id: a1057a01-1111-4c11-8a57-000000000002
 status: experimental
-description: Detects WMIC usage to enumerate processes (e.g., 'wmic process list', 'wmic process get').
+description: >-
+  Detects WMIC usage to enumerate processes (e.g., 'wmic process list', 'wmic process get').
 references:
   - https://attack.mitre.org/techniques/T1057/
 author: Infinit3i
 date: 2025-10-19
 tags:
-  # MITRE ATT&CK tactic
   - attack.discovery
-  # MITRE ATT&CK technique
   - attack.t1057
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.t1057
   - tactic.discovery
   - platform:windows
   - technique:T1057
@@ -26,10 +23,10 @@ logsource:
   service: sysmon
 detection:
   sel_image:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   sel_cmd:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - "wmic process list"
       - "wmic process get"

@@ -1,7 +1,8 @@
 title: Supply Chain Typosquatting Package Installation
 id: e4c7d9f3-8a6b-2e5c-9f8e-d7a4c6e9b2f5
 status: experimental
-description: Detects installation of typosquatted packages that mimic legitimate software libraries
+description: >-
+  Detects installation of typosquatted packages that mimic legitimate software libraries
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,7 +12,7 @@ logsource:
   service: npm
 detection:
   selection_suspicious_names:
-    PackageName|contains:
+  PackageName|contains:
       - 'requesst'
       - 'beautifulsoup'
       - 'urllibz'
@@ -19,14 +20,15 @@ detection:
       - 'pillow1'
       - 'lodaash'
   selection_low_downloads:
-    DownloadCount|lt: 1000
+  DownloadCount|lt:
   selection_recent_creation:
-    PackageAge|lt: 30
+  PackageAge|lt:
   selection_suspicious_author:
-    - AuthorName|length: 3
-    - AuthorEmail|contains: 'temp'
-    - AuthorEmail|contains: 'disposable'
-  condition: selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
+      - AuthorName|length: 3
+      - AuthorEmail|contains: 'temp'
+      - AuthorEmail|contains: 'disposable'
+  condition: |
+    selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
 level: high
 tags:
   - attack.initial-access

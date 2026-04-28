@@ -11,7 +11,7 @@ logsource:
   service: system
 detection:
   selection_sc:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\sc.exe'
       - '\net.exe'
@@ -38,8 +38,8 @@ detection:
       - 'Fax'               # Fax service
       - 'TermService'       # Terminal Services
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Stop-Service'
       - 'Set-Service'
@@ -59,10 +59,7 @@ falsepositives:
   - Maintenance scripts
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1489
-  # Platform/tool tags
   - windows
   - sysmon

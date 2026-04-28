@@ -18,9 +18,9 @@ detection:
       - 'FileDownloaded'
       - 'FileAccessed'
       - 'FileViewed'
-  ItemType: 'File'
+  ItemType:
   selection_search_activity:
-  Operation: 'SearchQueryPerformed'
+  Operation:
   Query|contains:
       - 'confidential'
       - 'secret'
@@ -38,7 +38,8 @@ detection:
       - 'curl'
       - 'powershell'
       - 'graph'
-  condition: (selection_bulk_download or selection_search_activity or selection_external_sharing) and selection_api_access
+  condition: |
+    (selection_bulk_download or selection_search_activity or selection_external_sharing) and selection_api_access
   timeframe: 1h
   count: 50
 level: medium

@@ -1,7 +1,8 @@
 title: Service Principal Abuse in Cloud Environment
 id: b2c3d4e5-f6a7-8901-2345-6789abcdef01
 status: experimental
-description: Detects abuse of service principals for unauthorized cloud resource access and privilege escalation
+description: >-
+  Detects abuse of service principals for unauthorized cloud resource access and privilege escalation
 author: Infinit3i
 date: 2026/04/27
 modified: 2026/04/27
@@ -17,26 +18,27 @@ logsource:
   service: auditlogs
 detection:
   selection_sp_activity:
-    Category: 'AuditLogs'
-    ActivityDisplayName|contains:
+  Category:
+  ActivityDisplayName|contains:
       - 'Add service principal'
       - 'Update service principal'
       - 'Add application'
   selection_suspicious_permissions:
-    TargetResources.modifiedProperties.newValue|contains:
+  TargetResources.modifiedProperties.newValue|contains:
       - 'Application.ReadWrite.All'
       - 'Directory.ReadWrite.All'
       - 'RoleManagement.ReadWrite.Directory'
       - 'User.ReadWrite.All'
   selection_credential_ops:
-    ActivityDisplayName|contains:
+  ActivityDisplayName|contains:
       - 'Add service principal credentials'
       - 'Update application – Certificates and secrets management'
   selection_unusual_source:
-    InitiatedBy.app.appId|exists: false
-    InitiatedBy.user.userPrincipalName|re: '^(?!.*@(company\.com|domain\.local)).*'
-  condition: (selection_sp_activity and selection_suspicious_permissions) or
-               (selection_credential_ops and selection_unusual_source)
+  InitiatedBy.app.appId|exists:
+  InitiatedBy.user.userPrincipalName|re:
+  condition: |
+    (selection_sp_activity and selection_suspicious_permissions) or
+    (selection_credential_ops and selection_unusual_source)
 level: high
 fields:
   - ActivityDisplayName

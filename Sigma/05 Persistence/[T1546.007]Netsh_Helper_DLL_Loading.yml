@@ -3,7 +3,8 @@ title: Netsh Helper DLL Suspicious Loading Detection
 technique: T1546.007
 id: b1c2d3e4-8f9a-5b6c-0d7e-3f4a5b6c7d8e
 status: experimental
-description: Detects suspicious DLL loading by netsh.exe indicating malicious helper DLL usage
+description: >-
+  Detects suspicious DLL loading by netsh.exe indicating malicious helper DLL usage
 author: Infinit3i
 date: 2026/04/27
 logsource:
@@ -11,16 +12,16 @@ logsource:
   service: sysmon
 detection:
   selection_netsh_process:
-  EventID: 7
-  Image|endswith: '\netsh.exe'
+  EventID:
+  Image|endswith:
   selection_suspicious_dll:
-  EventID: 7
+  EventID:
   ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '\Users\Public\'
-  ImageLoaded|endswith: '.dll'
+  ImageLoaded|endswith:
   filter_legitimate_helpers:
   ImageLoaded|contains:
       - 'C:\Windows\System32\'

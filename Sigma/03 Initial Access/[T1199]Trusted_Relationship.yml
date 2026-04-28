@@ -3,24 +3,17 @@ title: Trusted Relationship Abuse Detection
 technique: T1199
 id: c9e4f7a2-6b8d-4f1e-a5c3-8f2e9d1c7a6b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects abuse of trusted relationships by monitoring for suspicious access
-  from partner networks, third-party connections, or trusted domain accounts
-  that may indicate compromise of trusted entities.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects abuse of trusted relationships by monitoring for suspicious access from partner networks, third-party connections, or trusted domain accounts that may indicate compromise of trusted entities.
 references:
   - https://attack.mitre.org/techniques/T1199/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1199
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1199
   - trusted_relationship
   - third_party
   - partner
@@ -29,19 +22,19 @@ logsource:
   service: security
 detection:
   external_domain:
-  EventID: 4624
+  EventID:
   TargetDomainName|endswith:
       - '.partner.com'
       - '.vendor.com'
       - '.contractor.com'
   service_account:
-  EventID: 4624
+  EventID:
   TargetUserName|startswith:
       - 'svc-'
       - 'service-'
-  LogonType: 3
+  LogonType:
   unusual_hours:
-  EventID: 4624
+  EventID:
   TimeGenerated|contains:
       - 'T20:'
       - 'T21:'

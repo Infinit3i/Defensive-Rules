@@ -11,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_automation_tools:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\chromedriver.exe'
       - '\geckodriver.exe'
@@ -25,7 +25,7 @@ detection:
       - '--remote-debugging'
       - '--user-data-dir'
   selection_suspicious_scripts:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\python.exe'
       - '\node.exe'
@@ -39,7 +39,7 @@ detection:
       - 'clickbot'
       - 'adclick'
   selection_browser_args:
-  EventID: 1
+  EventID:
   Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
@@ -52,7 +52,7 @@ detection:
       - '--remote-debugging-port'
       - '--enable-automation'
   selection_click_scripts:
-  EventID: 11  # File creation
+  EventID:
   TargetFilename|endswith:
       - '.py'
       - '.js'
@@ -64,7 +64,8 @@ detection:
       - 'bot'
       - 'farm'
       - 'ad'
-  condition: selection_automation_tools or selection_suspicious_scripts or selection_browser_args or selection_click_scripts
+  condition: |
+    selection_automation_tools or selection_suspicious_scripts or selection_browser_args or selection_click_scripts
 fields:
   - Image
   - CommandLine

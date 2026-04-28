@@ -11,16 +11,16 @@ logsource:
   service: sysmon
 detection:
   selection_lsass_process:
-  EventID: 7
-  Image|endswith: '\lsass.exe'
+  EventID:
+  Image|endswith:
   selection_suspicious_dll:
-  EventID: 7
+  EventID:
   ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '\Users\Public\'
-  ImageLoaded|endswith: '.dll'
+  ImageLoaded|endswith:
   filter_system_dlls:
   ImageLoaded|contains:
       - 'C:\Windows\System32\'

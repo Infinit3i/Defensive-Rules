@@ -9,11 +9,11 @@ logsource:
   service: auditd
 detection:
   selection_write:
-    type: "SYSCALL"
-    syscall: "openat"
-    a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
+  type:
+  syscall:
+  a2:
   selection_profiles:
-    name:
+  name:
       - "*/.bashrc"
       - "*/.bash_profile"
       - "*/.bash_login"

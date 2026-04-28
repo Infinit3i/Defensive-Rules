@@ -13,35 +13,33 @@ logsource:
   service: sysmon
 detection:
   dll_creation:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\System32\'
       - '\SysWOW64\'
-    TargetFilename|endswith: '.dll'
+  TargetFilename|endswith:
   service_dll_load:
-    EventID: 7
-    ImageLoaded|contains:
+  EventID:
+  ImageLoaded|contains:
       - '\System32\'
       - '\SysWOW64\'
-    ImageLoaded|endswith: '.dll'
+  ImageLoaded|endswith:
   suspicious_dll_creation:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - '\System32\wbem\'
       - '\System32\WindowsPowerShell\'
       - '\System32\config\systemprofile\'
-    TargetFilename|endswith: '.dll'
+  TargetFilename|endswith:
   service_modification:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'sc config'
       - 'reg add'
-    CommandLine|contains|all:
+  CommandLine|contains|all:
       - 'ServiceDll'
       - '.dll'
-  condition: (dll_creation and service_dll_load) or
-               suspicious_dll_creation or
-               service_modification
+  condition: (dll_creation and service_dll_load) or suspicious_dll_creation or service_modification
 fields:
   - TargetFilename
   - ImageLoaded
@@ -56,16 +54,9 @@ falsepositives:
   - Security software operations
 level: high
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1574.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.privilege_escalation
   - attack.t1574
-  - attack.t1574.001
-  - windows
-  - sysmon

@@ -1,7 +1,8 @@
 title: Web Content Defacement Detection
 id: w3x4y5z6-a7b8-9012-wxyz-345678901234
 status: experimental
-description: Detects web defacement attempts through unauthorized content modification and injection attacks
+description: >-
+  Detects web defacement attempts through unauthorized content modification and injection attacks
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,25 +12,25 @@ logsource:
   service: access
 detection:
   selection_methods:
-    method:
+  method:
       - 'PUT'
       - 'PATCH'
       - 'DELETE'
-    status: 200
+  status:
   selection_injection:
-    uri|contains:
+  uri|contains:
       - '<script>'
       - '<iframe>'
       - 'javascript:'
       - 'data:'
-    method: 'POST'
+  method:
   selection_upload:
-    uri|contains:
+  uri|contains:
       - 'upload'
       - 'file'
       - 'image'
-    status: 200
-    content_length: '>1000'
+  status:
+  content_length:
   condition: selection_methods or selection_injection or selection_upload
 falsepositives:
   - Legitimate content management operations

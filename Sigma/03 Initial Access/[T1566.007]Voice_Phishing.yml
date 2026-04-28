@@ -3,24 +3,17 @@ title: Voice Phishing (Vishing) Attack Detection
 technique: T1566.007
 id: a6e2f9c4-7d8b-4e3f-c1a5-8f2e9c6d4a7b
 status: experimental
-description: Detects cloud-based security attacks and access attempts.
-  Detects voice phishing attacks by monitoring for suspicious phone calls,
-  voice message patterns, or social engineering attempts via voice
-  communication that may lead to credential disclosure or system access.
+description: >-
+  Detects cloud-based security attacks and access attempts. Detects voice phishing attacks by monitoring for suspicious phone calls, voice message patterns, or social engineering attempts via voice communication that may lead to credential disclosure or system access.
 references:
   - https://attack.mitre.org/techniques/T1566/007/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.initial_access
-  # MITRE ATT&CK technique
   - attack.t1566.007
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.initial_access
-  - attack.t1566.007
   - voice
   - phishing
   - social_engineering
@@ -41,8 +34,8 @@ detection:
       - 'Help Desk'
       - 'Microsoft'
   high_frequency:
-  source_number|count|gte: 10
-  time_window: '1h'
+  source_number|count|gte:
+  time_window:
   condition: suspicious_keywords or impersonation_attempts or high_frequency
 falsepositives:
   - Legitimate support calls

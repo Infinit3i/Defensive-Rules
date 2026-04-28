@@ -1,7 +1,8 @@
 title: Suspicious Content Replacement Activities
 id: 546c891c-feda-430d-9eb4-350f62156a5b
 status: experimental
-description: Detects content replacement and file overwriting through process execution targeting web content
+description: >-
+  Detects content replacement and file overwriting through process execution targeting web content
 author: Infinit3i
 date: 2026/04/28
 logsource:
@@ -9,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'echo'
       - 'copy'
       - 'move'
@@ -20,13 +21,13 @@ detection:
       - 'default.asp'
       - 'home.html'
   selection_script:
-    EventID: 1
-    ParentProcessName|endswith:
+  EventID:
+  ParentProcessName|endswith:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'wscript.exe'
       - 'cscript.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'replace'
       - 'overwrite'
       - 'hacked'

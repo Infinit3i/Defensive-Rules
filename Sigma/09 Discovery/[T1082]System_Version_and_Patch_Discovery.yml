@@ -11,18 +11,18 @@ logsource:
   service: sysmon
 detection:
   selection_systeminfo:
-  EventID: 1
-  Image|endswith: '\systeminfo.exe'
+  EventID:
+  Image|endswith:
   selection_wmic_qfe:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'qfe'
       - 'os get'
       - 'computersystem get'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Get-HotFix'
       - 'Get-WmiObject Win32_QuickFixEngineering'
@@ -41,14 +41,7 @@ falsepositives:
   - Security assessment tools
 level: low
 tags:
-  # MITRE ATT&CK tactic
-  - attack.discovery
-  # MITRE ATT&CK technique
-  - attack.t1082
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.discovery
   - attack.t1082
-  - sysmon
   - windows
+  - sysmon

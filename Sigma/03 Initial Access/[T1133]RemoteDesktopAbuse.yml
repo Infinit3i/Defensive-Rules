@@ -1,7 +1,8 @@
 title: Remote Desktop Protocol Abuse Detection
 id: f6g7h8i9-j0k1-2345-fghi-678901234567
 status: experimental
-description: Detects suspicious RDP connections indicating potential credential stuffing or brute force attacks
+description: >-
+  Detects suspicious RDP connections indicating potential credential stuffing or brute force attacks
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -11,15 +12,15 @@ logsource:
   service: security
 detection:
   selection_rdp:
-    EventID: 4624
-    LogonType: 10
-    ProcessName: 'winlogon.exe'
+  EventID:
+  LogonType:
+  ProcessName:
   selection_failed:
-    EventID: 4625
-    LogonType: 10
+  EventID:
+  LogonType:
   selection_geographic:
-    SourceNetworkAddress|regex: '^(?!10\.|172\.|192\.168\.)'
-  timeframe: 3600s
+  SourceNetworkAddress|regex:
+    timeframe:
   condition: (selection_rdp and selection_geographic) or (selection_failed | count() > 5)
 falsepositives:
   - Legitimate remote administration

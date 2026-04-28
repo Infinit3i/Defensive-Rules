@@ -1,7 +1,8 @@
 title: Accessibility Features Registry Modification
 id: 89012345-6789-0123-4567-89abcdef0123
 status: experimental
-description: Detects registry modifications targeting accessibility features for backdoor creation
+description: >-
+  Detects registry modifications targeting accessibility features for backdoor creation
 author: Infinit3i
 date: 2026/04/27
 references:
@@ -12,24 +13,24 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID:
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\narrator.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe'
   selection_debugger:
-    EventID: 13
-    TargetObject|endswith: '\Debugger'
-    Details|contains:
+  EventID:
+  TargetObject|endswith:
+  Details|contains:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'rundll32.exe'
   selection_accessibility_reg:
-    EventID: 13
-    TargetObject|contains: '\Control Panel\Accessibility\'
-    Details|contains:
+  EventID:
+  TargetObject|contains:
+  Details|contains:
       - '.exe'
       - '.bat'
       - '.cmd'

@@ -13,27 +13,26 @@ logsource:
   service: sysmon
 detection:
   file_creation:
-    EventID: 11
-    TargetFilename|contains: '\Windows\System32\Tasks\'
-    TargetFilename|endswith: '.xml'
+  EventID:
+  TargetFilename|contains:
+  TargetFilename|endswith:
   file_modification:
-    EventID: 2
-    TargetFilename|contains: '\Windows\System32\Tasks\'
+  EventID:
+  TargetFilename|contains:
   xml_tools:
-    EventID: 1
-    CommandLine|contains:
+  EventID:
+  CommandLine|contains:
       - 'schtasks /xml'
       - 'Export-ScheduledTask'
       - 'Import-ScheduledTask'
   direct_xml_access:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\notepad.exe'
       - '\wordpad.exe'
       - '\powershell.exe'
-    CommandLine|contains: '\Windows\System32\Tasks\'
-  condition: (file_creation or file_modification) and
-               (xml_tools or direct_xml_access)
+  CommandLine|contains:
+  condition: (file_creation or file_modification) and (xml_tools or direct_xml_access)
 fields:
   - TargetFilename
   - Image
@@ -47,16 +46,9 @@ falsepositives:
   - Backup and restore operations
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.persistence
-  # MITRE ATT&CK technique
   - attack.t1053.005
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.persistence
   - attack.defense_evasion
   - attack.t1053
-  - attack.t1053.005
-  - windows
-  - sysmon

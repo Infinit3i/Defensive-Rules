@@ -1,7 +1,6 @@
 ---
 title: WMI Remote Command Execution
 technique: T1047
-
 id: n4o5p6q7-r8s9-0123-4567-890123nopqrs
 status: experimental
 description: Detects WMI being used for remote command execution and lateral movement
@@ -12,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID: 1
-  Image|endswith: '\wmic.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '/node:'
       - 'process call create'
@@ -21,8 +20,8 @@ detection:
       - '/password:'
       - 'Win32_Process'
   selection_powershell_wmi:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - 'Invoke-WmiMethod'
       - 'Get-WmiObject'
@@ -32,9 +31,9 @@ detection:
       - '-ComputerName'
       - '-Credential'
   selection_wmiprvse:
-  EventID: 1
-  Image|endswith: '\wmiprvse.exe'
-  ParentImage|endswith: '\svchost.exe'
+  EventID:
+  Image|endswith:
+  ParentImage|endswith:
   remote_indicators:
   CommandLine|contains:
       - 'cmd.exe /c'
@@ -45,8 +44,9 @@ detection:
       - 'bitsadmin.exe'
       - 'certutil.exe'
   network_indicators:
-  CommandLine|re: '.*\\\\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.*'
-  condition: (selection_wmic or selection_powershell_wmi) and (remote_indicators or network_indicators) or selection_wmiprvse
+  CommandLine|re:
+  condition: |
+    (selection_wmic or selection_powershell_wmi) and (remote_indicators or network_indicators) or selection_wmiprvse
 fields:
   - Image
   - CommandLine
@@ -60,22 +60,8 @@ falsepositives:
   - Monitoring software
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.execution
-  # MITRE ATT&CK technique
   - attack.t1047
-  # Platform/tool tags
   - windows
   - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1047
-  # Platform/tool tags
-  - windows
-  - sysmon
-  - attack.execution
   - attack.lateral-movement
-  - attack.t1047
-  - sysmon
-  - windows

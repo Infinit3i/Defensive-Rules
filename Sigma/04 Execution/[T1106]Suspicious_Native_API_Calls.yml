@@ -1,7 +1,6 @@
 ---
 title: Suspicious Native API Function Calls
 technique: T1106
-
 id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
 status: experimental
 description: Detects potentially malicious native API function calls often used by malware
@@ -12,7 +11,7 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'NtCreateSection'
       - 'NtMapViewOfSection'
@@ -30,8 +29,8 @@ detection:
       - 'LdrLoadDll'
       - 'RtlCreateUserThread'
   selection_powershell:
-  EventID: 1
-  Image|endswith: '\powershell.exe'
+  EventID:
+  Image|endswith:
   CommandLine|contains:
       - '[DllImport("ntdll")]'
       - 'VirtualAlloc'
@@ -55,21 +54,7 @@ falsepositives:
   - Security software
 level: medium
 tags:
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1106
-  # Platform/tool tags
-  - windows
-  - sysmon
-  # MITRE ATT&CK tactic
-  - attack.execution
-  # MITRE ATT&CK technique
-  - attack.t1106
-  # Platform/tool tags
-  - windows
-  - sysmon
   - attack.execution
   - attack.t1106
-  - sysmon
   - windows
+  - sysmon

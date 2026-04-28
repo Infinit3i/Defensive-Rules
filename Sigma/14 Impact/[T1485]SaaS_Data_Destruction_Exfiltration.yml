@@ -2,7 +2,8 @@ title: SaaS Data Destruction and Exfiltration
 technique: T1485
 id: 5d8e2f3a-9b6c-4e7f-2a5d-8e3f6b9c4a7e
 status: experimental
-description: Detects malicious data destruction and exfiltration in SaaS platforms through API abuse and bulk operations.
+description: >-
+  Detects malicious data destruction and exfiltration in SaaS platforms through API abuse and bulk operations.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,8 +15,8 @@ logsource:
   service: powershell
 detection:
   selection_o365_destruction:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'Remove-Mailbox'
       - 'Remove-MailboxFolder'
       - 'Remove-UnifiedGroup'
@@ -25,8 +26,8 @@ detection:
       - 'Remove-AzureADUser'
       - 'Remove-MgUser'
   selection_google_workspace:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'gam delete'
       - 'gam remove'
       - 'gsuite delete'
@@ -34,25 +35,25 @@ detection:
       - 'drive.files().delete'
       - 'gmail.users().messages().delete'
   selection_salesforce_api:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'sfdx force:data:record:delete'
       - 'sf data delete'
       - 'salesforce api delete'
       - 'DELETE /services/data/'
   selection_bulk_operations:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'Invoke-RestMethod'
       - 'Invoke-WebRequest'
       - 'HttpClient'
       - 'WebClient'
-    ScriptBlockText|regex:
+  ScriptBlockText|regex:
       - '.*delete.*\d{2,}.*'  # delete with numbers (bulk)
       - '.*remove.*\d{2,}.*'  # remove with numbers (bulk)
   selection_exfiltration:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID:
+  ScriptBlockText|contains:
       - 'Export-Mailbox'
       - 'Export-PST'
       - 'Get-Mailbox | ForEach'
@@ -60,46 +61,41 @@ detection:
       - 'Download-File'
       - 'Copy-Item'
   selection_api_tools:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\powershell.exe'
       - '\python.exe'
       - '\curl.exe'
       - '\wget.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'api'
       - 'rest'
       - 'graph.microsoft.com'
       - 'googleapis.com'
       - 'salesforce.com'
   selection_network_activity:
-    EventID: 3
-    DestinationHostname|contains:
+  EventID:
+  DestinationHostname|contains:
       - 'graph.microsoft.com'
       - 'outlook.office365.com'
       - 'googleapis.com'
       - 'salesforce.com'
       - 'dropbox.com'
       - 'box.com'
-    DestinationPort: 443
-  condition: (selection_o365_destruction or selection_google_workspace or selection_salesforce_api) and
-               selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)
+  DestinationPort:
+  condition: |
+    (selection_o365_destruction or selection_google_workspace or selection_salesforce_api) and
+    selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1485
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1485
   - attack.exfiltration
   - attack.t1567
   - attack.t1567.002
   - powershell
-  - windows
   - saas
   - office365
   - google_workspace

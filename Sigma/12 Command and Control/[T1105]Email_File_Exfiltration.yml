@@ -10,7 +10,7 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID: 1
+  EventID:
   CommandLine|contains:
       - 'Send-MailMessage'
       - 'System.Net.Mail.SmtpClient'
@@ -21,12 +21,8 @@ detection:
       - 'blat.exe'
   condition: selection
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1105
-  # Platform/tool tags
   - windows
   - sysmon
   - attack.exfiltration
-  - attack.t1105

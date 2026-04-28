@@ -1,9 +1,11 @@
 title: Domain Fronting and CDN Abuse for Command and Control
 technique: T1090.004
 author: Infinit3i
+date: 2026/04/28
 id: 2c8f5a3e-7b9d-4e2a-9f6c-3d1a8b7e5c9f
 status: experimental
-description: Detects domain fronting techniques using CDN services to hide command and control communication
+description: >-
+  Detects domain fronting techniques using CDN services to hide command and control communication
 logsource:
   product: proxy
   service: web
@@ -29,27 +31,23 @@ detection:
       - '/proxy/'
       - '/tunnel/'
   selection_encrypted_traffic:
-  cs-method: 'POST'
-  sc-bytes|gt: 512
-  cs-bytes|gt: 256
+  cs-method:
+  sc-bytes|gt:
+  cs-bytes|gt:
   selection_https_tunnel:
-  cs-method: 'CONNECT'
+  cs-method:
   cs-uri-port:
       - 443
       - 8443
       - 9443
-  condition: (selection_cdn_providers and selection_suspicious_paths and selection_encrypted_traffic) or (selection_host_mismatch) or (selection_https_tunnel and selection_cdn_providers)
+  condition: |
+    (selection_cdn_providers and selection_suspicious_paths and selection_encrypted_traffic) or (selection_host_mismatch) or (selection_https_tunnel and selection_cdn_providers)
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.command_and_control
-  # MITRE ATT&CK technique
   - attack.t1090.004
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.command_and_control
-  - attack.t1090.004
   - attack.t1071.001
   - domain_fronting
   - cdn_abuse

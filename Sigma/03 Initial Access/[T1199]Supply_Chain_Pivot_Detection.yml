@@ -3,7 +3,8 @@ title: Supply Chain Pivoting Through Trusted Connections
 technique: T1199
 id: b1c2d3e4-5f6a-7b8c-9d0e-1f2a3b4c5d6e
 status: experimental
-description: Detects lateral movement through compromised supply chain partners using established trust relationships
+description: >-
+  Detects lateral movement through compromised supply chain partners using established trust relationships
 references:
   - https://attack.mitre.org/techniques/T1199/
 author: Infinit3i
@@ -19,7 +20,7 @@ logsource:
   service: sysmon
 detection:
   network_connections:
-  EventID: 3
+  EventID:
   DestinationHostname|endswith:
       - '.supplier.com'
       - '.vendor.net'
@@ -29,7 +30,7 @@ detection:
       - 'cmd.exe'
       - 'wmic.exe'
   file_transfers:
-  EventID: 11
+  EventID:
   TargetFilename|endswith:
       - '.exe'
       - '.dll'
@@ -40,7 +41,7 @@ detection:
       - 'sftp.exe'
       - 'ftp.exe'
   process_creation:
-  EventID: 1
+  EventID:
   ParentProcessName|contains:
       - 'ssh.exe'
       - 'putty.exe'

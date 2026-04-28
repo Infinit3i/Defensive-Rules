@@ -1,7 +1,8 @@
 title: Microsoft 365 Suspicious Login Pattern
 id: e4f8a2b1-5c9d-4e3f-8a7b-1c2d3e4f5a6b
 status: experimental
-description: Detects suspicious login patterns in Microsoft 365 indicating potential account compromise
+description: >-
+  Detects suspicious login patterns in Microsoft 365 indicating potential account compromise
 author: Infinit3i
 date: 2026/04/27
 tags:
@@ -14,14 +15,14 @@ logsource:
   service: audit
 detection:
   selection_signin:
-    Operation: UserLoggedIn
+  Operation:
   selection_suspicious:
-    - DeviceDetail.isCompliant: false
-    - IPAddress|startswith:
+      - DeviceDetail.isCompliant: false
+      - IPAddress|startswith:
       - '10.'
       - '192.168.'
       - '172.'
-    - UserAgent|contains:
+      - UserAgent|contains:
       - 'curl'
       - 'python'
       - 'bot'

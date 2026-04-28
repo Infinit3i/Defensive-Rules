@@ -2,7 +2,8 @@ title: Deepfake-Based Business Email Compromise
 technique: T1566
 id: 8a3f5e2b-6c9d-7e4f-3a8b-5e2f9c6d4a7e
 status: experimental
-description: Detects deepfake-based business email compromise attacks using AI-generated audio/video content, voice cloning, and synthetic media for social engineering and financial fraud.
+description: >-
+  Detects deepfake-based business email compromise attacks using AI-generated audio/video content, voice cloning, and synthetic media for social engineering and financial fraud.
 author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
@@ -14,12 +15,12 @@ logsource:
   service: sysmon
 detection:
   selection_ai_tools:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\python.exe'
       - '\ffmpeg.exe'
       - '\audacity.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'deepfake'
       - 'voice_clone'
       - 'speech_synthesis'
@@ -30,65 +31,65 @@ detection:
       - 'faceswap'
       - 'deepvoice'
   selection_media_generation:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID:
+  TargetFilename|endswith:
       - '.wav'
       - '.mp3'
       - '.mp4'
       - '.avi'
       - '.mov'
-    Image|contains:
+  Image|contains:
       - 'synthesis'
       - 'generate'
       - 'clone'
       - 'fake'
   selection_email_clients:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\outlook.exe'
       - '\thunderbird.exe'
       - '\mailbird.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'attach'
       - 'send'
       - 'compose'
   selection_recording_tools:
-    EventID: 1
-    Image|contains:
+  EventID:
+  Image|contains:
       - 'record'
       - 'capture'
       - 'screen'
       - 'audio'
-    CommandLine|contains:
+  CommandLine|contains:
       - '--audio'
       - '--video'
       - '--microphone'
       - '--camera'
   selection_browser_activity:
-    EventID: 1
-    Image|endswith:
+  EventID:
+  Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'webrtc'
       - 'getUserMedia'
       - 'mediaRecorder'
   selection_network_upload:
-    EventID: 3
-    DestinationPort:
+  EventID:
+  DestinationPort:
       - 443
       - 587
       - 993
       - 995
-    Initiated: true
-    Image|contains:
+  Initiated:
+  Image|contains:
       - 'mail'
       - 'smtp'
       - 'email'
   selection_suspicious_files:
-    EventID: 11
-    TargetFilename|contains:
+  EventID:
+  TargetFilename|contains:
       - 'voice_'
       - 'audio_'
       - 'video_'
@@ -96,26 +97,20 @@ detection:
       - 'synthetic_'
       - 'generated_'
       - 'cloned_'
-  condition: (selection_ai_tools and selection_media_generation) or
-               (selection_email_clients and selection_suspicious_files) or
-               (selection_recording_tools and selection_browser_activity and selection_network_upload)
+  condition: |
+    (selection_ai_tools and selection_media_generation) or
+    (selection_email_clients and selection_suspicious_files) or
+    (selection_recording_tools and selection_browser_activity and selection_network_upload)
 level: critical
 tags:
-  # MITRE ATT&CK tactic
   - attack.impact
-  # MITRE ATT&CK technique
   - attack.t1566
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.impact
-  - attack.t1566
   - attack.t1566.001
   - attack.t1566.002
   - attack.t1598
   - attack.social_engineering
-  - sysmon
-  - windows
   - deepfake
   - business_email_compromise
   - synthetic_media

@@ -4,23 +4,16 @@ technique: T1567.001
 id: f4a8e6c9-3b5d-4e7f-f4a8-6e9c3b5d7f4b
 status: experimental
 description: >-
-  Detects data exfiltration to code repositories by monitoring for suspicious
-  uploads to GitHub, GitLab, or other version control platforms that may
-  be used to exfiltrate sensitive data disguised as code commits.
+  >- Detects data exfiltration to code repositories by monitoring for suspicious uploads to GitHub, GitLab, or other version control platforms that may be used to exfiltrate sensitive data disguised as code commits.
 references:
   - https://attack.mitre.org/techniques/T1567/001/
 author: Infinit3i
 date: 2026-04-27
 tags:
-  # MITRE ATT&CK tactic
   - attack.exfiltration
-  # MITRE ATT&CK technique
   - attack.t1567.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.exfiltration
-  - attack.t1567.001
   - code_repository
   - git
   - version_control
@@ -29,18 +22,18 @@ logsource:
   service: http
 detection:
   git_hosts:
-  host|endswith:
+    host|endswith:
       - '.github.com'
       - '.gitlab.com'
       - '.bitbucket.org'
       - '.sourceforge.net'
-  large_push:
-  method: 'POST'
-  request_body_len|gte: 10000000
-  uri|contains: 'git'
-  suspicious_commit:
-  method: 'POST'
-  uri|contains:
+    large_push:
+    method:
+    request_body_len|gte:
+    uri|contains:
+    suspicious_commit:
+    method:
+    uri|contains:
       - '/upload'
       - '/commit'
       - '/push'

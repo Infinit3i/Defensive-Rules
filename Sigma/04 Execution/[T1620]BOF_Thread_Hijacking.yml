@@ -14,39 +14,40 @@ logsource:
   service: sysmon
 detection:
   sel_thread_access:
-    EventID: 8
-    TargetImage|endswith:
+  EventID:
+  TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
       - '\lsass.exe'
-    GrantedAccess:
+  GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
   sel_thread_create:
-    EventID: 8
-    NewThreadId: '*'
-    StartAddress|contains: 'UNKNOWN'
+  EventID:
+  NewThreadId:
+  StartAddress|contains:
   sel_context_apis:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'SuspendThread'
       - 'SetThreadContext'
       - 'ResumeThread'
       - 'GetThreadContext'
   sel_memory_access:
-    EventID: 10
-    CallTrace|contains:
+  EventID:
+  CallTrace|contains:
       - 'SetThreadContext'
       - 'UNKNOWN'
-    GrantedAccess: '0x1F0FFF'
+  GrantedAccess:
   sel_injection_pattern:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'OpenThread'
       - 'VirtualAllocEx'
       - 'WriteProcessMemory'
-  condition: (sel_thread_access and sel_thread_create) or
-               (sel_context_apis and sel_memory_access) or
-               sel_injection_pattern
+  condition: |
+    (sel_thread_access and sel_thread_create) or
+    (sel_context_apis and sel_memory_access) or
+    sel_injection_pattern
 falsepositives:
   - Thread debugging in development environments
   - Process monitoring security tools

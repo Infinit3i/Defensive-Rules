@@ -14,20 +14,20 @@ logsource:
   service: admin
 detection:
   selection_audit_disable:
-  event_name: CHANGE_APPLICATION_SETTING
-  application_name: 'Admin console'
+  event_name:
+  application_name:
   setting_name|contains:
       - 'audit'
       - 'logging'
       - 'security'
   selection_retention_change:
-  event_name: CHANGE_APPLICATION_SETTING
+  event_name:
   setting_name|contains:
       - 'retention'
       - 'delete'
       - 'purge'
   selection_admin_privilege:
-  event_name: ASSIGN_ROLE
+  event_name:
   role_name|contains:
       - 'Super Admin'
       - 'Security'

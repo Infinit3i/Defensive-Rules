@@ -12,15 +12,15 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-    EventID: 7
-    ImageLoaded|contains: 'advapi32.dll'
+  EventID:
+  ImageLoaded|contains:
   selection_process_access:
-    EventID: 10
-    CallTrace|contains:
+  EventID:
+  CallTrace|contains:
       - 'SetThreadToken'
       - 'ImpersonateLoggedOnUser'
       - 'DuplicateTokenEx'
-    GrantedAccess:
+  GrantedAccess:
       - '0x1478'
       - '0x1400'
   condition: selection_image_load and selection_process_access
@@ -29,15 +29,8 @@ falsepositives:
   - System processes
 level: medium
 tags:
-  # MITRE ATT&CK tactic
   - attack.privilege_escalation
-  # MITRE ATT&CK technique
   - attack.t1134.001
-  # Platform/tool tags
   - windows
   - sysmon
-  - attack.privilege_escalation
-  - attack.t1134.001
   - attack.defense_evasion
-  - sysmon
-  - windows
