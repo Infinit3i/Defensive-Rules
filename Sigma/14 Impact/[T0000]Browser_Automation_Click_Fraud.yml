@@ -78,15 +78,8 @@ falsepositives:
   - QA automation
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t0000
-    # Platform/tool tags
-    - windows
-    - sysmon
   - attack.impact
   - attack.t0000
-  - sysmon
   - windows
+  - sysmon
   - click-fraud
