@@ -30,7 +30,7 @@ detection:
             - '.xlsx'
     condition: selection_delete or
                (selection_file_count and
-                #selection_file_count > 50)
+                # selection_file_count > 50)
     timeframe: 10m
 level: high
 tags:

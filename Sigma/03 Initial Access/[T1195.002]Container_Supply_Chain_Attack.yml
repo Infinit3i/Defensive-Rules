@@ -24,7 +24,7 @@ detection:
             - ':latest'
             - ':main'
             - ':master'
-        # Using mutable tags instead of specific versions
+            # Using mutable tags instead of specific versions
     selection_privileged_containers:
         verb: 'create'
         objectRef.resource: 'pods'

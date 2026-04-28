@@ -57,15 +57,10 @@ falsepositives:
   - Load testing
 level: medium
 tags:
-    # MITRE ATT&CK tactic
-    - attack.impact
-    # MITRE ATT&CK technique
-    - attack.t0000
-    # Platform/tool tags
-    - windows
-    - sysmon
   - attack.impact
   - attack.t0000
+  - windows
+  - sysmon
   - zeek
   - network
   - click-fraud

@@ -15,7 +15,6 @@ detection:
             - 'copy'
             - 'move'
             - 'type'
-        CommandLine|contains:
             - 'index.html'
             - 'index.php'
             - 'default.asp'
