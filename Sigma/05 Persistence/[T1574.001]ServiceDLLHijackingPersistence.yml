@@ -1,0 +1,71 @@
+---
+title: Service DLL Hijacking Persistence
+technique: T1574.001
+id: d4e5f678-9012-3456-789a-bcdef0123456
+status: experimental
+description: Detects DLL hijacking attempts targeting Windows services for persistence
+author: Infinit3i
+date: 2026-04-27
+references:
+    - https://attack.mitre.org/techniques/T1574/001/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    dll_creation:
+        EventID: 11
+        TargetFilename|contains:
+            - '\System32\'
+            - '\SysWOW64\'
+        TargetFilename|endswith: '.dll'
+    service_dll_load:
+        EventID: 7
+        ImageLoaded|contains:
+            - '\System32\'
+            - '\SysWOW64\'
+        ImageLoaded|endswith: '.dll'
+    suspicious_dll_creation:
+        EventID: 11
+        TargetFilename|contains:
+            - '\System32\wbem\'
+            - '\System32\WindowsPowerShell\'
+            - '\System32\config\systemprofile\'
+        TargetFilename|endswith: '.dll'
+    service_modification:
+        EventID: 1
+        CommandLine|contains:
+            - 'sc config'
+            - 'reg add'
+        CommandLine|contains|all:
+            - 'ServiceDll'
+            - '.dll'
+    condition: (dll_creation and service_dll_load) or
+               suspicious_dll_creation or
+               service_modification
+fields:
+    - TargetFilename
+    - ImageLoaded
+    - Image
+    - CommandLine
+    - ProcessId
+    - User
+    - ComputerName
+falsepositives:
+    - Software installations and updates
+    - System file repairs
+    - Security software operations
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1574.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1574
+    - attack.t1574.001
+    - windows
+    - sysmon

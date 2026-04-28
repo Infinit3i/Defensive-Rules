@@ -1,5 +1,6 @@
 ---
 title: Windows Remote Management Service Abuse
+technique: T1028
 id: a4c8f7e3-9b5d-4e6f-a4c8-7f3e9b5d6a4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   malicious use of remote management capabilities for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1028/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1028
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1028
   - winrm

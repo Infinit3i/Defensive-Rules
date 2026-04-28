@@ -1,5 +1,6 @@
 ---
 title: Data Collection from Confluence Repositories
+technique: T1213.002
 id: d4a7f9e5-8c2b-4e6f-d4a7-9f5e8c2b6d4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   content retrieval that may indicate data harvesting.
 references:
   - https://attack.mitre.org/techniques/T1213/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1213.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.collection
   - attack.exfiltration
   - attack.t1213.002

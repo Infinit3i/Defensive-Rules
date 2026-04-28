@@ -1,5 +1,6 @@
 ---
 title: Supply Chain Compromise Software Installation
+technique: T1195.001
 id: f2c8e4a1-9b7d-4e6c-a3f8-5d2b9e1c7a4f
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   processes with suspicious digital signatures.
 references:
   - https://attack.mitre.org/techniques/T1195/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1195.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1195.001
   - supply_chain

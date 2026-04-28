@@ -1,4 +1,6 @@
 title: Supply Chain Compromise Indicators Detection
+technique: T1195.002
+author: Infinit3i
 id: b8a4f6c2-7d9e-4b3a-8f1c-5e7a9b2d4c6f
 status: experimental
 description: Detects indicators of supply chain compromises including suspicious software updates, package managers, and trusted binary modifications
@@ -108,6 +110,13 @@ falsepositives:
   - Development environment activities
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1195.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1195.002
   - attack.defense_evasion

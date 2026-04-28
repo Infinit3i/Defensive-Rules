@@ -1,5 +1,6 @@
 ---
 title: BOF Command and Control Beaconing Patterns
+technique: T1071.001
 id: a1b2c3d4-e5f6-7890-bcde-f23456789012
 status: experimental
 description: >
@@ -8,7 +9,7 @@ description: >
 references:
   - https://attack.mitre.org/techniques/T1071.001/
   - https://www.cobaltstrike.com/help-malleable-c2
-author: Defensive Rules Project
+author: Infinit3i
 date: 2026/04/27
 logsource:
   category: network
@@ -51,6 +52,13 @@ falsepositives:
   - CDN and analytics traffic
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.001
   - network

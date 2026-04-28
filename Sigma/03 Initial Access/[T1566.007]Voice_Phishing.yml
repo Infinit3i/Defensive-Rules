@@ -1,5 +1,6 @@
 ---
 title: Voice Phishing (Vishing) Attack Detection
+technique: T1566.007
 id: a6e2f9c4-7d8b-4e3f-c1a5-8f2e9c6d4a7b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   communication that may lead to credential disclosure or system access.
 references:
   - https://attack.mitre.org/techniques/T1566/007/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1566.007
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1566.007
   - voice

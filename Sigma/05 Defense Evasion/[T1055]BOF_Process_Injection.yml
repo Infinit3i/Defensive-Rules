@@ -1,5 +1,6 @@
 ---
 title: BOF Process Injection and Memory Manipulation
+technique: T1055
 id: b1c2d3e4-f5a6-7890-cdef-345678901234
 status: experimental
 description: >
@@ -8,7 +9,7 @@ description: >
 references:
   - https://attack.mitre.org/techniques/T1055/
   - https://www.cobaltstrike.com/help-process-injection
-author: Defensive Rules Project
+author: Infinit3i
 date: 2026/04/27
 logsource:
   category: process_access
@@ -59,6 +60,13 @@ falsepositives:
   - Debugging applications
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1055
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1055
   - attack.t1055.001

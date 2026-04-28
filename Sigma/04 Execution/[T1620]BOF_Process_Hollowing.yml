@@ -1,0 +1,60 @@
+---
+title: BOF Process Hollowing Technique Detection
+technique: T1620
+id: f009e975-7ab9-442c-afce-518c0a2dac2f
+status: experimental
+description: Detects BOF process hollowing through memory manipulation patterns
+references:
+    - https://attack.mitre.org/techniques/T1055/012/
+    - https://attack.mitre.org/techniques/T1620/
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_create_proc:
+        EventID: 1
+        Image|endswith:
+            - '\svchost.exe'
+            - '\explorer.exe'
+            - '\notepad.exe'
+        ParentCommandLine|contains:
+            - 'CREATE_SUSPENDED'
+            - 'SUSPENDED'
+    sel_mem_write:
+        EventID: 10
+        TargetImage|endswith:
+            - '\svchost.exe'
+            - '\explorer.exe'
+            - '\notepad.exe'
+        GrantedAccess:
+            - '0x1F0FFF'
+            - '0x143A'
+        CallTrace|contains: 'UNKNOWN'
+    sel_thread_resume:
+        EventID: 8
+        TargetImage|endswith:
+            - '\svchost.exe'
+            - '\explorer.exe'
+            - '\notepad.exe'
+    sel_apis:
+        CommandLine|contains:
+            - 'NtUnmapViewOfSection'
+            - 'VirtualAllocEx'
+            - 'WriteProcessMemory'
+            - 'ResumeThread'
+    condition: sel_create_proc and sel_mem_write and
+               (sel_thread_resume or sel_apis)
+falsepositives:
+    - Debuggers and process analysis tools
+    - Some antivirus software behavior
+level: high
+tags:
+    - attack.execution
+    - attack.t1620
+    - attack.t1055.012
+    - windows
+    - sysmon
+    - cobalt_strike
+    - bof

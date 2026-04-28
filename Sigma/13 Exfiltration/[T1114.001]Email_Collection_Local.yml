@@ -1,5 +1,6 @@
 ---
 title: Local Email Collection Detection
+technique: T1114.001
 id: f9c6e4a7-8b3d-4e5f-f9c6-4e7a8b3d5f9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   attempts to collect email data for exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1114/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1114.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.collection
   - attack.exfiltration
   - attack.t1114.001

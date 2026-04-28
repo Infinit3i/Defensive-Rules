@@ -1,5 +1,7 @@
 ---
 title: Detect Scanning or IPsec Probing via Public IPs or Port 500
+technique: T1046
+author: Infinit3i
 id: 2d8dc2ac-01f4-45be-a72d-cccf594e0155
 description: Detects external IP scans or use of port 500 (commonly used for ISAKMP/IPsec VPNs), indicating reconnaissance or tunneling attempts.
 status: experimental
@@ -31,6 +33,13 @@ falsepositives:
   - Monitoring services scanning external hosts
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1046
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1046
   - volt_typhoon

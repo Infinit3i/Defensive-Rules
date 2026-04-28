@@ -1,0 +1,52 @@
+---
+title: Registry Run Keys Persistence Detection
+technique: T1547.001
+id: a7d2f8c9-5b3e-4f1a-9d8c-2e6b7a4f9c1d
+status: experimental
+description: Detects suspicious modifications to registry Run keys for persistence through Sysmon Event ID 13
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_runkeys:
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce\'
+  filter_legitimate:
+    Details|contains:
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - 'C:\Windows\System32\'
+  condition: selection_event and selection_runkeys and not filter_legitimate
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Legitimate software installations
+  - System updates and patches
+  - Antivirus software persistence
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1547.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.001
+  - sysmon
+  - windows

@@ -1,9 +1,10 @@
 ---
 title: Sleep-Based Sandbox Evasion Techniques
+technique: T1497.003
 id: d1e2f3g4-h5i6-7890-abcd-222222222222
 status: experimental
 description: Detects sleep-based sandbox evasion
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -23,6 +24,13 @@ falsepositives:
   - Backup operations
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense-evasion
   - attack.t1497.003
   - sysmon

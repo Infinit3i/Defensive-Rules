@@ -1,5 +1,6 @@
 ---
 title: Authentication Certificate Theft or Forgery
+technique: T1649
 id: a8f5c9e4-7b2d-4e6f-a8f5-9c4e7b2d6a8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   certificate abuse that may be used for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1649/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1649
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.credential_access
   - attack.t1649

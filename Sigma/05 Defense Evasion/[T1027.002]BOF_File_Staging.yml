@@ -1,0 +1,59 @@
+---
+title: BOF File System Staging and Obfuscation
+technique: T1027.002
+id: c7d8e9f0-1a2b-3456-7890-abcdef123456
+status: experimental
+description: Detects BOF file staging through temporary writes and packed payloads
+author: matthewiver@protonmail.com
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1027/002/
+    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    temp_staging:
+        EventID: 11
+        TargetFilename|contains:
+            - '\AppData\Local\Temp\'
+            - '\Windows\Temp\'
+            - '\ProgramData\'
+        TargetFilename|endswith:
+            - '.tmp'
+            - '.dat'
+            - '.bin'
+    packed_files:
+        EventID: 15
+        Hash|contains: 'IMPHASH'
+        TargetFilename|endswith:
+            - '.exe'
+            - '.dll'
+            - '.obj'
+    reflective_load:
+        EventID: 7
+        Signed: 'false'
+        ImageLoaded|contains:
+            - '\AppData\Local\Temp\'
+            - '\Windows\Temp\'
+    condition: (temp_staging and packed_files) or
+               (temp_staging and reflective_load)
+fields:
+    - TargetFilename
+    - ProcessId
+    - Image
+    - Hash
+    - Signed
+falsepositives:
+    - Software installation routines
+    - Windows update processes
+    - Antivirus scanning
+level: medium
+tags:
+    - attack.defense_evasion
+    - attack.t1027.002
+    - bof
+    - file_staging
+    - obfuscation
+    - sysmon
+    - windows

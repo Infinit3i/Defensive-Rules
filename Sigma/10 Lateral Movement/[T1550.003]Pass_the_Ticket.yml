@@ -1,5 +1,6 @@
 ---
 title: Pass the Ticket Attack Detection
+technique: T1550.003
 id: e6b9f2a7-8d5c-4e4f-e6b9-7f2a8d5c4e6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   that may indicate ticket theft and reuse for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1550/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1550.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1550.003
   - pass_the_ticket

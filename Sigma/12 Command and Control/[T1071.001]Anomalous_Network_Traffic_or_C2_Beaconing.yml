@@ -1,5 +1,6 @@
 ---
 title: Anomalous Network Traffic / C2 Beaconing
+technique: T1071.001
 id: fa1b2c3d-4e5f-6789-abcd-ef1234567890
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   sizes, which can indicate command and control communications."
 references:
   - https://attack.mitre.org/techniques/T1071/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.001
 logsource:

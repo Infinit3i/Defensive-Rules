@@ -1,9 +1,11 @@
 ---
 title: WMI Remote Command Execution
+technique: T1047
+
 id: n4o5p6q7-r8s9-0123-4567-890123nopqrs
 status: experimental
 description: Detects WMI being used for remote command execution and lateral movement
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -58,6 +60,20 @@ falsepositives:
   - Monitoring software
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.lateral-movement
   - attack.t1047

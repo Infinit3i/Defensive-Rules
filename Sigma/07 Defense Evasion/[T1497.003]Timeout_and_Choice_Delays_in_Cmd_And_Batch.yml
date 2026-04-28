@@ -1,13 +1,21 @@
 ---
 title: Timeout / choice based long delays in cmd/batch
+technique: T1497.003
 id: 7a0c3e2b-4d5f-4e6a-8b9c-1d2e3f4a5b6c
 status: experimental
 description: Detect use of `timeout`, `choice` or other cmd-based delay constructs with long durations frequently used to bypass sandbox time windows.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1497/003/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1497.003
   - tactic.defense-evasion
   - platform:windows

@@ -1,5 +1,6 @@
 ---
 title: Drive-by Compromise Detection
+technique: T1189
 id: e7f2c9a4-8b5d-4e1f-a3c6-9f2e7d8c4a1b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   that may lead to initial system compromise.
 references:
   - https://attack.mitre.org/techniques/T1189/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1189
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1189
   - browser

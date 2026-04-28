@@ -1,8 +1,10 @@
 title: Hardware Fingerprinting and System Artifact Evasion
+technique: T1497.001
+
 id: e7b4c5d8-f2a9-4e1c-8d6b-2a3f5e1c4b7d
 status: experimental
 description: Detects attempts to evade detection by manipulating or checking hardware fingerprints and system artifacts
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1497/001/
@@ -91,6 +93,20 @@ falsepositives:
   - Performance monitoring applications
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1497
   - attack.t1497.001

@@ -333,37 +333,6 @@ body {
     margin-bottom: 1rem;
 }
 
-.rule-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.copy-btn {
-    background: transparent;
-    border: 1px solid #30363d;
-    color: #8b949e;
-    padding: 0.3rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    transform: scale(0.9);
-}
-
-.rule-card:hover .copy-btn {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.copy-btn:hover {
-    background: #30363d;
-    color: #58a6ff;
-    border-color: #58a6ff;
-}
 
 .detection-header {
     display: flex;
@@ -390,6 +359,21 @@ body {
 .detection-copy-btn:hover {
     background: #58a6ff;
     color: #0d1117;
+}
+
+/* Vue Modal Transitions - Morphing Animation */
+.modal-enter-active,
+.modal-leave-active {
+    transition: none; /* Handled by JS transition hooks */
+}
+
+.modal-overlay {
+    transition: opacity 0.3s ease;
+}
+
+.modal {
+    transition: none; /* Handled by JS transition hooks */
+    transform-origin: center center;
 }
 
 /* Mobile Styles */
@@ -590,6 +574,61 @@ body {
 }
 
 .rule-description {
+    font-size: 0.85rem;
+    color: #8b949e;
+    line-height: 1.4;
+    margin: 1rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.rule-info-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.info-btn {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #e0e0e0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.3rem;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: all 0.3s ease;
+}
+
+.technique-btn {
+    border-color: #f85149;
+    color: #f85149;
+}
+
+.product-btn {
+    border-color: #7c3aed;
+    color: #7c3aed;
+}
+
+.service-btn {
+    border-color: #059669;
+    color: #059669;
+}
+
+.status-btn {
+    border-color: #d97706;
+    color: #d97706;
+}
+
+.info-btn i {
+    font-size: 0.7rem;
+}
+
+.rule-description {
     color: #e0e0e0;
     font-size: 0.9rem;
     line-height: 1.5;
@@ -671,6 +710,7 @@ body {
     max-width: 700px;
     max-height: 80vh;
     overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
 }
 
@@ -709,6 +749,10 @@ body {
 
 .modal-content {
     padding: 1.5rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .rule-details {
@@ -730,8 +774,11 @@ body {
 
 .detail-row ul {
     list-style: none;
-    margin-left: 1rem;
+    margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .detail-row li {

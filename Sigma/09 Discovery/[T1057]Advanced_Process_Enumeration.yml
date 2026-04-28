@@ -1,9 +1,10 @@
 ---
 title: Advanced Process Enumeration and Discovery
+technique: T1057
 id: h8i9j0k1-l2m3-4567-8901-234567hijklm
 status: experimental
 description: Detects advanced process enumeration techniques beyond basic tasklist
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -60,6 +61,13 @@ falsepositives:
   - System monitoring tools
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1057
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1057
   - sysmon

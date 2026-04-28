@@ -1,0 +1,61 @@
+---
+title: Accessibility Feature Hijacking Persistence
+technique: T1546.008
+id: f3c8d5a7-1b9e-4f6a-8c2d-5e7f9a1c4b8d
+status: experimental
+description: Detects hijacking of accessibility features for persistence through registry or file system modifications
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_registry:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Magnify.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
+  selection_file:
+    EventID: 11
+    TargetFilename|contains:
+      - '\Windows\System32\sethc.exe'
+      - '\Windows\System32\utilman.exe'
+      - '\Windows\System32\osk.exe'
+      - '\Windows\System32\Magnify.exe'
+      - '\Windows\System32\Narrator.exe'
+      - '\Windows\System32\DisplaySwitch.exe'
+  filter_system:
+    Image|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+  condition: (selection_registry or selection_file) and not filter_system
+fields:
+  - Image
+  - TargetObject
+  - TargetFilename
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - System updates and patches
+  - Accessibility software configuration
+  - Administrative debugging setups
+level: critical
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1546.008
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.t1546
+  - attack.t1546.008
+  - sysmon
+  - windows

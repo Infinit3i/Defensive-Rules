@@ -1,0 +1,51 @@
+---
+title: Logon Script Persistence Detection
+technique: T1037.001
+id: c8e9f1a2-4d6b-3c5e-9f2a-1b7d8e3c6f9a
+status: experimental
+description: Detects suspicious logon script persistence through registry modifications or GPO changes
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_logonscript:
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\UserInitMprLogonScript'
+      - '\SOFTWARE\Policies\Microsoft\Windows\System\Scripts\Logon\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Logon\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Shell'
+  filter_gpo:
+    Image|contains:
+      - 'C:\Windows\System32\GroupPolicy\'
+      - 'C:\Windows\System32\gpupdate.exe'
+  condition: selection_event and selection_logonscript and not filter_gpo
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Group Policy updates
+  - Legitimate domain logon scripts
+  - Administrative configuration changes
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1037.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.t1037
+  - attack.t1037.001
+  - sysmon
+  - windows

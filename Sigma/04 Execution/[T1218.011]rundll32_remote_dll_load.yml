@@ -1,9 +1,11 @@
 ---
 title: Rundll32 Loading Remote or Non-System DLLs
+technique: T1218.011
+
 id: 9c2a7a3e-2b11-46c7-8123-bbbb4444cccc
 status: experimental
 description: Detects rundll32.exe loading DLLs from non-standard directories, network shares, or remote URLs, which may indicate lateral movement or execution of malicious code.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1218/011/
@@ -29,6 +31,20 @@ falsepositives:
   - Legitimate DLLs loaded from shared drives in enterprise environments
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.T1218
   - attack.T1218.011
   - execution

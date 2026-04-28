@@ -1,5 +1,6 @@
 ---
 title: Data Exfiltration Over Bluetooth
+technique: T1011.001
 id: f6c8e4a9-7b5d-4e3f-f6c8-4e9a7b5d3f6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   Bluetooth-enabled devices that may bypass network monitoring.
 references:
   - https://attack.mitre.org/techniques/T1011/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1011.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1011.001
   - bluetooth

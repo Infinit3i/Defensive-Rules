@@ -1,5 +1,6 @@
 ---
 title: Unauthorized Cron Job Creation
+technique: T1053
 id: e9c71683-79f8-40c0-93e4-1234567890ab
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   or 'crontab: installing for', which may signal unauthorized cron job creation."
 references:
   - https://attack.mitre.org/techniques/T1053/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1053
+    # Platform/tool tags
+    - windows
+    - sysmon
   - job.creation
   - attack.t1053
 logsource:

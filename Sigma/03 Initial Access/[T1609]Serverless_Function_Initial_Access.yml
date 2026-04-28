@@ -1,4 +1,6 @@
 title: Serverless Function Abuse for Initial Access
+technique: T1609
+author: Infinit3i
 id: f20d37b8-6789-9012-3456-789abcdef012
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -73,6 +75,13 @@ falsepositives:
     - Administrative functions requiring elevated access
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1609
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1609
     - attack.execution

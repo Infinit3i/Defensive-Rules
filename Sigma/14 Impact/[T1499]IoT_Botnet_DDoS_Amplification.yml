@@ -1,8 +1,9 @@
 title: IoT Botnet Recruitment and DDoS Amplification
+technique: T1499
 id: 2f7e9a4b-8c5d-6e3f-4a2f-7e9a5c8d6b3f
 status: experimental
 description: Detects IoT device recruitment into botnets and DDoS amplification attacks targeting DNS, NTP, SSDP, and other UDP-based services for traffic amplification and infrastructure disruption.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -69,6 +70,13 @@ detection:
                (selection_amplification_dns or selection_amplification_ntp or selection_amplification_ssdp) and selection_mass_targeting
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1499
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1499
     - attack.t1499.004

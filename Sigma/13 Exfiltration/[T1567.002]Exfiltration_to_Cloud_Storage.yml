@@ -1,5 +1,6 @@
 ---
 title: Exfiltration to Cloud Storage
+technique: T1567.002
 id: a3f7e9c5-8b4d-4e6f-a3f7-9e5c8b4d6a3b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   that may be used to exfiltrate sensitive organizational data.
 references:
   - https://attack.mitre.org/techniques/T1567/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1567.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1567.002
   - cloud_storage

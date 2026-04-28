@@ -1,5 +1,6 @@
 ---
 title: Suspicious Domain Token Theft or Impersonation
+technique: T1134
 id: 12345678-9abc-def0-1234-56789abcdef0
 status: experimental
 description: >
@@ -9,9 +10,16 @@ description: >
   credential or token theft.
 references:
   - https://attack.mitre.org/techniques/T1134/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1134
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.privilege_escalation
   - attack.credential_access
   - attack.t1134

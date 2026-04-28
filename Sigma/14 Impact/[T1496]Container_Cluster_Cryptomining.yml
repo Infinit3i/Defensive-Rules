@@ -1,8 +1,9 @@
 title: Container Cluster Compromise and Cryptocurrency Mining
+technique: T1496
 id: 9b4e6f2a-7c8d-3e5f-1a9b-4d6e8f2c5a7b
 status: experimental
 description: Detects container cluster compromise for cryptocurrency mining. Monitors unauthorized deployments and resource hijacking.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -81,6 +82,13 @@ detection:
                (selection_container_tools and selection_resource_requests and selection_network_mining)
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1496
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1496
     - attack.resource_hijacking

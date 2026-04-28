@@ -1,5 +1,7 @@
 ---
 title: Detect ICMP-Based FRPC Communication
+technique: T1095
+author: Infinit3i
 id: 49e5a81b-f83d-4c26-aeaa-6b423d678c2c
 description: Detects ICMP echo request and reply traffic which may indicate FRPC tunneling behavior for C2 using non-application layer protocols.
 status: experimental
@@ -23,6 +25,13 @@ falsepositives:
   - Legitimate ping traffic
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1095
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1095
   - volt_typhoon

@@ -1,0 +1,51 @@
+---
+title: BOF Memory Allocation Pattern Detection
+technique: T1620
+id: b3f8df4a-ea80-488b-b427-da0385fc0540
+status: experimental
+description: Detects BOF execution memory allocation patterns and RWX regions
+references:
+    - https://attack.mitre.org/techniques/T1620/
+    - https://www.elastic.co/guide/en/security/current/bof-detection.html
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_process:
+        EventID: 1
+        ParentImage|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\rundll32.exe'
+    sel_memory:
+        EventID: 10
+        GrantedAccess:
+            - '0x1F0FFF'
+            - '0x40'
+            - '0x20'
+        CallTrace|contains: 'UNKNOWN'
+    sel_alloc_pattern:
+        CommandLine|contains:
+            - 'VirtualAlloc'
+            - 'VirtualProtect'
+            - 'NtAllocateVirtualMemory'
+            - 'PAGE_EXECUTE_READWRITE'
+    sel_size_pattern:
+        CommandLine|re: '.*VirtualAlloc.*0x[0-9A-Fa-f]{4,}.*'
+    condition: sel_process and sel_memory and
+               (sel_alloc_pattern or sel_size_pattern)
+falsepositives:
+    - JIT compilation in .NET applications
+    - Browser JIT engines
+    - Legitimate debugging sessions
+level: medium
+tags:
+    - attack.execution
+    - attack.t1620
+    - attack.t1055
+    - windows
+    - sysmon
+    - cobalt_strike
+    - bof

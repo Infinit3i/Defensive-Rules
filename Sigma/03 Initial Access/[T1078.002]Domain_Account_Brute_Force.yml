@@ -1,5 +1,6 @@
 ---
 title: Domain Account Brute Force Attack
+technique: T1078.002
 id: d7a3e5f2-8c1b-4f6e-a9d4-2b7c6e3f1a8d
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   from the same source IP or user account.
 references:
   - https://attack.mitre.org/techniques/T1078/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1078.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.credential_access
   - attack.t1078.002

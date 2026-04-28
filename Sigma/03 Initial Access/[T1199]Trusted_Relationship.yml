@@ -1,5 +1,6 @@
 ---
 title: Trusted Relationship Abuse Detection
+technique: T1199
 id: c9e4f7a2-6b8d-4f1e-a5c3-8f2e9d1c7a6b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   that may indicate compromise of trusted entities.
 references:
   - https://attack.mitre.org/techniques/T1199/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1199
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1199
   - trusted_relationship

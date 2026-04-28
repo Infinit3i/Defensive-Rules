@@ -1,5 +1,6 @@
 ---
 title: Email Service Abuse for Initial Access
+technique: T1566.003
 id: e6b9c4f7-3a8e-4d2c-b1f5-7e4a9c2d8f6b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   compromised or newly created accounts.
 references:
   - https://attack.mitre.org/techniques/T1566/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1566.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1566.003
   - email

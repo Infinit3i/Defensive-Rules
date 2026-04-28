@@ -1,5 +1,6 @@
 ---
 title: Unusual File Access or Modification
+technique: T1070.004
 id: d4c3b2a1-5678-4def-9abc-abcdef123456
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   files or directories (e.g., /etc/passwd, /etc/shadow, /etc/sudoers, /etc/group, /var/log), which may signal potential indicator removal or tampering.
 references:
   - https://attack.mitre.org/techniques/T1070/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1070.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.indicator_removal
   - attack.t1070.004
 logsource:

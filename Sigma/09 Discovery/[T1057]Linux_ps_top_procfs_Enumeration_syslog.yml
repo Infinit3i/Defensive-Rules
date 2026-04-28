@@ -1,13 +1,21 @@
 ---
 title: Linux ps/top or /proc Enumeration (syslog/audit)
+technique: T1057
 id: a1057a01-1111-4c11-8a57-000000000005
 status: experimental
 description: Detects process discovery on Linux via ps, top in batch mode, pgrep, or reading /proc to list running processes as seen in syslog/audit logs.
 references:
   - https://attack.mitre.org/techniques/T1057/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1057
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1057
   - tactic.discovery
   - platform:linux

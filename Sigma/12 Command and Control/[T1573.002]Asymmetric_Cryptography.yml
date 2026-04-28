@@ -1,5 +1,6 @@
 ---
 title: Command and Control with Asymmetric Cryptography
+technique: T1573.002
 id: f5c8e9a6-4b7d-4e3f-f5c8-9e6a4b7d3f5b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   public key cryptography patterns in C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1573/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1573.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1573.002
   - asymmetric_cryptography

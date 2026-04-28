@@ -1,5 +1,6 @@
 ---
 title: Scheduled Data Transfer Detection
+technique: T1029
 id: c9f5e3a7-8d6b-4e2f-c9f5-3e7a8d6b2c9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   systematically exfiltrate data over time.
 references:
   - https://attack.mitre.org/techniques/T1029/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1029
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1029
   - scheduled_transfer

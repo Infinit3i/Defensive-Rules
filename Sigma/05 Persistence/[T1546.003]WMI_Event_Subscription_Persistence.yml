@@ -1,0 +1,46 @@
+title: WMI Event Subscription Persistence
+technique: T1546.003
+id: 8f4c0b2a-7e9d-4c3b-8f1a-2d5e6f7g8h9i
+status: experimental
+description: Detects WMI event subscription persistence through consumer and filter binding
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_wmi_consumer:
+        EventID: 20
+        Consumer|contains:
+            - 'ActiveScriptEventConsumer'
+            - 'CommandLineEventConsumer'
+            - 'LogFileEventConsumer'
+    sel_wmi_filter:
+        EventID: 19
+        EventNamespace: 'root\subscription'
+    sel_wmi_binding:
+        EventID: 21
+        Consumer|contains:
+            - 'ActiveScript'
+            - 'CommandLine'
+    condition: sel_wmi_consumer or (sel_wmi_filter and sel_wmi_binding)
+falsepositives:
+    - Legitimate system administration scripts
+    - Security monitoring software
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1546.003
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.t1546.003
+    - sysmon
+    - windows
+    - wmi
+references:
+    - https://attack.mitre.org/techniques/T1546/003/
+    - https://learn.microsoft.com/en-us/windows/win32/wmisdk/

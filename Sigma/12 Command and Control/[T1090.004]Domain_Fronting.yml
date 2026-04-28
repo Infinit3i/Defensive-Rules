@@ -1,5 +1,6 @@
 ---
 title: Domain Fronting for Command and Control
+technique: T1090.004
 id: f8c5e9a2-6d4b-4e7f-f8c5-9e2a6d4b7f8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   traffic routing through content delivery networks.
 references:
   - https://attack.mitre.org/techniques/T1090/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1090.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1090.004
   - domain_fronting

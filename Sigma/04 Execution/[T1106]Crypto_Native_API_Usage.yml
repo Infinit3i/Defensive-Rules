@@ -1,9 +1,11 @@
 ---
 title: Cryptographic Native API Usage
+technique: T1106
+
 id: b1c2d3e4-f5g6-7890-abcd-555555555555
 status: experimental
 description: Detects suspicious cryptographic operations via native APIs
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -39,6 +41,20 @@ falsepositives:
   - Digital signature tools
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1106
   - sysmon

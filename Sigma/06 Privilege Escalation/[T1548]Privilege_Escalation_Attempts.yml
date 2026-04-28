@@ -1,5 +1,6 @@
 ---
 title: Privilege Escalation Attempts
+technique: T1548
 id: f87a1b2c-3d4e-5f6a-9b7c-abcdef123456
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   is not in the sudoers file, or failed su attempts."
 references:
   - https://attack.mitre.org/techniques/T1548/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1548
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.privilege_escalation
   - attack.t1548
 logsource:

@@ -1,5 +1,6 @@
 ---
 title: Suspicious Use of ADMIN$ Administrative Share
+technique: T1077
 id: 9a8d3f1e-7c12-45ef-8d9a-123456789abc
 status: experimental
 description: >
@@ -9,9 +10,16 @@ description: >
   related fields reference "ADMIN$".
 references:
     - https://attack.mitre.org/techniques/T1077/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1077
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.lateral_movement
     - attack.t1077
 logsource:

@@ -1,13 +1,21 @@
 ---
 title: System Information Discovery - PowerShell Get-CimInstance / Get-WmiObject / Get-ComputerInfo
+technique: T1082
 id: e0b6b3a7-3a72-49e4-9dce-4f5f2a6c9b3c
 status: experimental
 description: Detect PowerShell commands invoking Get-CimInstance, Get-WmiObject, Get-ComputerInfo or common WMI/Win32 class queries used to enumerate system information.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1082/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1082
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1082
   - tactic.discovery
   - platform:windows

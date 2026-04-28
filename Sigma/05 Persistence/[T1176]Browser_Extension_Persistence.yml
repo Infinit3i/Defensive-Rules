@@ -1,0 +1,52 @@
+title: Malicious Browser Extension Installation
+technique: T1176
+id: b6c7d8e9-f0a1-2b3c-4d5e-6f7890a1b2c3
+status: experimental
+description: Detects browser extension persistence through malicious extension installation
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_chrome_ext:
+        EventID: 11
+        TargetFilename|contains: '\Chrome\User Data\'
+        TargetFilename|endswith: '\manifest.json'
+    sel_firefox_ext:
+        EventID: 11
+        TargetFilename|contains: '\Firefox\Profiles\'
+        TargetFilename|endswith: '.xpi'
+    sel_edge_ext:
+        EventID: 11
+        TargetFilename|contains: '\Edge\User Data\Default\Extensions\'
+    sel_browser_cmd:
+        EventID: 1
+        Image|endswith:
+            - '\chrome.exe'
+            - '\firefox.exe'
+            - '\msedge.exe'
+        CommandLine|contains:
+            - '--load-extension'
+            - '--install-extension'
+            - 'extensions.install'
+    condition: sel_chrome_ext or sel_firefox_ext or sel_edge_ext or sel_browser_cmd
+falsepositives:
+    - Legitimate browser extension installation
+    - Administrative browser configuration
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1176
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.t1176
+    - sysmon
+    - windows
+    - browser
+references:
+    - https://attack.mitre.org/techniques/T1176/

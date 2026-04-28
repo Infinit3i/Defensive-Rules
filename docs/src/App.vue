@@ -7,7 +7,7 @@
             <i class="nf nf-fa-shield"></i>
             Defensive Rules Repository
           </h1>
-          <p class="subtitle">Cybersecurity Detection Rules - Sigma & YARA</p>
+          <p class="subtitle">{{ funnyQuote || 'Cybersecurity Detection Rules - Sigma & YARA' }}</p>
         </div>
         <div class="header-right desktop-only">
           <div class="rule-type-buttons">
@@ -33,7 +33,7 @@
     </div>
   </header>
 
-  <nav class="nav">
+  <nav class="nav" v-if="activeRuleType === 'sigma'">
     <div class="container">
       <!-- Mobile Hamburger -->
       <div class="mobile-nav">
@@ -149,23 +149,15 @@
           v-for="rule in filteredSigmaRules"
           :key="rule.id"
           class="rule-card"
-          @click="selectedRule = rule"
+          :ref="`card-${rule.id}`"
+          @click="openModal(rule, $event)"
         >
           <div class="rule-header">
             <h3 class="rule-title">{{ rule.title }}</h3>
-            <div class="rule-actions">
-              <button
-                class="copy-btn"
-                @click.stop="copyRule(rule)"
-                title="Copy rule"
-              >
-                <i class="nf nf-fa-copy"></i>
-              </button>
-              <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
-            </div>
+            <span class="rule-severity" :class="rule.level">{{ rule.level }}</span>
           </div>
           <div class="rule-meta">
-            <span class="rule-tactic">
+            <span v-if="!selectedTactic" class="rule-tactic">
               <i class="nf nf-fa-crosshairs"></i>
               {{ rule.tactic }}
             </span>
@@ -183,7 +175,8 @@
           v-for="rule in filteredYaraRules"
           :key="rule.name"
           class="rule-card"
-          @click="selectedRule = rule"
+          :ref="`card-${rule.name}`"
+          @click="openModal(rule, $event)"
         >
           <div class="rule-header">
             <h3 class="rule-title">{{ rule.name }}</h3>
@@ -201,15 +194,21 @@
   </main>
 
   <!-- Rule Detail Modal -->
-  <div v-if="selectedRule" class="modal-overlay" @click="selectedRule = null">
-    <div class="modal" @click.stop>
-      <div class="modal-header">
-        <h2>{{ selectedRule.title || selectedRule.name }}</h2>
-        <button class="close-btn" @click="selectedRule = null">
-          <i class="nf nf-fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-content">
+  <Transition
+    name="modal"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @leave="leave"
+  >
+    <div v-if="selectedRule" class="modal-overlay" @click="closeModal">
+      <div class="modal" @click.stop>
+        <div class="modal-header">
+          <h2>{{ selectedRule.title || selectedRule.name }}</h2>
+          <button class="close-btn" @click="closeModal">
+            <i class="nf nf-fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-content">
         <div v-if="selectedRule.title" class="rule-details">
           <div v-if="selectedRule.detection" class="detail-row">
             <div class="detection-header">
@@ -228,20 +227,24 @@
           <div class="detail-row">
             <strong>Description:</strong> {{ selectedRule.description }}
           </div>
-          <div class="detail-row">
-            <strong>Level:</strong> {{ selectedRule.level }}
-          </div>
-          <div class="detail-row">
-            <strong>Technique:</strong> {{ selectedRule.technique }}
-          </div>
-          <div v-if="selectedRule.logsource" class="detail-row">
-            <strong>Log Source:</strong> {{ formatLogSource(selectedRule.logsource) }}
-          </div>
-          <div class="detail-row">
-            <strong>ID:</strong> {{ selectedRule.id }}
-          </div>
-          <div class="detail-row">
-            <strong>Status:</strong> {{ selectedRule.status }}
+
+          <div class="rule-info-buttons">
+            <span class="info-btn technique-btn" v-if="selectedRule.technique">
+              <i class="nf nf-fa-bullseye"></i>
+              {{ selectedRule.technique }}
+            </span>
+            <span class="info-btn product-btn" v-if="selectedRule.logsource?.product">
+              <i class="nf nf-fa-server"></i>
+              {{ selectedRule.logsource.product }}
+            </span>
+            <span class="info-btn service-btn" v-if="selectedRule.logsource?.service">
+              <i class="nf nf-fa-cogs"></i>
+              {{ selectedRule.logsource.service }}
+            </span>
+            <span class="info-btn status-btn">
+              <i class="nf nf-fa-flag"></i>
+              {{ selectedRule.status }}
+            </span>
           </div>
           <div class="detail-row">
             <strong>Author:</strong> {{ selectedRule.author }}
@@ -269,13 +272,14 @@
             <strong>Description:</strong> {{ selectedRule.description }}
           </div>
         </div>
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 interface SigmaRule {
   id: string
@@ -319,6 +323,9 @@ const mobileMenuOpen = ref(false)
 const sigmaRules = ref<SigmaRule[]>([])
 const yaraRules = ref<YaraRule[]>([])
 const loading = ref(true)
+const funnyQuote = ref('')
+const cardRect = ref<DOMRect | null>(null)
+const isAnimating = ref(false)
 const tactics = ref<string[]>([])
 const uniqueTechniques = ref<string[]>([])
 const allLogSources = ref<string[]>([])
@@ -550,7 +557,7 @@ const parseSigmaRule = (yamlContent: string, filename: string, directory: string
       level: rule.level || 'medium',
       author: rule.author || 'Unknown',
       date: rule.date || '',
-      technique: extractTechnique(rule.tags || []),
+      technique: rule.technique || extractTechnique(rule.tags || []),
       tactic: mapTacticFromDirectory(directory),
       tags: rule.tags || [],
       references: rule.references || [],
@@ -613,10 +620,29 @@ const parseSimpleYaml = (yamlContent: string): Record<string, any> => {
         // This is a nested key-value pair
         const [nestedKey, ...nestedValueParts] = line.split(':')
         const nestedValue = nestedValueParts.join(':').trim()
-        nestedObject[nestedKey.trim()] = nestedValue
+        if (nestedValue === '') {
+          // This key expects an array, start collecting it
+          if (!nestedObject[nestedKey.trim()]) {
+            nestedObject[nestedKey.trim()] = []
+          }
+        } else {
+          nestedObject[nestedKey.trim()] = nestedValue
+        }
         inNestedObject = true
       } else {
-        currentValue.push(originalLine)
+        // Handle array items within nested objects
+        if (inNestedObject && line.startsWith('-')) {
+          const arrayItem = line.substring(1).trim().replace(/['"]/g, '')
+          // Find the last key that was added to nestedObject
+          const lastKey = Object.keys(nestedObject)[Object.keys(nestedObject).length - 1]
+          if (lastKey && Array.isArray(nestedObject[lastKey])) {
+            nestedObject[lastKey].push(arrayItem)
+          } else if (lastKey) {
+            nestedObject[lastKey] = [arrayItem]
+          }
+        } else {
+          currentValue.push(originalLine)
+        }
       }
     }
   }
@@ -791,20 +817,20 @@ const formatDetection = (detection: any): string => {
   // Format each section of the detection
   Object.entries(detection).forEach(([key, value], index) => {
     if (key === 'condition') {
-      formatted += `Condition: ${value}`
+      formatted += `\nCondition: ${value}`
     } else {
       formatted += `${key}:`
       if (typeof value === 'object' && value !== null) {
         if (Array.isArray(value)) {
-          value.forEach((item, idx) => {
-            formatted += `\n  [${idx}]: ${item}`
+          value.forEach(item => {
+            formatted += `\n    - '${item}'`
           })
         } else {
           Object.entries(value).forEach(([subKey, subValue]) => {
             if (Array.isArray(subValue)) {
               formatted += `\n  ${subKey}:`
               subValue.forEach(item => {
-                formatted += `\n    - ${item}`
+                formatted += `\n    - '${item}'`
               })
             } else {
               formatted += `\n  ${subKey}: ${subValue}`
@@ -825,15 +851,6 @@ const formatDetection = (detection: any): string => {
   return formatted || 'Detection structure exists but content is empty'
 }
 
-const copyRule = async (rule: SigmaRule): Promise<void> => {
-  try {
-    const content = rule.rawContent || 'Raw content not available'
-    await navigator.clipboard.writeText(content)
-    console.log('Rule copied to clipboard')
-  } catch (err) {
-    console.error('Failed to copy rule:', err)
-  }
-}
 
 const copyDetectionLogic = async (rule: SigmaRule): Promise<void> => {
   try {
@@ -845,8 +862,107 @@ const copyDetectionLogic = async (rule: SigmaRule): Promise<void> => {
   }
 }
 
+const openModal = (rule: SelectedRule, event: Event) => {
+  const target = event.currentTarget as HTMLElement
+  cardRect.value = target.getBoundingClientRect()
+  selectedRule.value = rule
+}
+
+const closeModal = () => {
+  selectedRule.value = null
+  cardRect.value = null
+}
+
+const beforeEnter = (el: Element) => {
+  const element = el as HTMLElement
+  if (!cardRect.value) return
+
+  const modal = element.querySelector('.modal') as HTMLElement
+  if (!modal) return
+
+  const rect = cardRect.value
+  const windowWidth = window.innerWidth
+  const windowHeight = window.innerHeight
+
+  // Calculate transform from card position to center
+  const centerX = windowWidth / 2
+  const centerY = windowHeight / 2
+  const cardCenterX = rect.left + rect.width / 2
+  const cardCenterY = rect.top + rect.height / 2
+
+  const translateX = cardCenterX - centerX
+  const translateY = cardCenterY - centerY
+  const scaleX = rect.width / 700 // Target modal width
+  const scaleY = rect.height / 400 // Target modal height
+
+  // Set initial transform to match card position and size
+  modal.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`
+  modal.style.transformOrigin = 'center center'
+  element.style.opacity = '0'
+}
+
+const enter = (el: Element, done: () => void) => {
+  const element = el as HTMLElement
+  const modal = element.querySelector('.modal') as HTMLElement
+  if (!modal) {
+    done()
+    return
+  }
+
+  // Force reflow
+  element.offsetHeight
+
+  // Animate to center position
+  element.style.opacity = '1'
+  modal.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+  modal.style.transform = 'translate(0, 0) scale(1, 1)'
+
+  setTimeout(done, 800)
+}
+
+const leave = (el: Element, done: () => void) => {
+  const element = el as HTMLElement
+  const modal = element.querySelector('.modal') as HTMLElement
+  if (!modal) {
+    done()
+    return
+  }
+
+  // Animate to small size and fade out
+  modal.style.transition = 'transform 0.4s cubic-bezier(0.55, 0.06, 0.68, 0.19)'
+  modal.style.transform = 'translate(0, 0) scale(0.3, 0.3)'
+  element.style.transition = 'opacity 0.4s ease'
+  element.style.opacity = '0'
+
+  setTimeout(done, 400)
+}
+
+const loadRandomQuote = async (): Promise<void> => {
+  try {
+    const response = await fetch('./assets/funny-quotes.json')
+    const quotes = await response.json()
+    const randomIndex = Math.floor(Math.random() * quotes.length)
+    funnyQuote.value = quotes[randomIndex]
+  } catch (err) {
+    console.warn('Failed to load funny quotes:', err)
+    funnyQuote.value = 'Cybersecurity Detection Rules - Sigma & YARA'
+  }
+}
+
+// Watchers
+watch(selectedRule, (newRule) => {
+  if (newRule) {
+    // Prevent background scrolling when modal is open
+    document.body.style.overflow = 'hidden'
+  } else {
+    // Restore scrolling when modal is closed
+    document.body.style.overflow = ''
+  }
+})
+
 // Lifecycle
 onMounted(async () => {
+  await loadRandomQuote()
   await loadLocalRules()
 })
 </script>

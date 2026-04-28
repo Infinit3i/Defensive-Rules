@@ -1,5 +1,6 @@
 ---
 title: Exfiltration Over Symmetric Encrypted Non-C2 Protocol
+technique: T1048.001
 id: b6f4e8c2-9d7a-4e3f-b6f4-8e2c9d7a3b6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   or large data transfers over encrypted channels.
 references:
   - https://attack.mitre.org/techniques/T1048/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1048.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1048.001
   - encrypted_protocol

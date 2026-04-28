@@ -1,5 +1,6 @@
 ---
 title: Taint Shared Content Detection
+technique: T1080
 id: f6c9e4a7-8d3b-4e5f-a6f9-9e4c8d3b6a7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   used to spread malware or gain access to other systems.
 references:
   - https://attack.mitre.org/techniques/T1080/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1080
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1080
   - shared_content

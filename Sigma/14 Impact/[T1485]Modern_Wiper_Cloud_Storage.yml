@@ -1,8 +1,9 @@
 title: Modern Wiper Malware Targeting Cloud Storage
+technique: T1485
 id: 6e4f7a8b-9c2d-5e3f-7a6e-4f8b2c5d9a3e
 status: experimental
 description: Detects modern wiper malware targeting cloud storage services. Monitors mass file deletion and storage API abuse.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -98,6 +99,13 @@ detection:
                (selection_powershell_destruction and selection_registry_manipulation) or selection_credential_theft
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1485
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1485
     - attack.t1070.004

@@ -1,9 +1,10 @@
 ---
 title: Suspicious WMIC Usage for Remote Process Execution
+technique: T1047
 id: 3c1a1c4b-7c6c-4f5d-bb77-0000aaaawmi1
 status: stable
 description: Detects suspicious use of wmic.exe to spawn processes (e.g., cmd.exe/powershell.exe) locally or on remote hosts using 'process call create'.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1047/
@@ -39,6 +40,13 @@ falsepositives:
   - Legitimate remote admin or software deployment using WMIC
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.T1047
   - execution
   - windows

@@ -1,5 +1,6 @@
 ---
 title: Abnormal Kernel Module Loading
+technique: T1542.007
 id: 2f7e9d45-8c3a-4d5e-bf90-1234567890ab
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   insmod, modprobe) executed from non-standard directories such as /tmp/."
 references:
   - https://attack.mitre.org/techniques/T1542/007/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1542.007
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.persistence
   - attack.t1542.007
 logsource:

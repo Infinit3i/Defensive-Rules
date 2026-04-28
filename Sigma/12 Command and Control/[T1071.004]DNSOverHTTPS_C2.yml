@@ -1,4 +1,6 @@
 title: DNS-over-HTTPS Command and Control Communication
+technique: T1071.004
+author: Infinit3i
 id: 7d3e9b2f-4c8a-4f1e-8d7b-6a5c9e3f2d8a
 status: experimental
 description: Detects potential command and control communication through DNS-over-HTTPS channels with suspicious query patterns
@@ -36,6 +38,13 @@ detection:
   condition: selection_doh_providers and (selection_suspicious_queries or selection_encoded_subdomains or selection_long_queries or selection_txt_records)
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.004
   - attack.t1568.002

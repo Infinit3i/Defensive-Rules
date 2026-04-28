@@ -1,4 +1,6 @@
 title: Legitimate Service Abuse for Command and Control
+technique: T1102.001
+author: Infinit3i
 id: 8e4f7c2d-9a1b-4e3c-8f7a-5b9d6e2c4a8f
 status: experimental
 description: Detects abuse of legitimate services like Discord, Telegram, and GitHub for command and control operations
@@ -43,6 +45,13 @@ detection:
   condition: (selection_discord or selection_telegram or selection_github or selection_pastebin) and selection_suspicious_activity and selection_automated
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1102.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1102.001
   - attack.t1071.001

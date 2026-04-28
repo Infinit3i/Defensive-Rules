@@ -1,8 +1,9 @@
 title: UAC Bypass via ComputerDefaults Registry Manipulation
+technique: T1548.002
 id: 3f4e5d6c-7a8b-9c0d-1e2f-3456789abcde
 status: experimental
 description: Detects UAC bypass using ComputerDefaults.exe registry hijacking
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1548/002/
@@ -27,6 +28,13 @@ falsepositives:
     - Legitimate Windows settings changes
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1548.002
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1548.002
     - attack.defense_evasion

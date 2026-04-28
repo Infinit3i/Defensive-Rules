@@ -1,5 +1,6 @@
 ---
 title: Data Access from Network Shared Drives
+technique: T1039
 id: f3a7e9c5-8b6d-4e2f-f3a7-9e5c8b6d2f3b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   access to sensitive shared resources during lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1039/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1039
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.collection
   - attack.t1039

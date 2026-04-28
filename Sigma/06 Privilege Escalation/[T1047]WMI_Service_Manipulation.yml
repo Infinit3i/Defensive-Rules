@@ -1,0 +1,72 @@
+title: WMI Service Manipulation for Privilege Escalation
+technique: T1047
+id: c3d4e5f6-a7b8-9012-cdef-345678901234
+status: experimental
+description: Detects WMI service creation and modification for privilege escalation
+author: Infinit3i
+date: 2026/04/27
+references:
+    - https://attack.mitre.org/techniques/T1047/
+    - https://attack.mitre.org/techniques/T1543/003/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_service_creation:
+        EventID: 1
+        Image|endswith: '\wmic.exe'
+        CommandLine|contains|all:
+            - 'service'
+            - 'create'
+        CommandLine|contains:
+            - 'binPath='
+            - 'type=own'
+            - 'start=auto'
+    selection_wmi_service_mod:
+        EventID: 1
+        ParentImage|endswith: '\wmiprvse.exe'
+        CommandLine|contains:
+            - 'Win32_Service'
+            - 'Create'
+            - 'Change'
+            - 'StartService'
+    selection_privileged_service:
+        EventID: 1
+        CommandLine|contains|all:
+            - 'wmic'
+            - 'service'
+        CommandLine|contains:
+            - 'LocalSystem'
+            - 'LocalService'
+            - 'NetworkService'
+        User|contains: 'SYSTEM'
+    selection_suspicious_binpath:
+        EventID: 1
+        Image|endswith: '\wmic.exe'
+        CommandLine|contains:
+            - 'binPath= cmd'
+            - 'binPath= powershell'
+            - 'binPath= rundll32'
+            - 'binPath= regsvr32'
+            - 'binPath= mshta'
+    condition: selection_service_creation or selection_wmi_service_mod or
+               (selection_privileged_service and selection_suspicious_binpath)
+falsepositives:
+    - Legitimate service installation scripts
+    - System administration tasks
+    - Software deployment tools
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.privilege_escalation
+    - attack.t1047
+    - attack.t1543.003
+    - attack.persistence
+    - sysmon
+    - windows

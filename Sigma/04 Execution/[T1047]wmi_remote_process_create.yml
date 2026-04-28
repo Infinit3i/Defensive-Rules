@@ -1,9 +1,10 @@
 ---
 title: WMI Win32_Process.Create Executed Remotely (WMI-Activity)
+technique: T1047
 id: 6f2e9b12-3a0a-4b7a-9b31-0000aaaawmi2
 status: experimental
 description: Flags remote WMI method execution of Win32_Process.Create via WMI-Activity Operational log (commonly used for lateral movement).
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1047/
@@ -35,6 +36,13 @@ falsepositives:
   - Approved admin tools that orchestrate software installs or updates via WMI
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.T1047
   - execution
   - windows

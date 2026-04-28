@@ -1,8 +1,9 @@
 title: PowerShell Constrained Language Mode Bypass
+technique: T1562.001
 id: 3e4f5a6b-7c8d-9012-3456-789abcdef012
 status: experimental
 description: Detects PowerShell constrained language mode bypass attempts
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1562/001/
@@ -29,6 +30,13 @@ falsepositives:
     - Security testing
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1562.001
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1562.001
     - attack.defense_evasion

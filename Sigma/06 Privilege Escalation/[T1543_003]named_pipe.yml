@@ -1,5 +1,6 @@
 ---
 title: Service Creation Using a Named Pipe
+technique: T1543.003
 id: 8ca2a7bf-42a1-4d95-8d55-93f4df3b4b7f
 status: experimental
 description: >
@@ -7,7 +8,7 @@ description: >
   Attackers sometimes abuse named pipes when creating malicious services for lateral movement or privilege escalation.
 references:
   - https://attack.mitre.org/techniques/T1543/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
   - attack.privilege_escalation

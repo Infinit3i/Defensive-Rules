@@ -1,5 +1,6 @@
 ---
 title: Malicious Image File Execution
+technique: T1204.003
 id: a3f6e8c9-7b4d-4e2f-c5a8-9f6e8d5c8a4b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   processes launched from image file interactions.
 references:
   - https://attack.mitre.org/techniques/T1204/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1204.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.execution
   - attack.t1204.003

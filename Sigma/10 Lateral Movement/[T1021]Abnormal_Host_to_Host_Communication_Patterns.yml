@@ -1,5 +1,6 @@
 ---
 title: Abnormal Host-to-Host Communication Patterns
+technique: T1021
 id: a123bc45-6789-4def-9012-abcdef987654
 status: experimental
 description: >
@@ -8,9 +9,16 @@ description: >
 references:
   - https://attack.mitre.org/techniques/T1021/
   - https://attack.mitre.org/techniques/T1049/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1021
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.discovery
   - attack.t1021

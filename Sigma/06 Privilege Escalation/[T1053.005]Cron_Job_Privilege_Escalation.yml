@@ -1,8 +1,9 @@
 title: Cron Job Creation for Privilege Escalation
+technique: T1053.005
 id: 4a5b6c7d-8e9f-0123-4567-89012345abcd
 status: experimental
 description: Detects suspicious cron job creation for privilege escalation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1053/005/
@@ -33,6 +34,13 @@ falsepositives:
     - Automated backup scripts
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1053.005
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1053.005
     - attack.persistence

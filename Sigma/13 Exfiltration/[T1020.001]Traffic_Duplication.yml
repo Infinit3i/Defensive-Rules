@@ -1,5 +1,6 @@
 ---
 title: Traffic Duplication for Exfiltration
+technique: T1020.001
 id: e9c7f5a8-2d4b-4e6f-e9c7-5f8a2d4b6e9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   network redirection that may indicate data interception.
 references:
   - https://attack.mitre.org/techniques/T1020/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1020.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1020.001
   - traffic_duplication

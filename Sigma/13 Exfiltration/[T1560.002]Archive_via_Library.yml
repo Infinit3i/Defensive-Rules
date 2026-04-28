@@ -1,5 +1,6 @@
 ---
 title: Data Archiving via Library
+technique: T1560.002
 id: d8e5f9a6-9c7b-4e3f-d8e5-9f6a9c7b3d8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   file packaging that may be used to prepare data for exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1560/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1560.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.collection
   - attack.exfiltration
   - attack.t1560.002

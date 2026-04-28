@@ -1,9 +1,10 @@
 ---
 title: Hardware Information Discovery Commands
+technique: T1082
 id: a1b2c3d4-e5f6-7890-abcd-333333333333
 status: experimental
 description: Detects commands used to discover hardware information
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -42,6 +43,13 @@ falsepositives:
   - IT asset management
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1082
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1082
   - sysmon

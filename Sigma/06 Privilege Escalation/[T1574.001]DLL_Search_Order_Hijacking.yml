@@ -1,8 +1,9 @@
 title: DLL Search Order Hijacking Detection
+technique: T1574.001
 id: 9f0e1d2c-3b4a-5968-7e8f-0a1b2c3d4e5f
 status: experimental
 description: Detects DLL hijacking through search order manipulation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1574/001/
@@ -32,6 +33,13 @@ falsepositives:
     - Development environments
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1574.001
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1574.001
     - attack.persistence

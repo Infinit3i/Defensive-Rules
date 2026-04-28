@@ -1,9 +1,11 @@
 ---
 title: Suspicious Native API Function Calls
+technique: T1106
+
 id: b2c3d4e5-f6g7-8901-2345-678901bcdefg
 status: experimental
 description: Detects potentially malicious native API function calls often used by malware
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -53,6 +55,20 @@ falsepositives:
   - Security software
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1106
   - sysmon

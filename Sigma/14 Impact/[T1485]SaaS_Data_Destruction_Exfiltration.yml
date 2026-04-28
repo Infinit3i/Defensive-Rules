@@ -1,8 +1,9 @@
 title: SaaS Data Destruction and Exfiltration
+technique: T1485
 id: 5d8e2f3a-9b6c-4e7f-2a5d-8e3f6b9c4a7e
 status: experimental
 description: Detects malicious data destruction and exfiltration in SaaS platforms through API abuse and bulk operations.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -85,6 +86,13 @@ detection:
                selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1485
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1485
     - attack.exfiltration

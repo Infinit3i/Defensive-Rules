@@ -1,4 +1,6 @@
 title: Cloud API Key Compromise Detection
+technique: T1552.001
+author: Infinit3i
 id: 031e48c9-789a-0123-4567-89abcdef0123
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -81,6 +83,13 @@ falsepositives:
     - Service accounts with legitimate automation
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1552.001
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1552.001
     - attack.credential_access

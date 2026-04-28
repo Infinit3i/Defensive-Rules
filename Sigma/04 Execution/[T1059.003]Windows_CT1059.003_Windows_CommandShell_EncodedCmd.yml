@@ -1,13 +1,21 @@
 ---
 title: Suspicious Command Shell Activity (Encoded or Obfuscated Commands)
+technique: T1059.003
 id: 82a7dfe1-59f9-4b2a-bb02-7a2a63f0d002
 status: experimental
 description: Detects suspicious use of cmd.exe executing encoded or obfuscated commands often used by attackers to evade detection.
 references:
   - https://attack.mitre.org/techniques/T1059/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-20
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1059.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1059.003
   - windows

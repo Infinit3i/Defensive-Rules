@@ -1,5 +1,6 @@
 ---
 title: Data Transfer Size Limits Evasion
+technique: T1030
 id: d4a6f8e2-7c9b-4e5f-d4a6-8f2e7c9b5d4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   be used to bypass DLP or network monitoring thresholds.
 references:
   - https://attack.mitre.org/techniques/T1030/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1030
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1030
   - size_limits

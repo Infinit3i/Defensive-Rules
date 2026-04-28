@@ -1,5 +1,6 @@
 ---
 title: Lateral Movement Activity Analysis
+technique: T1021
 id: e123fa45-6789-4dce-91ab-abcdef987654
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   This rule uses Zeek conn logs to analyze host-to-host activity across the internal network."
 references:
   - https://attack.mitre.org/techniques/T1021/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1021
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1021
 logsource:

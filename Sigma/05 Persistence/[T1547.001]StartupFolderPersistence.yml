@@ -1,0 +1,52 @@
+---
+title: Startup Folder Persistence Detection
+technique: T1547.001
+id: b4f7e2a8-3c9d-4a1b-8e5f-7c6d9b2a4e8f
+status: experimental
+description: Detects suspicious file creation in Windows startup folders for persistence through file system monitoring
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: file_event
+detection:
+  selection_event:
+    EventID: 11
+  selection_startupfolders:
+    TargetFilename|contains:
+      - '\Start Menu\Programs\Startup\'
+      - '\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\'
+      - '\Users\All Users\Start Menu\Programs\Startup\'
+      - '\Users\Public\Start Menu\Programs\Startup\'
+  filter_legitimate:
+    Image|contains:
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\explorer.exe'
+  condition: selection_event and selection_startupfolders and not filter_legitimate
+fields:
+  - Image
+  - TargetFilename
+  - ProcessId
+  - User
+  - ComputerName
+falsepositives:
+  - Legitimate software installations
+  - System updates and patches
+  - Administrative tools installation
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1547.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.001
+  - sysmon
+  - windows

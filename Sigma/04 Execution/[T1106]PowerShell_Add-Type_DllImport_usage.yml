@@ -1,13 +1,21 @@
 ---
 title: PowerShell Add-Type and DllImport usage
+technique: T1106
 id: 2a7c3d8e-5b4f-4c1a-9e2d-1f0e2d3c4b5a
 status: experimental
 description: Detect PowerShell using Add-Type / DllImport / System.Runtime.InteropServices to import native DLLs (ntdll/kernel32). This is commonly used to call native APIs from scripts.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1106/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1106
   - tactic.execution
   - platform:windows

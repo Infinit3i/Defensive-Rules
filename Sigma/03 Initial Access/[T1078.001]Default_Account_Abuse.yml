@@ -1,5 +1,6 @@
 ---
 title: Default Account Abuse Detection
+technique: T1078.001
 id: d3a8e5f1-4c7b-4e2f-b6a9-8e1c3f7d2a5b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   activities from well-known default service accounts.
 references:
   - https://attack.mitre.org/techniques/T1078/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1078.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1078.001
   - default_account

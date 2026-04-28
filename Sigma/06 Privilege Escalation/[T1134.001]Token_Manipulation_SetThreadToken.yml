@@ -1,8 +1,9 @@
 title: Token Manipulation via SetThreadToken API
+technique: T1134.001
 id: 8b9c0d1e-2f3g-4h5i-6j7k-8l9m0n1o2p3q
 status: experimental
 description: Detects token manipulation through SetThreadToken API calls
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1134/001/
@@ -28,6 +29,13 @@ falsepositives:
     - System processes
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1134.001
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1134.001
     - attack.defense_evasion

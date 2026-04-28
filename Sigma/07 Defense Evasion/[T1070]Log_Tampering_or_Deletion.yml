@@ -1,5 +1,6 @@
 ---
 title: Log Tampering or Deletion
+technique: T1070
 id: 9d2f1c73-6f4e-4b2a-bd33-1234567890ab
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   'rm -rf /var/log', 'deleted log', 'truncated log', 'log cleared') that may indicate attempts to remove or obscure log data.
 references:
   - https://attack.mitre.org/techniques/T1070/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1070
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.indicator_removal
   - attack.t1070
 logsource:

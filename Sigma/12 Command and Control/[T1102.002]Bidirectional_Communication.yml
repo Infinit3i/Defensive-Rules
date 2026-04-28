@@ -1,5 +1,6 @@
 ---
 title: Bidirectional Communication via Web Service
+technique: T1102.002
 id: e4a7f9c6-8d5b-4e2f-e4a7-9f6c8d5b2e4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   command execution through web service interfaces.
 references:
   - https://attack.mitre.org/techniques/T1102/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1102.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1102.002
   - bidirectional

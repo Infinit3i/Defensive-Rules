@@ -1,4 +1,6 @@
 title: Container Image Supply Chain Attack Detection
+technique: T1195.002
+author: Infinit3i
 id: e1fc26a7-5678-8901-2345-6789abcdef01
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -65,6 +67,13 @@ falsepositives:
     - Legacy applications in migration process
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1195.002
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1195.002
     - attack.execution

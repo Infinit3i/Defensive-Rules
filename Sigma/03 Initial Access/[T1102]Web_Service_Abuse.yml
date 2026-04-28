@@ -1,5 +1,6 @@
 ---
 title: Legitimate Web Service Abuse
+technique: T1102
 id: d8f3e6a2-9c4b-4e7f-a1d5-8f3e9c6d4a8b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   using trusted platforms to bypass security controls.
 references:
   - https://attack.mitre.org/techniques/T1102/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1102
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.command_and_control
   - attack.t1102

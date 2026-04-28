@@ -1,0 +1,63 @@
+title: Office Macro Persistence Mechanism
+technique: T1137
+id: c8d9e0f1-2a3b-4c5d-6e7f-890a1b2c3d4e
+status: experimental
+description: Detects Office macro persistence through template and startup modification
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_office_template:
+        EventID: 11
+        TargetFilename|contains:
+            - '\Microsoft Office\Office'
+            - '\Microsoft\Office\'
+        TargetFilename|endswith:
+            - '\STARTUP\'
+            - '\XLSTART\'
+            - '.dotm'
+            - '.xltm'
+            - '.pptm'
+    sel_office_registry:
+        EventID: 13
+        TargetObject|contains:
+            - '\Software\Microsoft\Office\'
+            - '\Software\Microsoft\VBA\'
+        TargetObject|endswith:
+            - '\Security\VBAWarnings'
+            - '\Security\AccessVBOM'
+            - '\Security\ExtensionHardening'
+    sel_macro_process:
+        EventID: 1
+        ParentImage|endswith:
+            - '\winword.exe'
+            - '\excel.exe'
+            - '\powerpnt.exe'
+        Image|endswith:
+            - '\wscript.exe'
+            - '\cscript.exe'
+            - '\powershell.exe'
+            - '\cmd.exe'
+    condition: sel_office_template or sel_office_registry or sel_macro_process
+falsepositives:
+    - Legitimate Office macro usage
+    - Administrative Office configuration changes
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1137
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.t1137
+    - sysmon
+    - windows
+    - office
+    - macro
+references:
+    - https://attack.mitre.org/techniques/T1137/

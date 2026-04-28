@@ -1,0 +1,48 @@
+---
+title: BOF Process Injection via Memory Allocation
+technique: T1620
+id: 0b531e59-2c2f-471d-970e-ee2367e8c338
+status: experimental
+description: Detects BOF process injection through memory allocation patterns
+references:
+    - https://attack.mitre.org/techniques/T1620/
+    - https://www.cobaltstrike.com/help-beacon-object-files
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_mem_alloc:
+        EventID: 10
+        GrantedAccess:
+            - '0x1F0FFF'
+            - '0x1FFFFF'
+            - '0x143A'
+            - '0x40'
+        CallTrace|contains: 'UNKNOWN'
+    sel_target_proc:
+        TargetImage|endswith:
+            - '\explorer.exe'
+            - '\svchost.exe'
+            - '\winlogon.exe'
+            - '\lsass.exe'
+    sel_apis:
+        CallTrace|contains:
+            - 'VirtualAllocEx'
+            - 'WriteProcessMemory'
+            - 'CreateRemoteThread'
+            - 'SetThreadContext'
+    condition: sel_mem_alloc and sel_target_proc and sel_apis
+falsepositives:
+    - Legitimate debugging tools
+    - Security software process monitoring
+level: high
+tags:
+    - attack.execution
+    - attack.t1620
+    - attack.t1055
+    - windows
+    - sysmon
+    - cobalt_strike
+    - bof

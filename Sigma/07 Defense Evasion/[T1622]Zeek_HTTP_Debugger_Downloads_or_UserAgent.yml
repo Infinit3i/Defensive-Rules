@@ -1,5 +1,6 @@
 ---
 title: Zeek HTTP logs - download or user-agent indicative of debugger tools
+technique: T1622
 id: a4d5e6f7-0123-4567-89ab-cdef01234567
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   Network detection of tooling acquisition can indicate active analysis or adversary tooling movement.
 references:
   - https://attack.mitre.org/techniques/T1622/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1622
   - tactic.defense-evasion
   - platform:network

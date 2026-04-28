@@ -1,13 +1,21 @@
 ---
 title: Malicious Scheduled Task Creation
+technique: T1053.005
 id: e4f2d6b7-8c90-4a71-bd3e-1234567890ab
 status: experimental
 description: "Detects suspicious creation or modification of scheduled tasks (EventID 4698) that may be used for persistence or malicious code execution."
 references:
   - https://attack.mitre.org/techniques/T1053/005/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1053.005
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.persistence
   - attack.t1053.005
 logsource:

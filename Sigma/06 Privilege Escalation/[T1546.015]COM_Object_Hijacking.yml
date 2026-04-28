@@ -1,8 +1,9 @@
 title: COM Object Hijacking for Privilege Escalation
+technique: T1546.015
 id: 5c6d7e8f-9a0b-1234-5678-90abcdef1234
 status: experimental
 description: Detects COM object hijacking through registry manipulation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1546/015/
@@ -33,6 +34,13 @@ falsepositives:
     - COM object registrations
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1546.015
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1546.015
     - attack.persistence

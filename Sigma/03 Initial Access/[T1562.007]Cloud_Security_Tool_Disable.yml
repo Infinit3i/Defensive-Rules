@@ -1,4 +1,6 @@
 title: Cloud Security Tool Disabling Detection
+technique: T1562.007
+author: Infinit3i
 id: 475i82ad-b23e-4567-8901-cdef01234567
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -70,6 +72,13 @@ falsepositives:
     - Compliance-driven security configuration changes
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1562.007
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1562.007
     - attack.defense_evasion

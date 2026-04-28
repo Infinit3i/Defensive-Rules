@@ -1,5 +1,6 @@
 ---
 title: Data Archiving via Utility
+technique: T1560.001
 id: c7f4e8a2-8d6b-4e9f-c7f4-8e2a8d6b9c7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   may be used to prepare data for exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1560/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1560.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.collection
   - attack.exfiltration
   - attack.t1560.001

@@ -1,5 +1,6 @@
 ---
 title: External Proxy for Command and Control
+technique: T1090.002
 id: d6a9f4e7-8c2b-4e5f-d6a9-4f7e8c2b5d6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   traffic redirection that may be used to hide C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1090/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1090.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1090.002
   - external_proxy

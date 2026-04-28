@@ -1,5 +1,6 @@
 ---
 title: Hardware Supply Chain Compromise Detection
+technique: T1195.002
 id: b8e3f2a5-6c9d-4f7e-a1b4-9e2c7f8d3a6b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   suspicious driver installations that may indicate compromised hardware.
 references:
   - https://attack.mitre.org/techniques/T1195/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1195.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1195.002
   - supply_chain

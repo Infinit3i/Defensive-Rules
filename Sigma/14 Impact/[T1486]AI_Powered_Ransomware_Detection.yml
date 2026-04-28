@@ -1,8 +1,9 @@
 title: AI-Powered Ransomware with Adaptive Encryption
+technique: T1486
 id: 4c8a3f2e-5b1d-4e6f-9c2a-8d7e5f3a9b1c
 status: experimental
 description: Detects AI-powered ransomware using adaptive encryption. Monitors neural network loading and dynamic key generation.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -64,6 +65,13 @@ detection:
     condition: (selection_ai_models and selection_encryption) or (selection_mass_file_ops and selection_adaptive_behavior) or (selection_network_ml and selection_encryption)
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1486
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1486
     - attack.persistence

@@ -1,5 +1,6 @@
 ---
 title: Command and Control via Mail Protocols
+technique: T1071.003
 id: c8f5e3a6-7b9d-4e4f-c8f5-3e6a7b9d4c8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   email-based C2 communications or data staging.
 references:
   - https://attack.mitre.org/techniques/T1071/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.003
   - mail_protocols

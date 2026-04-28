@@ -1,13 +1,21 @@
 ---
 title: FTP or anonymous file transfer indicators (ftp, ftps, smb file transfer)
+technique: T1105
 id: d1105a01-0005-4c11-8a05-000000000005
 status: experimental
 description: Detect FTP activity, SMB file copy events, or anonymous uploads/downloads that indicate tools being brought into the environment via legacy protocols (ftp/ftps, smb put/get).
 references:
   - https://attack.mitre.org/techniques/T1105/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1105
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1105
   - tactic.command-and-control
   - platform:network

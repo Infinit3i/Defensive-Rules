@@ -1,5 +1,6 @@
 ---
 title: CertUtil download to suspicious path
+technique: T1105
 id: d1105a01-0001-4c11-8a05-000000000001
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   common technique for ingress tool transfer on Windows.
 references:
   - https://attack.mitre.org/techniques/T1105/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1105
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1105
   - tactic.command-and-control
   - platform:windows

@@ -1,8 +1,9 @@
 ---
 title: Email-Based File Exfiltration
+technique: T1105
 id: j1k2l3m4-n5o6-7890-abcd-222222222222
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -20,5 +21,12 @@ detection:
       - 'blat.exe'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1105
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1105

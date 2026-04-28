@@ -1,8 +1,9 @@
 title: Container Escape Attempt Detection
+technique: T1611
 id: 4f5a6b7c-8d9e-0123-4567-89abcdef0123
 status: experimental
 description: Detects container escape attempts through privileged operations
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1611/
@@ -32,6 +33,13 @@ falsepositives:
     - System maintenance
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1611
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1611
     - auditd

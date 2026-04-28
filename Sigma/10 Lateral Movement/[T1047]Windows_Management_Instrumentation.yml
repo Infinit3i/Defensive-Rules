@@ -1,5 +1,6 @@
 ---
 title: WMI Lateral Movement Detection
+technique: T1047
 id: b9f6e4a3-7d8c-4e5f-a4b9-9f6e8d8c5a4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   WMI event subscriptions that may indicate attacker lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1047/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.execution
   - attack.t1047

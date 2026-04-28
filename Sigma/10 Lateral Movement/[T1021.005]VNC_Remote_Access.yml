@@ -1,5 +1,6 @@
 ---
 title: VNC Remote Access for Lateral Movement
+technique: T1021.005
 id: f2c7e4a9-8b6d-4e5f-a3c2-9f7e8d6c4a9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   indicate unauthorized remote access for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1021/005/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1021.005
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1021.005
   - vnc

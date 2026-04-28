@@ -1,5 +1,6 @@
 ---
 title: Multi-hop Proxy for Command and Control
+technique: T1090.003
 id: e7b4f8c9-5d3a-4e6f-e7b4-8f9c5d3a6e7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   routing that may be used to obscure C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1090/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1090.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1090.003
   - multi_hop_proxy

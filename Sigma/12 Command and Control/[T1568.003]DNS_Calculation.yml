@@ -1,5 +1,6 @@
 ---
 title: DNS Calculation for Command and Control
+technique: T1568.003
 id: c8e5f2a9-4d7b-4e6f-c8e5-2f9a4d7b6c8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   resolution patterns used for C2 communication.
 references:
   - https://attack.mitre.org/techniques/T1568/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1568.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1568.003
   - dns_calculation

@@ -1,9 +1,10 @@
 ---
 title: Rundll32 Proxy Execution for Defense Evasion
+technique: T1218.011
 id: o5p6q7r8-s9t0-1234-5678-901234opqrst
 status: experimental
 description: Detects rundll32.exe being used to proxy execution of malicious code
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -68,6 +69,13 @@ falsepositives:
   - System administration
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense-evasion
   - attack.t1218.011
   - sysmon

@@ -1,8 +1,9 @@
 title: UAC Bypass via Fodhelper Executable
+technique: T1548.002
 id: 4c5bf4c1-8c4d-4e3b-9a1e-2f5c7d8e9f01
 status: experimental
 description: Detects UAC bypass through fodhelper.exe registry manipulation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     # Reference to MITRE ATT&CK technique
@@ -31,6 +32,13 @@ falsepositives:
     - Software installation processes
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1548.002
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1548.002
     - attack.defense_evasion

@@ -1,5 +1,6 @@
 ---
 title: Command and Control via File Transfer Protocols
+technique: T1071.002
 id: b7e4f9c2-6a8d-4e3f-b7e4-9f2c6a8d3b7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   used for C2 communications or file staging.
 references:
   - https://attack.mitre.org/techniques/T1071/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.002
   - file_transfer

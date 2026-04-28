@@ -1,0 +1,48 @@
+---
+title: AppInit DLLs Registry Persistence Detection
+technique: T1547.010
+id: b8e3f7a2-9c5d-4e6b-8a7f-1d9c3e5a7b2f
+status: experimental
+description: Detects persistence via AppInit DLLs registry modifications through Sysmon Event ID 13
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_appinit:
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
+      - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
+      - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
+  filter_empty:
+    Details: ''
+  condition: selection_event and selection_appinit and not filter_empty
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Legitimate application installations requiring DLL loading
+  - Security software using AppInit DLLs
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1547.010
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1547
+  - attack.t1547.010
+  - sysmon
+  - windows

@@ -1,13 +1,21 @@
 ---
 title: Time-Based Evasion via Sleep, Ping-Delay, or Timeout
+technique: T1497.003
 id: 9d1e7b44-2e65-4e5d-bc2f-1e1b2a3c4d5e
 status: experimental
 description: Detect long execution delays often used to evade sandboxes, including Start-Sleep, timeout, and ping loops as timers.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1497/003/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1497.003
   - tactic.defense-evasion
   - platform:windows

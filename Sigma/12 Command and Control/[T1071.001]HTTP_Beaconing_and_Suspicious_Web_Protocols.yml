@@ -1,5 +1,6 @@
 ---
 title: HTTP Beaconing and Suspicious Web Protocols
+technique: T1071.001
 id: e1071001-9b2c-4d5e-af01-1234567890ab
 status: experimental
 description: >
@@ -8,9 +9,16 @@ description: >
   of executables). Covers network (Zeek/Proxy), endpoint (Sysmon NetworkConnect), and web server logs.
 references:
   - https://attack.mitre.org/techniques/T1071/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1071.001
   - tactic.command-and-control
   - platform:cross-platform

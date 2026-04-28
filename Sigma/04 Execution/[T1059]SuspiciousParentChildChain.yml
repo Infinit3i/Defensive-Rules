@@ -1,9 +1,11 @@
 ---
 title: Suspicious Office-Initiated Scripting or Execution Chain
+technique: T1059
+
 id: 6df2e2b1-14db-4fc7-9759-8869c8d3e1d9
 status: experimental
 description: Detects suspicious parent-child chains such as Office apps spawning script interpreters like powershell.exe, mshta.exe, etc., based on Sysmon Event ID 1.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
@@ -35,6 +37,20 @@ falsepositives:
   - Plugins or add-ins executing scripts legitimately
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1059
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1059
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1059
   - attack.t1059.001

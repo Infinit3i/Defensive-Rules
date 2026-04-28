@@ -1,8 +1,9 @@
 title: AI-Powered Data Manipulation and Integrity Attacks
+technique: T1565
 id: 1a5e8f2b-7c9d-4e6f-8a1e-5f2b9c7d4e6f
 status: experimental
 description: Detects AI-powered data manipulation attacks that use machine learning to alter data integrity, modify records subtly, and perform intelligent data poisoning while avoiding detection.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -99,6 +100,13 @@ detection:
                (selection_steganography and selection_network_exfil) or selection_registry_persistence
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1565
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1565
     - attack.t1565.001

@@ -1,9 +1,10 @@
 ---
 title: Click Fraud and Automated Clicking Detection
+technique: T0000
 id: k1l2m3n4-o5p6-7890-1234-567890klmnop
 status: experimental
 description: Detects automated clicking patterns and click fraud activities
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: zeek
@@ -56,6 +57,13 @@ falsepositives:
   - Load testing
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t0000
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.impact
   - attack.t0000
   - zeek

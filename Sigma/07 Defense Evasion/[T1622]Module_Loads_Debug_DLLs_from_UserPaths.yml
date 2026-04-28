@@ -1,5 +1,6 @@
 ---
 title: Module loads of debugging libraries from user-writable paths
+technique: T1622
 id: b5e6f708-1234-5678-9abc-def012345678
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   AppData, Downloads) — suspicious for evasion or illicit debugging helpers.
 references:
   - https://attack.mitre.org/techniques/T1622/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1622
   - tactic.defense-evasion
   - platform:windows

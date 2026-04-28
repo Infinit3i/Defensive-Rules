@@ -1,9 +1,10 @@
 ---
 title: Multiple Account Lockouts Detected
+technique: T1110.003
 id: 3de5cc64-87fc-41d5-8663-d8cc0d1cb165
 status: experimental
 description: Detects repeated user account lockouts which may suggest password spraying or brute force attacks. Uses Windows Security Event ID 4740.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
@@ -23,6 +24,13 @@ falsepositives:
   - Misconfigured applications
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.credential_access
+    # MITRE ATT&CK technique
+    - attack.t1110.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.credential_access
   - attack.t1110
   - attack.t1110.003

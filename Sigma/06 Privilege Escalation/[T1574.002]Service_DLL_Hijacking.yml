@@ -1,8 +1,9 @@
 title: Windows Service DLL Hijacking Detection
+technique: T1574.002
 id: 5e6f7a8b-9c0d-1e2f-3456-789abcdef012
 status: experimental
 description: Detects DLL hijacking targeting Windows service executables
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1574/002/
@@ -30,6 +31,13 @@ falsepositives:
     - Software updates
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1574.002
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1574.002
     - attack.persistence

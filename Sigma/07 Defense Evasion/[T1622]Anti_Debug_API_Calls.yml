@@ -1,9 +1,10 @@
 ---
 title: Anti-Debug API Calls and Techniques
+technique: T1622
 id: e5f6g7h8-i9j0-1234-5678-901234efghij
 status: experimental
 description: Detects anti-debugging techniques and API calls used to evade debugger detection
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -64,6 +65,13 @@ falsepositives:
   - System monitoring utilities
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense-evasion
   - attack.t1622
   - sysmon

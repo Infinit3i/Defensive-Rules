@@ -1,5 +1,6 @@
 ---
 title: Potential Meterpreter Execution Detected
+technique: T1219
 id: dcoxidm8-abcd-win1-met6-infinit3i456
 status: experimental
 description: >
@@ -7,11 +8,18 @@ description: >
   in process creation events. Meterpreter is a payload commonly used in
   penetration testing frameworks (e.g., Metasploit) and may indicate
   unauthorized remote control activity.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/08
 references:
   - https://attack.mitre.org/techniques/T1219/   # MITRE ATT&CK: T1219 - Remote Access Tools
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1219
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1219
   - attack.execution
 logsource:

@@ -1,4 +1,6 @@
 title: Event Tracing for Windows (ETW) Tampering Detection
+technique: T1562.006
+author: Infinit3i
 id: f9e6a7c4-8d2b-4a1e-9c5f-7b3a8e2d6f4c
 status: experimental
 description: Detects attempts to tamper with Event Tracing for Windows (ETW) to disable logging and evade detection by security monitoring tools
@@ -92,6 +94,13 @@ falsepositives:
   - Windows diagnostic tools
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1562.006
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1562.006
   - attack.execution

@@ -1,9 +1,10 @@
 ---
 title: Timing Attack Anti-Debug Detection
+technique: T1622
 id: e1f2g3h4-i5j6-7890-abcd-333333333333
 status: experimental
 description: Detects timing-based debugger detection
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -19,5 +20,12 @@ detection:
       - 'GetLocalTime'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense-evasion
   - attack.t1622

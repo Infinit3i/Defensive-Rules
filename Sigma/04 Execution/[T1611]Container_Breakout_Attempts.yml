@@ -1,8 +1,10 @@
 title: Container Escape and Breakout Attempts
+technique: T1611
+
 id: b4e9c3d2-f6a8-4b1c-9d7e-2f3a5c8b1e4f
 status: experimental
 description: Detects attempts to escape from containerized environments and break out to the host system
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1611/
@@ -70,6 +72,20 @@ falsepositives:
   - Container runtime operations
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1611
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1611
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.privilege_escalation
   - attack.t1611
   - container_escape

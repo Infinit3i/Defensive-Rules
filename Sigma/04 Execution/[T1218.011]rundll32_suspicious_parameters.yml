@@ -1,9 +1,11 @@
 ---
 title: Suspicious Rundll32 Execution with Unusual Parameters
+technique: T1218.011
+
 id: 5e89e2fa-21b3-4f09-9011-aaaa3333bbbb
 status: stable
 description: Detects potentially malicious use of rundll32.exe with uncommon parameters or DLL paths that may indicate proxy execution of code.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1218/011/
@@ -30,6 +32,20 @@ falsepositives:
   - Software invoking valid DLLs
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.T1218
   - attack.T1218.011
   - execution

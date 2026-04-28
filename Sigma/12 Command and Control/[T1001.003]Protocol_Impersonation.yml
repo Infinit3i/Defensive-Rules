@@ -1,5 +1,6 @@
 ---
 title: Protocol Impersonation for Data Obfuscation
+technique: T1001.003
 id: e4a7f9c5-6d8b-4e3f-e4a7-9f5c6d8b3e4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   that may be used to hide C2 traffic within expected network patterns.
 references:
   - https://attack.mitre.org/techniques/T1001/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1001.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1001.003
   - protocol_impersonation

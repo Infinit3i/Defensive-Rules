@@ -1,4 +1,6 @@
 title: Steganographic Command and Control in Images and Documents
+technique: T1001.002
+author: Infinit3i
 id: 9f6e8c4d-3a7b-4e2f-8c5a-7d9e6b3f4a2c
 status: experimental
 description: Detects potential steganographic command and control communication hidden in image and document files
@@ -43,6 +45,13 @@ detection:
   condition: (selection_image_files or selection_document_files) and selection_suspicious_size and selection_frequent_downloads
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1001.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1001.002
   - attack.t1071.001

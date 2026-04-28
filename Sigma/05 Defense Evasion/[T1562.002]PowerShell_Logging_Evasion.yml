@@ -1,4 +1,6 @@
 title: PowerShell Logging Evasion Detection
+technique: T1562.002
+author: Infinit3i
 id: e8b7f9a2-4c5d-3e1a-9f6b-7d8a2c4e9f1b
 status: experimental
 description: Detects attempts to disable or evade PowerShell script block logging and transcription logging to hide malicious activity
@@ -76,6 +78,13 @@ falsepositives:
   - Software installation requiring PowerShell policy modifications
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1562.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1562.002
   - attack.execution

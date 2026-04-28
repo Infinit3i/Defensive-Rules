@@ -1,13 +1,21 @@
 ---
 title: tzutil query timezone
+technique: T1124
 id: 1f2e3d4c-5b6a-7890-ab12-cdef34567890
 status: experimental
 description: Detects use of tzutil to query or set the system timezone which may indicate system time discovery or manipulation.
 references:
   - https://attack.mitre.org/techniques/T1124/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1124
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1124
   - tactic.discovery
   - platform:windows

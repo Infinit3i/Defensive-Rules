@@ -1,13 +1,21 @@
 ---
 title: Debugger Evasion Indicators in Command Line or ScriptBlock
+technique: T1622
 id: 2f8adbb1-1331-4c13-9d90-0e6a4a2bd1c1
 status: experimental
 description: Detect common anti-debug techniques including IsDebuggerPresent/CheckRemoteDebuggerPresent strings, anti-debug flags, or tooling checks.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1622/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1622
   - tactic.defense-evasion
   - platform:windows

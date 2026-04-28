@@ -1,13 +1,29 @@
 ---
 title: Managed code P/Invoke or runtime interop usage detected
+technique: T1106
+
 id: 6e1a7c4d-9f5b-4g78-0h9i-3c4d5e6f7a8b
 status: experimental
 description: Detect managed (.NET) applications or scripts that declare P/Invoke signatures, use Runtime.InteropServices or Marshal methods to call native APIs (indicative of Native API usage).
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1106/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1106
   - tactic.execution
   - platform:windows

@@ -1,9 +1,10 @@
 ---
 title: Backup Service Disruption
+technique: T1489
 id: c1d2e3f4-g5h6-7890-abcd-222222222222
 status: experimental
 description: Detects attempts to stop or disable backup services
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -47,6 +48,13 @@ falsepositives:
   - System troubleshooting
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1489
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.impact
   - attack.t1489
   - sysmon

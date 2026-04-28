@@ -1,14 +1,22 @@
 ---
 title: Anomalous Connection Volume and Duration
+technique: T1071.001
 id: b231fa84-6789-4cde-9abc-def123456789
 status: experimental
 description: "Detects hosts with a high number of connections or abnormally long connection durations using Zeek conn logs. These may indicate beaconing, data exfiltration, or scanning behavior."
 references:
   - https://attack.mitre.org/techniques/T1071/001/
   - https://attack.mitre.org/techniques/T1041/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.exfiltration
   - attack.t1071.001

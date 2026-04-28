@@ -1,9 +1,10 @@
 ---
 title: Suspicious Service Creation
+technique: T1543.003
 id: 76e6d2c2-9d4f-41c0-a56a-847cf50a6470
 status: experimental
 description: Detects creation of new services which may indicate attacker persistence. Uses Windows System Event ID 7045 and correlated process creation from Sysmon.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
@@ -31,6 +32,13 @@ falsepositives:
   - Legitimate administrative service setup
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1543.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.persistence
   - attack.privilege_escalation
   - attack.t1543

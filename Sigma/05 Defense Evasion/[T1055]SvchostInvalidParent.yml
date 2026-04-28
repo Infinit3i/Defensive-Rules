@@ -1,12 +1,13 @@
 ---
 title: Svchost Spawned by Suspicious Parent Process
+technique: T1055
 id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 status: experimental
 description: Detects svchost.exe spawned by process other than services.exe which may indicate process hollowing or injection
 references:
     - https://attack.mitre.org/techniques/T1055/
     - https://www.microsoft.com/en-us/security/blog/2021/01/21/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/
-author: Defensive Rules Project
+author: Infinit3i
 date: 2026/04/27
 logsource:
     category: process_creation
@@ -21,6 +22,13 @@ falsepositives:
     - Unknown legitimate processes spawning svchost (rare)
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1055
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.defense_evasion
     - attack.t1055
     - sysmon

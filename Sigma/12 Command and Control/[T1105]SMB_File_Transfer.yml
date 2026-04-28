@@ -1,8 +1,9 @@
 ---
 title: SMB File Transfer Activities
+technique: T1105
 id: i1j2k3l4-m5n6-7890-abcd-111111111111
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -22,5 +23,12 @@ detection:
       - 'smbclient'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1105
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command-and-control
   - attack.t1105

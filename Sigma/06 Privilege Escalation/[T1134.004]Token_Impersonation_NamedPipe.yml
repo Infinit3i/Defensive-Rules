@@ -1,8 +1,9 @@
 title: Token Impersonation via Named Pipe Client
+technique: T1134.004
 id: 2c3d4e5f-6a7b-8c9d-0e1f-2345678901ab
 status: experimental
 description: Detects token impersonation through named pipe client connections
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1134/004/
@@ -30,6 +31,13 @@ falsepositives:
     - Print spooler operations
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1134.004
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1134.004
     - attack.lateral_movement

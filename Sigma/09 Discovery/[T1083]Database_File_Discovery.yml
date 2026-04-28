@@ -1,8 +1,9 @@
 ---
 title: Database File Discovery
+technique: T1083
 id: f1g2h3i4-j5k6-7890-abcd-555555555555
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -24,5 +25,12 @@ detection:
       - '*.wal'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1083
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1083

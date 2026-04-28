@@ -1,4 +1,6 @@
 title: AMSI Bypass Technique Detection
+technique: T1562.001
+author: Infinit3i
 id: f7a9c4d2-8e3b-4f1a-9c5d-6b7e8a2f4c9d
 status: experimental
 description: Detects attempts to bypass Anti-Malware Scan Interface (AMSI) through various techniques including memory patching, COM hijacking, and reflection
@@ -63,6 +65,13 @@ falsepositives:
   - Red team exercises
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1562.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1562.001
   - attack.execution

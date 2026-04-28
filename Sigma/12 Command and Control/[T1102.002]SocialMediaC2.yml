@@ -1,4 +1,6 @@
 title: Social Media Platform Command and Control Communication
+technique: T1102.002
+author: Infinit3i
 id: 3a7b9f2e-8d4c-4f1a-b5e7-6c3d9a8b7f2e
 status: experimental
 description: Detects potential command and control communication through social media platforms using suspicious posting patterns and encoded content
@@ -36,6 +38,13 @@ detection:
   condition: selection_platforms and selection_suspicious_posts and selection_encoded_content and not selection_automated_patterns
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1102.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1102.002
   - attack.t1071.001

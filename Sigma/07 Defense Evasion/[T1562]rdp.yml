@@ -1,5 +1,6 @@
 ---
 title: Enabling RDP Through Firewall Modification Detected
+technique: T1562
 id: 0e2a15fa-1234-5678-9abc-def098765432
 status: experimental
 description: >
@@ -9,9 +10,16 @@ description: >
   for remote access.
 references:
     - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-security-audit-events
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1562
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.defense_evasion
     - attack.t1562
 logsource:

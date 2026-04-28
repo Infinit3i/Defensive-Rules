@@ -1,5 +1,6 @@
 ---
 title: Remote Access Software for Command and Control
+technique: T1219
 id: a6c9f4e8-7b5d-4e2f-a6c9-4f8e7b5d2a6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   abused for unauthorized system access and C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1219/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1219
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1219
   - remote_access

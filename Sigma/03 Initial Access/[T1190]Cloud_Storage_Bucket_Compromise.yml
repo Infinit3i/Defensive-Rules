@@ -1,4 +1,6 @@
 title: Cloud Storage Bucket Compromise Detection
+technique: T1190
+author: Infinit3i
 id: d0eb15f6-4567-7890-1234-56789abcdef0
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -63,6 +65,13 @@ falsepositives:
     - Public content intentionally shared via S3
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1190
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1190
     - attack.collection

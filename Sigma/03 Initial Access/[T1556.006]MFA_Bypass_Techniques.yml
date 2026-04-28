@@ -1,4 +1,6 @@
 title: Multi-Factor Authentication Bypass Detection
+technique: T1556.006
+author: Infinit3i
 id: 142f59da-890b-1234-5678-9abcdef01234
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -76,6 +78,13 @@ falsepositives:
     - Password reset flows for legitimate users
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1556.006
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1556.006
     - attack.credential_access

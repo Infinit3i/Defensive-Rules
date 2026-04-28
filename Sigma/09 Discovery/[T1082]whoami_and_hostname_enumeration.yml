@@ -1,9 +1,10 @@
 ---
 title: System Information Discovery via whoami and hostname
+technique: T1082
 id: a1b2c3d4-e5f6-7890-1234-567890abcdef
 status: experimental
 description: Detects system information discovery attempts using whoami, hostname, and similar commands
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -40,6 +41,13 @@ falsepositives:
   - Software installation scripts
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1082
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1082
   - sysmon

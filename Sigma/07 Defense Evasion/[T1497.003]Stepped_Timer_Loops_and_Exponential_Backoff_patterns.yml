@@ -1,13 +1,21 @@
 ---
 title: Stepped timer loops or exponential backoff used as long delay
+technique: T1497.003
 id: a0f3b6c7-1d2e-4f5a-9b8c-0d1e2f3a4b5c
 status: experimental
 description: Detect patterns indicative of scripted stepped waits or exponential backoff loops (incremental sleep/ping loops) used to extend execution time beyond sandbox limits.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1497/003/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1497.003
   - tactic.defense-evasion
   - platform:windows

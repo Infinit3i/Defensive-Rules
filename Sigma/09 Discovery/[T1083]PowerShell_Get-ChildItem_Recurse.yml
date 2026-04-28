@@ -1,13 +1,21 @@
 ---
 title: PowerShell_Get-ChildItem_Recurse
+technique: T1083
 id: 1a2b3c4d-5e6f-7081-9a0b-1c2d3e4f5a6b
 status: experimental
 description: Detect PowerShell recursive file and directory enumeration (Get-ChildItem -Recurse, gci -Recurse, Get-ChildItem -File) commonly used by attackers to locate sensitive files.
 references:
   - https://attack.mitre.org/techniques/T1083/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1083
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1083
   - tactic.discovery
   - platform:windows

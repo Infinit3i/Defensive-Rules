@@ -1,4 +1,6 @@
 title: Command and Script Obfuscation Detection
+technique: T1027.010
+author: Infinit3i
 id: c4a9d7e2-8f3b-4e1a-9c5d-6b8e7a3f4c2d
 status: experimental
 description: Detects various command and script obfuscation techniques used to evade detection by security tools and analysts
@@ -83,6 +85,13 @@ falsepositives:
   - Development and testing activities
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1027.010
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1027.010
   - attack.execution

@@ -1,8 +1,10 @@
 title: Fileless Code Execution in Container Environments
+technique: T1055.002
+
 id: f8c1d4e7-a3b6-4f9c-8e2a-1d5b3c7f9a2e
 status: experimental
 description: Detects fileless malware execution techniques within containerized environments using memory-resident payloads
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1055/002/
@@ -73,6 +75,20 @@ falsepositives:
   - Container orchestration platforms
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1055.002
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1055.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1055
   - attack.t1055.002

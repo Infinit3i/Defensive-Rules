@@ -1,8 +1,9 @@
 title: Supply Chain Poisoning Through Package Managers
+technique: T1195
 id: 7f9e2d4c-8b5a-4e3f-9d1c-6a8e5f2b9c4d
 status: experimental
 description: Detects supply chain attacks targeting package managers through malicious packages and dependency confusion attacks.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -91,6 +92,13 @@ detection:
     condition: selection_package_managers and (selection_typosquatting or selection_suspicious_install or selection_malicious_scripts) or (selection_network_exfil and selection_file_creation)
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1195
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1195
     - attack.t1195.002

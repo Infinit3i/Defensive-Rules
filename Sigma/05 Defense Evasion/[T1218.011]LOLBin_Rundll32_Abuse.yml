@@ -1,4 +1,6 @@
 title: Living-off-the-Land Binary Rundll32 Suspicious Execution
+technique: T1218.011
+author: Infinit3i
 id: a8f2b8dc-4e7f-4b8a-9c3d-2e1f5a8b9c7d
 status: experimental
 description: Detects suspicious use of rundll32.exe to execute potentially malicious code, commonly used for defense evasion by abusing legitimate Windows binaries
@@ -42,6 +44,13 @@ falsepositives:
   - Administrative tools and scripts
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1218.011
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1218.011
   - attack.execution

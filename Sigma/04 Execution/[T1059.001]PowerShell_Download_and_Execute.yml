@@ -1,9 +1,10 @@
 ---
 title: PowerShell Download and Execute Patterns
+technique: T1059.001
 id: m3n4o5p6-q7r8-9012-3456-789012mnopqr
 status: experimental
 description: Detects PowerShell commands that download and execute files or scripts
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -68,6 +69,13 @@ falsepositives:
   - System administration
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1059.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1059.001
   - powershell

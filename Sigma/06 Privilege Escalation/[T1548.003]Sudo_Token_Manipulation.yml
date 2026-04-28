@@ -1,8 +1,9 @@
 title: Sudo Token Manipulation and Caching Abuse
+technique: T1548.003
 id: 1a2b3c4d-5e6f-7890-abcd-ef1234567890
 status: experimental
 description: Detects abuse of sudo token caching for privilege escalation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1548/003/
@@ -32,6 +33,13 @@ falsepositives:
     - Automated scripts
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1548.003
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1548.003
     - auditd

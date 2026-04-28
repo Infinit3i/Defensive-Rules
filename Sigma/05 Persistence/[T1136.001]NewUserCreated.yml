@@ -1,9 +1,10 @@
 ---
 title: New User Account Created
+technique: T1136.001
 id: d799d84f-d03f-4a7b-a1a3-3bd12a3e22d2
 status: stable
 description: Detects creation of new local or domain user accounts using Windows Security Event ID 4720.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
@@ -22,6 +23,13 @@ falsepositives:
   - Legitimate user provisioning by IT
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1136.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.persistence
   - attack.t1136
   - attack.t1136.001

@@ -1,5 +1,6 @@
 ---
 title: SSH Lateral Movement Detection
+technique: T1021.004
 id: e9b6f2a8-3d5c-4e7f-a2b6-8f3e9d5c2a8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   activities that may indicate attacker movement through Linux/Unix systems.
 references:
   - https://attack.mitre.org/techniques/T1021/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1021.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1021.004
   - ssh

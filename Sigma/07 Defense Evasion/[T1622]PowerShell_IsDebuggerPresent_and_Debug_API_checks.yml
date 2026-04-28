@@ -1,5 +1,6 @@
 ---
 title: PowerShell IsDebuggerPresent or Debug API checks in ScriptBlock
+technique: T1622
 id: d1a2b3c4-5d6e-7f80-1234-abcdef012345
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   Attackers may call these to detect attached debuggers.
 references:
   - https://attack.mitre.org/techniques/T1622/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1622
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1622
   - tactic.defense-evasion
   - platform:windows

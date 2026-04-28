@@ -1,5 +1,6 @@
 ---
 title: Data Collection from Code Repositories
+technique: T1213.003
 id: e8b5f3a6-9d7c-4e4f-e8b5-3f6a9d7c4e8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   to source code repositories that may indicate intellectual property theft.
 references:
   - https://attack.mitre.org/techniques/T1213/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1213.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.collection
   - attack.exfiltration
   - attack.t1213.003

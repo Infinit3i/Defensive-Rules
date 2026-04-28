@@ -1,13 +1,21 @@
 ---
 title: SSH Brute-Force Attack Detection
+technique: T1110
 id: d3f6a1b2-7e3b-4c9f-82ec-abcdef123456
 status: experimental
 description: "Detects brute force SSH login attempts by monitoring syslog events for failed authentication attempts indicated by 'Failed password for' messages."
 references:
   - https://attack.mitre.org/techniques/T1110/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.credential_access
+    # MITRE ATT&CK technique
+    - attack.t1110
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.credential_access
   - attack.t1110
 logsource:

@@ -1,8 +1,9 @@
 title: Process Hollowing for Privilege Escalation
+technique: T1055.012
 id: 9e0f1a2b-3c4d-5678-9012-3456789abcde
 status: experimental
 description: Detects process hollowing techniques used for privilege escalation
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1055/012/
@@ -32,6 +33,13 @@ falsepositives:
     - Security software
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1055.012
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1055.012
     - attack.defense_evasion

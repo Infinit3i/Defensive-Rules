@@ -1,5 +1,6 @@
 ---
 title: Exfiltration Over Unencrypted Non-C2 Protocol
+technique: T1048.003
 id: d8b6f4a7-9e3c-4e5f-d8b6-4f7a9e3c5d8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   protocols that may indicate data exfiltration attempts.
 references:
   - https://attack.mitre.org/techniques/T1048/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1048.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1048.003
   - unencrypted_protocol

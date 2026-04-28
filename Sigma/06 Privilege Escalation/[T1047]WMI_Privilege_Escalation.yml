@@ -1,8 +1,9 @@
 title: WMI Process Creation for Privilege Escalation
+technique: T1047
 id: 8d9e0f1a-2b3c-4567-890a-bcdef1234567
 status: experimental
 description: Detects WMI process creation with elevated privileges
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1047/
@@ -33,6 +34,13 @@ falsepositives:
     - WMI-based monitoring tools
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1047
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1047
     - attack.execution

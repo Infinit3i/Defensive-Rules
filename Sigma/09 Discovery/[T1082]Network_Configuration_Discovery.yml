@@ -1,9 +1,10 @@
 ---
 title: Network Configuration Discovery
+technique: T1082
 id: a1b2c3d4-e5f6-7890-abcd-444444444444
 status: experimental
 description: Detects network configuration discovery commands
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -45,6 +46,13 @@ falsepositives:
   - Network monitoring tools
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1082
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1082
   - sysmon

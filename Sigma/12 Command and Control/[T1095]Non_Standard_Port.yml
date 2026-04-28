@@ -1,5 +1,6 @@
 ---
 title: Command and Control via Non-Standard Ports
+technique: T1095
 id: a9d6f3e8-7c5b-4e4f-a9d6-3f8e7c5b4a9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   protocol mismatches that may indicate C2 evasion techniques.
 references:
   - https://attack.mitre.org/techniques/T1095/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1095
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1095
   - non_standard_port

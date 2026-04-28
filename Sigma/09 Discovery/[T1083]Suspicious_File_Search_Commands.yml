@@ -1,9 +1,10 @@
 ---
 title: Suspicious File and Directory Search Commands
+technique: T1083
 id: f6g7h8i9-j0k1-2345-6789-012345fghijk
 status: experimental
 description: Detects suspicious file and directory enumeration commands often used by attackers
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -78,6 +79,13 @@ falsepositives:
   - Backup scripts
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1083
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1083
   - sysmon

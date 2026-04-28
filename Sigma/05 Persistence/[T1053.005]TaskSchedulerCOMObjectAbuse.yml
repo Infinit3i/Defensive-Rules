@@ -1,0 +1,79 @@
+---
+title: Task Scheduler COM Object Abuse
+technique: T1053.005
+id: e5f67890-1234-5678-90ab-cdef12345678
+status: experimental
+description: Detects abuse of Task Scheduler COM objects for stealthy persistence mechanisms
+author: Infinit3i
+date: 2026-04-27
+references:
+    - https://attack.mitre.org/techniques/T1053/005/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    com_taskscheduler:
+        EventID: 1
+        Image|endswith:
+            - '\powershell.exe'
+            - '\cscript.exe'
+            - '\wscript.exe'
+        CommandLine|contains:
+            - 'Schedule.Service'
+            - 'TaskService'
+            - 'ITaskService'
+            - 'NewTask'
+    com_registration:
+        EventID: 1
+        CommandLine|contains:
+            - 'regsvr32'
+            - 'COM+'
+        CommandLine|contains:
+            - 'taskschd.dll'
+            - 'Task Scheduler'
+    powershell_com:
+        EventID: 1
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains:
+            - 'New-Object -ComObject'
+            - '[System.Activator]::CreateInstance'
+        CommandLine|contains:
+            - 'Schedule.Service'
+            - 'TaskScheduler'
+    wmi_taskscheduler:
+        EventID: 1
+        CommandLine|contains:
+            - 'Win32_ScheduledJob'
+            - 'Win32_Process'
+        CommandLine|contains|all:
+            - 'Create'
+            - 'schtasks'
+    condition: com_taskscheduler or com_registration or
+               powershell_com or wmi_taskscheduler
+fields:
+    - Image
+    - CommandLine
+    - ParentImage
+    - ProcessId
+    - User
+    - ComputerName
+falsepositives:
+    - Legitimate task management scripts
+    - System administration tools
+    - Monitoring and backup software
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1053.005
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.execution
+    - attack.t1053
+    - attack.t1053.005
+    - attack.t1059.001
+    - windows
+    - sysmon

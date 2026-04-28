@@ -1,5 +1,6 @@
 ---
 title: Exfiltration to Code Repository
+technique: T1567.001
 id: f4a8e6c9-3b5d-4e7f-f4a8-6e9c3b5d7f4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   be used to exfiltrate sensitive data disguised as code commits.
 references:
   - https://attack.mitre.org/techniques/T1567/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1567.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1567.001
   - code_repository

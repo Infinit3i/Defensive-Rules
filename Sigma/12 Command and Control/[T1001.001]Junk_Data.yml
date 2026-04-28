@@ -1,5 +1,6 @@
 ---
 title: Data Obfuscation with Junk Data
+technique: T1001.001
 id: c8e5f3a9-7d6b-4e4f-c8e5-3f9a7d6b4c8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   patterns that may be used to hide C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1001/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1001.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1001.001
   - junk_data

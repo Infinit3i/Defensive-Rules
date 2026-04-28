@@ -1,5 +1,6 @@
 ---
 title: Email Server Compromise Detection
+technique: T1566.004
 id: c5f8e2a9-1d4b-4e7c-a6f3-2b8e9c1d5a7e
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   administrative activities on email infrastructure.
 references:
   - https://attack.mitre.org/techniques/T1566/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1566.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1566.004
   - email_server

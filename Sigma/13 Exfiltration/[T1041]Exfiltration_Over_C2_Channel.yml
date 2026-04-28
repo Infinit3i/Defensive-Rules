@@ -1,5 +1,6 @@
 ---
 title: Exfiltration Over Command and Control Channel
+technique: T1041
 id: a5e9f3c7-8b2d-4e6f-a5e9-3f7c8b2d6a5b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   data encoding patterns that may indicate C2 exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1041/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1041
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1041
   - c2_channel

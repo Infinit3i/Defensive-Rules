@@ -1,0 +1,51 @@
+---
+title: Image File Execution Options Hijacking Detection
+technique: T1546.012
+id: c9f2e8d6-7a4b-4f3e-9c5a-8d6e1b7c9a5f
+status: experimental
+description: Detects IFEO hijacking for persistence via debugger registry modifications through Sysmon Event ID 13
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_ifeo:
+    TargetObject|contains: '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\'
+  selection_debugger:
+    TargetObject|endswith: '\Debugger'
+  filter_legitimate:
+    Details|contains:
+      - 'ntsd.exe'
+      - 'windbg.exe'
+      - 'cdb.exe'
+      - 'vsjitdebugger.exe'
+  condition: selection_event and selection_ifeo and selection_debugger and not filter_legitimate
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Legitimate debugging tools configuration
+  - Application compatibility shims
+  - Security research activities
+level: high
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1546.012
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1546
+  - attack.t1546.012
+  - sysmon
+  - windows

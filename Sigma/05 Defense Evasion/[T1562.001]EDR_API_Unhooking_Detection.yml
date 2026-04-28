@@ -1,4 +1,6 @@
 title: EDR/AV API Unhooking Detection
+technique: T1562.001
+author: Infinit3i
 id: d4f8a7e2-9c1b-4f5e-8a3d-7b6c9e2f4a8d
 status: experimental
 description: Detects attempts to unhook EDR/AV API monitoring by restoring original API function code from disk or memory, commonly used to evade security monitoring
@@ -69,6 +71,13 @@ falsepositives:
   - Some penetration testing frameworks
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1562.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1562.001
   - attack.privilege_escalation

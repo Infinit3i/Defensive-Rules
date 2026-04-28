@@ -1,4 +1,6 @@
 title: Process Doppelganging Attack Detection
+technique: T1055.013
+author: Infinit3i
 id: c9e2f4a8-7b5d-4a1c-8e9f-3c7a6b2d4f8e
 status: experimental
 description: Detects Process Doppelganging technique where attackers use NTFS transactions to replace legitimate process images with malicious code during process creation
@@ -53,6 +55,13 @@ falsepositives:
   - Backup and restore utilities
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1055.013
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1055.013
   - attack.execution

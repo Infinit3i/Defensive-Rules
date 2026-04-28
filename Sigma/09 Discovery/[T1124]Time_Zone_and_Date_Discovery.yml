@@ -1,9 +1,10 @@
 ---
 title: System Time and Timezone Discovery Commands
+technique: T1124
 id: g7h8i9j0-k1l2-3456-7890-123456ghijkl
 status: experimental
 description: Detects commands used to discover system time, timezone, and date information
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -61,6 +62,13 @@ falsepositives:
   - Backup and logging scripts
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1124
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1124
   - sysmon

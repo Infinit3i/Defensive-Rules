@@ -1,5 +1,6 @@
 ---
 title: Data Exfiltration Over Wi-Fi
+technique: T1011.002
 id: a7d9f5c8-6b3e-4e2f-a7d9-5f8c6b3e2a7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   unauthorized wireless access points.
 references:
   - https://attack.mitre.org/techniques/T1011/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1011.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1011.002
   - wifi

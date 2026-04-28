@@ -1,9 +1,10 @@
 ---
 title: Network Native API Calls
+technique: T1106
 id: b1c2d3e4-f5g6-7890-abcd-444444444444
 status: experimental
 description: Detects suspicious network operations via native APIs
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -41,6 +42,13 @@ falsepositives:
   - Download managers
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1106
   - sysmon

@@ -1,4 +1,6 @@
 title: Certificate Pinning Bypass Detection
+technique: T1553.003
+author: Infinit3i
 id: a5d8f7c3-9e2b-4f1a-8c6d-7b9e3a2f5c8d
 status: experimental
 description: Detects attempts to bypass SSL/TLS certificate pinning mechanisms in applications to enable man-in-the-middle attacks or malware communication
@@ -85,6 +87,13 @@ falsepositives:
   - Corporate proxy configurations
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1553.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1553.003
   - attack.man_in_the_middle

@@ -1,9 +1,10 @@
 ---
 title: DNS Tunneling via High Volume or Suspicious Subdomains
+technique: T1071.004
 id: 14f932db-1817-4224-9490-bd2b2e0a63a1
 status: experimental
 description: Detects DNS tunneling behavior by identifying high-frequency or unusual DNS queries with long or encoded subdomains. Uses Sysmon Event ID 22.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
@@ -31,6 +32,13 @@ falsepositives:
   - Misconfigured software
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071
   - attack.t1071.004

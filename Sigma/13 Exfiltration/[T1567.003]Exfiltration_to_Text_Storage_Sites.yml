@@ -1,5 +1,6 @@
 ---
 title: Exfiltration to Text Storage Sites
+technique: T1567.003
 id: b8e4f2a6-9c7d-4e5f-b8e4-2f6a9c7d5b8b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   used to exfiltrate sensitive text-based data.
 references:
   - https://attack.mitre.org/techniques/T1567/003/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1567.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1567.003
   - text_storage

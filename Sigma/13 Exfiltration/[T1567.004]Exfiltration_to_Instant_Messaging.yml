@@ -1,5 +1,6 @@
 ---
 title: Exfiltration to Instant Messaging Platforms
+technique: T1567.004
 id: b4c7f8e5-9a6d-4e2f-b4c7-8f5e9a6d2b4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   applications, or suspicious messaging activity that may indicate data theft.
 references:
   - https://attack.mitre.org/techniques/T1567/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1567.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1567.004
   - instant_messaging

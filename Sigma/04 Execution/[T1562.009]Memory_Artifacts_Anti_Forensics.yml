@@ -1,8 +1,9 @@
 title: Memory Artifacts Anti-Forensics and Evidence Destruction
+technique: T1562.009
 id: b5d3c7f1-e8a4-4f2b-9c6d-1a5e3b7c9f2a
 status: experimental
 description: Detects attempts to destroy or obfuscate memory artifacts to evade forensic analysis and incident response
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1562/009/
@@ -105,6 +106,13 @@ falsepositives:
   - Antivirus memory scanning
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1562.009
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1562
   - attack.t1562.009

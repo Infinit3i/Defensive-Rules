@@ -1,4 +1,6 @@
 title: AI-Generated Phishing Content Detection
+technique: T1566.001
+author: Infinit3i
 id: 4e7f8c2a-9b3d-4f1e-8a6c-5d7b9e4f2a8c
 status: experimental
 description: Detects network indicators of AI-generated phishing campaigns with modern language model characteristics
@@ -44,6 +46,13 @@ detection:
   condition: (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1566.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1566.001
   - attack.t1566.002

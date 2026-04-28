@@ -1,8 +1,10 @@
 title: Time-Based Anti-Analysis and Sandbox Evasion
+technique: T1497.003
+
 id: d6a3b9c4-e1f8-4d2b-9c7a-3e5f1b8d4c6a
 status: experimental
 description: Detects malware using timing-based techniques to evade automated analysis and sandbox environments
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1497/003/
@@ -83,6 +85,20 @@ falsepositives:
   - Games and multimedia applications
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1497
   - attack.t1497.003

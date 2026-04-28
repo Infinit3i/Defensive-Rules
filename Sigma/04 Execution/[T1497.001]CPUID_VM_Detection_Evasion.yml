@@ -1,8 +1,10 @@
 title: CPUID-Based Virtual Machine Detection Evasion
+technique: T1497.001
+
 id: a3f8b2c1-e4d7-4a9b-8c6f-1e5a2b3d4c5f
 status: experimental
 description: Detects attempts to bypass virtual machine detection using CPUID instruction manipulation and timing analysis
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1497/001/
@@ -69,6 +71,20 @@ falsepositives:
   - Virtualization management tools
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.001
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1497.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1497
   - attack.t1497.001

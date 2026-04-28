@@ -1,5 +1,6 @@
 ---
 title: Unauthorized Hardware Addition Detection
+technique: T1200
 id: b7e9f4c3-2a8d-4f6e-c1b5-9e3f8c2d7a4b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   modifications that may indicate malicious hardware implants.
 references:
   - https://attack.mitre.org/techniques/T1200/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1200
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1200
   - hardware

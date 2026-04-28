@@ -1,8 +1,9 @@
 title: Quantum-Resistant Cryptographic Ransomware
+technique: T1486
 id: 3d9e7f4a-6b8c-5e2f-9d3e-7f4a8c6b5e2f
 status: experimental
 description: Detects next-generation ransomware using quantum-resistant cryptographic algorithms (post-quantum cryptography) to future-proof encryption against quantum computing threats.
-author: Cybersecurity Detection Engineering
+author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
@@ -98,6 +99,13 @@ detection:
                (selection_ransom_note and selection_crypto_apis and selection_network_c2)
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.impact
+    # MITRE ATT&CK technique
+    - attack.t1486
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.impact
     - attack.t1486
     - attack.persistence

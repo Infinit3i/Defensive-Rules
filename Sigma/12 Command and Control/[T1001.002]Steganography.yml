@@ -1,5 +1,6 @@
 ---
 title: Steganography for Data Obfuscation
+technique: T1001.002
 id: d9f6e4a2-8c7b-4e5f-d9f6-4e2a8c7b5d9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   within multimedia files for covert C2 communications.
 references:
   - https://attack.mitre.org/techniques/T1001/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1001.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1001.002
   - steganography

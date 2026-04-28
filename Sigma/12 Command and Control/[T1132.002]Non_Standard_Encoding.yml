@@ -1,5 +1,6 @@
 ---
 title: Non-Standard Encoding for Data Encoding
+technique: T1132.002
 id: a9c6f4e7-8d5b-4e3f-a9c6-4f7e8d5b3a9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   may be used to obfuscate C2 communications and evade detection.
 references:
   - https://attack.mitre.org/techniques/T1132/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1132.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1132.002
   - non_standard_encoding

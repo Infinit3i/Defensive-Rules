@@ -1,5 +1,6 @@
 ---
 title: SSH Session Hijacking Detection
+technique: T1563.001
 id: d4a9f6e8-2c7b-4e5f-a7d4-9f6e8c7b5a4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   SSH sessions that may indicate session hijacking attempts.
 references:
   - https://attack.mitre.org/techniques/T1563/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1563.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1563.001
   - ssh

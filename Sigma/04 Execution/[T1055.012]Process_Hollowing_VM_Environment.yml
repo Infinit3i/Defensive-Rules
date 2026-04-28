@@ -1,8 +1,10 @@
 title: Process Hollowing in Virtualized Environments
+technique: T1055.012
+
 id: c5f2a8b1-d3e7-4c9a-8f6b-1a4d2e5c3b7f
 status: experimental
 description: Detects process hollowing techniques specifically designed to evade detection in virtual machine environments
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1055/012/
@@ -80,6 +82,20 @@ falsepositives:
   - Antivirus software behavior
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1055.012
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1055.012
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.privilege_escalation
   - attack.t1055

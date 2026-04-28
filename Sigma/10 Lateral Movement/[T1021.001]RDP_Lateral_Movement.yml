@@ -1,5 +1,6 @@
 ---
 title: RDP Lateral Movement Detection
+technique: T1021.001
 id: b6f2e9d4-8c7a-4e3f-a1b5-9e2f8d7c4a6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   desktop access that may indicate attacker movement through the network.
 references:
   - https://attack.mitre.org/techniques/T1021/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1021.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1021.001
   - rdp

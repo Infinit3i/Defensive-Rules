@@ -1,4 +1,6 @@
 title: Deepfake Voice and Video Call Social Engineering Indicators
+technique: T1566.004
+author: Infinit3i
 id: 6a9e7c3f-8d2b-4f5a-9c7e-3f8a6b4d7e9c
 status: experimental
 description: Detects network indicators of deepfake voice/video-based social engineering attacks through communication platforms
@@ -46,6 +48,13 @@ detection:
   condition: selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1566.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.t1566.004
   - attack.command_and_control

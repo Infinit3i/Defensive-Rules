@@ -1,0 +1,49 @@
+title: PowerShell Profile Persistence Modification
+technique: T1546.011
+id: 9a5b1c3d-4e6f-7890-a1b2-c3d4e5f6789a
+status: experimental
+description: Detects PowerShell profile modification for persistence through profile scripts
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_profile_file:
+        EventID: 11
+        TargetFilename|contains:
+            - '\WindowsPowerShell\profile.ps1'
+            - '\PowerShell\profile.ps1'
+            - '\Microsoft.PowerShell_profile.ps1'
+            - '\Microsoft.VSCode_profile.ps1'
+    sel_profile_process:
+        EventID: 1
+        Image|endswith:
+            - '\powershell.exe'
+            - '\pwsh.exe'
+        CommandLine|contains:
+            - '$profile'
+            - 'Add-Content'
+            - 'Set-Content'
+            - 'Out-File'
+    condition: sel_profile_file or sel_profile_process
+falsepositives:
+    - Legitimate PowerShell profile customization
+    - Administrative PowerShell configuration
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1546.011
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.t1546.011
+    - sysmon
+    - windows
+    - powershell
+references:
+    - https://attack.mitre.org/techniques/T1546/011/
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles

@@ -1,5 +1,7 @@
 ---
 title: Beacon Object File (BOF) Reflective Loading Detection
+technique: T1620
+
 id: f1a2b3c4-d5e6-7890-abcd-ef1234567890
 status: experimental
 description: >
@@ -9,7 +11,7 @@ references:
   - https://attack.mitre.org/techniques/T1620/
   - https://www.cobaltstrike.com/help-beacon-object-files
   - https://github.com/trustedsec/CS-Situational-Awareness-BOF
-author: Defensive Rules Project
+author: Infinit3i
 date: 2026/04/27
 logsource:
   category: process_creation
@@ -43,6 +45,20 @@ falsepositives:
   - Security tools performing memory analysis
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1620
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1620
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1620
   - attack.t1055

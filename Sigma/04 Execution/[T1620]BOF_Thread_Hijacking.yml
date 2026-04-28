@@ -1,0 +1,61 @@
+---
+title: BOF Thread Hijacking Execution Detection
+technique: T1620
+id: a564c4c2-39aa-478b-a142-cf2e74a2804d
+status: experimental
+description: Detects BOF execution through thread hijacking techniques
+references:
+    - https://attack.mitre.org/techniques/T1055/003/
+    - https://attack.mitre.org/techniques/T1620/
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_thread_access:
+        EventID: 8
+        TargetImage|endswith:
+            - '\explorer.exe'
+            - '\svchost.exe'
+            - '\winlogon.exe'
+            - '\lsass.exe'
+        GrantedAccess:
+            - '0x1F0FFF'
+            - '0x1FFFFF'
+    sel_thread_create:
+        EventID: 8
+        NewThreadId: '*'
+        StartAddress|contains: 'UNKNOWN'
+    sel_context_apis:
+        CommandLine|contains:
+            - 'SuspendThread'
+            - 'SetThreadContext'
+            - 'ResumeThread'
+            - 'GetThreadContext'
+    sel_memory_access:
+        EventID: 10
+        CallTrace|contains:
+            - 'SetThreadContext'
+            - 'UNKNOWN'
+        GrantedAccess: '0x1F0FFF'
+    sel_injection_pattern:
+        CommandLine|contains:
+            - 'OpenThread'
+            - 'VirtualAllocEx'
+            - 'WriteProcessMemory'
+    condition: (sel_thread_access and sel_thread_create) or
+               (sel_context_apis and sel_memory_access) or
+               sel_injection_pattern
+falsepositives:
+    - Thread debugging in development environments
+    - Process monitoring security tools
+level: high
+tags:
+    - attack.execution
+    - attack.t1620
+    - attack.t1055.003
+    - windows
+    - sysmon
+    - cobalt_strike
+    - bof

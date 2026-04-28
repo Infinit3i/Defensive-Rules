@@ -1,5 +1,7 @@
 ---
 title: Detect FRPC Communication on Designated Ports
+technique: T1071
+author: Infinit3i
 id: b33f772a-12f3-4ae6-942c-f6c81803d107
 description: Detects possible FRPC (Fast Reverse Proxy Client) activity by identifying traffic on high-risk ports (6000, 7000) using Zeek logs.
 status: experimental
@@ -27,6 +29,13 @@ falsepositives:
   - Legitimate applications using the same ports
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071
   - frpc

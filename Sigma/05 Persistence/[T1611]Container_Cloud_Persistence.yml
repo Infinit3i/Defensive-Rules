@@ -1,0 +1,70 @@
+title: Container and Cloud Persistence Techniques
+technique: T1611
+id: d0e1f2a3-b4c5-6d7e-8f90-a1b2c3d4e5f6
+status: experimental
+description: Detects container and cloud persistence through malicious deployments and configurations
+author: Infinit3i
+date: 2026/04/27
+logsource:
+    product: linux
+    service: auditd
+detection:
+    sel_k8s_deploy:
+        type: EXECVE
+        comm:
+            - 'kubectl'
+            - 'docker'
+            - 'podman'
+        a0|contains:
+            - 'create'
+            - 'apply'
+            - 'patch'
+        a1|contains:
+            - 'cronjob'
+            - 'daemonset'
+            - 'deployment'
+    sel_docker_persist:
+        type: EXECVE
+        comm: 'docker'
+        a1|contains:
+            - 'run'
+            - 'create'
+        a2|contains:
+            - '--restart=always'
+            - '--privileged'
+            - '--net=host'
+    sel_cron_persist:
+        type: PATH
+        name|contains:
+            - '/var/spool/cron'
+            - '/etc/crontab'
+            - '/etc/cron'
+        nametype: 'CREATE'
+    sel_systemd_persist:
+        type: PATH
+        name|contains:
+            - '/etc/systemd/system/'
+            - '/usr/lib/systemd/system/'
+        nametype: 'CREATE'
+    condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
+falsepositives:
+    - Legitimate container orchestration
+    - Authorized system administration
+    - CI/CD deployment processes
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1611
+    # Platform/tool tags
+    - windows
+    - sysmon
+    - attack.persistence
+    - attack.t1611
+    - auditd
+    - linux
+    - container
+    - cloud
+references:
+    - https://attack.mitre.org/techniques/T1611/

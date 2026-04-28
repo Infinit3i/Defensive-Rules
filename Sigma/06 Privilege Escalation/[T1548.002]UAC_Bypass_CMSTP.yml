@@ -1,8 +1,9 @@
 title: UAC Bypass via CMSTP Connection Manager
+technique: T1548.002
 id: 0e1f2a3b-4c5d-6789-0123-456789abcdef
 status: experimental
 description: Detects UAC bypass using CMSTP.exe connection manager profiles
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1548/002/
@@ -32,6 +33,13 @@ falsepositives:
     - Network profile installations
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1548.002
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1548.002
     - attack.defense_evasion

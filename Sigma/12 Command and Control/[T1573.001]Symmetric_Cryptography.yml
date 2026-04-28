@@ -1,5 +1,6 @@
 ---
 title: Command and Control with Symmetric Cryptography
+technique: T1573.001
 id: e4b7f8c5-9d3a-4e6f-e4b7-8f5c9d3a6e4b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   encrypted C2 channels that may indicate protected communications.
 references:
   - https://attack.mitre.org/techniques/T1573/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1573.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1573.001
   - symmetric_cryptography

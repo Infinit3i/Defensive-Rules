@@ -1,8 +1,9 @@
 ---
 title: C2 Framework Network Indicators
+technique: T1071.001
 id: i1j2k3l4-m5n6-7890-abcd-555555555555
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: zeek
@@ -21,5 +22,12 @@ detection:
       - '/rest/2/api'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command-and-control
   - attack.t1071.001

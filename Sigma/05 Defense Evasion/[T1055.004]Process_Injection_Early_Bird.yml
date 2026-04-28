@@ -1,4 +1,6 @@
 title: Early Bird Process Injection Detection
+technique: T1055.004
+author: Infinit3i
 id: b7c4e9f2-8d5a-4c3b-9e1f-7a2d5c8b4e9a
 status: experimental
 description: Detects Early Bird process injection technique where malicious code is injected into a process before its main thread begins execution, bypassing many security monitoring solutions
@@ -51,6 +53,13 @@ falsepositives:
   - System administration tools
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - 
+    # MITRE ATT&CK technique
+    - attack.t1055.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.defense_evasion
   - attack.t1055.004
   - attack.privilege_escalation

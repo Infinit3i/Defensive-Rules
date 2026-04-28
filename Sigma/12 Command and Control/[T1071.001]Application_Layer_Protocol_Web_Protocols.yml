@@ -1,5 +1,6 @@
 ---
 title: Command and Control via Web Protocols
+technique: T1071.001
 id: a6f3e8c9-5b7d-4e2f-a6f3-8e9c5b7d2a6b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   web-based C2 communication channels.
 references:
   - https://attack.mitre.org/techniques/T1071/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1071.001
   - web_protocols

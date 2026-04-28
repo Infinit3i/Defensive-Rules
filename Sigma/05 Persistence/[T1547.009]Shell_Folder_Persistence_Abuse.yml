@@ -1,0 +1,56 @@
+---
+title: Shell Folder Persistence Registry Abuse Detection
+technique: T1547.009
+id: f7c9e2a5-8d6b-4f1a-9e3c-7a5d2f8b9c4e
+status: experimental
+description: Detects shell folder redirection persistence via registry modifications through Sysmon Event ID 13
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_shell_folders:
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders\'
+  selection_suspicious_folders:
+    TargetObject|endswith:
+      - '\Common Startup'
+      - '\Startup'
+      - '\Common Programs'
+      - '\Programs'
+  filter_legitimate_paths:
+    Details|contains:
+      - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup'
+      - 'C:\Users\'
+      - '%USERPROFILE%'
+      - '%ALLUSERSPROFILE%'
+  condition: selection_event and selection_shell_folders and selection_suspicious_folders and not filter_legitimate_paths
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Legitimate shell folder customization by administrators
+  - Profile migration tools
+  - Enterprise management software
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1547.009
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.t1547
+  - attack.t1547.009
+  - sysmon
+  - windows

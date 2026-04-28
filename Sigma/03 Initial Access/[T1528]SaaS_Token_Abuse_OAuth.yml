@@ -1,4 +1,6 @@
 title: SaaS OAuth Token Abuse and Session Hijacking
+technique: T1528
+author: Infinit3i
 id: c9fa04e5-3456-6789-0123-456789abcdef
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -51,6 +53,13 @@ falsepositives:
     - Corporate applications with broad permissions
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1528
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.initial_access
     - attack.t1528
     - attack.credential_access

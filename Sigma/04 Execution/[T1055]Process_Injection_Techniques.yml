@@ -1,5 +1,6 @@
 ---
 title: Process Injection Techniques
+technique: T1055
 id: a1b2c3d4-5678-90ab-cdef-1234567890ab
 status: experimental
 description: >
@@ -7,9 +8,16 @@ description: >
   suspicious granted access rights and remote thread creation events (EventID 8)."
 references:
   - https://attack.mitre.org/techniques/T1055/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1055
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.execution
   - attack.t1055
 logsource:

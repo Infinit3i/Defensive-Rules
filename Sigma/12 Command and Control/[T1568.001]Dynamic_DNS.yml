@@ -1,5 +1,6 @@
 ---
 title: Dynamic DNS for Command and Control
+technique: T1568.001
 id: a9c6f3e4-7b8d-4e5f-a9c6-3f4e7b8d5a9b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   or suspicious domain resolution patterns.
 references:
   - https://attack.mitre.org/techniques/T1568/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1568.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1568.001
   - dynamic_dns

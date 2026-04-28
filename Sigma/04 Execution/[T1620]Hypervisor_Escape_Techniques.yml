@@ -1,8 +1,10 @@
 title: Hypervisor Escape and VM Breakout Attempts
+technique: T1620
+
 id: a9e2f5c8-b7d4-4c1f-9e6a-2b8d5f1c3e7b
 status: experimental
 description: Detects attempts to escape from virtual machine guest environments to compromise the hypervisor or host system
-author: matthewiver@protonmail.com
+author: Infinit3i
 date: 2026/04/27
 references:
   - https://attack.mitre.org/techniques/T1620/
@@ -101,6 +103,20 @@ falsepositives:
   - VM performance monitoring
 level: critical
 tags:
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1620
+    # Platform/tool tags
+    - windows
+    - sysmon
+    # MITRE ATT&CK tactic
+    - attack.execution
+    # MITRE ATT&CK technique
+    - attack.t1620
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.escape_virtualization
   - attack.t1620
   - hypervisor_escape

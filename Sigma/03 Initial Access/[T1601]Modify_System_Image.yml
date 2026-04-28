@@ -1,5 +1,6 @@
 ---
 title: System Image Modification Detection
+technique: T1601
 id: b9f4e7c8-3a5d-4e2f-c6a1-9e3f8c5d2a7b
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -8,9 +9,16 @@ description: Detects cloud-based security attacks and access attempts.
   that may indicate persistent compromise or rootkit installation.
 references:
   - https://attack.mitre.org/techniques/T1601/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.initial_access
+    # MITRE ATT&CK technique
+    - attack.t1601
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.initial_access
   - attack.persistence
   - attack.t1601

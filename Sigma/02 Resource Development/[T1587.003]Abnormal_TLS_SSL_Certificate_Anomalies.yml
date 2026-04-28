@@ -1,5 +1,6 @@
 ---
 title: Abnormal TLS/SSL Certificate Anomalies
+technique: T1587.003
 id: a1b2c3d4-e5f6-7890-abcd-1234567890ef
 status: experimental
 description: >
@@ -8,9 +9,16 @@ description: >
 references:
   - https://attack.mitre.org/techniques/T1587/003/
   - https://attack.mitre.org/techniques/T1557/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-04-08
 tags:
+    # MITRE ATT&CK tactic
+    - attack.resource_development
+    # MITRE ATT&CK technique
+    - attack.t1587.003
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1587.003
   - attack.t1557
 logsource:

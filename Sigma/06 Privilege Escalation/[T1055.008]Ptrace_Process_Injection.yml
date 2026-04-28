@@ -1,8 +1,9 @@
 title: Ptrace Process Injection for Privilege Escalation
+technique: T1055.008
 id: 4f5a6b7c-8d9e-0123-4567-890123456789
 status: experimental
 description: Detects ptrace system call abuse for process injection
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1055/008/
@@ -33,6 +34,13 @@ falsepositives:
     - System monitoring tools
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1055.008
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1055.008
     - attack.defense_evasion

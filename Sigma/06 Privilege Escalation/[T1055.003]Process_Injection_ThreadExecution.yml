@@ -1,8 +1,9 @@
 title: Thread Execution Hijacking for Privilege Gain
+technique: T1055.003
 id: 2f3a4b5c-6d7e-8901-2345-678901234567
 status: experimental
 description: Detects thread execution hijacking in privileged processes
-author: SOC Team
+author: Infinit3i
 date: 2024/04/27
 references:
     - https://attack.mitre.org/techniques/T1055/003/
@@ -31,6 +32,13 @@ falsepositives:
     - System monitoring software
 level: high
 tags:
+    # MITRE ATT&CK tactic
+    - attack.privilege_escalation
+    # MITRE ATT&CK technique
+    - attack.t1055.003
+    # Platform/tool tags
+    - windows
+    - sysmon
     - attack.privilege_escalation
     - attack.t1055.003
     - attack.defense_evasion

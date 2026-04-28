@@ -1,8 +1,9 @@
 ---
 title: NTP Configuration Discovery
+technique: T1124
 id: g1h2i3j4-k5l6-7890-abcd-111111111111
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -21,5 +22,12 @@ detection:
       - 'chrony sources'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1124
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1124

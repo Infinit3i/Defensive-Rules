@@ -1,15 +1,23 @@
 ---
 title: Syscall strings or inline syscall opcodes in scriptblocks
+technique: T1106
 id: 5d0f6b3c-8e4a-4f67-9c8d-2b3f4e5d6c7b
 status: experimental
 description: >
   Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke
   native syscalls directly.
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 references:
   - https://attack.mitre.org/techniques/T1106/
 tags:
+    # MITRE ATT&CK tactic
+    - attack.defense_evasion
+    # MITRE ATT&CK technique
+    - attack.t1106
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1106
   - tactic.defense-evasion
   - platform:windows

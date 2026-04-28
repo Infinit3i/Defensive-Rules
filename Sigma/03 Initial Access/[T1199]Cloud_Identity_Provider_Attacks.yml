@@ -1,4 +1,6 @@
 title: Cloud Identity Provider Attack Detection
+technique: T1199
+author: Infinit3i
 id: 253g60eb-901c-2345-6789-abcdef012345
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
@@ -88,9 +90,13 @@ falsepositives:
     - Administrative tasks by authorized personnel
 level: critical
 tags:
+    # MITRE ATT&CK tactic
     - attack.initial_access
+    # MITRE ATT&CK technique
     - attack.t1199
-    - attack.credential_access
+    # Platform/tool tags
+    - azure
+    - cloud
     - attack.t1606
     - attack.defense_evasion
     - attack.t1484

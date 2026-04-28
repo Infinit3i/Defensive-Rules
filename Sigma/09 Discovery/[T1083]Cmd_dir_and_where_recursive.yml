@@ -1,13 +1,21 @@
 ---
 title: Cmd_dir_and_where_recursive
+technique: T1083
 id: 0f1a2b3c-4d5e-6f70-8a9b-0c1d2e3f4a5b
 status: experimental
 description: Detect Windows cmd.exe or where.exe usage with recursive file/directory enumeration flags (e.g., dir /s, where /r) often used for wide file discovery.
 references:
   - https://attack.mitre.org/techniques/T1083/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1083
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1083
   - tactic.discovery
   - platform:windows

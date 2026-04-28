@@ -1,5 +1,6 @@
 ---
 title: Domain Generation Algorithm Detection
+technique: T1568.002
 id: b7d4f8e5-9c6a-4e3f-b7d4-8f5e9c6a3b7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   DNS queries to randomly generated domain names.
 references:
   - https://attack.mitre.org/techniques/T1568/002/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1568.002
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command_and_control
   - attack.t1568.002
   - dga

@@ -1,9 +1,10 @@
 ---
 title: Registry System Information Queries
+technique: T1082
 id: a1b2c3d4-e5f6-7890-abcd-222222222222
 status: experimental
 description: Detects registry queries for system information discovery
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -39,6 +40,13 @@ falsepositives:
   - System monitoring
 level: low
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1082
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1082
   - sysmon

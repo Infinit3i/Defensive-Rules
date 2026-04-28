@@ -1,13 +1,21 @@
 ---
 title: Zeek NTP or UDP 123 traffic indicating external time queries
+technique: T1124
 id: 4c5d6e7f-8012-3456-7890-abcdef123456
 status: experimental
 description: Detects NTP (UDP/123) requests or responses observed in Zeek logs which may indicate a host querying external time sources for time discovery or sync changes.
 references:
   - https://attack.mitre.org/techniques/T1124/
-author: Matthew Iverson
+author: Infinit3i
 date: 2025-10-19
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1124
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.t1124
   - tactic.discovery
   - platform:network

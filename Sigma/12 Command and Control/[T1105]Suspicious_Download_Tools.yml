@@ -1,9 +1,10 @@
 ---
 title: Suspicious Download Tools and Methods
+technique: T1105
 id: i9j0k1l2-m3n4-5678-9012-345678ijklmn
 status: experimental
 description: Detects suspicious file download methods and tools used for ingress tool transfer
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -76,6 +77,13 @@ falsepositives:
   - Development tools
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1105
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command-and-control
   - attack.t1105
   - sysmon

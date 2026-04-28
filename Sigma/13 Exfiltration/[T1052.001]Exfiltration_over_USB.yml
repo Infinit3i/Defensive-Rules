@@ -1,5 +1,6 @@
 ---
 title: Data Exfiltration over USB Device
+technique: T1052.001
 id: e5b7f9c3-8a4d-4e6f-e5b7-9f3c8a4d6e5b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   data copying to external storage devices.
 references:
   - https://attack.mitre.org/techniques/T1052/001/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.exfiltration
+    # MITRE ATT&CK technique
+    - attack.t1052.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.exfiltration
   - attack.t1052.001
   - usb

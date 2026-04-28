@@ -1,0 +1,55 @@
+---
+title: COM Object Hijacking Registry Persistence Detection
+technique: T1546.015
+id: d5a8f3c7-2e9b-4a6d-8f7c-3b5e9a1d4c8f
+status: experimental
+description: Detects COM object hijacking for persistence via registry modifications through Sysmon Event ID 13
+author: Infinit3i
+date: 2026/04/27
+logsource:
+  product: windows
+  service: sysmon
+  category: registry_set
+detection:
+  selection_event:
+    EventID: 13
+  selection_com_hijack:
+    TargetObject|contains:
+      - '\SOFTWARE\Classes\CLSID\'
+      - '\SOFTWARE\Classes\WOW6432Node\CLSID\'
+  selection_com_keys:
+    TargetObject|endswith:
+      - '\InprocServer32\(Default)'
+      - '\LocalServer32\(Default)'
+      - '\InprocHandler32\(Default)'
+  filter_system_paths:
+    Details|contains:
+      - 'C:\Windows\System32\'
+      - 'C:\Windows\SysWOW64\'
+      - 'C:\Program Files\'
+      - 'C:\Program Files (x86)\'
+  condition: selection_event and selection_com_hijack and selection_com_keys and not filter_system_paths
+fields:
+  - Image
+  - TargetObject
+  - Details
+  - ProcessId
+  - ComputerName
+falsepositives:
+  - Legitimate software installations registering COM objects
+  - System updates modifying COM registrations
+level: medium
+tags:
+    # MITRE ATT&CK tactic
+    - attack.persistence
+    # MITRE ATT&CK technique
+    - attack.t1546.015
+    # Platform/tool tags
+    - windows
+    - sysmon
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1546
+  - attack.t1546.015
+  - sysmon
+  - windows

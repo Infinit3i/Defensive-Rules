@@ -1,5 +1,6 @@
 ---
 title: Web Session Cookie Theft Detection
+technique: T1550.004
 id: f7c4e8a3-9d6b-4e5f-f7c4-8e3a9d6b5f7b
 status: experimental
 description: >-
@@ -8,9 +9,16 @@ description: >-
   may indicate stolen session cookies being used for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1550/004/
-author: Matthew Iverson
+author: Infinit3i
 date: 2026-04-27
 tags:
+    # MITRE ATT&CK tactic
+    - attack.lateral_movement
+    # MITRE ATT&CK technique
+    - attack.t1550.004
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.lateral_movement
   - attack.t1550.004
   - session_cookie

@@ -1,9 +1,10 @@
 ---
 title: Suspicious Web-based Command and Control Patterns
+technique: T1071.001
 id: j0k1l2m3-n4o5-6789-0123-456789jklmno
 status: experimental
 description: Detects suspicious web-based command and control communication patterns
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: zeek
@@ -55,6 +56,13 @@ falsepositives:
   - API clients
 level: medium
 tags:
+    # MITRE ATT&CK tactic
+    - attack.command_and_control
+    # MITRE ATT&CK technique
+    - attack.t1071.001
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.command-and-control
   - attack.t1071.001
   - zeek

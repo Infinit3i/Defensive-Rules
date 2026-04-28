@@ -1,8 +1,9 @@
 ---
 title: Process Handle Analysis
+technique: T1057
 id: h1i2j3k4-l5m6-7890-abcd-444444444444
 status: experimental
-author: Matthew Iverson
+author: Infinit3i
 date: 2026/04/27
 logsource:
   product: windows
@@ -19,5 +20,12 @@ detection:
       - 'ss -tulpn'
   condition: selection
 tags:
+    # MITRE ATT&CK tactic
+    - attack.discovery
+    # MITRE ATT&CK technique
+    - attack.t1057
+    # Platform/tool tags
+    - windows
+    - sysmon
   - attack.discovery
   - attack.t1057
