@@ -29,14 +29,14 @@ logsource:
   service: http
 detection:
   large_requests:
-    method: 'POST'
-    request_body_len|gte: 10000
-    response_body_len|lte: 1000
+  method: 'POST'
+  request_body_len|gte: 10000
+  response_body_len|lte: 1000
   padding_patterns:
-    request_body_len: response_body_len
-    ratio|gte: 10
+  request_body_len: response_body_len
+  ratio|gte: 10
   repeated_data:
-    uri|contains:
+  uri|contains:
       - 'AAAAAAA'
       - '0000000'
       - 'padding'

@@ -26,7 +26,7 @@ logsource:
   service: dns
 detection:
   encoded_query:
-    query|re: "([a-zA-Z0-9]{10,}\\.){3,}"  # Deeply nested and encoded-looking subdomains
+  query|re: "([a-zA-Z0-9]{10,}\\.){3,}"  # Deeply nested and encoded-looking subdomains
   condition: encoded_query
 falsepositives:
   - Legitimate telemetry domains (e.g., antivirus or EDR heartbeat pings) and some CDN services.

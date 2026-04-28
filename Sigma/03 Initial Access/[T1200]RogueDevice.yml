@@ -5,27 +5,27 @@ description: Detects rogue network devices through MAC address monitoring and un
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1200/
+  - https://attack.mitre.org/techniques/T1200/
 logsource:
-    product: zeek
-    service: dhcp
+  product: zeek
+  service: dhcp
 detection:
-    selection_dhcp:
-        msg_types|contains: 'REQUEST'
-        mac|regex: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
-    selection_unknown:
-        vendor_class|contains:
-            - 'unknown'
-            - 'generic'
-            - ''
-    selection_suspicious:
-        requested_addr|startswith:
-            - '169.254.'
-            - '0.0.0.0'
-    condition: selection_dhcp and (selection_unknown or selection_suspicious)
+  selection_dhcp:
+    msg_types|contains: 'REQUEST'
+    mac|regex: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+  selection_unknown:
+    vendor_class|contains:
+      - 'unknown'
+      - 'generic'
+      - ''
+  selection_suspicious:
+    requested_addr|startswith:
+      - '169.254.'
+      - '0.0.0.0'
+  condition: selection_dhcp and (selection_unknown or selection_suspicious)
 falsepositives:
-    - New legitimate devices joining network
-    - DHCP configuration issues
+  - New legitimate devices joining network
+  - DHCP configuration issues
 level: medium
 tags:
   - attack.initial_access

@@ -12,17 +12,17 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-    EventID: 13
+  EventID: 13
   selection_lsa:
-    TargetObject|contains:
+  TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Authentication Packages'
       - '\SYSTEM\CurrentControlSet\Control\Lsa\OSConfig\Authentication Packages'
       - '\SYSTEM\CurrentControlSet\Control\Lsa\Security Packages'
   selection_suspicious:
-    Details|contains:
+  Details|contains:
       - '.dll'
   filter_msv:
-    Details|contains:
+  Details|contains:
       - 'msv1_0'
       - 'kerberos'
       - 'negotiate'

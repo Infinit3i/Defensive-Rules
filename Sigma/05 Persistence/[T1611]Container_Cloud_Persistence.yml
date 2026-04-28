@@ -6,51 +6,51 @@ description: Detects container and cloud persistence through malicious deploymen
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    sel_k8s_deploy:
-        type: EXECVE
-        comm:
-            - 'kubectl'
-            - 'docker'
-            - 'podman'
-        a0|contains:
-            - 'create'
-            - 'apply'
-            - 'patch'
-        a1|contains:
-            - 'cronjob'
-            - 'daemonset'
-            - 'deployment'
-    sel_docker_persist:
-        type: EXECVE
-        comm: 'docker'
-        a1|contains:
-            - 'run'
-            - 'create'
-        a2|contains:
-            - '--restart=always'
-            - '--privileged'
-            - '--net=host'
-    sel_cron_persist:
-        type: PATH
-        name|contains:
-            - '/var/spool/cron'
-            - '/etc/crontab'
-            - '/etc/cron'
-        nametype: 'CREATE'
-    sel_systemd_persist:
-        type: PATH
-        name|contains:
-            - '/etc/systemd/system/'
-            - '/usr/lib/systemd/system/'
-        nametype: 'CREATE'
-    condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
+  sel_k8s_deploy:
+    type: EXECVE
+    comm:
+      - 'kubectl'
+      - 'docker'
+      - 'podman'
+    a0|contains:
+      - 'create'
+      - 'apply'
+      - 'patch'
+    a1|contains:
+      - 'cronjob'
+      - 'daemonset'
+      - 'deployment'
+  sel_docker_persist:
+    type: EXECVE
+    comm: 'docker'
+    a1|contains:
+      - 'run'
+      - 'create'
+    a2|contains:
+      - '--restart=always'
+      - '--privileged'
+      - '--net=host'
+  sel_cron_persist:
+    type: PATH
+    name|contains:
+      - '/var/spool/cron'
+      - '/etc/crontab'
+      - '/etc/cron'
+    nametype: 'CREATE'
+  sel_systemd_persist:
+    type: PATH
+    name|contains:
+      - '/etc/systemd/system/'
+      - '/usr/lib/systemd/system/'
+    nametype: 'CREATE'
+  condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
 falsepositives:
-    - Legitimate container orchestration
-    - Authorized system administration
-    - CI/CD deployment processes
+  - Legitimate container orchestration
+  - Authorized system administration
+  - CI/CD deployment processes
 level: medium
 tags:
   # MITRE ATT&CK tactic
@@ -67,4 +67,4 @@ tags:
   - container
   - cloud
 references:
-    - https://attack.mitre.org/techniques/T1611/
+  - https://attack.mitre.org/techniques/T1611/

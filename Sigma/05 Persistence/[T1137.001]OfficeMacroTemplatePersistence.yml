@@ -5,24 +5,24 @@ description: Detects Office template modification with macro content for persist
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_file:
-        EventID: 11
-        TargetFilename|contains:
-            - '\Microsoft Office\UnsafeLocations\'
-            - '\Microsoft\Templates\'
-            - '\STARTUP\'
-            - 'Normal.dotm'
-            - 'Personal.xlsb'
-    selection_ext:
-        TargetFilename|endswith:
-            - '.dotm'
-            - '.xlam'
-            - '.ppam'
-            - '.potm'
-    condition: selection_file or selection_ext
+  selection_file:
+    EventID: 11
+    TargetFilename|contains:
+      - '\Microsoft Office\UnsafeLocations\'
+      - '\Microsoft\Templates\'
+      - '\STARTUP\'
+      - 'Normal.dotm'
+      - 'Personal.xlsb'
+  selection_ext:
+    TargetFilename|endswith:
+      - '.dotm'
+      - '.xlam'
+      - '.ppam'
+      - '.potm'
+  condition: selection_file or selection_ext
 level: high
 tags:
   - attack.persistence
@@ -30,4 +30,4 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1137/001/
+  - https://attack.mitre.org/techniques/T1137/001/

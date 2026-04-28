@@ -7,82 +7,82 @@ author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1485/
-    - https://attack.mitre.org/techniques/T1567/
+  - https://attack.mitre.org/techniques/T1485/
+  - https://attack.mitre.org/techniques/T1567/
 logsource:
-    product: windows
-    service: powershell
+  product: windows
+  service: powershell
 detection:
-    selection_o365_destruction:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'Remove-Mailbox'
-            - 'Remove-MailboxFolder'
-            - 'Remove-UnifiedGroup'
-            - 'Remove-SPOSite'
-            - 'Remove-PnPFile'
-            - 'Clear-RecycleBin'
-            - 'Remove-AzureADUser'
-            - 'Remove-MgUser'
-    selection_google_workspace:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'gam delete'
-            - 'gam remove'
-            - 'gsuite delete'
-            - 'google-api-python-client'
-            - 'drive.files().delete'
-            - 'gmail.users().messages().delete'
-    selection_salesforce_api:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'sfdx force:data:record:delete'
-            - 'sf data delete'
-            - 'salesforce api delete'
-            - 'DELETE /services/data/'
-    selection_bulk_operations:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'Invoke-RestMethod'
-            - 'Invoke-WebRequest'
-            - 'HttpClient'
-            - 'WebClient'
-        ScriptBlockText|regex:
-            - '.*delete.*\d{2,}.*'  # delete with numbers (bulk)
-            - '.*remove.*\d{2,}.*'  # remove with numbers (bulk)
-    selection_exfiltration:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'Export-Mailbox'
-            - 'Export-PST'
-            - 'Get-Mailbox | ForEach'
-            - 'Get-SPOFile'
-            - 'Download-File'
-            - 'Copy-Item'
-    selection_api_tools:
-        EventID: 1
-        Image|endswith:
-            - '\powershell.exe'
-            - '\python.exe'
-            - '\curl.exe'
-            - '\wget.exe'
-        CommandLine|contains:
-            - 'api'
-            - 'rest'
-            - 'graph.microsoft.com'
-            - 'googleapis.com'
-            - 'salesforce.com'
-    selection_network_activity:
-        EventID: 3
-        DestinationHostname|contains:
-            - 'graph.microsoft.com'
-            - 'outlook.office365.com'
-            - 'googleapis.com'
-            - 'salesforce.com'
-            - 'dropbox.com'
-            - 'box.com'
-        DestinationPort: 443
-    condition: (selection_o365_destruction or selection_google_workspace or selection_salesforce_api) and
+  selection_o365_destruction:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'Remove-Mailbox'
+      - 'Remove-MailboxFolder'
+      - 'Remove-UnifiedGroup'
+      - 'Remove-SPOSite'
+      - 'Remove-PnPFile'
+      - 'Clear-RecycleBin'
+      - 'Remove-AzureADUser'
+      - 'Remove-MgUser'
+  selection_google_workspace:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'gam delete'
+      - 'gam remove'
+      - 'gsuite delete'
+      - 'google-api-python-client'
+      - 'drive.files().delete'
+      - 'gmail.users().messages().delete'
+  selection_salesforce_api:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'sfdx force:data:record:delete'
+      - 'sf data delete'
+      - 'salesforce api delete'
+      - 'DELETE /services/data/'
+  selection_bulk_operations:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'Invoke-RestMethod'
+      - 'Invoke-WebRequest'
+      - 'HttpClient'
+      - 'WebClient'
+    ScriptBlockText|regex:
+      - '.*delete.*\d{2,}.*'  # delete with numbers (bulk)
+      - '.*remove.*\d{2,}.*'  # remove with numbers (bulk)
+  selection_exfiltration:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'Export-Mailbox'
+      - 'Export-PST'
+      - 'Get-Mailbox | ForEach'
+      - 'Get-SPOFile'
+      - 'Download-File'
+      - 'Copy-Item'
+  selection_api_tools:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\python.exe'
+      - '\curl.exe'
+      - '\wget.exe'
+    CommandLine|contains:
+      - 'api'
+      - 'rest'
+      - 'graph.microsoft.com'
+      - 'googleapis.com'
+      - 'salesforce.com'
+  selection_network_activity:
+    EventID: 3
+    DestinationHostname|contains:
+      - 'graph.microsoft.com'
+      - 'outlook.office365.com'
+      - 'googleapis.com'
+      - 'salesforce.com'
+      - 'dropbox.com'
+      - 'box.com'
+    DestinationPort: 443
+  condition: (selection_o365_destruction or selection_google_workspace or selection_salesforce_api) and
                selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)
 level: critical
 tags:
@@ -106,6 +106,6 @@ tags:
   - salesforce
   - data_destruction
 falsepositives:
-    - Legitimate bulk data management operations
-    - Automated backup and archival processes
-    - Administrative cleanup and maintenance tasks
+  - Legitimate bulk data management operations
+  - Automated backup and archival processes
+  - Administrative cleanup and maintenance tasks

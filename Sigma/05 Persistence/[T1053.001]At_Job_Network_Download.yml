@@ -12,23 +12,23 @@ logsource:
   service: auditd
 detection:
   selection_at_process:
-    - type: EXECVE
+  - type: EXECVE
       a0|contains:
-        - /usr/bin/at
-        - /bin/at
-        - atd
+    - /usr/bin/at
+    - /bin/at
+    - atd
   selection_network_tools:
-    - a1|contains:
-        - wget
-        - curl
-        - ftp
-        - sftp
-        - rsync
-        - scp
+  - a1|contains:
+    - wget
+    - curl
+    - ftp
+    - sftp
+    - rsync
+    - scp
   selection_execution_pattern:
-    - a1|re: '.*[|&;]\s*(chmod|bash|sh|python|perl)'
+  - a1|re: '.*[|&;]\s*(chmod|bash|sh|python|perl)'
   selection_at_spool:
-    - type: PATH
+  - type: PATH
       name|startswith: /var/spool/at/
   condition: (selection_at_process and selection_network_tools and selection_execution_pattern) or selection_at_spool
 level: high

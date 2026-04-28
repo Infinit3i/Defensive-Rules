@@ -6,32 +6,32 @@ description: Detects ptrace system call abuse for process injection
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1055/008/
+  - https://attack.mitre.org/techniques/T1055/008/
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_ptrace:
-        type: 'SYSCALL'
-        syscall: 'ptrace'
-        success: 'yes'
-    selection_attach:
-        a0: '0x10'
-        a1: '!= 0'
-    selection_suspicious:
-        comm: 'gdb'
-        ppid: '!= 1'
-    selection_injection:
-        syscall: 'ptrace'
-        a0|contains:
-            - '0x4'
-            - '0x5'
-            - '0x6'
-    condition: selection_ptrace and (selection_attach or selection_injection)
+  selection_ptrace:
+    type: 'SYSCALL'
+    syscall: 'ptrace'
+    success: 'yes'
+  selection_attach:
+    a0: '0x10'
+    a1: '!= 0'
+  selection_suspicious:
+    comm: 'gdb'
+    ppid: '!= 1'
+  selection_injection:
+    syscall: 'ptrace'
+    a0|contains:
+      - '0x4'
+      - '0x5'
+      - '0x6'
+  condition: selection_ptrace and (selection_attach or selection_injection)
                and not selection_suspicious
 falsepositives:
-    - Legitimate debugging sessions
-    - System monitoring tools
+  - Legitimate debugging sessions
+  - System monitoring tools
 level: medium
 tags:
   # MITRE ATT&CK tactic

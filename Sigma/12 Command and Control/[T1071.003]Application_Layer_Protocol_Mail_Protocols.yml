@@ -29,19 +29,19 @@ logsource:
   service: conn
 detection:
   mail_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 25
       - 587
       - 993
       - 995
   unusual_traffic:
-    service: 'ssl'
-    orig_bytes|gte: 10000
-    duration|gte: 300
+  service: 'ssl'
+  orig_bytes|gte: 10000
+  duration|gte: 300
   automated_mail:
-    id.orig_h|count|lte: 5
-    id.resp_p: 25
-    orig_bytes|gte: 1000
+  id.orig_h|count|lte: 5
+  id.resp_p: 25
+  orig_bytes|gte: 1000
   condition: mail_ports and (unusual_traffic or automated_mail)
 falsepositives:
   - Legitimate email communications

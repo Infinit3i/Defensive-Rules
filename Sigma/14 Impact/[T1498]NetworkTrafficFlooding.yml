@@ -5,45 +5,45 @@ description: Detects network denial of service through excessive traffic generat
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1498/
+  - https://attack.mitre.org/techniques/T1498/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    sel_ddos_tools:
-        EventID: 1
-        Image|contains:
-            - 'hping'
-            - 'nmap'
-            - 'scapy'
-            - 'slowloris'
-            - 'hulk'
-            - 'torshammer'
-            - 'pyloris'
-            - 'slowhttptest'
-            - 'goldeneye'
-            - 'xerxes'
-            - 'loic'
-            - 'hoic'
-    sel_ddos_args:
-        EventID: 1
-        CommandLine|contains:
-            - '--flood'
-            - '--syn-flood'
-            - '--udp-flood'
-            - '--icmp-flood'
-            - '-c 999'
-            - '-t 0'
-            - '--rate'
-            - '--pps'
-            - '--bandwidth'
-            - 'flood'
-            - 'attack'
-            - 'ddos'
-    sel_network_stress:
-        EventID: 3
-        Initiated: 'true'
-    condition: sel_ddos_tools or sel_ddos_args
+  sel_ddos_tools:
+    EventID: 1
+    Image|contains:
+      - 'hping'
+      - 'nmap'
+      - 'scapy'
+      - 'slowloris'
+      - 'hulk'
+      - 'torshammer'
+      - 'pyloris'
+      - 'slowhttptest'
+      - 'goldeneye'
+      - 'xerxes'
+      - 'loic'
+      - 'hoic'
+  sel_ddos_args:
+    EventID: 1
+    CommandLine|contains:
+      - '--flood'
+      - '--syn-flood'
+      - '--udp-flood'
+      - '--icmp-flood'
+      - '-c 999'
+      - '-t 0'
+      - '--rate'
+      - '--pps'
+      - '--bandwidth'
+      - 'flood'
+      - 'attack'
+      - 'ddos'
+  sel_network_stress:
+    EventID: 3
+    Initiated: 'true'
+  condition: sel_ddos_tools or sel_ddos_args
 level: high
 tags:
   - attack.impact

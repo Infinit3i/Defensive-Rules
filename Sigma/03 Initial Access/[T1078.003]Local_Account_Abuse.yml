@@ -29,18 +29,18 @@ logsource:
   service: security
 detection:
   local_admin_logon:
-    EventID: 4624
-    LogonType: 2
-    TargetUserName|endswith: '$'
+  EventID: 4624
+  LogonType: 2
+  TargetUserName|endswith: '$'
   service_logon:
-    EventID: 4624
-    LogonType: 5
-    TargetUserName|contains:
+  EventID: 4624
+  LogonType: 5
+  TargetUserName|contains:
       - 'service'
       - 'svc'
   unusual_hours:
-    EventID: 4624
-    TimeGenerated|contains:
+  EventID: 4624
+  TimeGenerated|contains:
       - 'T22:'
       - 'T23:'
       - 'T00:'

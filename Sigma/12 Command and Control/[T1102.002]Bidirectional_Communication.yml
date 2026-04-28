@@ -29,19 +29,19 @@ logsource:
   service: http
 detection:
   interactive_session:
-    method: 'POST'
-    response_code: 200
-    orig_bytes|gte: 100
-    resp_bytes|gte: 100
+  method: 'POST'
+  response_code: 200
+  orig_bytes|gte: 100
+  resp_bytes|gte: 100
   web_shell:
-    uri|contains:
+  uri|contains:
       - '/shell'
       - '/cmd'
       - '/exec'
       - '/webshell'
   command_execution:
-    method: 'POST'
-    uri|contains:
+  method: 'POST'
+  uri|contains:
       - 'cmd='
       - 'execute='
       - 'run='

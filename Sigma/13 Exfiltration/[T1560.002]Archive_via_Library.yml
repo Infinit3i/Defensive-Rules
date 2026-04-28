@@ -30,21 +30,21 @@ logsource:
   category: process_creation
 detection:
   script_archiving:
-    Image|endswith:
+  Image|endswith:
       - '\python.exe'
       - '\powershell.exe'
       - '\node.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'zipfile'
       - 'tarfile'
       - 'compress-archive'
   library_usage:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'System.IO.Compression'
       - 'SharpZipLib'
       - 'archiver'
   bulk_processing:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'foreach'
       - 'for file in'
       - 'glob'

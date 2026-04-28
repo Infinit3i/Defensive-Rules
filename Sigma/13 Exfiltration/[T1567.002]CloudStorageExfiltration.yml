@@ -10,39 +10,39 @@ tags:
   - cloud_storage
   - cloud
 logsource:
-    product: cloud_storage
-    service: access
+  product: cloud_storage
+  service: access
 detection:
-    selection_upload:
-        event_type:
-            - 'upload'
-            - 'create'
-            - 'share'
-    selection_volume:
-        file_size|gt: 100000000  # > 100MB
-    selection_suspicious:
-        - file_name|contains:
-            - 'dump'
-            - 'backup'
-            - 'export'
-            - 'confidential'
-        - ip_address|startswith:
-            - '10.'
-            - '192.168.'
-            - '172.'
-    condition: selection_upload and (selection_volume or selection_suspicious)
-    timeframe: 1h
-    count: 10
+  selection_upload:
+    event_type:
+      - 'upload'
+      - 'create'
+      - 'share'
+  selection_volume:
+    file_size|gt: 100000000  # > 100MB
+  selection_suspicious:
+    - file_name|contains:
+      - 'dump'
+      - 'backup'
+      - 'export'
+      - 'confidential'
+    - ip_address|startswith:
+      - '10.'
+      - '192.168.'
+      - '172.'
+  condition: selection_upload and (selection_volume or selection_suspicious)
+  timeframe: 1h
+  count: 10
 level: high
 fields:
-    - user_email
-    - file_name
-    - file_size
-    - ip_address
-    - event_type
+  - user_email
+  - file_name
+  - file_size
+  - ip_address
+  - event_type
 falsepositives:
-    - Legitimate large file uploads
-    - Automated backup processes
+  - Legitimate large file uploads
+  - Automated backup processes
 references:
-    - https://attack.mitre.org/techniques/T1567/002/
+  - https://attack.mitre.org/techniques/T1567/002/
 technique: T1567.002

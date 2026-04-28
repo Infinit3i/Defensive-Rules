@@ -9,43 +9,43 @@ logsource:
   service: sysmon
 detection:
   selection_process_create:
-    EventID: 1
+  EventID: 1
   selection_file_create:
-    EventID: 11
-    TargetFilename|contains: '\*.tmp'
+  EventID: 11
+  TargetFilename|contains: '\*.tmp'
   selection_file_transaction:
-    EventID: 15
-    Hash|contains: '*'
+  EventID: 15
+  Hash|contains: '*'
   selection_process_access:
-    EventID: 10
-    GrantedAccess:
+  EventID: 10
+  GrantedAccess:
       - '0x1F3FFF'
       - '0x1FFFFF'
-    CallTrace|contains:
+  CallTrace|contains:
       - 'ntdll.dll+NtCreateTransaction'
       - 'ntdll.dll+NtCreateSection'
       - 'ntdll.dll+NtCreateProcessEx'
       - 'ntdll.dll+RtlSetCurrentTransaction'
   suspicious_process_characteristics:
-    - ParentImage|endswith:
-        - '\explorer.exe'
-        - '\winlogon.exe'
-    - Image|endswith:
-        - '\svchost.exe'
-        - '\lsass.exe'
-        - '\csrss.exe'
-        - '\winlogon.exe'
-        - '\dwm.exe'
-    - IntegrityLevel: 'High'
+  - ParentImage|endswith:
+    - '\explorer.exe'
+    - '\winlogon.exe'
+  - Image|endswith:
+    - '\svchost.exe'
+    - '\lsass.exe'
+    - '\csrss.exe'
+    - '\winlogon.exe'
+    - '\dwm.exe'
+  - IntegrityLevel: 'High'
   selection_registry_transaction:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Services'
       - 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options'
   network_callback:
-    EventID: 3
-    Initiated: 'true'
-    Protocol: 'tcp'
+  EventID: 3
+  Initiated: 'true'
+  Protocol: 'tcp'
   condition: (selection_process_create and selection_file_create and selection_file_transaction) or
              (selection_process_access and suspicious_process_characteristics) or
              (selection_registry_transaction and network_callback)

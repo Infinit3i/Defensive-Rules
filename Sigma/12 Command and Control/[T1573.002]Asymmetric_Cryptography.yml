@@ -29,13 +29,13 @@ logsource:
   service: x509
 detection:
   unusual_key_size:
-    certificate.key_length|gte: 4096
-    certificate.key_type: 'rsa'
+  certificate.key_length|gte: 4096
+  certificate.key_type: 'rsa'
   short_validity:
-    certificate.not_valid_before: certificate.not_valid_after
-    validity_period|lte: 30
+  certificate.not_valid_before: certificate.not_valid_after
+  validity_period|lte: 30
   suspicious_subject:
-    certificate.subject|contains:
+  certificate.subject|contains:
       - 'CN=temp'
       - 'CN=test'
       - 'CN=localhost'

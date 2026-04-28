@@ -26,11 +26,11 @@ logsource:
   category: kernel
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "insmod"
       - "modprobe"
   abnormal_path:
-    Message|contains: "/tmp/"
+  Message|contains: "/tmp/"
   condition: selection and abnormal_path
 falsepositives:
   - Legitimate kernel module loading during system updates or when modules are temporarily staged in /tmp/ during packaging.

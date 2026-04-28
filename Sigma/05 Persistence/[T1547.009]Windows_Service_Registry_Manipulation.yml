@@ -5,44 +5,44 @@ description: Detects direct registry manipulation for service persistence bypass
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/009/
+  - https://attack.mitre.org/techniques/T1547/009/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_reg:
-        EventID: 13
-        TargetObject|contains: '\System\CurrentControlSet\Services\'
-    selection_values:
-        TargetObject|endswith:
-            - '\ImagePath'
-            - '\ServiceDll'
-            - '\Parameters\ServiceDll'
-            - '\Start'
-            - '\Type'
-    selection_suspicious:
-        - Details|contains:
-            - 'powershell'
-            - 'cmd.exe'
-            - 'rundll32'
-            - 'regsvr32'
-            - 'mshta'
-            - 'wscript'
-            - 'cscript'
-        - Details|contains:
-            - '\AppData\'
-            - '\Temp\'
-            - '\Users\Public\'
-            - '\ProgramData\'
-        - Details|endswith:
-            - '.bat'
-            - '.vbs'
-            - '.js'
-            - '.ps1'
-    condition: selection_reg and selection_values and selection_suspicious
+  selection_reg:
+    EventID: 13
+    TargetObject|contains: '\System\CurrentControlSet\Services\'
+  selection_values:
+    TargetObject|endswith:
+      - '\ImagePath'
+      - '\ServiceDll'
+      - '\Parameters\ServiceDll'
+      - '\Start'
+      - '\Type'
+  selection_suspicious:
+    - Details|contains:
+      - 'powershell'
+      - 'cmd.exe'
+      - 'rundll32'
+      - 'regsvr32'
+      - 'mshta'
+      - 'wscript'
+      - 'cscript'
+    - Details|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+    - Details|endswith:
+      - '.bat'
+      - '.vbs'
+      - '.js'
+      - '.ps1'
+  condition: selection_reg and selection_values and selection_suspicious
 falsepositives:
-    - Legitimate service updates
-    - Software installations modifying services
+  - Legitimate service updates
+  - Software installations modifying services
 level: high
 tags:
   - attack.persistence

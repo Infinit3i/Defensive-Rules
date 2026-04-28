@@ -11,18 +11,18 @@ logsource:
   product: windows
 detection:
   sysmon_event:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'FromBase64String'
       - 'amsi'
       - 'IEX'
       - 'Invoke-Obfuscation'
       - 'DownloadString'
   powershell_event:
-    EventID: 4104
-    Channel: Microsoft-Windows-PowerShell/Operational
-    Message|contains:
+  EventID: 4104
+  Channel: Microsoft-Windows-PowerShell/Operational
+  Message|contains:
       - 'FromBase64String'
       - 'amsi'
       - 'IEX'

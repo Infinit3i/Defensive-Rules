@@ -28,14 +28,14 @@ logsource:
   service: zeek
 detection:
   selection_propfind:
-    zeek.http.method|contains:
+  zeek.http.method|contains:
       - "PROPFIND"
   selection_depth_header:
-    zeek.http.headers|contains:
+  zeek.http.headers|contains:
       - "Depth: 1"
       - "Depth: infinity"
   selection_path_pattern:
-    zeek.http.uri|matches:
+  zeek.http.uri|matches:
       - "^/.*(/|%2F).*"   # URIs containing directory-like patterns (basic)
   condition: selection_propfind and selection_depth_header
 falsepositives:

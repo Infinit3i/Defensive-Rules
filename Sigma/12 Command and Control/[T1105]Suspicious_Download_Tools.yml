@@ -11,17 +11,17 @@ logsource:
   service: sysmon
 detection:
   selection_certutil:
-    EventID: 1
-    Image|endswith: '\certutil.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\certutil.exe'
+  CommandLine|contains:
       - '-urlcache'
       - '-split'
       - '-f'
       - 'http'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Invoke-WebRequest'
       - 'iwr'
       - 'wget'
@@ -32,29 +32,29 @@ detection:
       - 'Net.WebClient'
       - 'Start-BitsTransfer'
   selection_bitsadmin:
-    EventID: 1
-    Image|endswith: '\bitsadmin.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\bitsadmin.exe'
+  CommandLine|contains:
       - '/transfer'
       - '/download'
       - '/addfile'
   selection_hh:
-    EventID: 1
-    Image|endswith: '\hh.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\hh.exe'
+  CommandLine|contains:
       - 'http'
       - 'https'
       - '.chm'
   selection_mshta:
-    EventID: 1
-    Image|endswith: '\mshta.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\mshta.exe'
+  CommandLine|contains:
       - 'http'
       - 'https'
       - 'javascript'
       - 'vbscript'
   suspicious_urls:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'raw.githubusercontent'
       - 'pastebin.com'
       - 'bit.ly'

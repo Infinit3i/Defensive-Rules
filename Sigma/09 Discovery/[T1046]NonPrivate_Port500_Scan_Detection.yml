@@ -10,15 +10,15 @@ logsource:
   product: syslog
 detection:
   selection:
-    src_ip|cidr:
+  src_ip|cidr:
       - "!10.0.0.0/8"
       - "!192.168.0.0/16"
       - "!172.16.0.0/12"
-    condition1:
+  condition1:
       src_ip|cidr: 137.0.0.0/16
-    condition2:
+  condition2:
       src_port: 500
-    condition3:
+  condition3:
       dest_port: 500
   condition: selection and (condition1 or condition2 or condition3)
 fields:

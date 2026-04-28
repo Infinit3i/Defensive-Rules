@@ -14,13 +14,13 @@ logsource:
   service: security
 detection:
   selection_rdp_logon:
-    EventID: 4624
-    LogonType: 10
-    AuthenticationPackageName: Negotiate
+  EventID: 4624
+  LogonType: 10
+  AuthenticationPackageName: Negotiate
   selection_network_logon:
-    EventID: 4624
-    LogonType: 3
-    ProcessName: '*\svchost.exe'
+  EventID: 4624
+  LogonType: 3
+  ProcessName: '*\svchost.exe'
   condition: selection_rdp_logon or selection_network_logon
   timeframe: 10m
   count: 3

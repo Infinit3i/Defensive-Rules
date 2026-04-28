@@ -20,15 +20,15 @@ logsource:
   service: sysmon
 detection:
   selection_proc:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "sleep("
       - "Sleep("
       - "NtDelayExecution"
       - "NtDelayExecution("
   selection_image_load:
-    EventID: 7
-    TargetFilename|contains:
+  EventID: 7
+  TargetFilename|contains:
       - "\\Temp\\"
       - "\\AppData\\"
   condition: selection_proc or selection_image_load

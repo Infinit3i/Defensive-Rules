@@ -33,16 +33,16 @@ logsource:
   service: sysmon
 detection:
   selection_certutil:
-    EventID: 1
-    Image|endswith: '\certutil.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\certutil.exe'
+  CommandLine|contains:
       - "-urlcache"
       - "-f"
       - "http://"
       - "https://"
   selection_target_path:
-    EventID: 11
-    TargetFilename|contains:
+  EventID: 11
+  TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

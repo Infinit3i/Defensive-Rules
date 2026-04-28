@@ -29,15 +29,15 @@ logsource:
   service: http
 detection:
   base64_data:
-    uri|contains:
+  uri|contains:
       - 'base64'
       - '==='
       - 'encode'
   hex_encoding:
-    uri|regex: '[0-9a-fA-F]{20,}'
-    method: 'POST'
+  uri|regex: '[0-9a-fA-F]{20,}'
+  method: 'POST'
   url_encoding:
-    uri|contains:
+  uri|contains:
       - '%2F%2F'
       - '%3A%2F%2F'
       - '%20%20%20'

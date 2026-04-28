@@ -6,30 +6,30 @@ description: Detects UAC bypass through fodhelper.exe registry manipulation
 author: Infinit3i
 date: 2024/04/27
 references:
-    # Reference to MITRE ATT&CK technique
-    - https://attack.mitre.org/techniques/T1548/002/
+  # Reference to MITRE ATT&CK technique
+  - https://attack.mitre.org/techniques/T1548/002/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_process:
-        EventID: 1
-        Image|endswith: '\fodhelper.exe'
-        ParentImage|endswith:
-            - '\powershell.exe'
-            - '\cmd.exe'
-            - '\wscript.exe'
-            - '\cscript.exe'
-    selection_registry:
-        EventID: 13
-        TargetObject|contains:
-            - 'ms-settings\shell\open\command'
-            - 'Classes\ms-settings'
-    condition: selection_process or selection_registry
+  selection_process:
+    EventID: 1
+    Image|endswith: '\fodhelper.exe'
+    ParentImage|endswith:
+      - '\powershell.exe'
+      - '\cmd.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+  selection_registry:
+    EventID: 13
+    TargetObject|contains:
+      - 'ms-settings\shell\open\command'
+      - 'Classes\ms-settings'
+  condition: selection_process or selection_registry
 falsepositives:
-    # Legitimate system administration
-    - Legitimate system administration activities
-    - Software installation processes
+  # Legitimate system administration
+  - Legitimate system administration activities
+  - Software installation processes
 level: high
 tags:
   # MITRE ATT&CK tactic

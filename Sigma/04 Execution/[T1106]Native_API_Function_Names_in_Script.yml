@@ -28,8 +28,8 @@ logsource:
   service: sysmon
 detection:
   selection_proc:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"
       - "NtOpenProcess"
@@ -37,8 +37,8 @@ detection:
       - "NtCreateThread"
       - "ZwCreateThread"
   selection_ps:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"
       - "NtOpenProcess"

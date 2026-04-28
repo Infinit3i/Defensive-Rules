@@ -29,17 +29,17 @@ logsource:
   service: conn
 detection:
   large_upload:
-    orig_bytes|gte: 10000000
-    duration|gte: 60
+  orig_bytes|gte: 10000000
+  duration|gte: 60
   suspicious_destination:
-    id.resp_h|startswith:
+  id.resp_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    not: true
+  not: true
   encrypted_traffic:
-    service: 'ssl'
-    orig_bytes|gte: 1000000
+  service: 'ssl'
+  orig_bytes|gte: 1000000
   condition: large_upload or (suspicious_destination and encrypted_traffic)
 falsepositives:
   - Legitimate large file uploads

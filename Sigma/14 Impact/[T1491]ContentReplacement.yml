@@ -5,37 +5,37 @@ description: Detects content replacement and file overwriting through process ex
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_process:
-        EventID: 1
-        CommandLine|contains:
-            - 'echo'
-            - 'copy'
-            - 'move'
-            - 'type'
-            - 'index.html'
-            - 'index.php'
-            - 'default.asp'
-            - 'home.html'
-    selection_script:
-        EventID: 1
-        ParentProcessName|endswith:
-            - 'cmd.exe'
-            - 'powershell.exe'
-            - 'wscript.exe'
-            - 'cscript.exe'
-        CommandLine|contains:
-            - 'replace'
-            - 'overwrite'
-            - 'hacked'
-            - 'defaced'
-    condition: selection_process or selection_script
+  selection_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'echo'
+      - 'copy'
+      - 'move'
+      - 'type'
+      - 'index.html'
+      - 'index.php'
+      - 'default.asp'
+      - 'home.html'
+  selection_script:
+    EventID: 1
+    ParentProcessName|endswith:
+      - 'cmd.exe'
+      - 'powershell.exe'
+      - 'wscript.exe'
+      - 'cscript.exe'
+    CommandLine|contains:
+      - 'replace'
+      - 'overwrite'
+      - 'hacked'
+      - 'defaced'
+  condition: selection_process or selection_script
 falsepositives:
-    - Web development and deployment scripts
-    - Content management system updates
-    - Legitimate file maintenance
+  - Web development and deployment scripts
+  - Content management system updates
+  - Legitimate file maintenance
 level: medium
 tags:
   - attack.impact

@@ -5,30 +5,30 @@ description: Detects access to email database files and mailbox data
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1114/
+  - https://attack.mitre.org/techniques/T1114/
 tags:
   - attack.collection
   - attack.t1114
   - sysmon
   - windows
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 1
-    email_files:
-        CommandLine|contains:
-            - '.pst'
-            - '.ost'
-            - '.edb'
-            - 'MAPI'
-    tools:
-        - Image|endswith: '\pst2ost.exe'
-        - Image|endswith: '\ost2pst.exe'
-        - CommandLine|contains: 'Export-Mailbox'
-    condition: selection and (email_files or tools)
+  selection:
+    EventID: 1
+  email_files:
+    CommandLine|contains:
+      - '.pst'
+      - '.ost'
+      - '.edb'
+      - 'MAPI'
+  tools:
+    - Image|endswith: '\pst2ost.exe'
+    - Image|endswith: '\ost2pst.exe'
+    - CommandLine|contains: 'Export-Mailbox'
+  condition: selection and (email_files or tools)
 falsepositives:
-    - Email backup operations
-    - Migration tools
+  - Email backup operations
+  - Migration tools
 level: medium

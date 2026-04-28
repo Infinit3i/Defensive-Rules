@@ -30,17 +30,17 @@ logsource:
   category: file_create
 detection:
   usb_drive:
-    TargetFilename|startswith:
+  TargetFilename|startswith:
       - 'E:\'
       - 'F:\'
       - 'G:\'
       - 'H:\'
   large_files:
-    Image|endswith: '\explorer.exe'
-    TargetFilename|contains: ':'
-    FileSize|gte: 10000000
+  Image|endswith: '\explorer.exe'
+  TargetFilename|contains: ':'
+  FileSize|gte: 10000000
   sensitive_data:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.xlsx'
       - '.docx'
       - '.pdf'

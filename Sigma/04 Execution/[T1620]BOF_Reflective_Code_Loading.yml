@@ -18,27 +18,27 @@ logsource:
   product: windows
 detection:
   selection_apis:
-    Image|endswith: '\rundll32.exe'
-    CommandLine|contains:
+  Image|endswith: '\rundll32.exe'
+  CommandLine|contains:
       - 'VirtualAlloc'
       - 'VirtualProtect'
       - 'CreateThread'
       - 'ReflectiveLoader'
   selection_injection:
-    TargetImage|endswith:
+  TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
-    CallTrace|contains:
+  CallTrace|contains:
       - 'UNKNOWN'
       - 'Unbacked'
   selection_memory:
-    EventID: 10
-    GrantedAccess:
+  EventID: 10
+  GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
-    CallTrace|contains: 'UNKNOWN'
+  CallTrace|contains: 'UNKNOWN'
   condition: any of selection_*
 falsepositives:
   - Legitimate software using similar memory manipulation techniques

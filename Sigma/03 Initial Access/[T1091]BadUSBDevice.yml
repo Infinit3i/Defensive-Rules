@@ -5,26 +5,26 @@ description: Detects potential BadUSB attacks through rapid HID keystroke inject
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1091/
+  - https://attack.mitre.org/techniques/T1091/
 logsource:
-    product: windows
-    service: security
+  product: windows
+  service: security
 detection:
-    selection_hid:
-        EventID: 4648
-        LogonType: 2
-        ProcessName|contains:
-            - 'powershell.exe'
-            - 'cmd.exe'
-            - 'rundll32.exe'
-    selection_timing:
-        EventID: 4624
-        LogonType: 2
-    timeframe: 5s
-    condition: selection_hid and selection_timing | count() > 10
+  selection_hid:
+    EventID: 4648
+    LogonType: 2
+    ProcessName|contains:
+      - 'powershell.exe'
+      - 'cmd.exe'
+      - 'rundll32.exe'
+  selection_timing:
+    EventID: 4624
+    LogonType: 2
+  timeframe: 5s
+  condition: selection_hid and selection_timing | count() > 10
 falsepositives:
-    - Power users with rapid keyboard usage
-    - Automation scripts via keyboard simulation
+  - Power users with rapid keyboard usage
+  - Automation scripts via keyboard simulation
 level: high
 tags:
   - attack.initial_access

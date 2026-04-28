@@ -29,20 +29,20 @@ logsource:
   service: security
 detection:
   external_domain:
-    EventID: 4624
-    TargetDomainName|endswith:
+  EventID: 4624
+  TargetDomainName|endswith:
       - '.partner.com'
       - '.vendor.com'
       - '.contractor.com'
   service_account:
-    EventID: 4624
-    TargetUserName|startswith:
+  EventID: 4624
+  TargetUserName|startswith:
       - 'svc-'
       - 'service-'
-    LogonType: 3
+  LogonType: 3
   unusual_hours:
-    EventID: 4624
-    TimeGenerated|contains:
+  EventID: 4624
+  TimeGenerated|contains:
       - 'T20:'
       - 'T21:'
       - 'T22:'

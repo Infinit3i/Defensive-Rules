@@ -29,17 +29,17 @@ logsource:
   service: security
 detection:
   ntlm_logon:
-    EventID: 4624
-    LogonType: 3
-    AuthenticationPackageName: 'NTLM'
+  EventID: 4624
+  LogonType: 3
+  AuthenticationPackageName: 'NTLM'
   unusual_source:
-    WorkstationName|contains:
+  WorkstationName|contains:
       - 'WORKSTATION'
       - 'UNKNOWN'
       - 'DESKTOP'
   no_password:
-    LogonProcessName: 'NtLmSsp'
-    SubStatus: '0x0'
+  LogonProcessName: 'NtLmSsp'
+  SubStatus: '0x0'
   condition: ntlm_logon and (unusual_source or no_password)
 falsepositives:
   - Legacy NTLM applications

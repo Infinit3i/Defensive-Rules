@@ -5,28 +5,28 @@ description: Detects backup deletion attempts through command line tools targeti
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_wbadmin:
-        EventID: 1
-        CommandLine|contains:
-            - 'wbadmin delete backup'
-            - 'wbadmin delete catalog'
-            - 'wbadmin delete systemstatebackup'
-    selection_vssadmin:
-        EventID: 1
-        CommandLine|contains:
-            - 'vssadmin delete shadows'
-            - 'vssadmin delete backup'
-    selection_diskshadow:
-        EventID: 1
-        CommandLine|contains:
-            - 'diskshadow delete'
-    condition: selection_wbadmin or selection_vssadmin or selection_diskshadow
+  selection_wbadmin:
+    EventID: 1
+    CommandLine|contains:
+      - 'wbadmin delete backup'
+      - 'wbadmin delete catalog'
+      - 'wbadmin delete systemstatebackup'
+  selection_vssadmin:
+    EventID: 1
+    CommandLine|contains:
+      - 'vssadmin delete shadows'
+      - 'vssadmin delete backup'
+  selection_diskshadow:
+    EventID: 1
+    CommandLine|contains:
+      - 'diskshadow delete'
+  condition: selection_wbadmin or selection_vssadmin or selection_diskshadow
 falsepositives:
-    - Legitimate backup management scripts
-    - System maintenance activities
+  - Legitimate backup management scripts
+  - System maintenance activities
 level: high
 tags:
   - attack.impact

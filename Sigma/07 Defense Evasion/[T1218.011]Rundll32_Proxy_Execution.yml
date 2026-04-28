@@ -11,10 +11,10 @@ logsource:
   service: sysmon
 detection:
   selection_base:
-    EventID: 1
-    Image|endswith: '\rundll32.exe'
+  EventID: 1
+  Image|endswith: '\rundll32.exe'
   suspicious_dlls:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'javascript:'
       - 'vbscript:'
       - 'mshtml'
@@ -27,7 +27,7 @@ detection:
       - 'setupapi.dll'
       - 'ieframe.dll'
   suspicious_functions:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'DllCanUnloadNow'
       - 'DllGetVersion'
       - 'DllInstall'
@@ -37,20 +37,20 @@ detection:
       - 'RouteTheCall'
       - 'LaunchApplication'
   remote_sources:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'http://'
       - 'https://'
       - 'ftp://'
       - '\\\\'  # UNC paths
   encoded_commands:
-    CommandLine|contains:
+  CommandLine|contains:
       - ' -e '
       - ' -en '
       - ' -enc '
       - ' -encoded '
       - 'FromBase64String'
   temp_paths:
-    CommandLine|contains:
+  CommandLine|contains:
       - '%TEMP%'
       - '%TMP%'
       - 'C:\Users\*\AppData\Local\Temp'

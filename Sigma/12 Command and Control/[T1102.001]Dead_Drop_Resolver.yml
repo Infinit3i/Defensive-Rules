@@ -29,19 +29,19 @@ logsource:
   service: http
 detection:
   social_media:
-    host|endswith:
+  host|endswith:
       - '.twitter.com'
       - '.facebook.com'
       - '.reddit.com'
       - '.telegram.org'
   automated_access:
-    user_agent|contains:
+  user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'bot'
   api_endpoints:
-    uri|contains:
+  uri|contains:
       - '/api/'
       - '/v1/'
       - '/v2/'

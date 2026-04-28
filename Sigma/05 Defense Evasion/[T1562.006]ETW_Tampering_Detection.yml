@@ -9,22 +9,22 @@ logsource:
   service: sysmon
 detection:
   selection_etw_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Control\WMI\Autologger'
       - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels'
       - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers'
-    TargetObject|endswith:
+  TargetObject|endswith:
       - '\Enabled'
       - '\EnableLevel'
       - '\MatchAnyKeyword'
-    Details:
+  Details:
       - 'DWORD (0x00000000)'
       - '0'
   selection_etw_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Set-EtwTraceProvider'
       - 'Remove-EtwTraceProvider'
       - 'Disable-EtwTraceProvider'
@@ -32,9 +32,9 @@ detection:
       - 'Microsoft-Windows-PowerShell'
       - 'Microsoft-Windows-Kernel-EventTracing'
   selection_etw_wevtutil:
-    EventID: 1
-    Image|endswith: '\wevtutil.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wevtutil.exe'
+  CommandLine|contains:
       - 'set-log'
       - 'sl'
       - '/e:false'
@@ -43,28 +43,28 @@ detection:
       - 'Microsoft-Windows-WMI-Activity/Operational'
       - 'Microsoft-Windows-Sysmon/Operational'
   selection_etw_process_access:
-    EventID: 10
-    TargetImage|endswith: '\svchost.exe'
-    CallTrace|contains:
+  EventID: 10
+  TargetImage|endswith: '\svchost.exe'
+  CallTrace|contains:
       - 'advapi32.dll+EventRegister'
       - 'advapi32.dll+EventUnregister'
       - 'ntdll.dll+EtwRegisterTraceGuids'
       - 'ntdll.dll+EtwUnregisterTraceGuids'
-    GrantedAccess:
+  GrantedAccess:
       - '0x1F3FFF'
       - '0x1FFFFF'
   selection_etw_api_calls:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'EtwEventWrite'
       - 'EtwEventRegister'
       - 'EtwEventUnregister'
       - 'EtwTraceMessage'
       - 'TraceEvent'
   selection_etw_logman:
-    EventID: 1
-    Image|endswith: '\logman.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\logman.exe'
+  CommandLine|contains:
       - 'stop'
       - 'delete'
       - 'update'
@@ -73,15 +73,15 @@ detection:
       - 'EventLog-Application'
       - 'NT Kernel Logger'
   selection_etw_service_stop:
-    EventID: 7045
-    ServiceName|contains:
+  EventID: 7045
+  ServiceName|contains:
       - 'EventLog'
       - 'Wecsvc'
       - 'WinRM'
-    StartType: 'Disabled'
+  StartType: 'Disabled'
   selection_etw_com:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'Microsoft.Diagnostics.Tracing'
       - 'System.Diagnostics.Eventing'
       - 'TraceLogging'

@@ -6,31 +6,31 @@ description: Detects abuse of sudo token caching for privilege escalation
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1548/003/
+  - https://attack.mitre.org/techniques/T1548/003/
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_sudo:
-        type: 'SYSCALL'
-        comm: 'sudo'
-        success: 'yes'
-    selection_timestamp:
-        type: 'USER_CMD'
-        msg|contains:
-            - 'sudo -S'
-            - 'sudo -A'
-            - 'sudo -k'
-    selection_unusual:
-        comm: 'sudo'
-        exe|contains:
-            - '/tmp/'
-            - '/var/tmp/'
-            - '/dev/shm/'
-    condition: selection_sudo and (selection_timestamp or selection_unusual)
+  selection_sudo:
+    type: 'SYSCALL'
+    comm: 'sudo'
+    success: 'yes'
+  selection_timestamp:
+    type: 'USER_CMD'
+    msg|contains:
+      - 'sudo -S'
+      - 'sudo -A'
+      - 'sudo -k'
+  selection_unusual:
+    comm: 'sudo'
+    exe|contains:
+      - '/tmp/'
+      - '/var/tmp/'
+      - '/dev/shm/'
+  condition: selection_sudo and (selection_timestamp or selection_unusual)
 falsepositives:
-    - Legitimate administrative tasks
-    - Automated scripts
+  - Legitimate administrative tasks
+  - Automated scripts
 level: medium
 tags:
   # MITRE ATT&CK tactic

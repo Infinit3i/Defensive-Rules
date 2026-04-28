@@ -20,8 +20,8 @@ logsource:
   service: powershell
 detection:
   selection_scriptblock:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "IsDebuggerPresent"
       - "CheckRemoteDebuggerPresent"
       - "OutputDebugString"

@@ -23,10 +23,10 @@ logsource:
   service: system
 detection:
   selection:
-    EventID: 7045
-    ServiceFileName|endswith: ".sys"
+  EventID: 7045
+  ServiceFileName|endswith: ".sys"
   whitelist:
-    ServiceFileName|startswith: "C:\\Windows\\System32\\drivers\\"
+  ServiceFileName|startswith: "C:\\Windows\\System32\\drivers\\"
   condition: selection and not whitelist
 falsepositives:
   - Legitimate driver updates or installations by trusted vendors in standard directories.

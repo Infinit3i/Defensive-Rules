@@ -5,25 +5,25 @@ description: Detects manipulation of LD_PRELOAD for library preloading persisten
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_env:
-        type: "SYSCALL"
-        syscall: ["execve", "execveat"]
-    selection_preload:
-        a0|contains: "LD_PRELOAD"
-    selection_preload_file:
-        type: "SYSCALL"
-        syscall: "openat"
-        name: "/etc/ld.so.preload"
-        a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
-    selection_export:
-        comm: ["bash", "sh", "zsh"]
-        proctitle|contains:
-            - "export LD_PRELOAD"
-            - "setenv LD_PRELOAD"
-    condition: (selection_env and selection_preload) or
+  selection_env:
+    type: "SYSCALL"
+    syscall: ["execve", "execveat"]
+  selection_preload:
+    a0|contains: "LD_PRELOAD"
+  selection_preload_file:
+    type: "SYSCALL"
+    syscall: "openat"
+    name: "/etc/ld.so.preload"
+    a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
+  selection_export:
+    comm: ["bash", "sh", "zsh"]
+    proctitle|contains:
+      - "export LD_PRELOAD"
+      - "setenv LD_PRELOAD"
+  condition: (selection_env and selection_preload) or
                selection_preload_file or selection_export
 level: high
 tags:
@@ -34,7 +34,7 @@ tags:
   - linux
   - auditd
 references:
-    - https://attack.mitre.org/techniques/T1574/006/
+  - https://attack.mitre.org/techniques/T1574/006/
 falsepositives:
-    - Debugging with LD_PRELOAD
-    - Legitimate library interposition
+  - Debugging with LD_PRELOAD
+  - Legitimate library interposition

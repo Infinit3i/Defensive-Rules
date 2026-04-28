@@ -29,16 +29,16 @@ logsource:
   service: signinlogs
 detection:
   saml_logon:
-    AuthenticationProtocol: 'saml'
-    TokenIssuerType: 'AzureAD'
+  AuthenticationProtocol: 'saml'
+  TokenIssuerType: 'AzureAD'
   suspicious_issuer:
-    TokenIssuerName|contains:
+  TokenIssuerName|contains:
       - 'adfs'
       - 'sso'
       - 'federation'
   unusual_attributes:
-    ConditionalAccessStatus: 'notApplied'
-    RiskLevelAggregated: 'high'
+  ConditionalAccessStatus: 'notApplied'
+  RiskLevelAggregated: 'high'
   condition: saml_logon and (suspicious_issuer or unusual_attributes)
 falsepositives:
   - Legitimate federated authentication

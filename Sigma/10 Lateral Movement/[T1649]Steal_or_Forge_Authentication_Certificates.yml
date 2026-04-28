@@ -29,18 +29,18 @@ logsource:
   service: security
 detection:
   cert_access:
-    EventID: 5058
-    SubjectUserName|contains:
+  EventID: 5058
+  SubjectUserName|contains:
       - 'admin'
       - 'service'
   cert_export:
-    EventID: 5061
-    KeyName|contains:
+  EventID: 5061
+  KeyName|contains:
       - 'Certificate'
       - 'Private Key'
   cert_install:
-    EventID: 4887
-    CertificateSubjectName|contains:
+  EventID: 4887
+  CertificateSubjectName|contains:
       - 'CN='
       - 'O='
   condition: cert_access or cert_export or cert_install

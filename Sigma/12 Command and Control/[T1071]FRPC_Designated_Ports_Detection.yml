@@ -10,12 +10,12 @@ logsource:
   product: zeek
 detection:
   selection:
-    - id.orig_p:
-        - 6000
-        - 7000
-    - id.resp_p:
-        - 6000
-        - 7000
+  - id.orig_p:
+    - 6000
+    - 7000
+  - id.resp_p:
+    - 6000
+    - 7000
   condition: selection
 fields:
   - _time

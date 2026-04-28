@@ -29,8 +29,8 @@ logsource:
   service: security
 detection:
   default_users:
-    EventID: 4624
-    TargetUserName|contains:
+  EventID: 4624
+  TargetUserName|contains:
       - 'admin'
       - 'administrator'
       - 'guest'
@@ -39,11 +39,11 @@ detection:
       - 'default'
       - 'sa'
   service_accounts:
-    EventID: 4624
-    TargetUserName|startswith:
+  EventID: 4624
+  TargetUserName|startswith:
       - 'svc'
       - 'service'
-    LogonType: 3
+  LogonType: 3
   condition: default_users or service_accounts
 falsepositives:
   - Legitimate use of administrative accounts

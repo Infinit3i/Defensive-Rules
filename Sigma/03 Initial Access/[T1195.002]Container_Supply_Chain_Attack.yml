@@ -5,66 +5,66 @@ id: e1fc26a7-5678-8901-2345-6789abcdef01
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
 references:
-    - https://attack.mitre.org/techniques/T1195/002/
-    - https://kubernetes.io/docs/concepts/security/
-    - https://docs.docker.com/engine/security/
+  - https://attack.mitre.org/techniques/T1195/002/
+  - https://kubernetes.io/docs/concepts/security/
+  - https://docs.docker.com/engine/security/
 logsource:
-    product: kubernetes
-    service: audit
+  product: kubernetes
+  service: audit
 detection:
-    selection_suspicious_image_source:
-        verb: 'create'
-        objectRef.resource: 'pods'
-        requestObject.spec.containers.image|contains:
-            - 'dockerhub.com'
-            - 'ghcr.io'
-            - 'quay.io'
-        # Images from public registries without organization control
-        requestObject.spec.containers.image|endswith:
-            - ':latest'
-            - ':main'
-            - ':master'
-            # Using mutable tags instead of specific versions
-    selection_privileged_containers:
-        verb: 'create'
-        objectRef.resource: 'pods'
-        requestObject.spec.containers.securityContext.privileged: true
-        requestObject.spec.containers.securityContext.runAsRoot: true
-    selection_excessive_capabilities:
-        verb: 'create'
-        objectRef.resource: 'pods'
-        requestObject.spec.containers.securityContext.capabilities.add|contains:
-            - 'SYS_ADMIN'
-            - 'NET_ADMIN'
-            - 'SYS_PTRACE'
-            - 'SYS_MODULE'
-    selection_suspicious_registry:
-        verb: 'create'
-        objectRef.resource: 'pods'
-        requestObject.spec.containers.image|contains:
-            - '.onion'
-            - 'tor'
-            - 'anonymous'
-            - 'proxy'
-    selection_untrusted_namespace:
-        verb: 'create'
-        objectRef.resource: 'pods'
-        objectRef.namespace:
-            - 'default'
-            - 'kube-public'
-    # Deployments in default or public namespaces
-    selection_image_without_digest:
-        verb: 'create'
-        objectRef.resource: 'pods'
-    # Images without SHA256 digest verification
-    condition: selection_suspicious_image_source or selection_privileged_containers or
+  selection_suspicious_image_source:
+    verb: 'create'
+    objectRef.resource: 'pods'
+    requestObject.spec.containers.image|contains:
+      - 'dockerhub.com'
+      - 'ghcr.io'
+      - 'quay.io'
+    # Images from public registries without organization control
+    requestObject.spec.containers.image|endswith:
+      - ':latest'
+      - ':main'
+      - ':master'
+      # Using mutable tags instead of specific versions
+  selection_privileged_containers:
+    verb: 'create'
+    objectRef.resource: 'pods'
+    requestObject.spec.containers.securityContext.privileged: true
+    requestObject.spec.containers.securityContext.runAsRoot: true
+  selection_excessive_capabilities:
+    verb: 'create'
+    objectRef.resource: 'pods'
+    requestObject.spec.containers.securityContext.capabilities.add|contains:
+      - 'SYS_ADMIN'
+      - 'NET_ADMIN'
+      - 'SYS_PTRACE'
+      - 'SYS_MODULE'
+  selection_suspicious_registry:
+    verb: 'create'
+    objectRef.resource: 'pods'
+    requestObject.spec.containers.image|contains:
+      - '.onion'
+      - 'tor'
+      - 'anonymous'
+      - 'proxy'
+  selection_untrusted_namespace:
+    verb: 'create'
+    objectRef.resource: 'pods'
+    objectRef.namespace:
+      - 'default'
+      - 'kube-public'
+  # Deployments in default or public namespaces
+  selection_image_without_digest:
+    verb: 'create'
+    objectRef.resource: 'pods'
+  # Images without SHA256 digest verification
+  condition: selection_suspicious_image_source or selection_privileged_containers or
                selection_excessive_capabilities or selection_suspicious_registry or
                selection_untrusted_namespace or selection_image_without_digest
 falsepositives:
-    - Legitimate development and testing environments
-    - Approved third-party containers with proper security review
-    - System containers requiring elevated privileges
-    - Legacy applications in migration process
+  - Legitimate development and testing environments
+  - Approved third-party containers with proper security review
+  - System containers requiring elevated privileges
+  - Legacy applications in migration process
 level: high
 tags:
   # MITRE ATT&CK tactic

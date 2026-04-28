@@ -30,19 +30,19 @@ logsource:
   category: process_creation
 detection:
   remote_tools:
-    Image|endswith:
+  Image|endswith:
       - '\teamviewer.exe'
       - '\vnc.exe'
       - '\anydesk.exe'
       - '\logmein.exe'
   suspicious_args:
-    CommandLine|contains:
+  CommandLine|contains:
       - '/password'
       - '/connect'
       - '/silent'
       - '/hide'
   network_access:
-    Image|contains:
+  Image|contains:
       - 'remote'
       - 'access'
       - 'desktop'

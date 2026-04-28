@@ -29,19 +29,19 @@ logsource:
   service: exchange
 detection:
   mass_email:
-    Operation: 'Send'
-    RecipientCount|gte: 50
+  Operation: 'Send'
+  RecipientCount|gte: 50
   suspicious_attachment:
-    Operation: 'Send'
-    AttachmentExtension|contains:
+  Operation: 'Send'
+  AttachmentExtension|contains:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.ps1'
       - '.vbs'
   external_sender:
-    Operation: 'Send'
-    SenderDomain|contains:
+  Operation: 'Send'
+  SenderDomain|contains:
       - 'gmail.com'
       - 'yahoo.com'
       - 'hotmail.com'

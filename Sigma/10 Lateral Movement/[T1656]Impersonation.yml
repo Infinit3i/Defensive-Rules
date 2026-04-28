@@ -29,19 +29,19 @@ logsource:
   service: security
 detection:
   unusual_logon:
-    EventID: 4624
-    LogonType:
+  EventID: 4624
+  LogonType:
       - 2
       - 3
       - 10
   geographic_anomaly:
-    IpAddress|startswith:
+  IpAddress|startswith:
       - '192.168.'
       - '10.'
-    WorkstationName|contains: 'EXTERNAL'
+  WorkstationName|contains: 'EXTERNAL'
   service_impersonation:
-    EventID: 4648
-    TargetUserName|contains:
+  EventID: 4648
+  TargetUserName|contains:
       - 'admin'
       - 'service'
       - 'system'

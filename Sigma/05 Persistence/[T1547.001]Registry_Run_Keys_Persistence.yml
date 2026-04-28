@@ -5,35 +5,35 @@ description: Detects suspicious process execution from Registry Run keys through
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_reg:
-        EventID: 13
-        TargetObject|contains:
-            - '\Software\Microsoft\Windows\CurrentVersion\Run\'
-            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
-    selection_suspicious:
-        - Details|contains:
-            - 'powershell'
-            - 'cmd.exe'
-            - 'wscript'
-            - 'cscript'
-            - 'rundll32'
-            - 'regsvr32'
-        - Details|endswith:
-            - '.exe -h'
-            - '.exe --hidden'
-            - '.bat'
-            - '.vbs'
-            - '.js'
-            - '.ps1'
-    condition: selection_reg and selection_suspicious
+  selection_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\Software\Microsoft\Windows\CurrentVersion\Run\'
+      - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+  selection_suspicious:
+    - Details|contains:
+      - 'powershell'
+      - 'cmd.exe'
+      - 'wscript'
+      - 'cscript'
+      - 'rundll32'
+      - 'regsvr32'
+    - Details|endswith:
+      - '.exe -h'
+      - '.exe --hidden'
+      - '.bat'
+      - '.vbs'
+      - '.js'
+      - '.ps1'
+  condition: selection_reg and selection_suspicious
 falsepositives:
-    - Legitimate software installations
-    - Administrative scripts
+  - Legitimate software installations
+  - Administrative scripts
 level: medium
 tags:
   - attack.persistence

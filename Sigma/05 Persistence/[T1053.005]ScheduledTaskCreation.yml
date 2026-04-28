@@ -10,10 +10,10 @@ logsource:
   product: windows
 detection:
   windows_event:
-    EventID: 4698
+  EventID: 4698
   sysmon_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'schtasks'
       - 'New-ScheduledTask'
       - 'at.exe'

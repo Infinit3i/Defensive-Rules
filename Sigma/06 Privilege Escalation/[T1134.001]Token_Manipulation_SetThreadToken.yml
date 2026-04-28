@@ -6,27 +6,27 @@ description: Detects token manipulation through SetThreadToken API calls
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1134/001/
+  - https://attack.mitre.org/techniques/T1134/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_image_load:
-        EventID: 7
-        ImageLoaded|contains: 'advapi32.dll'
-    selection_process_access:
-        EventID: 10
-        CallTrace|contains:
-            - 'SetThreadToken'
-            - 'ImpersonateLoggedOnUser'
-            - 'DuplicateTokenEx'
-        GrantedAccess:
-            - '0x1478'
-            - '0x1400'
-    condition: selection_image_load and selection_process_access
+  selection_image_load:
+    EventID: 7
+    ImageLoaded|contains: 'advapi32.dll'
+  selection_process_access:
+    EventID: 10
+    CallTrace|contains:
+      - 'SetThreadToken'
+      - 'ImpersonateLoggedOnUser'
+      - 'DuplicateTokenEx'
+    GrantedAccess:
+      - '0x1478'
+      - '0x1400'
+  condition: selection_image_load and selection_process_access
 falsepositives:
-    - Legitimate service authentication
-    - System processes
+  - Legitimate service authentication
+  - System processes
 level: medium
 tags:
   # MITRE ATT&CK tactic

@@ -29,20 +29,20 @@ logsource:
   service: http
 detection:
   beacon_pattern:
-    method: 'GET'
-    response_code: 200
-    orig_bytes|lte: 500
-    resp_bytes|lte: 1000
+  method: 'GET'
+  response_code: 200
+  orig_bytes|lte: 500
+  resp_bytes|lte: 1000
   data_retrieval:
-    method: 'GET'
-    uri|contains:
+  method: 'GET'
+  uri|contains:
       - '/data'
       - '/config'
       - '/update'
   periodic_access:
-    host|count|gte: 10
-    method: 'GET'
-    time_interval: '300'
+  host|count|gte: 10
+  method: 'GET'
+  time_interval: '300'
   condition: beacon_pattern or data_retrieval or periodic_access
 falsepositives:
   - Legitimate data synchronization

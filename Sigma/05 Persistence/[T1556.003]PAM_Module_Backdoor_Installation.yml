@@ -12,26 +12,26 @@ logsource:
   service: auditd
 detection:
   selection_pam_paths:
-    - type: PATH
+  - type: PATH
       name|contains:
-        - /lib/security/
-        - /lib64/security/
-        - /usr/lib/security/
-        - /usr/lib64/security/
-        - /etc/pam.d/
+    - /lib/security/
+    - /lib64/security/
+    - /usr/lib/security/
+    - /usr/lib64/security/
+    - /etc/pam.d/
   selection_file_operations:
-    - type: SYSCALL
+  - type: SYSCALL
       syscall: openat
       a2: 577  # O_WRONLY|O_CREAT
   selection_suspicious_names:
-    - comm|contains:
-        - pam_backdoor
-        - pam_evil
-        - pam_bypass
-        - pam_rootkit
-        - pam_stealth
-        - .so.bak
-        - .so.orig
+  - comm|contains:
+    - pam_backdoor
+    - pam_evil
+    - pam_bypass
+    - pam_rootkit
+    - pam_stealth
+    - .so.bak
+    - .so.orig
   condition: selection_pam_paths and selection_file_operations and selection_suspicious_names
 level: critical
 tags:

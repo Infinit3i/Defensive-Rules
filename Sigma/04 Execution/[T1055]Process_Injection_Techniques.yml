@@ -25,10 +25,10 @@ logsource:
   service: sysmon
 detection:
   suspicious_access:
-    EventID: 10
-    GrantedAccess|re: "(?i)0x1F0FFF|0x1fffff|0x1410|0x143a"
+  EventID: 10
+  GrantedAccess|re: "(?i)0x1F0FFF|0x1fffff|0x1410|0x143a"
   suspicious_thread:
-    EventID: 8
+  EventID: 8
   condition: suspicious_access OR suspicious_thread
 falsepositives:
   - Legitimate use of process injection techniques by security tools, EDR/antivirus software, or for debugging purposes.

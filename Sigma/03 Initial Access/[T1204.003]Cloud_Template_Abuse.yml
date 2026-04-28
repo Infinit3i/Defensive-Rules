@@ -21,26 +21,26 @@ logsource:
   category: script_block
 detection:
   cloud_cmdlets:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'New-AzVM'
       - 'New-EC2Instance'
       - 'az vm create'
       - 'gcloud compute'
   suspicious_templates:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'custom-script-extension'
       - 'cloud-init'
       - 'user-data'
       - 'startup-script'
   malicious_indicators:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'Invoke-WebRequest'
       - 'wget'
       - 'curl'
       - 'base64'
       - 'powershell -enc'
   automated_deployment:
-    ScriptBlockText|contains:
+  ScriptBlockText|contains:
       - 'foreach'
       - 'while'
       - 'Start-Job'

@@ -13,44 +13,44 @@ tags:
   - aws
   - cloud
 logsource:
-    product: azure
-    service: signin
+  product: azure
+  service: signin
 detection:
-    selection_console_access:
-        Category: 'SignInLogs'
-        AppDisplayName|contains:
-            - 'Azure portal'
-            - 'AWS Management Console'
-            - 'Google Cloud Console'
-            - 'Microsoft Azure PowerShell'
-    selection_suspicious_location:
-        Location|exists: true
-    selection_risk_indicators:
-        RiskLevelDuringSignIn:
-            - 'high'
-            - 'medium'
-        RiskDetail|contains:
-            - 'unfamiliarFeatures'
-            - 'anonymizedIPAddress'
-            - 'maliciousIPAddress'
-    selection_admin_roles:
-        UserPrincipalName|contains:
-            - 'admin'
-            - 'root'
-        ConditionalAccessStatus: 'notApplied'
-    condition: selection_console_access and (selection_risk_indicators or
+  selection_console_access:
+    Category: 'SignInLogs'
+    AppDisplayName|contains:
+      - 'Azure portal'
+      - 'AWS Management Console'
+      - 'Google Cloud Console'
+      - 'Microsoft Azure PowerShell'
+  selection_suspicious_location:
+    Location|exists: true
+  selection_risk_indicators:
+    RiskLevelDuringSignIn:
+      - 'high'
+      - 'medium'
+    RiskDetail|contains:
+      - 'unfamiliarFeatures'
+      - 'anonymizedIPAddress'
+      - 'maliciousIPAddress'
+  selection_admin_roles:
+    UserPrincipalName|contains:
+      - 'admin'
+      - 'root'
+    ConditionalAccessStatus: 'notApplied'
+  condition: selection_console_access and (selection_risk_indicators or
                (selection_suspicious_location and selection_admin_roles))
 level: high
 fields:
-    - UserPrincipalName
-    - IPAddress
-    - Location
-    - AppDisplayName
-    - RiskLevelDuringSignIn
+  - UserPrincipalName
+  - IPAddress
+  - Location
+  - AppDisplayName
+  - RiskLevelDuringSignIn
 falsepositives:
-    - Legitimate administrator access from new locations
-    - Business travel access to cloud consoles
-    - Emergency access during incidents
+  - Legitimate administrator access from new locations
+  - Business travel access to cloud consoles
+  - Emergency access during incidents
 references:
-    - https://attack.mitre.org/techniques/T1078/004/
+  - https://attack.mitre.org/techniques/T1078/004/
 technique: T1078.004

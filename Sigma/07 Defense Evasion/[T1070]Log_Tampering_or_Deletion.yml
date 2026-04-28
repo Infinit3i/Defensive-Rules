@@ -22,7 +22,7 @@ logsource:
   category: system
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "rm -rf /var/log"
       - "rm -f /var/log"
       - "deleted log"

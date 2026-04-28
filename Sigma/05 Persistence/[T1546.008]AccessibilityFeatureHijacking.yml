@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\Debugger'
@@ -20,8 +20,8 @@ detection:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
   selection_file:
-    EventID: 11
-    TargetFilename|contains:
+  EventID: 11
+  TargetFilename|contains:
       - '\Windows\System32\sethc.exe'
       - '\Windows\System32\utilman.exe'
       - '\Windows\System32\osk.exe'
@@ -29,7 +29,7 @@ detection:
       - '\Windows\System32\Narrator.exe'
       - '\Windows\System32\DisplaySwitch.exe'
   filter_system:
-    Image|contains:
+  Image|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
   condition: (selection_registry or selection_file) and not filter_system

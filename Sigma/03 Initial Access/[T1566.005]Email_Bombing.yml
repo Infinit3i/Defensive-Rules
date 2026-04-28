@@ -29,13 +29,13 @@ logsource:
   service: exchange
 detection:
   high_volume:
-    Operation: 'Send'
-    RecipientCount|gte: 100
+  Operation: 'Send'
+  RecipientCount|gte: 100
   same_recipient:
-    Operation: 'Send'
-    Recipients|count|gte: 50
+  Operation: 'Send'
+  Recipients|count|gte: 50
   subscription_spam:
-    Subject|contains:
+  Subject|contains:
       - 'Welcome to'
       - 'Confirm subscription'
       - 'You have subscribed'

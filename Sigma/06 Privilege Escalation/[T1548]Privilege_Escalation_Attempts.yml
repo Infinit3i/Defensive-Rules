@@ -23,15 +23,15 @@ logsource:
   category: authentication
 detection:
   sudo_failure:
-    Message|contains:
+  Message|contains:
       - "sudo:"
       - "authentication failure"
   sudo_not_in_sudoers:
-    Message|contains:
+  Message|contains:
       - "sudo:"
       - "not in the sudoers file"
   su_failure:
-    Message|contains:
+  Message|contains:
       - "su:"
       - "FAILED"
   condition: sudo_failure or sudo_not_in_sudoers or su_failure

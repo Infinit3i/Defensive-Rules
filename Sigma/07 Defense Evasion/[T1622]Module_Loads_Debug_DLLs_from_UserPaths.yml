@@ -28,14 +28,14 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-    EventID: 7
-    TargetFilename|contains:
+  EventID: 7
+  TargetFilename|contains:
       - "dbghelp.dll"
       - "dbgcore.dll"
       - "vsjitdebugger.exe"
   selection_path_user:
-    EventID: 7
-    TargetFilename|contains:
+  EventID: 7
+  TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

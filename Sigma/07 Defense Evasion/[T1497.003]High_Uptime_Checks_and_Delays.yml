@@ -18,16 +18,16 @@ logsource:
   service: sysmon
 detection:
   selection_uptime_check_ps:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "Get-Uptime"
       - "Get-CimInstance Win32_OperatingSystem"
       - "LastBootUpTime"
       - "GetTickCount"
       - "GetTickCount64"
   selection_then_sleep:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "Start-Sleep -Seconds 600"
       - "Start-Sleep -Seconds 900"
   condition: selection_uptime_check_ps and selection_then_sleep

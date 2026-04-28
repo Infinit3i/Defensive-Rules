@@ -5,16 +5,16 @@ description: Detects execution of Git hooks during repository operations
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection:
-        type: 'EXECVE'
-        comm: 'git'
-    selection_hook:
-        type: 'EXECVE'
-        a0|contains: '/.git/hooks/'
-    condition: selection or selection_hook
+  selection:
+    type: 'EXECVE'
+    comm: 'git'
+  selection_hook:
+    type: 'EXECVE'
+    a0|contains: '/.git/hooks/'
+  condition: selection or selection_hook
 level: low
 tags:
   - attack.persistence
@@ -22,4 +22,4 @@ tags:
   - auditd
   - linux
 references:
-    - https://attack.mitre.org/techniques/T1546/015/
+  - https://attack.mitre.org/techniques/T1546/015/

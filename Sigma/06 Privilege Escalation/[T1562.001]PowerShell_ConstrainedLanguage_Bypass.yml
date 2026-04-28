@@ -6,28 +6,28 @@ description: Detects PowerShell constrained language mode bypass attempts
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1562/001/
+  - https://attack.mitre.org/techniques/T1562/001/
 logsource:
-    product: windows
-    service: powershell
+  product: windows
+  service: powershell
 detection:
-    selection_clm:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - '$ExecutionContext.SessionState.LanguageMode'
-            - 'ConstrainedLanguage'
-            - 'FullLanguage'
-    selection_bypass:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'powershell.exe -version 2'
-            - 'Add-Type'
-            - 'reflection.assembly'
-            - '$env:PSModulePath'
-    condition: selection_clm or selection_bypass
+  selection_clm:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - '$ExecutionContext.SessionState.LanguageMode'
+      - 'ConstrainedLanguage'
+      - 'FullLanguage'
+  selection_bypass:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'powershell.exe -version 2'
+      - 'Add-Type'
+      - 'reflection.assembly'
+      - '$env:PSModulePath'
+  condition: selection_clm or selection_bypass
 falsepositives:
-    - Legitimate PowerShell administration
-    - Security testing
+  - Legitimate PowerShell administration
+  - Security testing
 level: high
 tags:
   # MITRE ATT&CK tactic

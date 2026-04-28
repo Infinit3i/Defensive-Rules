@@ -26,11 +26,11 @@ logsource:
   service: sysmon
 detection:
   selection_tasklist:
-    EventID: 1
-    Image|endswith: '\tasklist.exe'
+  EventID: 1
+  Image|endswith: '\tasklist.exe'
   selection_cmdline:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "tasklist"
       - "tasklist /v"
       - "tasklist /svc"

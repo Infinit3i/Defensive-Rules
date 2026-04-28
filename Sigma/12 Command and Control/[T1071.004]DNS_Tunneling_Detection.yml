@@ -23,10 +23,10 @@ logsource:
   service: dns
 detection:
   long_query:
-    qtype_name|contains:
+  qtype_name|contains:
       - "TXT"
       - "NULL"
-    query|re: ".{50,}"  # Queries longer than 50 characters
+  query|re: ".{50,}"  # Queries longer than 50 characters
   condition: long_query
 falsepositives:
   - Large DNS records used by cloud services or CDNs.

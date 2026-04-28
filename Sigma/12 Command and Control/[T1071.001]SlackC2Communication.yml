@@ -10,36 +10,36 @@ tags:
   - slack
   - cloud
 logsource:
-    product: slack
-    service: audit
+  product: slack
+  service: audit
 detection:
-    selection_automated:
-        action:
-            - 'message_posted'
-            - 'file_uploaded'
-        user_agent|contains:
-            - 'bot'
-            - 'curl'
-            - 'python'
-            - 'powershell'
-    selection_suspicious_content:
-        message|contains:
-            - 'base64'
-            - 'powershell'
-            - 'cmd.exe'
-            - 'wget'
-            - 'curl'
-    condition: selection_automated or selection_suspicious_content
+  selection_automated:
+    action:
+      - 'message_posted'
+      - 'file_uploaded'
+    user_agent|contains:
+      - 'bot'
+      - 'curl'
+      - 'python'
+      - 'powershell'
+  selection_suspicious_content:
+    message|contains:
+      - 'base64'
+      - 'powershell'
+      - 'cmd.exe'
+      - 'wget'
+      - 'curl'
+  condition: selection_automated or selection_suspicious_content
 level: medium
 fields:
-    - user.name
-    - user.email
-    - channel.name
-    - message
-    - user_agent
+  - user.name
+  - user.email
+  - channel.name
+  - message
+  - user_agent
 falsepositives:
-    - Legitimate automation bots
-    - DevOps tools using Slack integration
+  - Legitimate automation bots
+  - DevOps tools using Slack integration
 references:
-    - https://attack.mitre.org/techniques/T1071/001/
+  - https://attack.mitre.org/techniques/T1071/001/
 technique: T1071.001

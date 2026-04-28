@@ -21,17 +21,17 @@ logsource:
   service: syslog
 detection:
   selection_ptrace_syscall:
-    Message|contains:
+  Message|contains:
       - "syscall=101"       # common ptrace syscall number on x86_64 (auditd formatting may vary)
       - "ptrace("
       - "PTRACE_ATTACH"
   selection_gdb_invocation:
-    Message|contains:
+  Message|contains:
       - "gdb"
       - "gdbserver"
       - "gcore"
   selection_strace:
-    Message|contains:
+  Message|contains:
       - "strace"
   condition: selection_ptrace_syscall or selection_gdb_invocation or selection_strace
 falsepositives:

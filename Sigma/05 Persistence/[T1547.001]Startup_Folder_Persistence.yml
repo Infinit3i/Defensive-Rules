@@ -5,42 +5,42 @@ description: Detects malicious file placement in Windows Startup folders for per
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_file:
-        EventID: 11
-        TargetFilename|contains:
-            - '\Start Menu\Programs\Startup\'
-            - '\Start Menu\Programs\StartUp\'
-    selection_extension:
-        TargetFilename|endswith:
-            - '.exe'
-            - '.bat'
-            - '.cmd'
-            - '.com'
-            - '.scr'
-            - '.pif'
-            - '.vbs'
-            - '.js'
-            - '.jse'
-            - '.ps1'
-            - '.lnk'
-    selection_location:
-        - TargetFilename|contains:
-            - '\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
-            - '\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\'
-        - Image|contains:
-            - '\AppData\'
-            - '\Temp\'
-            - '\Users\Public\'
-            - '\Downloads\'
-    condition: selection_file and selection_extension and selection_location
+  selection_file:
+    EventID: 11
+    TargetFilename|contains:
+      - '\Start Menu\Programs\Startup\'
+      - '\Start Menu\Programs\StartUp\'
+  selection_extension:
+    TargetFilename|endswith:
+      - '.exe'
+      - '.bat'
+      - '.cmd'
+      - '.com'
+      - '.scr'
+      - '.pif'
+      - '.vbs'
+      - '.js'
+      - '.jse'
+      - '.ps1'
+      - '.lnk'
+  selection_location:
+    - TargetFilename|contains:
+      - '\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
+      - '\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\'
+    - Image|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\Downloads\'
+  condition: selection_file and selection_extension and selection_location
 falsepositives:
-    - Legitimate software installations
-    - User-installed startup applications
+  - Legitimate software installations
+  - User-installed startup applications
 level: medium
 tags:
   - attack.persistence

@@ -5,33 +5,33 @@ description: Detects attempts to evade SIEM detection through log source manipul
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1562/007/
+  - https://attack.mitre.org/techniques/T1562/007/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_services:
-        EventID: 1
-        Image|endswith:
-            - '\sc.exe'
-            - '\net.exe'
-            - '\wevtutil.exe'
-    selection_commands:
-        CommandLine|contains:
-            - 'stop winlogbeat'
-            - 'disable splunk'
-            - 'clear eventlog'
-            - 'wevtutil cl'
-    selection_config:
-        EventID: 11
-        TargetFilename|contains:
-            - 'winlogbeat.yml'
-            - 'splunk'
-            - 'nxlog.conf'
-    condition: (selection_services and selection_commands) or selection_config
+  selection_services:
+    EventID: 1
+    Image|endswith:
+      - '\sc.exe'
+      - '\net.exe'
+      - '\wevtutil.exe'
+  selection_commands:
+    CommandLine|contains:
+      - 'stop winlogbeat'
+      - 'disable splunk'
+      - 'clear eventlog'
+      - 'wevtutil cl'
+  selection_config:
+    EventID: 11
+    TargetFilename|contains:
+      - 'winlogbeat.yml'
+      - 'splunk'
+      - 'nxlog.conf'
+  condition: (selection_services and selection_commands) or selection_config
 falsepositives:
-    - Legitimate log management activities
-    - System maintenance operations
+  - Legitimate log management activities
+  - System maintenance operations
 level: high
 tags:
   - attack.initial_access

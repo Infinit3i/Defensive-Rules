@@ -26,18 +26,18 @@ logsource:
   service: powershell
 detection:
   sel_scriptblock:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "Get-Process"
       - "Get-WmiObject"
       - "Get-CimInstance"
       - "Win32_Process"
   sel_proc_create:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Get-Process"
       - "Get-WmiObject Win32_Process"
       - "Get-CimInstance Win32_Process"

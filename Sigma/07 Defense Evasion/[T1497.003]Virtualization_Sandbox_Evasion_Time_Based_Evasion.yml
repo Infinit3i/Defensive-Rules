@@ -26,28 +26,28 @@ logsource:
   service: sysmon
 detection:
   ps_sleep:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Start-Sleep"
       - "Start-Sleep -s"
       - "Start-Sleep -Seconds"
   cmd_timeout:
-    EventID: 1
-    Image|endswith: '\cmd.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\cmd.exe'
+  CommandLine|contains:
       - "timeout /t "
       - "choice /t "
   ping_delay:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "ping -n "
       - "ping -w "
   high_delay_hint:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "300"
       - "600"
       - "900"

@@ -12,13 +12,13 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-    EventID: 13
+  EventID: 13
   selection_shell:
-    TargetObject|contains:
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit'
   selection_suspicious:
-    Details|contains:
+  Details|contains:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'pwsh.exe'
@@ -27,7 +27,7 @@ detection:
       - '.ps1'
       - '.exe,'
   filter_legitimate:
-    Details:
+  Details:
       - 'explorer.exe'
       - 'C:\Windows\system32\userinit.exe,C:\Windows\system32\logonui.exe'
   condition: selection_event and selection_shell and (selection_suspicious or not filter_legitimate)

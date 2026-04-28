@@ -9,7 +9,7 @@ logsource:
   service: web
 detection:
   selection_voip_platforms:
-    c-uri|contains:
+  c-uri|contains:
       - 'zoom.us'
       - 'teams.microsoft.com'
       - 'meet.google.com'
@@ -19,7 +19,7 @@ detection:
       - 'discord.com'
       - 'slack.com'
   selection_media_streams:
-    c-uri|contains:
+  c-uri|contains:
       - '/media'
       - '/stream'
       - '/video'
@@ -27,24 +27,24 @@ detection:
       - '/call'
       - '/conference'
   selection_high_bandwidth:
-    sc-bytes|gt: 10485760  # > 10MB indicating video/audio streams
-    cs-bytes|gt: 1048576   # > 1MB upload
+  sc-bytes|gt: 10485760  # > 10MB indicating video/audio streams
+  cs-bytes|gt: 1048576   # > 1MB upload
   selection_suspicious_patterns:
-    c-useragent|contains:
+  c-useragent|contains:
       - 'deepfake'
       - 'voice-clone'
       - 'synthetic'
       - 'artificial'
   selection_ai_services:
-    c-uri|contains:
+  c-uri|contains:
       - 'elevenlabs'
       - 'murf.ai'
       - 'resemble.ai'
       - 'replica.ai'
       - 'speechify'
   selection_unusual_timing:
-    time|gt: 22:00:00  # Calls outside business hours
-    time|lt: 06:00:00
+  time|gt: 22:00:00  # Calls outside business hours
+  time|lt: 06:00:00
   condition: selection_voip_platforms and selection_media_streams and selection_high_bandwidth and not selection_suspicious_patterns
 level: medium
 tags:

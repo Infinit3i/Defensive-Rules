@@ -5,37 +5,37 @@ description: Detects installation of malicious packages from NPM or PyPI with su
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1195/003/
+  - https://attack.mitre.org/techniques/T1195/003/
 logsource:
-    product: package-manager
-    service: install-monitor
+  product: package-manager
+  service: install-monitor
 detection:
-    selection_package_manager:
-        Command|startswith:
-            - 'npm install'
-            - 'pip install'
-            - 'yarn add'
-    selection_suspicious_package:
-        PackageName|contains:
-            - 'discord-token'
-            - 'crypto-wallet'
-            - 'password-stealer'
-            - 'keylogger'
-            - 'reverse-shell'
-    selection_obfuscated_code:
-        PackageContent|contains:
-            - 'eval('
-            - 'exec('
-            - 'base64'
-            - 'atob('
-            - 'fromCharCode'
-    selection_network_requests:
-        PackageContent|contains:
-            - 'requests.post'
-            - 'fetch('
-            - 'XMLHttpRequest'
-            - 'webhook'
-    condition: selection_package_manager and (selection_suspicious_package or
+  selection_package_manager:
+    Command|startswith:
+      - 'npm install'
+      - 'pip install'
+      - 'yarn add'
+  selection_suspicious_package:
+    PackageName|contains:
+      - 'discord-token'
+      - 'crypto-wallet'
+      - 'password-stealer'
+      - 'keylogger'
+      - 'reverse-shell'
+  selection_obfuscated_code:
+    PackageContent|contains:
+      - 'eval('
+      - 'exec('
+      - 'base64'
+      - 'atob('
+      - 'fromCharCode'
+  selection_network_requests:
+    PackageContent|contains:
+      - 'requests.post'
+      - 'fetch('
+      - 'XMLHttpRequest'
+      - 'webhook'
+  condition: selection_package_manager and (selection_suspicious_package or
                (selection_obfuscated_code and selection_network_requests))
 level: critical
 tags:

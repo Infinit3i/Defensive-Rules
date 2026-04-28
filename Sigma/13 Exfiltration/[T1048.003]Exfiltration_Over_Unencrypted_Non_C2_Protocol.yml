@@ -29,16 +29,16 @@ logsource:
   service: http
 detection:
   large_post:
-    method: 'POST'
-    request_body_len|gte: 1000000
+  method: 'POST'
+  request_body_len|gte: 1000000
   file_upload:
-    uri|contains:
+  uri|contains:
       - '/upload'
       - '/submit'
       - '/data'
-    method: 'POST'
+  method: 'POST'
   suspicious_content:
-    content_type|contains:
+  content_type|contains:
       - 'application/octet-stream'
       - 'multipart/form-data'
   condition: large_post or (file_upload and suspicious_content)

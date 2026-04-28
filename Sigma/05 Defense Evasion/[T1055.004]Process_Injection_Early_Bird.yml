@@ -9,37 +9,37 @@ logsource:
   service: sysmon
 detection:
   selection_process_create:
-    EventID: 1
+  EventID: 1
   selection_process_access:
-    EventID: 10
-    GrantedAccess:
+  EventID: 10
+  GrantedAccess:
       - '0x1F3FFF'  # PROCESS_ALL_ACCESS
       - '0x1FFFFF'  # PROCESS_ALL_ACCESS (alternative)
       - '0x143A'    # Common injection access
       - '0x1438'    # WriteProcessMemory + CreateRemoteThread
-    CallTrace|contains:
+  CallTrace|contains:
       - 'ntdll.dll+NtQueueApcThread'
       - 'ntdll.dll+NtCreateThread'
       - 'kernel32.dll+WriteProcessMemory'
       - 'ntdll.dll+NtWriteVirtualMemory'
   selection_image_load:
-    EventID: 7
-    ImageLoaded|contains:
+  EventID: 7
+  ImageLoaded|contains:
       - 'ntdll.dll'
-    ProcessId: 'ProcessId'  # Same process being accessed
+  ProcessId: 'ProcessId'  # Same process being accessed
   selection_thread_create:
-    EventID: 8
-    StartModule|contains:
+  EventID: 8
+  StartModule|contains:
       - 'ntdll.dll'
-    NewThreadId: '*'
+  NewThreadId: '*'
   time_correlation:
-    # Events should occur within 5 seconds of process creation
-    - EventID: 1
-    - EventID: 10
-    - EventID: 7
-    - EventID: 8
+  # Events should occur within 5 seconds of process creation
+  - EventID: 1
+  - EventID: 10
+  - EventID: 7
+  - EventID: 8
   suspicious_targets:
-    TargetImage|endswith:
+  TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\winlogon.exe'

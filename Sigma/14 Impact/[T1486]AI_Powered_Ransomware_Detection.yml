@@ -7,62 +7,62 @@ author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1486/
-    - https://www.mitre.org/publications/systems-engineering-guide/
+  - https://attack.mitre.org/techniques/T1486/
+  - https://www.mitre.org/publications/systems-engineering-guide/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_ai_models:
-        EventID: 1
-        Image|endswith:
-            - '\python.exe'
-            - '\tensorflow.exe'
-            - '\pytorch.exe'
-        CommandLine|contains:
-            - 'tensorflow'
-            - 'pytorch'
-            - 'sklearn'
-            - 'neural_network'
-            - 'deep_learning'
-            - '.h5'
-            - '.pb'
-            - '.onnx'
-    selection_encryption:
-        EventID: 11
-        TargetFilename|endswith:
-            - '.locked'
-            - '.encrypted'
-            - '.ai_enc'
-            - '.neural'
-            - '.adaptive'
-    selection_mass_file_ops:
-        EventID: 11
-        Image|contains:
-            - 'encrypt'
-            - 'cipher'
-            - 'crypto'
-        ProcessId: '*'
-    selection_adaptive_behavior:
-        EventID: 1
-        CommandLine|contains:
-            - 'adaptive_encrypt'
-            - 'ml_crypto'
-            - 'neural_cipher'
-            - 'ai_ransom'
-            - 'smart_encrypt'
-            - 'learning_crypto'
-    selection_network_ml:
-        EventID: 3
-        DestinationPort:
-            - 443
-            - 8080
-            - 9090
-        Image|contains:
-            - 'ml_'
-            - 'ai_'
-            - 'neural_'
-    condition: (selection_ai_models and selection_encryption) or (selection_mass_file_ops and selection_adaptive_behavior) or (selection_network_ml and selection_encryption)
+  selection_ai_models:
+    EventID: 1
+    Image|endswith:
+      - '\python.exe'
+      - '\tensorflow.exe'
+      - '\pytorch.exe'
+    CommandLine|contains:
+      - 'tensorflow'
+      - 'pytorch'
+      - 'sklearn'
+      - 'neural_network'
+      - 'deep_learning'
+      - '.h5'
+      - '.pb'
+      - '.onnx'
+  selection_encryption:
+    EventID: 11
+    TargetFilename|endswith:
+      - '.locked'
+      - '.encrypted'
+      - '.ai_enc'
+      - '.neural'
+      - '.adaptive'
+  selection_mass_file_ops:
+    EventID: 11
+    Image|contains:
+      - 'encrypt'
+      - 'cipher'
+      - 'crypto'
+    ProcessId: '*'
+  selection_adaptive_behavior:
+    EventID: 1
+    CommandLine|contains:
+      - 'adaptive_encrypt'
+      - 'ml_crypto'
+      - 'neural_cipher'
+      - 'ai_ransom'
+      - 'smart_encrypt'
+      - 'learning_crypto'
+  selection_network_ml:
+    EventID: 3
+    DestinationPort:
+      - 443
+      - 8080
+      - 9090
+    Image|contains:
+      - 'ml_'
+      - 'ai_'
+      - 'neural_'
+  condition: (selection_ai_models and selection_encryption) or (selection_mass_file_ops and selection_adaptive_behavior) or (selection_network_ml and selection_encryption)
 level: critical
 tags:
   # MITRE ATT&CK tactic
@@ -82,6 +82,6 @@ tags:
   - artificial_intelligence
   - machine_learning
 falsepositives:
-    - Legitimate machine learning development environments
-    - Data science applications performing encryption
-    - Automated backup tools with ML components
+  - Legitimate machine learning development environments
+  - Data science applications performing encryption
+  - Automated backup tools with ML components

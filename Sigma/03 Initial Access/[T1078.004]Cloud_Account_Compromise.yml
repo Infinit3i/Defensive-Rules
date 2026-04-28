@@ -5,71 +5,71 @@ id: 364h71fc-a12d-3456-7890-bcdef0123456
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
 references:
-    - https://attack.mitre.org/techniques/T1078/004/
-    - https://docs.microsoft.com/en-us/azure/security/fundamentals/
+  - https://attack.mitre.org/techniques/T1078/004/
+  - https://docs.microsoft.com/en-us/azure/security/fundamentals/
 logsource:
-    product: azure
-    service: signinlogs
+  product: azure
+  service: signinlogs
 detection:
-    selection_impossible_travel:
-        EventName: 'SigninLogs'
-        ResultType: 0
-    # Login from geographic locations impossible to reach in timeframe
-    selection_multiple_failed_then_success:
-        EventName: 'SigninLogs'
-        UserPrincipalName: '*'
-    # Pattern: multiple failed attempts followed by successful login
-    selection_off_hours_access:
-        EventName: 'SigninLogs'
-        ResultType: 0
-    # Access outside typical business hours for user's timezone
-    selection_new_device_access:
-        EventName: 'SigninLogs'
-        ResultType: 0
-        DeviceDetail.isCompliant: false
-        DeviceDetail.isManaged: false
-    # Access from unmanaged/non-compliant devices
-    selection_privilege_changes:
-        EventName: 'AuditLogs'
-        ActivityDisplayName:
-            - 'Add member to role'
-            - 'Remove member from role'
-            - 'Update role'
-        TargetResources.userPrincipalName: '*'
-    # Unexpected privilege changes
-    selection_resource_enumeration:
-        EventName: 'AuditLogs'
-        ActivityDisplayName:
-            - 'List applications'
-            - 'List service principals'
-            - 'List users'
-            - 'List groups'
-    # Rapid enumeration activities post-login
-    selection_suspicious_app_access:
-        EventName: 'SigninLogs'
-        ResultType: 0
-        AppDisplayName|contains:
-            - 'Graph'
-            - 'Exchange'
-            - 'SharePoint'
-            - 'PowerBI'
-    # Access to high-value applications
-    selection_api_abuse:
-        EventName: 'AuditLogs'
-        ActivityDisplayName|contains:
-            - 'API'
-            - 'Graph'
-    # Unusual API usage patterns
-    condition: selection_impossible_travel or selection_multiple_failed_then_success or
+  selection_impossible_travel:
+    EventName: 'SigninLogs'
+    ResultType: 0
+  # Login from geographic locations impossible to reach in timeframe
+  selection_multiple_failed_then_success:
+    EventName: 'SigninLogs'
+    UserPrincipalName: '*'
+  # Pattern: multiple failed attempts followed by successful login
+  selection_off_hours_access:
+    EventName: 'SigninLogs'
+    ResultType: 0
+  # Access outside typical business hours for user's timezone
+  selection_new_device_access:
+    EventName: 'SigninLogs'
+    ResultType: 0
+    DeviceDetail.isCompliant: false
+    DeviceDetail.isManaged: false
+  # Access from unmanaged/non-compliant devices
+  selection_privilege_changes:
+    EventName: 'AuditLogs'
+    ActivityDisplayName:
+      - 'Add member to role'
+      - 'Remove member from role'
+      - 'Update role'
+    TargetResources.userPrincipalName: '*'
+  # Unexpected privilege changes
+  selection_resource_enumeration:
+    EventName: 'AuditLogs'
+    ActivityDisplayName:
+      - 'List applications'
+      - 'List service principals'
+      - 'List users'
+      - 'List groups'
+  # Rapid enumeration activities post-login
+  selection_suspicious_app_access:
+    EventName: 'SigninLogs'
+    ResultType: 0
+    AppDisplayName|contains:
+      - 'Graph'
+      - 'Exchange'
+      - 'SharePoint'
+      - 'PowerBI'
+  # Access to high-value applications
+  selection_api_abuse:
+    EventName: 'AuditLogs'
+    ActivityDisplayName|contains:
+      - 'API'
+      - 'Graph'
+  # Unusual API usage patterns
+  condition: selection_impossible_travel or selection_multiple_failed_then_success or
                selection_off_hours_access or selection_new_device_access or
                selection_privilege_changes or selection_resource_enumeration or
                selection_suspicious_app_access or selection_api_abuse
 falsepositives:
-    - Legitimate users traveling or working from new locations
-    - Authorized administrative activities
-    - New device enrollment and legitimate device access
-    - Legitimate after-hours work and different timezone access
-    - Authorized application integrations and API usage
+  - Legitimate users traveling or working from new locations
+  - Authorized administrative activities
+  - New device enrollment and legitimate device access
+  - Legitimate after-hours work and different timezone access
+  - Authorized application integrations and API usage
 level: high
 tags:
   # MITRE ATT&CK tactic

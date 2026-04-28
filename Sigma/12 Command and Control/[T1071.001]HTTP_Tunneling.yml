@@ -10,9 +10,9 @@ logsource:
   service: http
 detection:
   selection:
-    method: 'CONNECT'
-    status_code: '200'
-    response_body_len: '>1000'
+  method: 'CONNECT'
+  status_code: '200'
+  response_body_len: '>1000'
   condition: selection
 tags:
   # MITRE ATT&CK tactic

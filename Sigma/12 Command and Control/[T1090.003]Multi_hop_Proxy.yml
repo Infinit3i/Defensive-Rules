@@ -29,16 +29,16 @@ logsource:
   service: conn
 detection:
   proxy_chain:
-    id.orig_h|count|gte: 3
-    service: 'unknown'
-    duration|gte: 300
+  id.orig_h|count|gte: 3
+  service: 'unknown'
+  duration|gte: 300
   multiple_hops:
-    id.resp_h|count|gte: 2
-    orig_bytes|gte: 1000
-    resp_bytes|gte: 1000
+  id.resp_h|count|gte: 2
+  orig_bytes|gte: 1000
+  resp_bytes|gte: 1000
   tor_indicators:
-    id.resp_p: 9050
-    service: 'unknown'
+  id.resp_p: 9050
+  service: 'unknown'
   condition: proxy_chain or multiple_hops or tor_indicators
 falsepositives:
   - Complex network architectures

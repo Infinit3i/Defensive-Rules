@@ -22,14 +22,14 @@ logsource:
   category: file_activity
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "/etc/passwd"
       - "/etc/shadow"
       - "/etc/sudoers"
       - "/etc/group"
       - "/var/log"
   modifications:
-    Message|contains:
+  Message|contains:
       - "modified"
       - "changed"
       - "deleted"

@@ -28,15 +28,15 @@ logsource:
   service: sysmon
 detection:
   selection_windows_tools:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "robocopy"
       - "xcopy "
       - "tree "
       - "dir /s"
   selection_unix_tools:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "dirb "
       - "dirsearch"
       - "find "

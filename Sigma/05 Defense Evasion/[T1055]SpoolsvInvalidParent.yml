@@ -5,21 +5,21 @@ id: e5f6a7b8-c9d0-1234-efa5-567890123456
 status: experimental
 description: Detects spoolsv.exe spawned by process other than services.exe which may indicate process injection or masquerading
 references:
-    - https://attack.mitre.org/techniques/T1055/
-    - https://attack.mitre.org/techniques/T1036/
+  - https://attack.mitre.org/techniques/T1055/
+  - https://attack.mitre.org/techniques/T1036/
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    category: process_creation
-    product: windows
+  category: process_creation
+  product: windows
 detection:
-    selection:
-        Image|endswith: '\spoolsv.exe'
-    filter:
-        ParentImage|endswith: '\services.exe'
-    condition: selection and not filter
+  selection:
+    Image|endswith: '\spoolsv.exe'
+  filter:
+    ParentImage|endswith: '\services.exe'
+  condition: selection and not filter
 falsepositives:
-    - Unknown legitimate processes spawning spoolsv (rare)
+  - Unknown legitimate processes spawning spoolsv (rare)
 level: high
 tags:
   # MITRE ATT&CK tactic

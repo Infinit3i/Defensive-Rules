@@ -26,10 +26,10 @@ logsource:
   service: http
 detection:
   post_method:
-    method: "POST"
+  method: "POST"
   timeframe: 5m
   threshold:
-    count: 20
+  count: 20
   condition: post_method
 falsepositives:
   - High-volume API integrations or legitimate applications uploading data.

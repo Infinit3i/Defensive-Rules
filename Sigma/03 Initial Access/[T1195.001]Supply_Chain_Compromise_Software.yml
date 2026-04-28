@@ -30,18 +30,18 @@ logsource:
   category: process_creation
 detection:
   unsigned_process:
-    Signed: 'false'
-    Image|endswith:
+  Signed: 'false'
+  Image|endswith:
       - '.exe'
       - '.dll'
   suspicious_signer:
-    SignatureStatus: 'Valid'
-    Signature|contains:
+  SignatureStatus: 'Valid'
+  Signature|contains:
       - 'Test Certificate'
       - 'Self-signed'
       - 'Expired'
   unexpected_location:
-    Image|startswith:
+  Image|startswith:
       - 'C:\Users\Public\'
       - 'C:\Temp\'
       - 'C:\Windows\Temp\'

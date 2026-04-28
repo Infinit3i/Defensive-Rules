@@ -5,33 +5,33 @@ description: Detects disk formatting operations through format commands and volu
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_format:
-        EventID: 1
-        Image|endswith:
-            - '\format.com'
-            - '\diskpart.exe'
-            - '\powershell.exe'
-        CommandLine|contains:
-            - 'format /q /x'
-            - 'format c: /q'
-            - 'select disk'
-            - 'clean all'
-            - 'delete volume'
-            - 'Clear-Disk -RemoveData'
-    selection_wipe:
-        EventID: 1
-        Image|endswith:
-            - '\sdelete.exe'
-            - '\cipher.exe'
-        CommandLine|contains:
-            - 'sdelete -z'
-            - 'cipher /w:'
-            - '-p 3'
-            - '-s -z'
-    condition: selection_format or selection_wipe
+  selection_format:
+    EventID: 1
+    Image|endswith:
+      - '\format.com'
+      - '\diskpart.exe'
+      - '\powershell.exe'
+    CommandLine|contains:
+      - 'format /q /x'
+      - 'format c: /q'
+      - 'select disk'
+      - 'clean all'
+      - 'delete volume'
+      - 'Clear-Disk -RemoveData'
+  selection_wipe:
+    EventID: 1
+    Image|endswith:
+      - '\sdelete.exe'
+      - '\cipher.exe'
+    CommandLine|contains:
+      - 'sdelete -z'
+      - 'cipher /w:'
+      - '-p 3'
+      - '-s -z'
+  condition: selection_format or selection_wipe
 level: critical
 tags:
   - attack.impact
@@ -39,8 +39,8 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1485/
+  - https://attack.mitre.org/techniques/T1485/
 falsepositives:
-    - Legitimate disk maintenance
-    - System preparation
-    - Secure data wiping procedures
+  - Legitimate disk maintenance
+  - System preparation
+  - Secure data wiping procedures

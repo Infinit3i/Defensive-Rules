@@ -26,7 +26,7 @@ logsource:
   category: package
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "install add file"
       - "install activate"
       - "upgrade file"

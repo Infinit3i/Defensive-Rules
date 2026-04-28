@@ -10,10 +10,10 @@ logsource:
   product: windows
 detection:
   windows_event:
-    EventID: 4719
+  EventID: 4719
   sysmon_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'auditpol'
       - 'secedit'
       - 'wevtutil cl'

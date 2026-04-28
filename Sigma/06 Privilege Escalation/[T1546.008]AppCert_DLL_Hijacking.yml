@@ -6,28 +6,28 @@ description: Detects AppCert DLL hijacking through registry manipulation
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1546/008/
+  - https://attack.mitre.org/techniques/T1546/008/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_registry:
-        EventID: 13
-        TargetObject|contains:
-            - 'AppCertDlls'
-            - 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls'
-    selection_dll_load:
-        EventID: 7
-        ImageLoaded|contains: 'AppCert'
-        Signed: 'false'
-    selection_process:
-        EventID: 1
-        CommandLine|contains: 'AppCertDlls'
-    condition: selection_registry or selection_dll_load or
+  selection_registry:
+    EventID: 13
+    TargetObject|contains:
+      - 'AppCertDlls'
+      - 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls'
+  selection_dll_load:
+    EventID: 7
+    ImageLoaded|contains: 'AppCert'
+    Signed: 'false'
+  selection_process:
+    EventID: 1
+    CommandLine|contains: 'AppCertDlls'
+  condition: selection_registry or selection_dll_load or
                selection_process
 falsepositives:
-    - Legitimate application certification tools
-    - Security software installations
+  - Legitimate application certification tools
+  - Security software installations
 level: high
 tags:
   # MITRE ATT&CK tactic

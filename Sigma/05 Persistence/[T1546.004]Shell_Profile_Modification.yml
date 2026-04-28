@@ -5,27 +5,27 @@ description: Detects modification of shell profile scripts for persistence
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_write:
-        type: "SYSCALL"
-        syscall: "openat"
-        a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
-    selection_profiles:
-        name:
-            - "*/.bashrc"
-            - "*/.bash_profile"
-            - "*/.bash_login"
-            - "*/.profile"
-            - "*/.zshrc"
-            - "*/.zsh_profile"
-            - "*/.cshrc"
-            - "*/.tcshrc"
-            - "/etc/profile"
-            - "/etc/bash.bashrc"
-            - "/etc/zsh/zshrc"
-    condition: selection_write and selection_profiles
+  selection_write:
+    type: "SYSCALL"
+    syscall: "openat"
+    a2: ["O_WRONLY", "O_RDWR", "O_APPEND"]
+  selection_profiles:
+    name:
+      - "*/.bashrc"
+      - "*/.bash_profile"
+      - "*/.bash_login"
+      - "*/.profile"
+      - "*/.zshrc"
+      - "*/.zsh_profile"
+      - "*/.cshrc"
+      - "*/.tcshrc"
+      - "/etc/profile"
+      - "/etc/bash.bashrc"
+      - "/etc/zsh/zshrc"
+  condition: selection_write and selection_profiles
 level: medium
 tags:
   - attack.persistence
@@ -35,7 +35,7 @@ tags:
   - linux
   - auditd
 references:
-    - https://attack.mitre.org/techniques/T1546/004/
+  - https://attack.mitre.org/techniques/T1546/004/
 falsepositives:
-    - User customization of shell environment
-    - Automated configuration management
+  - User customization of shell environment
+  - Automated configuration management

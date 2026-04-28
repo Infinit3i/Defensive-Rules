@@ -5,30 +5,30 @@ description: Detects WMI queries to enumerate removable storage devices
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1025/
+  - https://attack.mitre.org/techniques/T1025/
 tags:
   - attack.collection
   - attack.t1025
   - powershell
   - windows
 logsource:
-    product: windows
-    service: powershell-classic
+  product: windows
+  service: powershell-classic
 detection:
-    selection:
-        EventID: 4104
-    wmi_queries:
-        ScriptBlockText|contains:
-            - 'Win32_LogicalDisk'
-            - 'Win32_Volume'
-            - 'DriveType'
-    removable_type:
-        ScriptBlockText|contains:
-            - 'DriveType = 2'
-            - 'Removable'
-            - 'USB'
-    condition: selection and wmi_queries and removable_type
+  selection:
+    EventID: 4104
+  wmi_queries:
+    ScriptBlockText|contains:
+      - 'Win32_LogicalDisk'
+      - 'Win32_Volume'
+      - 'DriveType'
+  removable_type:
+    ScriptBlockText|contains:
+      - 'DriveType = 2'
+      - 'Removable'
+      - 'USB'
+  condition: selection and wmi_queries and removable_type
 falsepositives:
-    - System inventory scripts
-    - Hardware monitoring
+  - System inventory scripts
+  - Hardware monitoring
 level: medium

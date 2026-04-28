@@ -5,19 +5,19 @@ description: Detects BITS job execution through notification command scheduling
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 1
-        ParentImage|endswith: '\svchost.exe'
-        ParentCommandLine|contains: 'BITS'
-        Image|contains:
-            - '\cmd.exe'
-            - '\powershell.exe'
-            - '\rundll32.exe'
-            - '\regsvr32.exe'
-    condition: selection
+  selection:
+    EventID: 1
+    ParentImage|endswith: '\svchost.exe'
+    ParentCommandLine|contains: 'BITS'
+    Image|contains:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\rundll32.exe'
+      - '\regsvr32.exe'
+  condition: selection
 level: high
 tags:
   - attack.persistence
@@ -25,4 +25,4 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1197/
+  - https://attack.mitre.org/techniques/T1197/

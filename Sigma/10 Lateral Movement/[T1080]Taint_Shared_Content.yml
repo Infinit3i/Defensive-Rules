@@ -30,19 +30,19 @@ logsource:
   category: file_create
 detection:
   shared_location:
-    TargetFilename|startswith:
+  TargetFilename|startswith:
       - '\\\'
       - 'C:\Share\'
       - 'C:\Public\'
   suspicious_extension:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.vbs'
       - '.ps1'
   document_macro:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.docm'
       - '.xlsm'
       - '.pptm'

@@ -20,25 +20,25 @@ logsource:
   service: system
 detection:
   bios_modifications:
-    EventID:
+  EventID:
       - 1
       - 12
-    ProcessName|contains:
+  ProcessName|contains:
       - 'nvflash.exe'
       - 'flashrom.exe'
       - 'afudos.exe'
       - 'awdflash.exe'
   uefi_changes:
-    EventID: 12
-    TargetObject|contains:
+  EventID: 12
+  TargetObject|contains:
       - '\EFI\Microsoft\Boot\'
       - '\EFI\Boot\'
       - 'HKLM\SYSTEM\CurrentControlSet\Control\SecureBoot'
   system_firmware_events:
-    EventID: 1
-    ProcessName|contains:
+  EventID: 1
+  ProcessName|contains:
       - 'bcdedit.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'set testsigning on'
       - 'set nointegritychecks on'
       - 'delete'

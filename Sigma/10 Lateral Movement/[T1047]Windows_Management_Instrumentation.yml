@@ -30,19 +30,19 @@ logsource:
   category: process_creation
 detection:
   wmi_execution:
-    ParentImage|endswith: '\wmiprvse.exe'
-    Image|endswith:
+  ParentImage|endswith: '\wmiprvse.exe'
+  Image|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\wmic.exe'
   remote_wmi:
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - '/node:'
       - 'process call create'
   wmi_provider:
-    Image|endswith: '\wmiprvse.exe'
-    CommandLine|contains:
+  Image|endswith: '\wmiprvse.exe'
+  CommandLine|contains:
       - '-Embedding'
       - '-secured'
   condition: wmi_execution or remote_wmi or wmi_provider

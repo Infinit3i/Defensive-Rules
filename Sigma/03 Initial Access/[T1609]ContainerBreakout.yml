@@ -5,35 +5,35 @@ description: Detects container escape attempts through privilege escalation and 
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1609/
+  - https://attack.mitre.org/techniques/T1609/
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_mount:
-        type: 'SYSCALL'
-        syscall: 'mount'
-        a1|contains:
-            - '/proc'
-            - '/sys'
-            - '/dev'
-            - '/host'
-    selection_namespace:
-        type: 'SYSCALL'
-        syscall|contains:
-            - 'setns'
-            - 'unshare'
-        success: 'yes'
-    selection_capabilities:
-        type: 'SYSCALL'
-        syscall: 'capset'
-        capability|contains:
-            - 'cap_sys_admin'
-            - 'cap_dac_override'
-    condition: selection_mount or selection_namespace or selection_capabilities
+  selection_mount:
+    type: 'SYSCALL'
+    syscall: 'mount'
+    a1|contains:
+      - '/proc'
+      - '/sys'
+      - '/dev'
+      - '/host'
+  selection_namespace:
+    type: 'SYSCALL'
+    syscall|contains:
+      - 'setns'
+      - 'unshare'
+    success: 'yes'
+  selection_capabilities:
+    type: 'SYSCALL'
+    syscall: 'capset'
+    capability|contains:
+      - 'cap_sys_admin'
+      - 'cap_dac_override'
+  condition: selection_mount or selection_namespace or selection_capabilities
 falsepositives:
-    - Container runtime operations
-    - System monitoring tools
+  - Container runtime operations
+  - System monitoring tools
 level: high
 tags:
   - attack.initial_access

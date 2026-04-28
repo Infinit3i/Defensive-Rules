@@ -30,7 +30,7 @@ logsource:
   service: syslog
 detection:
   selection_curl_wget:
-    Message|contains:
+  Message|contains:
       - "curl -O"
       - "curl -o"
       - "wget "
@@ -38,7 +38,7 @@ detection:
       - "sftp "
       - "rsync "
   selection_target_path:
-    Message|contains:
+  Message|contains:
       - "/tmp/"
       - "/var/tmp/"
       - "/home/"

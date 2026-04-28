@@ -26,16 +26,16 @@ logsource:
   service: sysmon
 detection:
   selection_w32tm:
-    EventID: 1
-    Image|endswith: '\w32tm.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\w32tm.exe'
+  CommandLine|contains:
       - "/query"
       - "/status"
       - "/stripchart"
   selection_cmdline:
-    EventID: 1
-    Image|endswith: '\cmd.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\cmd.exe'
+  CommandLine|contains:
       - "w32tm /query"
   condition: selection_w32tm or selection_cmdline
 falsepositives:

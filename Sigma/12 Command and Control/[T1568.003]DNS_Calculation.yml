@@ -29,16 +29,16 @@ logsource:
   service: dns
 detection:
   calculated_pattern:
-    query|contains:
+  query|contains:
       - 'calc'
       - 'math'
       - 'sum'
       - 'hash'
   time_based:
-    query|contains: '202[0-9]'
-    qtype_name: 'A'
+  query|contains: '202[0-9]'
+  qtype_name: 'A'
   hex_patterns:
-    query|regex: '^[a-f0-9]{8,16}\.(com|net|org)$'
+  query|regex: '^[a-f0-9]{8,16}\.(com|net|org)$'
   condition: calculated_pattern or time_based or hex_patterns
 falsepositives:
   - Timestamp-based services

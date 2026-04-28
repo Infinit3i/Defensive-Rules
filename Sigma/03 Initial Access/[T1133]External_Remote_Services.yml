@@ -29,23 +29,23 @@ logsource:
   service: security
 detection:
   external_rdp:
-    EventID: 4624
-    LogonType: 10
-    IpAddress|startswith:
+  EventID: 4624
+  LogonType: 10
+  IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    not: true
+  not: true
   vpn_logon:
-    EventID: 4624
-    LogonType: 3
-    AuthenticationPackageName: 'NTLM'
-    WorkstationName|contains:
+  EventID: 4624
+  LogonType: 3
+  AuthenticationPackageName: 'NTLM'
+  WorkstationName|contains:
       - 'vpn'
       - 'remote'
   suspicious_source:
-    EventID: 4625
-    IpAddress|contains:
+  EventID: 4625
+  IpAddress|contains:
       - 'tor-exit'
       - 'proxy'
   condition: external_rdp or vpn_logon or suspicious_source

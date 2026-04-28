@@ -5,38 +5,38 @@ description: Detects scheduled task persistence through direct Task Scheduler re
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1053/005/
+  - https://attack.mitre.org/techniques/T1053/005/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_reg:
-        EventID: 13
-        TargetObject|contains:
-            - '\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\'
-            - '\System\CurrentControlSet\Services\Schedule\JobSet\'
-    selection_task_files:
-        EventID: 11
-        TargetFilename|contains: '\System32\Tasks\'
-    selection_suspicious:
-        - Details|contains:
-            - 'powershell'
-            - 'cmd.exe'
-            - 'rundll32'
-            - 'mshta'
-            - 'wscript'
-            - 'cscript'
-        - TargetFilename|contains:
-            - '\AppData\'
-            - '\Temp\'
-            - '\Users\Public\'
-            - '\ProgramData\'
-        - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
-        - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
-    condition: (selection_reg or selection_task_files) and selection_suspicious
+  selection_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\'
+      - '\System\CurrentControlSet\Services\Schedule\JobSet\'
+  selection_task_files:
+    EventID: 11
+    TargetFilename|contains: '\System32\Tasks\'
+  selection_suspicious:
+    - Details|contains:
+      - 'powershell'
+      - 'cmd.exe'
+      - 'rundll32'
+      - 'mshta'
+      - 'wscript'
+      - 'cscript'
+    - TargetFilename|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+    - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
+    - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
+  condition: (selection_reg or selection_task_files) and selection_suspicious
 falsepositives:
-    - System task scheduler operations
-    - Legitimate software scheduling tasks
+  - System task scheduler operations
+  - Legitimate software scheduling tasks
 level: high
 tags:
   - attack.persistence

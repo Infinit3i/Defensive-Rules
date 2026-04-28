@@ -13,12 +13,12 @@ logsource:
   category: process_creation
 detection:
   parent_office:
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\winword.exe'
       - '\excel.exe'
       - '\outlook.exe'
   child_scripting:
-    Image|endswith:
+  Image|endswith:
       - '\powershell.exe'
       - '\mshta.exe'
       - '\cmd.exe'

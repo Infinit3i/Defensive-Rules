@@ -9,7 +9,7 @@ logsource:
   service: dns
 detection:
   selection_doh_providers:
-    query|contains:
+  query|contains:
       - 'cloudflare-dns.com'
       - 'dns.google'
       - 'dns.quad9.net'
@@ -18,7 +18,7 @@ detection:
       - '8.8.8.8'
       - '9.9.9.9'
   selection_suspicious_queries:
-    query|contains:
+  query|contains:
       - '.tk'
       - '.ml'
       - '.ga'
@@ -27,14 +27,14 @@ detection:
       - 'no-ip'
       - 'ddns'
   selection_encoded_subdomains:
-    query|re: '[a-f0-9]{32,}\..*'
+  query|re: '[a-f0-9]{32,}\..*'
   selection_long_queries:
-    query|length|gt: 100
+  query|length|gt: 100
   selection_txt_records:
-    record_type: 'TXT'
+  record_type: 'TXT'
   frequency_condition:
-    - count() by src_ip > 100
-    - timeframe: 10m
+  - count() by src_ip > 100
+  - timeframe: 10m
   condition: selection_doh_providers and (selection_suspicious_queries or selection_encoded_subdomains or selection_long_queries or selection_txt_records)
 level: medium
 tags:

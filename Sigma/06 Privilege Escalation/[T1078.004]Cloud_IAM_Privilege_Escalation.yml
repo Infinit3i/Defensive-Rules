@@ -6,28 +6,28 @@ description: Detects cloud IAM privilege escalation through role modifications
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1078/004/
+  - https://attack.mitre.org/techniques/T1078/004/
 logsource:
-    product: azure
-    service: activitylog
+  product: azure
+  service: activitylog
 detection:
-    selection_role_assignment:
-        operationName:
-            - 'Create role assignment'
-            - 'Delete role assignment'
-        properties.roleDefinitionName|contains:
-            - 'Owner'
-            - 'Contributor'
-            - 'Global Administrator'
-    selection_privilege_escalation:
-        operationName|contains:
-            - 'Add member to role'
-            - 'Update user'
-        properties.targetResources.userPrincipalName|endswith: '@'
-    condition: selection_role_assignment or selection_privilege_escalation
+  selection_role_assignment:
+    operationName:
+      - 'Create role assignment'
+      - 'Delete role assignment'
+    properties.roleDefinitionName|contains:
+      - 'Owner'
+      - 'Contributor'
+      - 'Global Administrator'
+  selection_privilege_escalation:
+    operationName|contains:
+      - 'Add member to role'
+      - 'Update user'
+    properties.targetResources.userPrincipalName|endswith: '@'
+  condition: selection_role_assignment or selection_privilege_escalation
 falsepositives:
-    - Legitimate administrative changes
-    - User onboarding processes
+  - Legitimate administrative changes
+  - User onboarding processes
 level: high
 tags:
   # MITRE ATT&CK tactic

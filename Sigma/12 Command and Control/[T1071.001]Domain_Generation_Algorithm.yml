@@ -10,7 +10,7 @@ logsource:
   service: dns
 detection:
   selection:
-    query|re: '[a-zA-Z0-9]{8,}\.com|[a-zA-Z0-9]{8,}\.net|[a-zA-Z0-9]{8,}\.org'
+  query|re: '[a-zA-Z0-9]{8,}\.com|[a-zA-Z0-9]{8,}\.net|[a-zA-Z0-9]{8,}\.org'
   condition: selection
 tags:
   # MITRE ATT&CK tactic

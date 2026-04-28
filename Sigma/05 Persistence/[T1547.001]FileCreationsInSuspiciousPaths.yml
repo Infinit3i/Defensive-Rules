@@ -12,13 +12,13 @@ logsource:
   category: file_create
 detection:
   selection_event:
-    EventID: 11
+  EventID: 11
   selection_path:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\AppData\'
       - '\Start Menu\Programs\Startup\'
   selection_extension:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.bat'
       - '.ps1'

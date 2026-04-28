@@ -24,11 +24,11 @@ logsource:
   service: sysmon
 detection:
   selection_wmic_image:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
+  EventID: 1
+  Image|endswith: '\wmic.exe'
   selection_wmic_cmd:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "wmic os get"
       - "wmic bios get"
       - "wmic computersystem get"

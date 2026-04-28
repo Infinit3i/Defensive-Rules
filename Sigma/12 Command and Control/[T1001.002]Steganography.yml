@@ -30,18 +30,18 @@ logsource:
   category: process_creation
 detection:
   stego_tools:
-    Image|endswith:
+  Image|endswith:
       - '\steghide.exe'
       - '\openstego.exe'
       - '\outguess.exe'
   image_processing:
-    CommandLine|contains:
+  CommandLine|contains:
       - '.jpg'
       - '.png'
       - '.bmp'
       - '.wav'
   embed_extract:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'embed'
       - 'extract'
       - 'hide'

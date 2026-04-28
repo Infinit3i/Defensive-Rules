@@ -5,33 +5,33 @@ description: Detects phishing attempts through social media direct messages with
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1566/005/
+  - https://attack.mitre.org/techniques/T1566/005/
 logsource:
-    product: social-media-security
-    service: platform-api
+  product: social-media-security
+  service: platform-api
 detection:
-    selection_direct_message:
-        MessageType: DirectMessage
-    selection_suspicious_links:
-        MessageContent|contains:
-            - 'bit.ly'
-            - 'tinyurl'
-            - 'cutt.ly'
-            - 'ow.ly'
-            - 't.co'
-    selection_urgent_language:
-        MessageContent|contains:
-            - 'urgent'
-            - 'verify'
-            - 'suspended'
-            - 'click here'
-            - 'limited time'
-            - 'act now'
-    selection_new_account:
-        SenderAccountAge|lt: 30
-    selection_low_followers:
-        SenderFollowerCount|lt: 50
-    condition: selection_direct_message and selection_suspicious_links and
+  selection_direct_message:
+    MessageType: DirectMessage
+  selection_suspicious_links:
+    MessageContent|contains:
+      - 'bit.ly'
+      - 'tinyurl'
+      - 'cutt.ly'
+      - 'ow.ly'
+      - 't.co'
+  selection_urgent_language:
+    MessageContent|contains:
+      - 'urgent'
+      - 'verify'
+      - 'suspended'
+      - 'click here'
+      - 'limited time'
+      - 'act now'
+  selection_new_account:
+    SenderAccountAge|lt: 30
+  selection_low_followers:
+    SenderFollowerCount|lt: 50
+  condition: selection_direct_message and selection_suspicious_links and
                (selection_urgent_language or (selection_new_account and selection_low_followers))
 level: medium
 tags:

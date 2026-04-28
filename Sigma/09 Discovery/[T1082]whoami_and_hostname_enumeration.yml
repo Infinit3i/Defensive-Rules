@@ -11,20 +11,20 @@ logsource:
   service: sysmon
 detection:
   selection_whoami:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\whoami.exe'
       - '\hostname.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'whoami'
       - 'hostname'
       - '/all'
       - '/groups'
       - '/priv'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - '$env:username'
       - '$env:computername'
       - 'Get-WmiObject Win32_ComputerSystem'

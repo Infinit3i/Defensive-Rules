@@ -12,28 +12,28 @@ logsource:
   service: auditd
 detection:
   selection_shell_configs:
-    - type: PATH
+  - type: PATH
       name|endswith:
-        - .bashrc
-        - .zshrc
-        - .bash_aliases
-        - .aliases
+    - .bashrc
+    - .zshrc
+    - .bash_aliases
+    - .aliases
   selection_file_modification:
-    - type: SYSCALL
+  - type: SYSCALL
       syscall: openat
       a2: 577  # O_WRONLY|O_CREAT
   selection_malicious_alias:
-    - comm|contains:
-        - /tmp/
-        - /dev/shm/
-        - /var/tmp/
-        - base64
-        - nc -e
-        - /dev/tcp/
-        - python -c
-        - perl -e
-        - bash -i
-        - sh -i
+  - comm|contains:
+    - /tmp/
+    - /dev/shm/
+    - /var/tmp/
+    - base64
+    - nc -e
+    - /dev/tcp/
+    - python -c
+    - perl -e
+    - bash -i
+    - sh -i
   condition: selection_shell_configs and selection_file_modification and selection_malicious_alias
 level: high
 tags:

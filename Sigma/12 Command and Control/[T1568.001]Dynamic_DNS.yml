@@ -29,17 +29,17 @@ logsource:
   service: dns
 detection:
   ddns_providers:
-    query|endswith:
+  query|endswith:
       - '.dyndns.org'
       - '.no-ip.com'
       - '.ddns.net'
       - '.freedns.org'
   short_ttl:
-    TTL|lte: 300
-    qtype_name: 'A'
+  TTL|lte: 300
+  qtype_name: 'A'
   frequent_changes:
-    query|count|gte: 10
-    answers|count|gte: 5
+  query|count|gte: 10
+  answers|count|gte: 5
   condition: ddns_providers or short_ttl or frequent_changes
 falsepositives:
   - Legitimate dynamic DNS usage

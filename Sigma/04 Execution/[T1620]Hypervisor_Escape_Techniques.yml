@@ -14,82 +14,82 @@ logsource:
   service: sysmon
 detection:
   selection_vmware_tools_abuse:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\vmtoolsd.exe'
       - '\vmwaretray.exe'
       - '\vmwareuser.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '-cmd'
       - '-command'
       - '-script'
       - 'guestinfo'
   selection_vm_backdoor:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'VMware backdoor'
       - 'in al, 0x5658'
       - 'vmware_backdoor'
       - 'hypervisor_cpuid'
   selection_shared_folders:
-    EventID: 11  # File create
-    TargetFilename|startswith:
+  EventID: 11  # File create
+  TargetFilename|startswith:
       - '\\vmware-host\'
       - '\\vboxsrv\'
       - '\\vboxsvr\'
       - 'Z:\'
       - 'E:\'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
       - '.vbs'
   selection_clipboard_access:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'GetClipboardData'
       - 'SetClipboardData'
       - 'OpenClipboard'
       - 'vmware-vmx'
   selection_vm_memory_access:
-    EventID: 10  # Process access
-    TargetImage|endswith:
+  EventID: 10  # Process access
+  TargetImage|endswith:
       - '\vmware-vmx.exe'
       - '\VBoxHeadless.exe'
       - '\qemu-system-x86_64.exe'
-    GrantedAccess:
+  GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
   selection_device_exploitation:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'CreateFile'
       - '\\\\.\\pipe\\'
       - '\\\\.\\mailslot\\'
       - '\\\\.\\vmci'
       - '\\\\.\\vmmouse'
   selection_dma_attack:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'physical memory'
       - 'DMA'
       - 'IOMMU'
       - 'PCI'
       - 'memory mapping'
   selection_vm_communication:
-    EventID: 3  # Network connection
-    DestinationIp:
+  EventID: 3  # Network connection
+  DestinationIp:
       - '169.254.1.1'  # VMware host-guest communication
       - '10.0.2.2'     # VirtualBox host
       - '192.168.122.1'  # QEMU/KVM default
-    DestinationPort:
+  DestinationPort:
       - 427    # Service Location Protocol
       - 902    # VMware vCenter
       - 903    # VMware console
   selection_hypercall:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'hypercall'
       - 'vmcall'
       - 'vmmcall'

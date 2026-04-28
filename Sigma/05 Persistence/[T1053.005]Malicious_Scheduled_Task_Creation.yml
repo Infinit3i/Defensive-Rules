@@ -23,7 +23,7 @@ logsource:
   service: security
 detection:
   selection:
-    EventID: 4698
+  EventID: 4698
   condition: selection
 falsepositives:
   - Legitimate scheduled task creation by system administrators or software update mechanisms.

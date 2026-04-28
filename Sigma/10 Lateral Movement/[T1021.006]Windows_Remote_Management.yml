@@ -29,18 +29,18 @@ logsource:
   service: microsoft-windows-winrm
 detection:
   winrm_connection:
-    EventID: 91
-    User|contains:
+  EventID: 91
+  User|contains:
       - 'admin'
       - 'service'
   remote_shell:
-    EventID: 169
-    ProcessName|contains:
+  EventID: 169
+  ProcessName|contains:
       - 'wsmprovhost.exe'
       - 'powershell.exe'
   powershell_remoting:
-    EventID: 134
-    ClientIP|startswith:
+  EventID: 134
+  ClientIP|startswith:
       - '10.'
       - '172.'
       - '192.168.'

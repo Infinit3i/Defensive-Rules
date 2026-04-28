@@ -42,24 +42,24 @@ logsource:
 detection:
   # Zeek / HTTP proxy indicators: uncommon UA, suspicious URIs, frequent small POSTs
   zeek_http_ua_uri:
-    zeek.http.user_agent|contains:
+  zeek.http.user_agent|contains:
       - "curl"
       - "Wget"
       - "python-requests"
       - "Go-http-client"
       - "libwww-perl"
-    zeek.http.uri|contains:
+  zeek.http.uri|contains:
       - "/api/"
       - "/upload"
       - "/ws/"
       - "/update"
   zeek_http_small_post:
-    zeek.http.method|contains: "POST"
-    zeek.http.content_length|lt: 200
-    zeek.http.uri|matches:
+  zeek.http.method|contains: "POST"
+  zeek.http.content_length|lt: 200
+  zeek.http.uri|matches:
       - "^/.{1,50}$"
   zeek_http_download_exec:
-    zeek.http.uri|contains:
+  zeek.http.uri|contains:
       - ".exe"
       - ".dll"
       - ".zip"
@@ -68,35 +68,35 @@ detection:
 
   # Sysmon NetworkConnect (EventID 3) to web ports from non-browser parents or suspicious processes
   sysmon_net_connect:
-    EventID: 3
-    DestinationPort:
+  EventID: 3
+  DestinationPort:
       - 80
       - 443
-    ParentImage|not_endswith:
+  ParentImage|not_endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
       - '\iexplore.exe'
-    Image|not_endswith:
+  Image|not_endswith:
       - '\pwsh.exe'
       - '\powershell.exe'   # exclude legitimate PS when allowedlist exists; adjust for your environment
 
   # Web server logs: unusual user-agent + POST to endpoints returning 200 and executable content-type
   webserver_post_exec:
-    http.method: "POST"
-    http.status: 200
-    http.user_agent|contains:
+  http.method: "POST"
+  http.status: 200
+  http.user_agent|contains:
       - "python-requests"
       - "curl"
-    http.content_type|contains:
+  http.content_type|contains:
       - "application/octet-stream"
       - "application/x-msdownload"
 
   # Time-based / periodic beaconing: repeated small POSTs to same host/path
   beaconing_pattern:
-    zeek.conn.count|gt: 5
-    zeek.http.uri|contains: "/api/"
-    zeek.http.content_length|lt: 300
+  zeek.conn.count|gt: 5
+  zeek.http.uri|contains: "/api/"
+  zeek.http.content_length|lt: 300
 
   condition: (zeek_http_ua_uri and (zeek_http_small_post or zeek_http_download_exec))
              or sysmon_net_connect

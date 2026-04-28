@@ -29,20 +29,20 @@ logsource:
   service: audit
 detection:
   bulk_export:
-    action: 'EXPORT'
-    objectType: 'PAGE'
-    objectName|count|gte: 20
+  action: 'EXPORT'
+  objectType: 'PAGE'
+  objectName|count|gte: 20
   api_access:
-    action: 'VIEW'
-    user_agent|contains:
+  action: 'VIEW'
+  user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'api'
   mass_viewing:
-    action: 'VIEW'
-    objectType: 'PAGE'
-    userId|count|gte: 100
+  action: 'VIEW'
+  objectType: 'PAGE'
+  userId|count|gte: 100
   condition: bulk_export or api_access or mass_viewing
 falsepositives:
   - Legitimate documentation exports

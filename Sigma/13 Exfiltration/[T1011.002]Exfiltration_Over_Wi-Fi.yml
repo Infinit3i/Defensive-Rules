@@ -29,19 +29,19 @@ logsource:
   service: wlansvc
 detection:
   wifi_connection:
-    EventID: 8001
-    SSID|contains:
+  EventID: 8001
+  SSID|contains:
       - 'free'
       - 'guest'
       - 'open'
       - 'public'
   adhoc_network:
-    EventID: 8002
-    NetworkType: 'adhoc'
+  EventID: 8002
+  NetworkType: 'adhoc'
   suspicious_ap:
-    EventID: 8003
-    SecurityType: 'none'
-    SignalStrength|gte: 80
+  EventID: 8003
+  SecurityType: 'none'
+  SignalStrength|gte: 80
   condition: wifi_connection or adhoc_network or suspicious_ap
 falsepositives:
   - Legitimate public Wi-Fi usage

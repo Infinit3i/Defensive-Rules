@@ -30,23 +30,23 @@ logsource:
   category: file_create
 detection:
   executable_transfer:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
-    TargetFilename|startswith:
+  TargetFilename|startswith:
       - 'C:\Windows\Temp\'
       - 'C:\Temp\'
       - 'C:\Users\Public\'
   network_tool:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - 'psexec'
       - 'mimikatz'
       - 'pwdump'
       - 'procdump'
   remote_source:
-    ProcessName|contains:
+  ProcessName|contains:
       - 'svchost.exe'
       - 'services.exe'
   condition: executable_transfer and (network_tool or remote_source)

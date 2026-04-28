@@ -29,18 +29,18 @@ logsource:
   service: http
 detection:
   suspicious_ua:
-    user_agent|contains:
+  user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'powershell'
       - 'empire'
   beacon_pattern:
-    method: 'POST'
-    request_body_len|lte: 100
-    response_body_len|lte: 100
+  method: 'POST'
+  request_body_len|lte: 100
+  response_body_len|lte: 100
   encoded_communication:
-    uri|contains:
+  uri|contains:
       - 'base64'
       - '%20%20%20'
       - 'encoded'

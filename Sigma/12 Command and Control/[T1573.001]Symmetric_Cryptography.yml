@@ -29,18 +29,18 @@ logsource:
   service: ssl
 detection:
   symmetric_ciphers:
-    cipher|contains:
+  cipher|contains:
       - 'AES'
       - 'ChaCha'
       - 'DES'
   weak_encryption:
-    cipher|contains:
+  cipher|contains:
       - 'RC4'
       - 'DES'
-    version: 'TLSv10'
+  version: 'TLSv10'
   self_signed_cert:
-    cert_subject|contains: 'self-signed'
-    established: true
+  cert_subject|contains: 'self-signed'
+  established: true
   condition: symmetric_ciphers or weak_encryption or self_signed_cert
 falsepositives:
   - Legitimate encrypted communications

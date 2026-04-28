@@ -14,21 +14,21 @@ logsource:
   service: security
 detection:
   selection_smb_access:
-    EventID: 5140
-    ShareName:
+  EventID: 5140
+  ShareName:
       - '\\*\C$'
       - '\\*\ADMIN$'
       - '\\*\IPC$'
   selection_file_access:
-    EventID: 5145
-    RelativeTargetName|contains:
+  EventID: 5145
+  RelativeTargetName|contains:
       - '\Windows\System32\'
       - '\Windows\Temp\'
       - '\Users\'
   selection_net_use:
-    EventID: 1
-    Image|endswith: '\net.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\net.exe'
+  CommandLine|contains:
       - 'use \\*\C$'
       - 'use \\*\ADMIN$'
       - 'use \\*\IPC$'

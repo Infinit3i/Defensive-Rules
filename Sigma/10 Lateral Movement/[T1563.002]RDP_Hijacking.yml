@@ -29,17 +29,17 @@ logsource:
   service: security
 detection:
   rdp_session_start:
-    EventID: 4624
-    LogonType: 10
+  EventID: 4624
+  LogonType: 10
   rdp_session_end:
-    EventID: 4634
-    LogonType: 10
+  EventID: 4634
+  LogonType: 10
   concurrent_rdp:
-    EventID: 21
-    SessionName|count|gte: 2
+  EventID: 21
+  SessionName|count|gte: 2
   session_takeover:
-    EventID: 4778
-    AccountName|contains:
+  EventID: 4778
+  AccountName|contains:
       - 'admin'
       - 'service'
   condition: (rdp_session_start and rdp_session_end) or concurrent_rdp or session_takeover

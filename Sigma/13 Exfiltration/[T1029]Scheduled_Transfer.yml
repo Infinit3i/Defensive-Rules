@@ -29,21 +29,21 @@ logsource:
   service: taskscheduler
 detection:
   scheduled_upload:
-    EventID: 129
-    TaskName|contains:
+  EventID: 129
+  TaskName|contains:
       - 'upload'
       - 'sync'
       - 'backup'
       - 'transfer'
   recurring_task:
-    EventID: 200
-    ActionName|contains:
+  EventID: 200
+  ActionName|contains:
       - 'curl'
       - 'wget'
       - 'powershell'
   network_task:
-    EventID: 201
-    TaskName|contains:
+  EventID: 201
+  TaskName|contains:
       - 'ftp'
       - 'http'
       - 'sftp'

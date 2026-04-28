@@ -13,41 +13,41 @@ tags:
   - cloud
   - service_principal
 logsource:
-    product: azure
-    service: auditlogs
+  product: azure
+  service: auditlogs
 detection:
-    selection_sp_activity:
-        Category: 'AuditLogs'
-        ActivityDisplayName|contains:
-            - 'Add service principal'
-            - 'Update service principal'
-            - 'Add application'
-    selection_suspicious_permissions:
-        TargetResources.modifiedProperties.newValue|contains:
-            - 'Application.ReadWrite.All'
-            - 'Directory.ReadWrite.All'
-            - 'RoleManagement.ReadWrite.Directory'
-            - 'User.ReadWrite.All'
-    selection_credential_ops:
-        ActivityDisplayName|contains:
-            - 'Add service principal credentials'
-            - 'Update application – Certificates and secrets management'
-    selection_unusual_source:
-        InitiatedBy.app.appId|exists: false
-        InitiatedBy.user.userPrincipalName|re: '^(?!.*@(company\.com|domain\.local)).*'
-    condition: (selection_sp_activity and selection_suspicious_permissions) or
+  selection_sp_activity:
+    Category: 'AuditLogs'
+    ActivityDisplayName|contains:
+      - 'Add service principal'
+      - 'Update service principal'
+      - 'Add application'
+  selection_suspicious_permissions:
+    TargetResources.modifiedProperties.newValue|contains:
+      - 'Application.ReadWrite.All'
+      - 'Directory.ReadWrite.All'
+      - 'RoleManagement.ReadWrite.Directory'
+      - 'User.ReadWrite.All'
+  selection_credential_ops:
+    ActivityDisplayName|contains:
+      - 'Add service principal credentials'
+      - 'Update application – Certificates and secrets management'
+  selection_unusual_source:
+    InitiatedBy.app.appId|exists: false
+    InitiatedBy.user.userPrincipalName|re: '^(?!.*@(company\.com|domain\.local)).*'
+  condition: (selection_sp_activity and selection_suspicious_permissions) or
                (selection_credential_ops and selection_unusual_source)
 level: high
 fields:
-    - ActivityDisplayName
-    - InitiatedBy.user.userPrincipalName
-    - InitiatedBy.app.displayName
-    - TargetResources.displayName
-    - Result
+  - ActivityDisplayName
+  - InitiatedBy.user.userPrincipalName
+  - InitiatedBy.app.displayName
+  - TargetResources.displayName
+  - Result
 falsepositives:
-    - Legitimate service principal management
-    - Application deployment automation
-    - DevOps pipeline service account creation
+  - Legitimate service principal management
+  - Application deployment automation
+  - DevOps pipeline service account creation
 references:
-    - https://attack.mitre.org/techniques/T1078/004/
+  - https://attack.mitre.org/techniques/T1078/004/
 technique: T1078.004

@@ -5,29 +5,29 @@ description: Detects addition of new SSH public keys to authorized_keys files
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: syslog
+  product: linux
+  service: syslog
 detection:
-    selection_ssh_keygen:
-        program: "ssh-keygen"
-        message|contains: "generated"
-    selection_key_add:
-        program:
-            - "cat"
-            - "echo"
-            - "tee"
-        message|contains:
-            - "authorized_keys"
-            - "ssh-rsa"
-            - "ssh-ed25519"
-            - "ssh-dss"
-    selection_suspicious_timing:
-        facility: "authpriv"
-        message|contains:
-            - "Accepted publickey"
-            - "Failed publickey"
-    timeframe: 5m
-    condition: selection_key_add or
+  selection_ssh_keygen:
+    program: "ssh-keygen"
+    message|contains: "generated"
+  selection_key_add:
+    program:
+      - "cat"
+      - "echo"
+      - "tee"
+    message|contains:
+      - "authorized_keys"
+      - "ssh-rsa"
+      - "ssh-ed25519"
+      - "ssh-dss"
+  selection_suspicious_timing:
+    facility: "authpriv"
+    message|contains:
+      - "Accepted publickey"
+      - "Failed publickey"
+  timeframe: 5m
+  condition: selection_key_add or
                (selection_ssh_keygen and selection_suspicious_timing)
 level: medium
 tags:
@@ -37,7 +37,7 @@ tags:
   - linux
   - syslog
 references:
-    - https://attack.mitre.org/techniques/T1098/004/
+  - https://attack.mitre.org/techniques/T1098/004/
 falsepositives:
-    - Legitimate SSH key deployment
-    - User adding their own keys
+  - Legitimate SSH key deployment
+  - User adding their own keys

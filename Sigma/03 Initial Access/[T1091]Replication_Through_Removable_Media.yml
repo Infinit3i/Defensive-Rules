@@ -30,22 +30,22 @@ logsource:
   category: process_creation
 detection:
   usb_execution:
-    Image|startswith:
+  Image|startswith:
       - 'E:\'
       - 'F:\'
       - 'G:\'
       - 'H:\'
-    Image|endswith: '.exe'
+  Image|endswith: '.exe'
   autorun_creation:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - 'autorun.inf'
       - 'desktop.ini'
-    TargetFilename|contains: ':'
+  TargetFilename|contains: ':'
   suspicious_files:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - 'USB'
       - 'removable'
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.scr'
       - '.bat'

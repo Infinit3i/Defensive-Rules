@@ -29,20 +29,20 @@ logsource:
   service: system
 detection:
   new_device:
-    EventID: 20001
-    DeviceInstanceId|startswith:
+  EventID: 20001
+  DeviceInstanceId|startswith:
       - 'USB\'
       - 'HID\'
       - 'ROOT\'
   pnp_install:
-    EventID: 20003
-    DriverName|contains:
+  EventID: 20003
+  DriverName|contains:
       - 'usb'
       - 'hid'
       - 'generic'
   storage_device:
-    EventID: 7036
-    ServiceName|contains:
+  EventID: 7036
+  ServiceName|contains:
       - 'disk'
       - 'storage'
       - 'usb'

@@ -29,14 +29,14 @@ logsource:
   service: conn
 detection:
   mirrored_traffic:
-    id.orig_h: id.resp_h
-    duration|lte: 1
+  id.orig_h: id.resp_h
+  duration|lte: 1
   duplicate_connections:
-    id.orig_h|count|gte: 2
-    id.resp_h|count|gte: 2
+  id.orig_h|count|gte: 2
+  id.resp_h|count|gte: 2
   span_port_activity:
-    service: 'unknown'
-    orig_bytes|gte: 1000000
+  service: 'unknown'
+  orig_bytes|gte: 1000000
   condition: mirrored_traffic or duplicate_connections or span_port_activity
 falsepositives:
   - Network monitoring tools

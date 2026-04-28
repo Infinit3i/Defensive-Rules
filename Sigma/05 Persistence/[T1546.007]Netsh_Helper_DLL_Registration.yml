@@ -11,26 +11,26 @@ logsource:
   service: sysmon
 detection:
   selection_netsh_helper:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Netsh\'
   selection_netsh_process:
-    EventID: 1
-    Image|endswith: '\netsh.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\netsh.exe'
+  CommandLine|contains:
       - 'add helper'
       - 'install'
   selection_suspicious_dll:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - '.dll'
-    CommandLine|contains:
+  CommandLine|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '\Users\Public\'
   filter_system_paths:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

@@ -30,16 +30,16 @@ logsource:
   category: file_create
 detection:
   unusual_extensions:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.dat'
       - '.bin'
       - '.tmp'
       - '.enc'
   large_files:
-    FileSize|gte: 100000000
-    TargetFilename|contains: 'temp'
+  FileSize|gte: 100000000
+  TargetFilename|contains: 'temp'
   custom_tools:
-    ProcessName|contains:
+  ProcessName|contains:
       - 'custom'
       - 'pack'
       - 'bundle'

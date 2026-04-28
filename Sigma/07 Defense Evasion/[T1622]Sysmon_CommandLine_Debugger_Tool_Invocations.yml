@@ -20,8 +20,8 @@ logsource:
   service: sysmon
 detection:
   selection_proc_create:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "ollydbg"
       - "x64dbg"
       - "windbg"
@@ -31,8 +31,8 @@ detection:
       - "scylla_x64"
       - "dbgview"
   selection_image:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\ollydbg.exe'
       - '\x64dbg.exe'
       - '\windbg.exe'

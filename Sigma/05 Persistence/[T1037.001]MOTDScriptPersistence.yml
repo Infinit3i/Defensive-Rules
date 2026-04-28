@@ -5,17 +5,17 @@ description: Detects MOTD script creation or modification for persistence on Lin
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection:
-        type: 'SYSCALL'
-        syscall:
-            - 'openat'
-            - 'write'
-            - 'creat'
-        name|contains: '/etc/update-motd.d/'
-    condition: selection
+  selection:
+    type: 'SYSCALL'
+    syscall:
+      - 'openat'
+      - 'write'
+      - 'creat'
+    name|contains: '/etc/update-motd.d/'
+  condition: selection
 level: medium
 tags:
   - attack.persistence
@@ -23,4 +23,4 @@ tags:
   - auditd
   - linux
 references:
-    - https://attack.mitre.org/techniques/T1037/001/
+  - https://attack.mitre.org/techniques/T1037/001/

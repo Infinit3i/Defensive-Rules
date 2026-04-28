@@ -29,17 +29,17 @@ logsource:
   service: http
 detection:
   cloud_services:
-    host|endswith:
+  host|endswith:
       - '.dropbox.com'
       - '.googledrive.com'
       - '.onedrive.com'
       - '.github.com'
       - '.pastebin.com'
   suspicious_uploads:
-    method: 'POST'
-    request_body_len|gte: 10000
+  method: 'POST'
+  request_body_len|gte: 10000
   encoded_content:
-    uri|contains:
+  uri|contains:
       - 'base64'
       - 'encoded'
       - '%20%20%20'

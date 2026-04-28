@@ -20,7 +20,7 @@ logsource:
   service: zeek
 detection:
   selection_uri:
-    zeek.http.uri|contains:
+  zeek.http.uri|contains:
       - "x64dbg"
       - "ollydbg"
       - "ida"
@@ -28,12 +28,12 @@ detection:
       - "windbg"
       - "scylla"
   selection_useragent:
-    zeek.http.user_agent|contains:
+  zeek.http.user_agent|contains:
       - "x64dbg"
       - "ollydbg"
       - "ida"
   selection_filename:
-    zeek.file.name|contains:
+  zeek.file.name|contains:
       - "x64dbg"
       - "ollydbg"
       - "ida"

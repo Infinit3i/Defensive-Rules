@@ -5,33 +5,33 @@ description: Detects installation of backdoored software from compromised legiti
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1195/001/
+  - https://attack.mitre.org/techniques/T1195/001/
 logsource:
-    product: endpoint-security
-    service: process-monitoring
+  product: endpoint-security
+  service: process-monitoring
 detection:
-    selection_installer:
-        ProcessName|endswith:
-            - 'setup.exe'
-            - 'install.exe'
-            - 'update.exe'
-            - 'msi'
-    selection_suspicious_signature:
-        - DigitalSignature: null
-        - SignatureVerified: false
-        - CertificateIssuer|not|contains: 'trusted_ca'
-    selection_network_activity:
-        NetworkConnections|contains:
-            - '.onion'
-            - 'tor'
-            - 'suspicious_domain'
-    selection_file_creation:
-        FileCreated|contains:
-            - '%APPDATA%'
-            - '%TEMP%'
-            - 'startup'
-            - 'autorun'
-    condition: selection_installer and selection_suspicious_signature and (selection_network_activity or selection_file_creation)
+  selection_installer:
+    ProcessName|endswith:
+      - 'setup.exe'
+      - 'install.exe'
+      - 'update.exe'
+      - 'msi'
+  selection_suspicious_signature:
+    - DigitalSignature: null
+    - SignatureVerified: false
+    - CertificateIssuer|not|contains: 'trusted_ca'
+  selection_network_activity:
+    NetworkConnections|contains:
+      - '.onion'
+      - 'tor'
+      - 'suspicious_domain'
+  selection_file_creation:
+    FileCreated|contains:
+      - '%APPDATA%'
+      - '%TEMP%'
+      - 'startup'
+      - 'autorun'
+  condition: selection_installer and selection_suspicious_signature and (selection_network_activity or selection_file_creation)
 level: high
 tags:
   - attack.initial-access

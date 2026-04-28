@@ -21,29 +21,29 @@ logsource:
   service: sysmon
 detection:
   proc_sc:
-    EventID: 1
-    Image|endswith: '\sc.exe'
-    CommandLine|contains|all:
+  EventID: 1
+  Image|endswith: '\sc.exe'
+  CommandLine|contains|all:
       - " stop "
   proc_net:
-    EventID: 1
-    Image|endswith: '\net.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\net.exe'
+  CommandLine|contains:
       - " net stop "
       - " net  stop "
       - " net  stop"
   proc_ps:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Stop-Service"
       - "Set-Service -Status Stopped"
   proc_wmic:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - "service"
       - "call stopservice"
       - " where "

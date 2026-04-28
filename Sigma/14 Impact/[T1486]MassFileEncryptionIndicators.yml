@@ -5,44 +5,44 @@ description: Detects mass file encryption indicators through high-volume file mo
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_file_mod:
-        EventID: 2
-        TargetFilename|endswith:
-            - '.doc'
-            - '.docx'
-            - '.xls'
-            - '.xlsx'
-            - '.pdf'
-            - '.jpg'
-            - '.png'
-            - '.txt'
-    selection_suspicious_process:
-        EventID: 1
-        Image|contains:
-            - '\AppData\Local\Temp\'
-            - '\Users\Public\'
-            - '\ProgramData\'
-        CommandLine|contains:
-            - '-enc '
-            - 'crypto'
-            - 'cipher'
-            - 'aes'
-            - 'rsa'
-    selection_network_ransom:
-        EventID: 3
-        DestinationPort:
-            - 443
-            - 80
-            - 9050
-        Image|contains:
-            - '\AppData\Local\Temp\'
-            - '\ProgramData\'
-    condition: selection_file_mod and
+  selection_file_mod:
+    EventID: 2
+    TargetFilename|endswith:
+      - '.doc'
+      - '.docx'
+      - '.xls'
+      - '.xlsx'
+      - '.pdf'
+      - '.jpg'
+      - '.png'
+      - '.txt'
+  selection_suspicious_process:
+    EventID: 1
+    Image|contains:
+      - '\AppData\Local\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+    CommandLine|contains:
+      - '-enc '
+      - 'crypto'
+      - 'cipher'
+      - 'aes'
+      - 'rsa'
+  selection_network_ransom:
+    EventID: 3
+    DestinationPort:
+      - 443
+      - 80
+      - 9050
+    Image|contains:
+      - '\AppData\Local\Temp\'
+      - '\ProgramData\'
+  condition: selection_file_mod and
                (selection_suspicious_process or
-                selection_network_ransom)
+        selection_network_ransom)
 level: critical
 tags:
   - attack.impact
@@ -50,8 +50,8 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1486/
+  - https://attack.mitre.org/techniques/T1486/
 falsepositives:
-    - Legitimate encryption software
-    - Backup operations
-    - Antivirus scanning
+  - Legitimate encryption software
+  - Backup operations
+  - Antivirus scanning

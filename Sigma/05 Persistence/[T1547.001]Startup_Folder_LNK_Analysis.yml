@@ -5,44 +5,44 @@ description: Detects suspicious shortcut files in startup folders with focus on 
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_lnk:
-        EventID: 11
-        TargetFilename|endswith: '.lnk'
-        TargetFilename|contains:
-            - '\Start Menu\Programs\Startup\'
-            - '\Start Menu\Programs\StartUp\'
-    selection_process:
-        EventID: 1
-        ParentImage|endswith: '\explorer.exe'
-        CommandLine|contains: 'Programs\Startup'
-    selection_suspicious:
-        - CommandLine|contains:
-            - 'powershell'
-            - 'cmd.exe /c'
-            - 'rundll32'
-            - 'mshta'
-            - 'wscript'
-            - 'cscript'
-        - CommandLine|contains:
-            - ' -w hidden'
-            - ' -windowstyle hidden'
-            - ' -enc '
-            - ' -e '
-            - 'bypass'
-        - Image|contains:
-            - '\AppData\'
-            - '\Temp\'
-            - '\Users\Public\'
-            - '\ProgramData\'
-    condition: (selection_lnk or selection_process) and selection_suspicious
+  selection_lnk:
+    EventID: 11
+    TargetFilename|endswith: '.lnk'
+    TargetFilename|contains:
+      - '\Start Menu\Programs\Startup\'
+      - '\Start Menu\Programs\StartUp\'
+  selection_process:
+    EventID: 1
+    ParentImage|endswith: '\explorer.exe'
+    CommandLine|contains: 'Programs\Startup'
+  selection_suspicious:
+    - CommandLine|contains:
+      - 'powershell'
+      - 'cmd.exe /c'
+      - 'rundll32'
+      - 'mshta'
+      - 'wscript'
+      - 'cscript'
+    - CommandLine|contains:
+      - ' -w hidden'
+      - ' -windowstyle hidden'
+      - ' -enc '
+      - ' -e '
+      - 'bypass'
+    - Image|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+  condition: (selection_lnk or selection_process) and selection_suspicious
 falsepositives:
-    - Legitimate application shortcuts
-    - User-created shortcuts to tools
+  - Legitimate application shortcuts
+  - User-created shortcuts to tools
 level: high
 tags:
   - attack.persistence

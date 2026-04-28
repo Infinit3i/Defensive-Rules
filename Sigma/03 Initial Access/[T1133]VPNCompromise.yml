@@ -5,32 +5,32 @@ description: Detects unauthorized VPN access patterns indicating compromised VPN
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1133/
+  - https://attack.mitre.org/techniques/T1133/
 logsource:
-    product: windows
-    service: security
+  product: windows
+  service: security
 detection:
-    selection_vpn:
-        EventID: 4624
-        LogonType: 3
-        ProcessName|contains:
-            - 'openvpn'
-            - 'vpnclient'
-            - 'anyconnect'
-            - 'forticlient'
-    selection_suspicious:
-        SourceNetworkAddress|startswith:
-            - '10.'
-            - '172.'
-            - '192.168.'
-        TargetUserName|contains: '$'
-    selection_timing:
-        EventID: 4625
-    timeframe: 300s
-    condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
+  selection_vpn:
+    EventID: 4624
+    LogonType: 3
+    ProcessName|contains:
+      - 'openvpn'
+      - 'vpnclient'
+      - 'anyconnect'
+      - 'forticlient'
+  selection_suspicious:
+    SourceNetworkAddress|startswith:
+      - '10.'
+      - '172.'
+      - '192.168.'
+    TargetUserName|contains: '$'
+  selection_timing:
+    EventID: 4625
+  timeframe: 300s
+  condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
 falsepositives:
-    - Legitimate VPN connections from remote workers
-    - VPN reconnection after network issues
+  - Legitimate VPN connections from remote workers
+  - VPN reconnection after network issues
 level: high
 tags:
   - attack.initial_access

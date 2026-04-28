@@ -5,30 +5,30 @@ description: Detects attempts to disable cloud logging services to evade detecti
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1562/007/
+  - https://attack.mitre.org/techniques/T1562/007/
 logsource:
-    product: aws
-    service: cloudtrail
+  product: aws
+  service: cloudtrail
 detection:
-    selection_disable:
-        eventName|contains:
-            - 'StopLogging'
-            - 'DeleteTrail'
-            - 'PutTrailStatus'
-    selection_logging:
-        eventName|contains:
-            - 'DeleteLogGroup'
-            - 'DeleteLogStream'
-            - 'PutRetentionPolicy'
-    selection_config:
-        eventName|contains:
-            - 'StopConfigurationRecorder'
-            - 'DeleteConfigurationRecorder'
-            - 'DeleteDeliveryChannel'
-    condition: selection_disable or selection_logging or selection_config
+  selection_disable:
+    eventName|contains:
+      - 'StopLogging'
+      - 'DeleteTrail'
+      - 'PutTrailStatus'
+  selection_logging:
+    eventName|contains:
+      - 'DeleteLogGroup'
+      - 'DeleteLogStream'
+      - 'PutRetentionPolicy'
+  selection_config:
+    eventName|contains:
+      - 'StopConfigurationRecorder'
+      - 'DeleteConfigurationRecorder'
+      - 'DeleteDeliveryChannel'
+  condition: selection_disable or selection_logging or selection_config
 falsepositives:
-    - Legitimate log retention policy changes
-    - Cost optimization activities
+  - Legitimate log retention policy changes
+  - Cost optimization activities
 level: high
 tags:
   - attack.initial_access

@@ -29,23 +29,23 @@ logsource:
   service: conn
 detection:
   vnc_port:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 5900
       - 5901
       - 5902
       - 5903
   internal_connection:
-    id.orig_h|startswith:
+  id.orig_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    id.resp_h|startswith:
+  id.resp_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
   established_connection:
-    conn_state: 'SF'
-    proto: 'tcp'
+  conn_state: 'SF'
+  proto: 'tcp'
   condition: vnc_port and internal_connection and established_connection
 falsepositives:
   - Legitimate VNC remote support

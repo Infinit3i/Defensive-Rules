@@ -29,16 +29,16 @@ logsource:
   service: dns
 detection:
   random_domains:
-    query|length|gte: 15
-    query|contains:
+  query|length|gte: 15
+  query|contains:
       - 'qwertyuiop'
       - 'abcdefgh'
       - 'aaaaaaa'
   entropy_check:
-    query|regex: '^[a-z]{10,20}\.(com|net|org)$'
+  query|regex: '^[a-z]{10,20}\.(com|net|org)$'
   numeric_domains:
-    query|contains: '[0-9]{5,}'
-    qtype_name: 'A'
+  query|contains: '[0-9]{5,}'
+  qtype_name: 'A'
   condition: random_domains or entropy_check or numeric_domains
 falsepositives:
   - CDN-generated subdomains

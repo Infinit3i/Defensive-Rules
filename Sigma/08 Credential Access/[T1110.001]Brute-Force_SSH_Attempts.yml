@@ -23,11 +23,11 @@ logsource:
   service: ssh
 detection:
   selection:
-    auth_success: "F"
+  auth_success: "F"
   condition: selection
   timeframe: 5m
   threshold:
-    count: 5
+  count: 5
 falsepositives:
   - Mistyped credentials by users, poor password managers, or misconfigured automation.
 level: high

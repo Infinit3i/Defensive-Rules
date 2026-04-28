@@ -11,18 +11,18 @@ logsource:
   service: sysmon
 detection:
   selection_spoolsv_process:
-    EventID: 7
-    Image|endswith: '\spoolsv.exe'
+  EventID: 7
+  Image|endswith: '\spoolsv.exe'
   selection_suspicious_dll:
-    EventID: 7
-    ImageLoaded|contains:
+  EventID: 7
+  ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '\Users\Public\'
-    ImageLoaded|endswith: '.dll'
+  ImageLoaded|endswith: '.dll'
   filter_legitimate_processors:
-    ImageLoaded|contains:
+  ImageLoaded|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

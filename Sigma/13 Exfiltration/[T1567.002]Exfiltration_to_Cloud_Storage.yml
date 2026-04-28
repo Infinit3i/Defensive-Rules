@@ -29,21 +29,21 @@ logsource:
   service: http
 detection:
   cloud_services:
-    host|endswith:
+  host|endswith:
       - '.dropbox.com'
       - '.googledrive.com'
       - '.onedrive.com'
       - '.box.com'
       - '.mega.nz'
   large_upload:
-    method: 'POST'
-    request_body_len|gte: 50000000
+  method: 'POST'
+  request_body_len|gte: 50000000
   file_sync:
-    uri|contains:
+  uri|contains:
       - '/upload'
       - '/sync'
       - '/files'
-    method: 'PUT'
+  method: 'PUT'
   condition: cloud_services and (large_upload or file_sync)
 falsepositives:
   - Legitimate cloud storage usage

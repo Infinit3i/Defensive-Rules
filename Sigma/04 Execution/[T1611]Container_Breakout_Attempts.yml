@@ -14,18 +14,18 @@ logsource:
   service: auditd
 detection:
   selection_privileged_container:
-    type: 'SYSCALL'
-    syscall:
+  type: 'SYSCALL'
+  syscall:
       - 'mount'
       - 'umount'
       - 'pivot_root'
       - 'chroot'
       - 'unshare'
       - 'clone'
-    success: 'yes'
+  success: 'yes'
   selection_proc_filesystem:
-    type: 'PATH'
-    name|contains:
+  type: 'PATH'
+  name|contains:
       - '/proc/1/root'
       - '/proc/self/root'
       - '/proc/*/root'
@@ -33,8 +33,8 @@ detection:
       - '/var/lib/docker'
       - '/var/run/docker.sock'
   selection_device_access:
-    type: 'PATH'
-    name|startswith:
+  type: 'PATH'
+  name|startswith:
       - '/dev/disk'
       - '/dev/sd'
       - '/dev/nvme'
@@ -42,29 +42,29 @@ detection:
       - '/dev/dm-'
       - '/dev/mapper'
   selection_kernel_modules:
-    type: 'SYSCALL'
-    syscall:
+  type: 'SYSCALL'
+  syscall:
       - 'init_module'
       - 'finit_module'
       - 'delete_module'
-    success: 'yes'
+  success: 'yes'
   selection_namespace_escape:
-    type: 'SYSCALL'
-    syscall: 'setns'
-    a0|contains:
+  type: 'SYSCALL'
+  syscall: 'setns'
+  a0|contains:
       - '/proc/1/ns'
       - '/proc/self/ns'
-    success: 'yes'
+  success: 'yes'
   selection_cgroup_manipulation:
-    type: 'PATH'
-    name|contains:
+  type: 'PATH'
+  name|contains:
       - '/sys/fs/cgroup'
       - '/proc/cgroups'
       - '/proc/self/cgroup'
   selection_capabilities:
-    type: 'SYSCALL'
-    syscall: 'capset'
-    success: 'yes'
+  type: 'SYSCALL'
+  syscall: 'capset'
+  success: 'yes'
   condition: 1 of selection_*
 falsepositives:
   - Legitimate container orchestration operations

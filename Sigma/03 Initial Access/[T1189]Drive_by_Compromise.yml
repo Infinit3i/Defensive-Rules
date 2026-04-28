@@ -29,20 +29,20 @@ logsource:
   service: http
 detection:
   malicious_js:
-    uri|contains:
+  uri|contains:
       - 'eval('
       - 'unescape('
       - 'fromCharCode('
-    method: 'GET'
+  method: 'GET'
   exploit_kit:
-    user_agent|contains:
+  user_agent|contains:
       - 'exploit'
       - 'kit'
       - 'angler'
       - 'blackhole'
   suspicious_redirect:
-    response_code: 302
-    location|contains:
+  response_code: 302
+  location|contains:
       - 'bit.ly'
       - 'tinyurl'
       - '.tk/'

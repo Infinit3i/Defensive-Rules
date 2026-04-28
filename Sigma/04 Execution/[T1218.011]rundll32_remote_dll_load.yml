@@ -15,8 +15,8 @@ logsource:
   category: process_creation
 detection:
   selection:
-    Image|endswith: '\rundll32.exe'
-    CommandLine|contains:
+  Image|endswith: '\rundll32.exe'
+  CommandLine|contains:
       - '\\\\'
       - 'http://'
       - 'https://'

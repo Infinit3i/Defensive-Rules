@@ -6,31 +6,31 @@ description: Detects container escape attempts through privileged operations
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1611/
+  - https://attack.mitre.org/techniques/T1611/
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_mount:
-        type: 'SYSCALL'
-        syscall: 'mount'
-        a0|contains:
-            - '/proc'
-            - '/sys'
-            - '/dev'
-    selection_chroot:
-        type: 'SYSCALL'
-        syscall:
-            - 'chroot'
-            - 'pivot_root'
-    selection_capabilities:
-        type: 'SYSCALL'
-        syscall: 'capset'
-        success: 'yes'
-    condition: selection_mount or selection_chroot or selection_capabilities
+  selection_mount:
+    type: 'SYSCALL'
+    syscall: 'mount'
+    a0|contains:
+      - '/proc'
+      - '/sys'
+      - '/dev'
+  selection_chroot:
+    type: 'SYSCALL'
+    syscall:
+      - 'chroot'
+      - 'pivot_root'
+  selection_capabilities:
+    type: 'SYSCALL'
+    syscall: 'capset'
+    success: 'yes'
+  condition: selection_mount or selection_chroot or selection_capabilities
 falsepositives:
-    - Legitimate container operations
-    - System maintenance
+  - Legitimate container operations
+  - System maintenance
 level: high
 tags:
   # MITRE ATT&CK tactic

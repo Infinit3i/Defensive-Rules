@@ -10,10 +10,10 @@ logsource:
   product: windows
 detection:
   windows_event:
-    EventID: 7045
+  EventID: 7045
   sysmon_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'sc create'
       - 'New-Service'
       - 'srvany.exe'

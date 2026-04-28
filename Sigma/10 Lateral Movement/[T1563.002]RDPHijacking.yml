@@ -14,23 +14,23 @@ logsource:
   service: security
 detection:
   selection_session_hijack:
-    EventID: 4778
-    ClientName: '*'
-    ClientAddress: '*'
+  EventID: 4778
+  ClientName: '*'
+  ClientAddress: '*'
   selection_tscon_usage:
-    EventID: 1
-    Image|endswith: '\tscon.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\tscon.exe'
+  CommandLine|contains:
       - '/dest:'
       - '/password'
       - '/v'
   selection_rdp_reconnect:
-    EventID: 4779
-    TargetLogonId: '*'
+  EventID: 4779
+  TargetLogonId: '*'
   selection_multiple_sessions:
-    EventID: 4624
-    LogonType: 10
-    IpAddress: '*'
+  EventID: 4624
+  LogonType: 10
+  IpAddress: '*'
   condition: selection_session_hijack or selection_tscon_usage or (selection_rdp_reconnect and selection_multiple_sessions)
   timeframe: 5m
   count: 2

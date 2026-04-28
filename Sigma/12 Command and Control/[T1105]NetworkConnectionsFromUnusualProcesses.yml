@@ -12,9 +12,9 @@ logsource:
   category: network_connection
 detection:
   selection_event:
-    EventID: 3
+  EventID: 3
   selection_process:
-    Image|endswith:
+  Image|endswith:
       - '\powershell.exe'
       - '\regsvr32.exe'
       - '\mshta.exe'

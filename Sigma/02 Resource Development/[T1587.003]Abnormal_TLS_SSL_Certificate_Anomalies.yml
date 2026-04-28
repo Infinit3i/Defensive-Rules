@@ -26,16 +26,16 @@ logsource:
   service: ssl
 detection:
   self_signed:
-    validation_status: "self signed certificate"
+  validation_status: "self signed certificate"
   bad_issuer:
-    issuer|contains:
+  issuer|contains:
       - "CN=localhost"
       - "CN=example"
       - "CN=fake"
   mismatched_cn:
-    subject|startswith: "CN="
-    issuer|startswith: "CN="
-    subject|contains: "test"
+  subject|startswith: "CN="
+  issuer|startswith: "CN="
+  subject|contains: "test"
   condition: self_signed OR bad_issuer OR mismatched_cn
 falsepositives:
   - Internal self-signed certs for testing or dev environments.

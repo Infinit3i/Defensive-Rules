@@ -5,32 +5,32 @@ description: Detects PowerShell accessing Outlook email data for collection
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1114/
+  - https://attack.mitre.org/techniques/T1114/
 tags:
   - attack.collection
   - attack.t1114
   - powershell
   - windows
 logsource:
-    product: windows
-    service: powershell-classic
+  product: windows
+  service: powershell-classic
 detection:
-    selection:
-        EventID: 4104
-    outlook_com:
-        ScriptBlockText|contains:
-            - 'Microsoft.Office.Interop.Outlook'
-            - 'New-Object -ComObject Outlook.Application'
-            - 'CreateObject("Outlook.Application")'
-    email_access:
-        ScriptBlockText|contains:
-            - '.GetDefaultFolder'
-            - '.Items'
-            - '.Body'
-            - '.Subject'
-            - '.Attachments'
-    condition: selection and outlook_com and email_access
+  selection:
+    EventID: 4104
+  outlook_com:
+    ScriptBlockText|contains:
+      - 'Microsoft.Office.Interop.Outlook'
+      - 'New-Object -ComObject Outlook.Application'
+      - 'CreateObject("Outlook.Application")'
+  email_access:
+    ScriptBlockText|contains:
+      - '.GetDefaultFolder'
+      - '.Items'
+      - '.Body'
+      - '.Subject'
+      - '.Attachments'
+  condition: selection and outlook_com and email_access
 falsepositives:
-    - Legitimate email automation
-    - System administration scripts
+  - Legitimate email automation
+  - System administration scripts
 level: high

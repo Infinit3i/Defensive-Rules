@@ -5,33 +5,33 @@ description: Detects bootkit installation through master boot record modificatio
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1601/
+  - https://attack.mitre.org/techniques/T1601/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_disk:
-        EventID: 1
-        Image|endswith:
-            - '\diskpart.exe'
-            - '\bcdedit.exe'
-            - '\bootrec.exe'
-    selection_commands:
-        CommandLine|contains:
-            - '/set bootstatuspolicy'
-            - 'recoveryenabled no'
-            - 'ignoreallfailures'
-            - 'fixmbr'
-    selection_files:
-        EventID: 11
-        TargetFilename|contains:
-            - 'bootmgr'
-            - 'ntldr'
-            - 'boot.ini'
-    condition: (selection_disk and selection_commands) or selection_files
+  selection_disk:
+    EventID: 1
+    Image|endswith:
+      - '\diskpart.exe'
+      - '\bcdedit.exe'
+      - '\bootrec.exe'
+  selection_commands:
+    CommandLine|contains:
+      - '/set bootstatuspolicy'
+      - 'recoveryenabled no'
+      - 'ignoreallfailures'
+      - 'fixmbr'
+  selection_files:
+    EventID: 11
+    TargetFilename|contains:
+      - 'bootmgr'
+      - 'ntldr'
+      - 'boot.ini'
+  condition: (selection_disk and selection_commands) or selection_files
 falsepositives:
-    - System recovery operations
-    - Legitimate boot configuration changes
+  - System recovery operations
+  - Legitimate boot configuration changes
 level: critical
 tags:
   - attack.initial_access

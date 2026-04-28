@@ -5,22 +5,22 @@ description: Detects unauthorized modification of SSH authorized_keys files
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_write:
-        type: "SYSCALL"
-        syscall: ["openat", "open"]
-        a2: ["O_WRONLY", "O_RDWR", "O_APPEND", "O_CREAT"]
-    selection_ssh_keys:
-        name:
-            - "*/.ssh/authorized_keys"
-            - "*/.ssh/authorized_keys2"
-            - "/home/*/.ssh/authorized_keys"
-            - "/root/.ssh/authorized_keys"
-    selection_remote:
-        auid: "4294967295"  # Remote/unknown user
-    condition: selection_write and selection_ssh_keys
+  selection_write:
+    type: "SYSCALL"
+    syscall: ["openat", "open"]
+    a2: ["O_WRONLY", "O_RDWR", "O_APPEND", "O_CREAT"]
+  selection_ssh_keys:
+    name:
+      - "*/.ssh/authorized_keys"
+      - "*/.ssh/authorized_keys2"
+      - "/home/*/.ssh/authorized_keys"
+      - "/root/.ssh/authorized_keys"
+  selection_remote:
+    auid: "4294967295"  # Remote/unknown user
+  condition: selection_write and selection_ssh_keys
 level: high
 tags:
   - attack.persistence
@@ -30,7 +30,7 @@ tags:
   - linux
   - auditd
 references:
-    - https://attack.mitre.org/techniques/T1098/004/
+  - https://attack.mitre.org/techniques/T1098/004/
 falsepositives:
-    - Legitimate SSH key management
-    - Automated deployment systems
+  - Legitimate SSH key management
+  - Automated deployment systems

@@ -12,13 +12,13 @@ logsource:
   category: process_creation
 detection:
   selection_event:
-    EventID:
+  EventID:
       - 1
       - 10
   selection_access:
-    TargetImage|endswith: '\lsass.exe'
+  TargetImage|endswith: '\lsass.exe'
   selection_cmdline:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'sekurlsa'
       - 'logonpasswords'
   condition: selection_event and (selection_access or selection_cmdline)

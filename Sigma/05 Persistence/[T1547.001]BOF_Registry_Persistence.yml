@@ -7,44 +7,44 @@ description: Detects BOF registry persistence through autorun keys and COM hijac
 author: matthewiver@protonmail.com
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
-    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+  - https://attack.mitre.org/techniques/T1547/001/
+  - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    autorun_keys:
-        EventID: 13
-        TargetObject|contains:
-            - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
-            - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
-            - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices'
-    com_hijack:
-        EventID: 13
-        TargetObject|contains:
-            - '\SOFTWARE\Classes\CLSID'
-            - '\SOFTWARE\Classes\Interface'
-        Details|contains:
-            - 'rundll32'
-            - 'regsvr32'
-    suspicious_values:
-        EventID: 13
-        Details|contains:
-            - '.tmp'
-            - '.dat'
-            - 'powershell -e'
-            - 'cmd /c'
-    condition: (autorun_keys or com_hijack) and suspicious_values
+  autorun_keys:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
+      - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices'
+  com_hijack:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Classes\CLSID'
+      - '\SOFTWARE\Classes\Interface'
+    Details|contains:
+      - 'rundll32'
+      - 'regsvr32'
+  suspicious_values:
+    EventID: 13
+    Details|contains:
+      - '.tmp'
+      - '.dat'
+      - 'powershell -e'
+      - 'cmd /c'
+  condition: (autorun_keys or com_hijack) and suspicious_values
 fields:
-    - TargetObject
-    - Details
-    - ProcessId
-    - Image
-    - EventType
+  - TargetObject
+  - Details
+  - ProcessId
+  - Image
+  - EventType
 falsepositives:
-    - Software installation
-    - System administration tools
-    - Legitimate startup applications
+  - Software installation
+  - System administration tools
+  - Legitimate startup applications
 level: high
 tags:
   - attack.persistence

@@ -5,36 +5,36 @@ description: Detects automated scripts collecting data from multiple sources
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1119/
+  - https://attack.mitre.org/techniques/T1119/
 tags:
   - attack.collection
   - attack.t1119
   - powershell
   - windows
 logsource:
-    product: windows
-    service: powershell-classic
+  product: windows
+  service: powershell-classic
 detection:
-    selection:
-        EventID: 4104
-    automation:
-        ScriptBlockText|contains:
-            - 'foreach'
-            - 'ForEach-Object'
-            - 'Get-ChildItem -Recurse'
-    collection:
-        ScriptBlockText|contains:
-            - 'Copy-Item'
-            - 'Move-Item'
-            - 'Export-'
-            - 'Out-File'
-    multiple_dirs:
-        ScriptBlockText|contains:
-            - 'Documents'
-            - 'Desktop'
-            - 'Downloads'
-    condition: selection and automation and collection and multiple_dirs
+  selection:
+    EventID: 4104
+  automation:
+    ScriptBlockText|contains:
+      - 'foreach'
+      - 'ForEach-Object'
+      - 'Get-ChildItem -Recurse'
+  collection:
+    ScriptBlockText|contains:
+      - 'Copy-Item'
+      - 'Move-Item'
+      - 'Export-'
+      - 'Out-File'
+  multiple_dirs:
+    ScriptBlockText|contains:
+      - 'Documents'
+      - 'Desktop'
+      - 'Downloads'
+  condition: selection and automation and collection and multiple_dirs
 falsepositives:
-    - Legitimate backup scripts
-    - System administration
+  - Legitimate backup scripts
+  - System administration
 level: medium

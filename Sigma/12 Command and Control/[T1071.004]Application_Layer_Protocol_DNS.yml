@@ -29,16 +29,16 @@ logsource:
   service: dns
 detection:
   long_queries:
-    query|length|gte: 50
-    qtype_name: 'TXT'
+  query|length|gte: 50
+  qtype_name: 'TXT'
   suspicious_domains:
-    query|contains:
+  query|contains:
       - '.tk'
       - '.ml'
       - '.cf'
       - '.ga'
   base64_encoded:
-    query|contains:
+  query|contains:
       - 'A=='
       - 'Q=='
       - 'g=='

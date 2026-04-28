@@ -26,7 +26,7 @@ logsource:
   category: cron
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "crontab: installing new crontab"
       - "crontab: installing for"
   condition: selection

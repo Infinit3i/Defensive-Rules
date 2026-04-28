@@ -17,21 +17,21 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\svchost.exe'
       - '\rundll32.exe'
       - '\dllhost.exe'
-    CommandLine: ''
+  CommandLine: ''
   selection_memory:
-    EventID: 10
-    CallTrace|contains:
+  EventID: 10
+  CallTrace|contains:
       - 'NtUnmapViewOfSection'
       - 'ZwUnmapViewOfSection'
       - 'VirtualAllocEx'
   selection_thread:
-    EventID: 8
-    StartModule: ''
+  EventID: 8
+  StartModule: ''
   condition: selection_process and (selection_memory or selection_thread)
 falsepositives:
   - Legitimate system processes

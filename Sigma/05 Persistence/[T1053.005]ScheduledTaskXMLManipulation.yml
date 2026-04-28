@@ -7,44 +7,44 @@ description: Detects direct manipulation of scheduled task XML files for persist
 author: Infinit3i
 date: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1053/005/
+  - https://attack.mitre.org/techniques/T1053/005/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    file_creation:
-        EventID: 11
-        TargetFilename|contains: '\Windows\System32\Tasks\'
-        TargetFilename|endswith: '.xml'
-    file_modification:
-        EventID: 2
-        TargetFilename|contains: '\Windows\System32\Tasks\'
-    xml_tools:
-        EventID: 1
-        CommandLine|contains:
-            - 'schtasks /xml'
-            - 'Export-ScheduledTask'
-            - 'Import-ScheduledTask'
-    direct_xml_access:
-        EventID: 1
-        Image|endswith:
-            - '\notepad.exe'
-            - '\wordpad.exe'
-            - '\powershell.exe'
-        CommandLine|contains: '\Windows\System32\Tasks\'
-    condition: (file_creation or file_modification) and
+  file_creation:
+    EventID: 11
+    TargetFilename|contains: '\Windows\System32\Tasks\'
+    TargetFilename|endswith: '.xml'
+  file_modification:
+    EventID: 2
+    TargetFilename|contains: '\Windows\System32\Tasks\'
+  xml_tools:
+    EventID: 1
+    CommandLine|contains:
+      - 'schtasks /xml'
+      - 'Export-ScheduledTask'
+      - 'Import-ScheduledTask'
+  direct_xml_access:
+    EventID: 1
+    Image|endswith:
+      - '\notepad.exe'
+      - '\wordpad.exe'
+      - '\powershell.exe'
+    CommandLine|contains: '\Windows\System32\Tasks\'
+  condition: (file_creation or file_modification) and
                (xml_tools or direct_xml_access)
 fields:
-    - TargetFilename
-    - Image
-    - CommandLine
-    - ProcessId
-    - User
-    - ComputerName
+  - TargetFilename
+  - Image
+  - CommandLine
+  - ProcessId
+  - User
+  - ComputerName
 falsepositives:
-    - System maintenance tasks
-    - Task Scheduler management tools
-    - Backup and restore operations
+  - System maintenance tasks
+  - Task Scheduler management tools
+  - Backup and restore operations
 level: medium
 tags:
   # MITRE ATT&CK tactic

@@ -5,31 +5,31 @@ description: Detects phishing emails with ISO/VHD image attachments commonly use
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1566/001/
+  - https://attack.mitre.org/techniques/T1566/001/
 logsource:
-    product: email-security
-    service: exchange
+  product: email-security
+  service: exchange
 detection:
-    selection_attachment:
-        AttachmentName|endswith:
-            - '.iso'
-            - '.vhd'
-            - '.img'
-            - '.dmg'
-    selection_sender:
-        SenderDomain|contains:
-            - 'temp'
-            - 'disposable'
-            - 'guerrillamail'
-            - '10minutemail'
-    selection_subject:
-        Subject|contains:
-            - 'urgent'
-            - 'invoice'
-            - 'payment'
-            - 'document'
-            - 'scan'
-    condition: selection_attachment and (selection_sender or selection_subject)
+  selection_attachment:
+    AttachmentName|endswith:
+      - '.iso'
+      - '.vhd'
+      - '.img'
+      - '.dmg'
+  selection_sender:
+    SenderDomain|contains:
+      - 'temp'
+      - 'disposable'
+      - 'guerrillamail'
+      - '10minutemail'
+  selection_subject:
+    Subject|contains:
+      - 'urgent'
+      - 'invoice'
+      - 'payment'
+      - 'document'
+      - 'scan'
+  condition: selection_attachment and (selection_sender or selection_subject)
 level: high
 tags:
   - attack.initial-access

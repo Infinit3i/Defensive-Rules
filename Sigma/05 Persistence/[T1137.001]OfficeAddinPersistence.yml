@@ -5,22 +5,22 @@ description: Detects Office add-in registration through registry modifications f
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 13
-        TargetObject|contains:
-            - '\SOFTWARE\Microsoft\Office\'
-            - '\Word\Addins\'
-            - '\Excel\Addins\'
-            - '\PowerPoint\Addins\'
-            - '\Outlook\Addins\'
-        Details|contains:
-            - '.dll'
-            - '.xll'
-            - '.wll'
-    condition: selection
+  selection:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Office\'
+      - '\Word\Addins\'
+      - '\Excel\Addins\'
+      - '\PowerPoint\Addins\'
+      - '\Outlook\Addins\'
+    Details|contains:
+      - '.dll'
+      - '.xll'
+      - '.wll'
+  condition: selection
 level: medium
 tags:
   - attack.persistence
@@ -28,4 +28,4 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1137/001/
+  - https://attack.mitre.org/techniques/T1137/001/

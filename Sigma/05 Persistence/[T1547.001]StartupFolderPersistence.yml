@@ -12,15 +12,15 @@ logsource:
   category: file_event
 detection:
   selection_event:
-    EventID: 11
+  EventID: 11
   selection_startupfolders:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\Start Menu\Programs\Startup\'
       - '\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\'
       - '\Users\All Users\Start Menu\Programs\Startup\'
       - '\Users\Public\Start Menu\Programs\Startup\'
   filter_legitimate:
-    Image|contains:
+  Image|contains:
       - 'C:\Program Files\'
       - 'C:\Program Files (x86)\'
       - 'C:\Windows\System32\'

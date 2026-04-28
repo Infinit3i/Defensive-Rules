@@ -14,59 +14,59 @@ logsource:
   service: auditd
 detection:
   selection_memfd_create:
-    type: 'SYSCALL'
-    syscall: 'memfd_create'
-    success: 'yes'
+  type: 'SYSCALL'
+  syscall: 'memfd_create'
+  success: 'yes'
   selection_proc_self_mem:
-    type: 'PATH'
-    name|contains:
+  type: 'PATH'
+  name|contains:
       - '/proc/self/mem'
       - '/proc/*/mem'
       - '/dev/shm'
   selection_ptrace_injection:
-    type: 'SYSCALL'
-    syscall: 'ptrace'
-    a0|contains:
+  type: 'SYSCALL'
+  syscall: 'ptrace'
+  a0|contains:
       - 'PTRACE_POKETEXT'
       - 'PTRACE_POKEDATA'
       - 'PTRACE_SETREGS'
       - 'PTRACE_ATTACH'
-    success: 'yes'
+  success: 'yes'
   selection_mmap_execution:
-    type: 'SYSCALL'
-    syscall: 'mmap'
-    a2|contains:
+  type: 'SYSCALL'
+  syscall: 'mmap'
+  a2|contains:
       - 'PROT_EXEC'
       - 'PROT_READ|PROT_WRITE|PROT_EXEC'
-    success: 'yes'
+  success: 'yes'
   selection_execve_memfd:
-    type: 'SYSCALL'
-    syscall: 'execve'
-    a0|startswith:
+  type: 'SYSCALL'
+  syscall: 'execve'
+  a0|startswith:
       - '/proc/self/fd/'
       - '/dev/fd/'
-    success: 'yes'
+  success: 'yes'
   selection_container_escape:
-    type: 'PATH'
-    name|contains:
+  type: 'PATH'
+  name|contains:
       - '/var/lib/docker'
       - '/var/run/docker.sock'
       - '/proc/1/root'
       - '/host'
   selection_shared_memory:
-    type: 'SYSCALL'
-    syscall:
+  type: 'SYSCALL'
+  syscall:
       - 'shmget'
       - 'shmat'
       - 'shmctl'
-    success: 'yes'
+  success: 'yes'
   selection_process_injection:
-    type: 'SYSCALL'
-    syscall: 'process_vm_writev'
-    success: 'yes'
+  type: 'SYSCALL'
+  syscall: 'process_vm_writev'
+  success: 'yes'
   selection_ld_preload:
-    type: 'EXECVE'
-    a2|contains: 'LD_PRELOAD='
+  type: 'EXECVE'
+  a2|contains: 'LD_PRELOAD='
   condition: 1 of selection_*
 falsepositives:
   - Legitimate container runtime operations

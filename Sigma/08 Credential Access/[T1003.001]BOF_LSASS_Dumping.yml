@@ -7,43 +7,43 @@ description: Detects BOF credential dumping through LSASS memory access patterns
 author: matthewiver@protonmail.com
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1003/001/
-    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+  - https://attack.mitre.org/techniques/T1003/001/
+  - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    lsass_access:
-        EventID: 10
-        TargetImage|endswith: '\lsass.exe'
-        GrantedAccess:
-            - '0x1010'
-            - '0x1038'
-            - '0x40'
-    bof_indicators:
-        SourceImage|contains:
-            - 'rundll32.exe'
-            - 'regsvr32.exe'
-        CallTrace|contains:
-            - 'UNKNOWN'
-            - 'ntdll.dll'
-    memory_patterns:
-        EventID: 7
-        ImageLoaded|contains:
-            - 'dbgcore.dll'
-            - 'dbghelp.dll'
-    condition: lsass_access and (bof_indicators or memory_patterns)
+  lsass_access:
+    EventID: 10
+    TargetImage|endswith: '\lsass.exe'
+    GrantedAccess:
+      - '0x1010'
+      - '0x1038'
+      - '0x40'
+  bof_indicators:
+    SourceImage|contains:
+      - 'rundll32.exe'
+      - 'regsvr32.exe'
+    CallTrace|contains:
+      - 'UNKNOWN'
+      - 'ntdll.dll'
+  memory_patterns:
+    EventID: 7
+    ImageLoaded|contains:
+      - 'dbgcore.dll'
+      - 'dbghelp.dll'
+  condition: lsass_access and (bof_indicators or memory_patterns)
 fields:
-    - SourceImage
-    - TargetImage
-    - GrantedAccess
-    - CallTrace
-    - SourceProcessId
-    - TargetProcessId
+  - SourceImage
+  - TargetImage
+  - GrantedAccess
+  - CallTrace
+  - SourceProcessId
+  - TargetProcessId
 falsepositives:
-    - Windows Error Reporting
-    - Process monitoring tools
-    - Debugging applications
+  - Windows Error Reporting
+  - Process monitoring tools
+  - Debugging applications
 level: high
 tags:
   - attack.credential_access

@@ -7,52 +7,52 @@ description: Detects BOF evasion through timing delays and environment checks
 author: matthewiver@protonmail.com
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1497/003/
-    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+  - https://attack.mitre.org/techniques/T1497/003/
+  - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    timing_evasion:
-        EventID: 1
-        CommandLine|contains:
-            - 'timeout'
-            - 'ping -n'
-            - 'start /wait'
-        ParentImage|endswith:
-            - '\rundll32.exe'
-            - '\regsvr32.exe'
-    vm_detection:
-        EventID: 1
-        CommandLine|contains:
-            - 'systeminfo'
-            - 'wmic computersystem'
-            - 'reg query'
-        Image|endswith:
-            - '\cmd.exe'
-            - '\powershell.exe'
-    sandbox_checks:
-        EventID: 11
-        TargetFilename|contains:
-            - 'vmware'
-            - 'vbox'
-            - 'sandbox'
-        Image|contains:
-            - 'temp'
-            - 'appdata'
-    condition: timing_evasion or
+  timing_evasion:
+    EventID: 1
+    CommandLine|contains:
+      - 'timeout'
+      - 'ping -n'
+      - 'start /wait'
+    ParentImage|endswith:
+      - '\rundll32.exe'
+      - '\regsvr32.exe'
+  vm_detection:
+    EventID: 1
+    CommandLine|contains:
+      - 'systeminfo'
+      - 'wmic computersystem'
+      - 'reg query'
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+  sandbox_checks:
+    EventID: 11
+    TargetFilename|contains:
+      - 'vmware'
+      - 'vbox'
+      - 'sandbox'
+    Image|contains:
+      - 'temp'
+      - 'appdata'
+  condition: timing_evasion or
                (vm_detection and sandbox_checks)
 fields:
-    - CommandLine
-    - Image
-    - ParentImage
-    - TargetFilename
-    - ProcessId
-    - ParentProcessId
+  - CommandLine
+  - Image
+  - ParentImage
+  - TargetFilename
+  - ProcessId
+  - ParentProcessId
 falsepositives:
-    - System diagnostics tools
-    - IT management scripts
-    - Performance monitoring
+  - System diagnostics tools
+  - IT management scripts
+  - Performance monitoring
 level: medium
 tags:
   - attack.defense_evasion

@@ -30,19 +30,19 @@ logsource:
   category: process_creation
 detection:
   archive_tools:
-    Image|endswith:
+  Image|endswith:
       - '\7z.exe'
       - '\winrar.exe'
       - '\zip.exe'
       - '\tar.exe'
   archive_creation:
-    CommandLine|contains:
+  CommandLine|contains:
       - ' a '
       - ' -a '
       - 'create'
       - 'compress'
   sensitive_directories:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'C:\Users\'
       - 'Documents'
       - 'Desktop'

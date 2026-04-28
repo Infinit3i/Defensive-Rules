@@ -5,49 +5,49 @@ description: Detects DLL hijacking through search order exploitation and suspici
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1574/001/
-    - https://www.mandiant.com/resources/dll-search-order-hijacking-revisited
+  - https://attack.mitre.org/techniques/T1574/001/
+  - https://www.mandiant.com/resources/dll-search-order-hijacking-revisited
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_image_load:
-        EventID: 7
-        Signed: 'false'
-    selection_suspicious_path:
-        EventID: 7
-        ImageLoaded|contains:
-            - '\Users\'
-            - '\Temp\'
-            - '\AppData\'
-            - '\ProgramData\'
-            - 'C:\Windows\Tasks\'
-    selection_common_hijack:
-        EventID: 7
-        ImageLoaded|endswith:
-            - '\version.dll'
-            - '\uxtheme.dll'
-            - '\dwmapi.dll'
-            - '\winmm.dll'
-            - '\wtsapi32.dll'
-    selection_system_process:
-        EventID: 7
-        Image|endswith:
-            - '\explorer.exe'
-            - '\winlogon.exe'
-            - '\csrss.exe'
-            - '\services.exe'
-    condition: selection_image_load and selection_suspicious_path and
+  selection_image_load:
+    EventID: 7
+    Signed: 'false'
+  selection_suspicious_path:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\Users\'
+      - '\Temp\'
+      - '\AppData\'
+      - '\ProgramData\'
+      - 'C:\Windows\Tasks\'
+  selection_common_hijack:
+    EventID: 7
+    ImageLoaded|endswith:
+      - '\version.dll'
+      - '\uxtheme.dll'
+      - '\dwmapi.dll'
+      - '\winmm.dll'
+      - '\wtsapi32.dll'
+  selection_system_process:
+    EventID: 7
+    Image|endswith:
+      - '\explorer.exe'
+      - '\winlogon.exe'
+      - '\csrss.exe'
+      - '\services.exe'
+  condition: selection_image_load and selection_suspicious_path and
                (selection_common_hijack or selection_system_process)
 fields:
-    - Image
-    - ImageLoaded
-    - Signed
-    - Signature
+  - Image
+  - ImageLoaded
+  - Signed
+  - Signature
 falsepositives:
-    - Legitimate third-party DLLs
-    - Software development environments
-    - Portable applications
+  - Legitimate third-party DLLs
+  - Software development environments
+  - Portable applications
 level: high
 tags:
   - attack.persistence

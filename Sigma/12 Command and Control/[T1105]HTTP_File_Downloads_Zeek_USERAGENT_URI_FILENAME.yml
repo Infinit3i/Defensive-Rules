@@ -32,7 +32,7 @@ logsource:
   service: zeek
 detection:
   selection_uri:
-    zeek.http.uri|contains:
+  zeek.http.uri|contains:
       - ".exe"
       - ".dll"
       - ".zip"
@@ -40,13 +40,13 @@ detection:
       - "download"
       - "installer"
   selection_filename:
-    zeek.file.name|contains:
+  zeek.file.name|contains:
       - "meterpreter"
       - "cobalt"
       - "beacon"
       - "agent"
   selection_useragent:
-    zeek.http.user_agent|contains:
+  zeek.http.user_agent|contains:
       - "curl"
       - "Wget"
       - "python-requests"

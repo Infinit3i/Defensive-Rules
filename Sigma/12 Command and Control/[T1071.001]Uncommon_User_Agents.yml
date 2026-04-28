@@ -10,7 +10,7 @@ logsource:
   service: http
 detection:
   selection:
-    user_agent|contains:
+  user_agent|contains:
       - 'Cobalt Strike'
       - 'Metasploit'
       - 'Empire'

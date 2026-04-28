@@ -29,15 +29,15 @@ logsource:
   service: ssl
 detection:
   unusual_ssl:
-    cipher|contains:
+  cipher|contains:
       - 'AES'
       - 'ChaCha'
-    cert_subject|contains: 'self-signed'
+  cert_subject|contains: 'self-signed'
   large_encrypted:
-    orig_bytes|gte: 5000000
-    duration|gte: 300
+  orig_bytes|gte: 5000000
+  duration|gte: 300
   suspicious_cert:
-    cert_subject|contains:
+  cert_subject|contains:
       - 'localhost'
       - 'test'
       - 'temp'

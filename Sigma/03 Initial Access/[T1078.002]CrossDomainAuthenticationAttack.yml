@@ -12,34 +12,34 @@ tags:
   - windows
   - security
 logsource:
-    product: windows
-    service: security
+  product: windows
+  service: security
 detection:
-    selection_event:
-        EventID: 4624
-        LogonType: 3
-    selection_domain_mismatch:
-        TargetDomainName|exists: true
-        WorkstationName|exists: true
-    filter_normal:
-        TargetDomainName|contains:
-            - TargetUserName
-    selection_suspicious_timing:
-        IpAddress|re: '^(?!10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.).*'
-    condition: selection_event and selection_domain_mismatch and not filter_normal and
+  selection_event:
+    EventID: 4624
+    LogonType: 3
+  selection_domain_mismatch:
+    TargetDomainName|exists: true
+    WorkstationName|exists: true
+  filter_normal:
+    TargetDomainName|contains:
+      - TargetUserName
+  selection_suspicious_timing:
+    IpAddress|re: '^(?!10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.).*'
+  condition: selection_event and selection_domain_mismatch and not filter_normal and
                selection_suspicious_timing
-    timeframe: 10m
-    count: 5
+  timeframe: 10m
+  count: 5
 level: high
 fields:
-    - TargetUserName
-    - TargetDomainName
-    - WorkstationName
-    - IpAddress
+  - TargetUserName
+  - TargetDomainName
+  - WorkstationName
+  - IpAddress
 falsepositives:
-    - Legitimate cross-domain trust relationships
-    - Remote administration from trusted networks
-    - Service account authentication across domains
+  - Legitimate cross-domain trust relationships
+  - Remote administration from trusted networks
+  - Service account authentication across domains
 references:
-    - https://attack.mitre.org/techniques/T1078/002/
+  - https://attack.mitre.org/techniques/T1078/002/
 technique: T1078.002

@@ -9,10 +9,10 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-    EventID: 1
-    Image|endswith: '\mshta.exe'
+  EventID: 1
+  Image|endswith: '\mshta.exe'
   selection_suspicious_args:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'javascript:'
       - 'vbscript:'
       - 'http://'
@@ -22,7 +22,7 @@ detection:
       - 'about:blank'
       - 'data:text/html'
   selection_encoded_content:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'FromBase64String'
       - 'MemoryStream'
       - 'GZipStream'
@@ -30,11 +30,11 @@ detection:
       - 'eval('
       - 'unescape('
   selection_network_download:
-    CommandLine|contains|all:
+  CommandLine|contains|all:
       - 'mshta'
       - 'http'
   selection_parent_suspicious:
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\wscript.exe'
@@ -44,12 +44,12 @@ detection:
       - '\powerpnt.exe'
       - '\outlook.exe'
   selection_network_connection:
-    EventID: 3
-    Image|endswith: '\mshta.exe'
-    Protocol: 'tcp'
-    Initiated: 'true'
+  EventID: 3
+  Image|endswith: '\mshta.exe'
+  Protocol: 'tcp'
+  Initiated: 'true'
   filter_legitimate:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'res://ieframe.dll'
       - 'res://mshtml.dll'
   condition: selection_process and (selection_suspicious_args or selection_encoded_content or

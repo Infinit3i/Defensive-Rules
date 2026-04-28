@@ -29,19 +29,19 @@ logsource:
   service: conn
 detection:
   email_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 993
       - 995
       - 143
       - 110
   large_download:
-    service: 'ssl'
-    resp_bytes|gte: 100000000
-    id.resp_p: 993
+  service: 'ssl'
+  resp_bytes|gte: 100000000
+  id.resp_p: 993
   api_access:
-    id.resp_p: 443
-    orig_bytes|gte: 10000
-    service: 'ssl'
+  id.resp_p: 443
+  orig_bytes|gte: 10000
+  service: 'ssl'
   condition: email_ports and (large_download or api_access)
 falsepositives:
   - Legitimate email client synchronization

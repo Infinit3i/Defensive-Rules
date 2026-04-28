@@ -30,22 +30,22 @@ logsource:
   category: file_create
 detection:
   executable_download:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\Temp\'
       - '\Downloads\'
   script_download:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.vbs'
       - '.js'
       - '.py'
       - '.pl'
   suspicious_location:
-    TargetFilename|startswith:
+  TargetFilename|startswith:
       - 'C:\Users\Public\'
       - 'C:\Windows\Temp\'
       - 'C:\Temp\'

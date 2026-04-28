@@ -6,34 +6,34 @@ description: Detects process creation with stolen or duplicated tokens
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1134/002/
+  - https://attack.mitre.org/techniques/T1134/002/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_api_call:
-        EventID: 10
-        CallTrace|contains:
-            - 'CreateProcessWithTokenW'
-            - 'CreateProcessAsUserW'
-            - 'DuplicateTokenEx'
-    selection_process:
-        EventID: 1
-        LogonId: '0x3e7'
-        IntegrityLevel: 'System'
-        ParentImage|endswith:
-            - '.exe'
-    selection_token_access:
-        EventID: 10
-        TargetImage|endswith:
-            - '\lsass.exe'
-            - '\winlogon.exe'
-        GrantedAccess: '0x1400'
-    condition: selection_api_call and (selection_process or
+  selection_api_call:
+    EventID: 10
+    CallTrace|contains:
+      - 'CreateProcessWithTokenW'
+      - 'CreateProcessAsUserW'
+      - 'DuplicateTokenEx'
+  selection_process:
+    EventID: 1
+    LogonId: '0x3e7'
+    IntegrityLevel: 'System'
+    ParentImage|endswith:
+      - '.exe'
+  selection_token_access:
+    EventID: 10
+    TargetImage|endswith:
+      - '\lsass.exe'
+      - '\winlogon.exe'
+    GrantedAccess: '0x1400'
+  condition: selection_api_call and (selection_process or
                selection_token_access)
 falsepositives:
-    - Legitimate service processes
-    - System authentication
+  - Legitimate service processes
+  - System authentication
 level: medium
 tags:
   # MITRE ATT&CK tactic

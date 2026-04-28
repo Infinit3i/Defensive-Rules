@@ -7,47 +7,47 @@ description: Detects BOF file staging through temporary writes and packed payloa
 author: matthewiver@protonmail.com
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1027/002/
-    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+  - https://attack.mitre.org/techniques/T1027/002/
+  - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    temp_staging:
-        EventID: 11
-        TargetFilename|contains:
-            - '\AppData\Local\Temp\'
-            - '\Windows\Temp\'
-            - '\ProgramData\'
-        TargetFilename|endswith:
-            - '.tmp'
-            - '.dat'
-            - '.bin'
-    packed_files:
-        EventID: 15
-        Hash|contains: 'IMPHASH'
-        TargetFilename|endswith:
-            - '.exe'
-            - '.dll'
-            - '.obj'
-    reflective_load:
-        EventID: 7
-        Signed: 'false'
-        ImageLoaded|contains:
-            - '\AppData\Local\Temp\'
-            - '\Windows\Temp\'
-    condition: (temp_staging and packed_files) or
+  temp_staging:
+    EventID: 11
+    TargetFilename|contains:
+      - '\AppData\Local\Temp\'
+      - '\Windows\Temp\'
+      - '\ProgramData\'
+    TargetFilename|endswith:
+      - '.tmp'
+      - '.dat'
+      - '.bin'
+  packed_files:
+    EventID: 15
+    Hash|contains: 'IMPHASH'
+    TargetFilename|endswith:
+      - '.exe'
+      - '.dll'
+      - '.obj'
+  reflective_load:
+    EventID: 7
+    Signed: 'false'
+    ImageLoaded|contains:
+      - '\AppData\Local\Temp\'
+      - '\Windows\Temp\'
+  condition: (temp_staging and packed_files) or
                (temp_staging and reflective_load)
 fields:
-    - TargetFilename
-    - ProcessId
-    - Image
-    - Hash
-    - Signed
+  - TargetFilename
+  - ProcessId
+  - Image
+  - Hash
+  - Signed
 falsepositives:
-    - Software installation routines
-    - Windows update processes
-    - Antivirus scanning
+  - Software installation routines
+  - Windows update processes
+  - Antivirus scanning
 level: medium
 tags:
   - attack.defense_evasion

@@ -30,17 +30,17 @@ logsource:
   category: file_access
 detection:
   pst_access:
-    TargetFilename|endswith:
+  TargetFilename|endswith:
       - '.pst'
       - '.ost'
       - '.edb'
   outlook_db:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\Outlook\'
       - '\Microsoft\Outlook\'
   email_export:
-    Image|endswith: '\outlook.exe'
-    CommandLine|contains:
+  Image|endswith: '\outlook.exe'
+  CommandLine|contains:
       - '/export'
       - '/backup'
   condition: pst_access or outlook_db or email_export

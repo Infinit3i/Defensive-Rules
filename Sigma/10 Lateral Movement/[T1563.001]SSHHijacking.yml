@@ -14,24 +14,24 @@ logsource:
   service: auditd
 detection:
   selection_ssh_agent:
-    type: SYSCALL
-    comm: ssh-agent
-    syscall:
+  type: SYSCALL
+  comm: ssh-agent
+  syscall:
       - 'connect'
       - 'bind'
       - 'socket'
   selection_ssh_add:
-    type: EXECVE
-    comm: ssh-add
-    a0|contains: '-'
+  type: EXECVE
+  comm: ssh-add
+  a0|contains: '-'
   selection_ssh_session_reuse:
-    type: USER_AUTH
-    exe: '/usr/bin/ssh'
-    res: 'success'
+  type: USER_AUTH
+  exe: '/usr/bin/ssh'
+  res: 'success'
   selection_multiple_sessions:
-    type: USER_START
-    exe: '/usr/sbin/sshd'
-    terminal: 'ssh'
+  type: USER_START
+  exe: '/usr/sbin/sshd'
+  terminal: 'ssh'
   condition: selection_ssh_agent or selection_ssh_add or (selection_ssh_session_reuse and selection_multiple_sessions)
   timeframe: 10m
   count: 3

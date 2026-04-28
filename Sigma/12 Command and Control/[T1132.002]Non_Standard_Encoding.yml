@@ -29,15 +29,15 @@ logsource:
   service: http
 detection:
   unusual_charset:
-    uri|contains:
+  uri|contains:
       - 'charset=unknown'
       - 'custom'
       - 'proprietary'
   binary_data:
-    content_type: 'application/octet-stream'
-    request_body_len|gte: 1000
+  content_type: 'application/octet-stream'
+  request_body_len|gte: 1000
   encoded_patterns:
-    uri|regex: '^[!@#$%^&*()_+{}|:<>?]{10,}$'
+  uri|regex: '^[!@#$%^&*()_+{}|:<>?]{10,}$'
   condition: unusual_charset or binary_data or encoded_patterns
 falsepositives:
   - Custom applications

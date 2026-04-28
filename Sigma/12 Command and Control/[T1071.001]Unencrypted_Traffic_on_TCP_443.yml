@@ -26,9 +26,9 @@ logsource:
   service: conn
 detection:
   unencrypted_443:
-    proto: "tcp"
-    id_resp_p: 443
-    service: "-"
+  proto: "tcp"
+  id_resp_p: 443
+  service: "-"
   condition: unencrypted_443
 falsepositives:
   - Port 443 used for non-TLS services in test or legacy environments.

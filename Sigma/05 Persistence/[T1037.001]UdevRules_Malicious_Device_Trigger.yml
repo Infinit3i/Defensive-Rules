@@ -12,28 +12,28 @@ logsource:
   service: auditd
 detection:
   selection_udev_path:
-    - type: PATH
+  - type: PATH
       name|contains:
-        - /etc/udev/rules.d/
-        - /lib/udev/rules.d/
-        - /run/udev/rules.d/
+    - /etc/udev/rules.d/
+    - /lib/udev/rules.d/
+    - /run/udev/rules.d/
   selection_file_creation:
-    - type: SYSCALL
+  - type: SYSCALL
       syscall: openat
       a2: 577  # O_WRONLY|O_CREAT
   selection_suspicious_content:
-    - comm|contains:
-        - RUN+=
-        - PROGRAM=
-        - /bin/bash
-        - /bin/sh
-        - wget
-        - curl
-        - nc
-        - python
-        - perl
-        - reverse
-        - shell
+  - comm|contains:
+    - RUN+=
+    - PROGRAM=
+    - /bin/bash
+    - /bin/sh
+    - wget
+    - curl
+    - nc
+    - python
+    - perl
+    - reverse
+    - shell
   condition: selection_udev_path and selection_file_creation and selection_suspicious_content
 level: high
 tags:

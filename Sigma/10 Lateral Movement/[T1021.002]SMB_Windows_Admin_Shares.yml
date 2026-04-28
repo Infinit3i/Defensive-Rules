@@ -29,17 +29,17 @@ logsource:
   service: security
 detection:
   admin_share_access:
-    EventID: 5140
-    ShareName|endswith:
+  EventID: 5140
+  ShareName|endswith:
       - 'C$'
       - 'ADMIN$'
       - 'IPC$'
   remote_access:
-    IpAddress|startswith:
+  IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    SubjectUserName|contains:
+  SubjectUserName|contains:
       - 'admin'
       - 'service'
   condition: admin_share_access and remote_access

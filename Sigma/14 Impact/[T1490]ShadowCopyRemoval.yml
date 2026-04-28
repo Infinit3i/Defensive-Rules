@@ -5,29 +5,29 @@ description: Detects shadow copy removal and system recovery disabling through r
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_bcdedit:
-        EventID: 1
-        CommandLine|contains:
-            - 'bcdedit /set recoveryenabled no'
-            - 'bcdedit /set bootstatuspolicy ignoreallfailures'
-    selection_reg_disable:
-        EventID: 1
-        CommandLine|contains:
-            - 'reg add HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\SystemRestore'
-            - 'DisableSR'
-            - 'DisableConfig'
-    selection_powershell:
-        EventID: 1
-        CommandLine|contains:
-            - 'Disable-ComputerRestore'
-            - 'Get-WmiObject Win32_Shadowcopy | Remove-WmiObject'
-    condition: selection_bcdedit or selection_reg_disable or selection_powershell
+  selection_bcdedit:
+    EventID: 1
+    CommandLine|contains:
+      - 'bcdedit /set recoveryenabled no'
+      - 'bcdedit /set bootstatuspolicy ignoreallfailures'
+  selection_reg_disable:
+    EventID: 1
+    CommandLine|contains:
+      - 'reg add HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows NT\\SystemRestore'
+      - 'DisableSR'
+      - 'DisableConfig'
+  selection_powershell:
+    EventID: 1
+    CommandLine|contains:
+      - 'Disable-ComputerRestore'
+      - 'Get-WmiObject Win32_Shadowcopy | Remove-WmiObject'
+  condition: selection_bcdedit or selection_reg_disable or selection_powershell
 falsepositives:
-    - System administrator recovery configuration
-    - Legitimate system deployment scripts
+  - System administrator recovery configuration
+  - Legitimate system deployment scripts
 level: critical
 tags:
   - attack.impact

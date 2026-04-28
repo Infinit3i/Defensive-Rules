@@ -6,31 +6,31 @@ description: Detects DLL hijacking through search order manipulation
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1574/001/
+  - https://attack.mitre.org/techniques/T1574/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_file_create:
-        EventID: 11
-        TargetFilename|endswith:
-            - '\version.dll'
-            - '\msvcr71.dll'
-            - '\msvcr100.dll'
-            - '\msvcp100.dll'
-            - '\dwmapi.dll'
-            - '\wininet.dll'
-    selection_image_load:
-        EventID: 7
-        ImageLoaded|endswith:
-            - '\version.dll'
-            - '\msvcr71.dll'
-            - '\dwmapi.dll'
-        Signed: 'false'
-    condition: selection_file_create or selection_image_load
+  selection_file_create:
+    EventID: 11
+    TargetFilename|endswith:
+      - '\version.dll'
+      - '\msvcr71.dll'
+      - '\msvcr100.dll'
+      - '\msvcp100.dll'
+      - '\dwmapi.dll'
+      - '\wininet.dll'
+  selection_image_load:
+    EventID: 7
+    ImageLoaded|endswith:
+      - '\version.dll'
+      - '\msvcr71.dll'
+      - '\dwmapi.dll'
+    Signed: 'false'
+  condition: selection_file_create or selection_image_load
 falsepositives:
-    - Legitimate software installations
-    - Development environments
+  - Legitimate software installations
+  - Development environments
 level: medium
 tags:
   # MITRE ATT&CK tactic

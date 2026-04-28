@@ -27,8 +27,8 @@ logsource:
   category: process_creation
 detection:
   selection:
-    Image|endswith: '\cmd.exe'
-    ParentImage|endswith:
+  Image|endswith: '\cmd.exe'
+  ParentImage|endswith:
       - '\winword.exe'
       - '\excel.exe'
       - '\outlook.exe'

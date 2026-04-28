@@ -5,48 +5,48 @@ description: Detects disk wiping tools through process execution and file operat
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1561/
+  - https://attack.mitre.org/techniques/T1561/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_tools:
-        EventID: 1
-        Image|endswith:
-            - '\sdelete.exe'
-            - '\cipher.exe'
-            - '\diskpart.exe'
-            - '\format.exe'
-            - '\dban.exe'
-            - '\wipe.exe'
-        CommandLine|contains:
-            - '/w:'
-            - '-w:'
-            - '/zerospace'
-            - 'clean all'
-            - '/fs:NTFS'
-            - '/q'
-            - '-s'
-            - '-z'
-    selection_cipher:
-        EventID: 1
-        Image|endswith: '\cipher.exe'
-        CommandLine|contains:
-            - '/w:'
-            - '/u'
-            - '/n'
-    selection_diskpart:
-        EventID: 1
-        Image|endswith: '\diskpart.exe'
-        CommandLine|contains:
-            - 'clean'
-            - 'format'
-            - 'active'
-    condition: selection_tools or selection_cipher or selection_diskpart
+  selection_tools:
+    EventID: 1
+    Image|endswith:
+      - '\sdelete.exe'
+      - '\cipher.exe'
+      - '\diskpart.exe'
+      - '\format.exe'
+      - '\dban.exe'
+      - '\wipe.exe'
+    CommandLine|contains:
+      - '/w:'
+      - '-w:'
+      - '/zerospace'
+      - 'clean all'
+      - '/fs:NTFS'
+      - '/q'
+      - '-s'
+      - '-z'
+  selection_cipher:
+    EventID: 1
+    Image|endswith: '\cipher.exe'
+    CommandLine|contains:
+      - '/w:'
+      - '/u'
+      - '/n'
+  selection_diskpart:
+    EventID: 1
+    Image|endswith: '\diskpart.exe'
+    CommandLine|contains:
+      - 'clean'
+      - 'format'
+      - 'active'
+  condition: selection_tools or selection_cipher or selection_diskpart
 falsepositives:
-    - System maintenance
-    - Secure file deletion for compliance
-    - Disk formatting for legitimate purposes
+  - System maintenance
+  - Secure file deletion for compliance
+  - Disk formatting for legitimate purposes
 level: high
 tags:
   - attack.impact

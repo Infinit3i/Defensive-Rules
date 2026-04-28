@@ -10,36 +10,36 @@ tags:
   - oauth
   - cloud
 logsource:
-    product: cloud_platform
-    service: oauth
+  product: cloud_platform
+  service: oauth
 detection:
-    selection_token_usage:
-        event_type: token_validation
-        grant_type: authorization_code
-    selection_suspicious:
-        - ip_address|startswith:
-            - '10.'
-            - '192.168.'
-            - '172.'
-        - user_agent|contains:
-            - 'curl'
-            - 'python'
-            - 'bot'
-        - scope|contains:
-            - 'admin'
-            - 'write'
-            - 'delete'
-    condition: selection_token_usage and selection_suspicious
+  selection_token_usage:
+    event_type: token_validation
+    grant_type: authorization_code
+  selection_suspicious:
+    - ip_address|startswith:
+      - '10.'
+      - '192.168.'
+      - '172.'
+    - user_agent|contains:
+      - 'curl'
+      - 'python'
+      - 'bot'
+    - scope|contains:
+      - 'admin'
+      - 'write'
+      - 'delete'
+  condition: selection_token_usage and selection_suspicious
 level: high
 fields:
-    - client_id
-    - user_id
-    - ip_address
-    - user_agent
-    - scope
+  - client_id
+  - user_id
+  - ip_address
+  - user_agent
+  - scope
 falsepositives:
-    - Legitimate API applications
-    - Internal automation tools
+  - Legitimate API applications
+  - Internal automation tools
 references:
-    - https://attack.mitre.org/techniques/T1550/001/
+  - https://attack.mitre.org/techniques/T1550/001/
 technique: T1550.001

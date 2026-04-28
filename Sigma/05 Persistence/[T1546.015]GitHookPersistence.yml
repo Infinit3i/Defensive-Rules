@@ -5,25 +5,25 @@ description: Detects Git hook script creation or modification for persistence
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection:
-        type: 'SYSCALL'
-        syscall:
-            - 'openat'
-            - 'write'
-            - 'creat'
-            - 'chmod'
-        name|contains: '/.git/hooks/'
-    selection_hook:
-        name|endswith:
-            - 'pre-commit'
-            - 'post-commit'
-            - 'pre-push'
-            - 'post-receive'
-            - 'pre-receive'
-    condition: selection and selection_hook
+  selection:
+    type: 'SYSCALL'
+    syscall:
+      - 'openat'
+      - 'write'
+      - 'creat'
+      - 'chmod'
+    name|contains: '/.git/hooks/'
+  selection_hook:
+    name|endswith:
+      - 'pre-commit'
+      - 'post-commit'
+      - 'pre-push'
+      - 'post-receive'
+      - 'pre-receive'
+  condition: selection and selection_hook
 level: medium
 tags:
   - attack.persistence
@@ -31,4 +31,4 @@ tags:
   - auditd
   - linux
 references:
-    - https://attack.mitre.org/techniques/T1546/015/
+  - https://attack.mitre.org/techniques/T1546/015/

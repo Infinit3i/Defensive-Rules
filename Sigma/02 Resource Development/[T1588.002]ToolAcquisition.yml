@@ -14,8 +14,8 @@ logsource:
   service: sysmon
 detection:
   selection_download_tools:
-    EventID: 15
-    Contents|contains:
+  EventID: 15
+  Contents|contains:
       - 'metasploit'
       - 'cobalt strike'
       - 'empire'
@@ -32,18 +32,18 @@ detection:
       - 'wireshark'
       - 'responder'
   selection_github_tools:
-    EventID: 22
-    QueryName|contains:
+  EventID: 22
+  QueryName|contains:
       - 'github.com'
-    QueryResults|contains:
+  QueryResults|contains:
       - 'exploit'
       - 'payload'
       - 'backdoor'
       - 'c2'
       - 'command-control'
   selection_tool_execution:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\metasploit.exe'
       - '\msfvenom.exe'
       - '\msfconsole.exe'

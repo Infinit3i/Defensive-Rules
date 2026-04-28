@@ -12,21 +12,21 @@ logsource:
   service: auditd
 detection:
   selection_grub_params:
-    - type: PATH
+  - type: PATH
       name|contains:
-        - /boot/grub/grub.cfg
-        - /boot/grub2/grub.cfg
+    - /boot/grub/grub.cfg
+    - /boot/grub2/grub.cfg
   selection_suspicious_params:
-    - comm|contains:
-        - init=
-        - modprobe.blacklist=
-        - systemd.unit=
-        - rd.shell
-        - emergency
-        - single
-        - rescue
+  - comm|contains:
+    - init=
+    - modprobe.blacklist=
+    - systemd.unit=
+    - rd.shell
+    - emergency
+    - single
+    - rescue
   selection_file_content:
-    - type: SYSCALL
+  - type: SYSCALL
       syscall: write
   condition: selection_grub_params and selection_file_content and selection_suspicious_params
 level: high

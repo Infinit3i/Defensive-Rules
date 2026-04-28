@@ -14,20 +14,20 @@ logsource:
   service: auditlogs
 detection:
   selection_user_creation:
-    OperationName: 'Add user'
-    Category: UserManagement
+  OperationName: 'Add user'
+  Category: UserManagement
   selection_bulk_creation:
-    OperationName: 'Bulk create users'
+  OperationName: 'Bulk create users'
   selection_privileged_creation:
-    OperationName:
+  OperationName:
       - 'Add member to role'
       - 'Add user'
-    TargetResources.modifiedProperties.newValue|contains:
+  TargetResources.modifiedProperties.newValue|contains:
       - 'Global Administrator'
       - 'Exchange Administrator'
       - 'Security Administrator'
   selection_external_domain:
-    TargetResources.userPrincipalName|endswith:
+  TargetResources.userPrincipalName|endswith:
       - '@gmail.com'
       - '@outlook.com'
       - '@yahoo.com'

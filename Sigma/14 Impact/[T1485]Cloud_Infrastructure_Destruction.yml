@@ -7,78 +7,78 @@ author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1485/
-    - https://attack.mitre.org/techniques/T1499/
+  - https://attack.mitre.org/techniques/T1485/
+  - https://attack.mitre.org/techniques/T1499/
 logsource:
-    product: windows
-    service: powershell
+  product: windows
+  service: powershell
 detection:
-    selection_aws_destruction:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'aws ec2 terminate-instances'
-            - 'aws s3 rm'
-            - 'aws s3api delete-bucket'
-            - 'aws rds delete-db-instance'
-            - 'aws lambda delete-function'
-            - 'aws iam delete-'
-            - 'aws cloudformation delete-stack'
-            - 'DeleteVolume'
-            - 'DeleteSnapshot'
-    selection_azure_destruction:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'az vm delete'
-            - 'az storage account delete'
-            - 'az sql db delete'
-            - 'az group delete'
-            - 'az keyvault delete'
-            - 'Remove-AzVM'
-            - 'Remove-AzStorageAccount'
-            - 'Remove-AzResourceGroup'
-    selection_gcp_destruction:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - 'gcloud compute instances delete'
-            - 'gcloud storage rm'
-            - 'gcloud sql instances delete'
-            - 'gcloud container clusters delete'
-            - 'gcloud projects delete'
-            - 'gsutil rm -r'
-    selection_mass_operations:
-        EventID: 4104
-        ScriptBlockText|contains:
-            - '--force'
-            - '--yes'
-            - '--quiet'
-            - 'ForEach'
-            - 'foreach'
-            - 'while'
-            - 'for i in'
-    selection_cli_tools:
-        EventID: 1
-        Image|endswith:
-            - '\aws.exe'
-            - '\az.exe'
-            - '\gcloud.exe'
-            - '\kubectl.exe'
-            - '\terraform.exe'
-            - '\powershell.exe'
-        CommandLine|contains:
-            - 'delete'
-            - 'destroy'
-            - 'terminate'
-            - 'remove'
-            - 'rm'
-    selection_network_calls:
-        EventID: 3
-        DestinationHostname|contains:
-            - 'amazonaws.com'
-            - 'azure.com'
-            - 'googleapis.com'
-            - 'gcp.com'
-        DestinationPort: 443
-    condition: (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
+  selection_aws_destruction:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'aws ec2 terminate-instances'
+      - 'aws s3 rm'
+      - 'aws s3api delete-bucket'
+      - 'aws rds delete-db-instance'
+      - 'aws lambda delete-function'
+      - 'aws iam delete-'
+      - 'aws cloudformation delete-stack'
+      - 'DeleteVolume'
+      - 'DeleteSnapshot'
+  selection_azure_destruction:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'az vm delete'
+      - 'az storage account delete'
+      - 'az sql db delete'
+      - 'az group delete'
+      - 'az keyvault delete'
+      - 'Remove-AzVM'
+      - 'Remove-AzStorageAccount'
+      - 'Remove-AzResourceGroup'
+  selection_gcp_destruction:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - 'gcloud compute instances delete'
+      - 'gcloud storage rm'
+      - 'gcloud sql instances delete'
+      - 'gcloud container clusters delete'
+      - 'gcloud projects delete'
+      - 'gsutil rm -r'
+  selection_mass_operations:
+    EventID: 4104
+    ScriptBlockText|contains:
+      - '--force'
+      - '--yes'
+      - '--quiet'
+      - 'ForEach'
+      - 'foreach'
+      - 'while'
+      - 'for i in'
+  selection_cli_tools:
+    EventID: 1
+    Image|endswith:
+      - '\aws.exe'
+      - '\az.exe'
+      - '\gcloud.exe'
+      - '\kubectl.exe'
+      - '\terraform.exe'
+      - '\powershell.exe'
+    CommandLine|contains:
+      - 'delete'
+      - 'destroy'
+      - 'terminate'
+      - 'remove'
+      - 'rm'
+  selection_network_calls:
+    EventID: 3
+    DestinationHostname|contains:
+      - 'amazonaws.com'
+      - 'azure.com'
+      - 'googleapis.com'
+      - 'gcp.com'
+    DestinationPort: 443
+  condition: (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
 level: critical
 tags:
   # MITRE ATT&CK tactic
@@ -101,6 +101,6 @@ tags:
   - gcp
   - infrastructure_destruction
 falsepositives:
-    - Legitimate infrastructure cleanup operations
-    - Automated cloud resource management scripts
-    - Scheduled maintenance and decommissioning activities
+  - Legitimate infrastructure cleanup operations
+  - Automated cloud resource management scripts
+  - Scheduled maintenance and decommissioning activities

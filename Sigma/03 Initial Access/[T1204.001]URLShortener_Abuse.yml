@@ -20,7 +20,7 @@ logsource:
   category: network_connection
 detection:
   shortener_domains:
-    DestinationHostname|endswith:
+  DestinationHostname|endswith:
       - 'bit.ly'
       - 'tinyurl.com'
       - 'goo.gl'
@@ -29,14 +29,14 @@ detection:
       - 'ow.ly'
       - 'buff.ly'
   browser_process:
-    Image|endswith:
+  Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
       - '\brave.exe'
       - '\opera.exe'
   multiple_redirects:
-    EventID: 3
+  EventID: 3
   condition: shortener_domains and browser_process and multiple_redirects
 falsepositives:
   - Legitimate social media links

@@ -29,17 +29,17 @@ logsource:
   service: sshd
 detection:
   ssh_login:
-    program: 'sshd'
-    message|contains:
+  program: 'sshd'
+  message|contains:
       - 'Accepted password'
       - 'Accepted publickey'
   internal_connection:
-    src_ip|startswith:
+  src_ip|startswith:
       - '10.'
       - '172.'
       - '192.168.'
   suspicious_user:
-    user|contains:
+  user|contains:
       - 'root'
       - 'admin'
       - 'service'

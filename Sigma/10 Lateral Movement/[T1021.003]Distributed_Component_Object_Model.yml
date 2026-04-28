@@ -30,16 +30,16 @@ logsource:
   category: process_creation
 detection:
   dcom_execution:
-    Image|endswith: '\svchost.exe'
-    CommandLine|contains:
+  Image|endswith: '\svchost.exe'
+  CommandLine|contains:
       - '-k DcomLaunch'
       - 'rpcss'
   wmi_dcom:
-    Image|endswith: '\wmiprvse.exe'
-    ParentImage|endswith: '\svchost.exe'
+  Image|endswith: '\wmiprvse.exe'
+  ParentImage|endswith: '\svchost.exe'
   remote_dcom:
-    Image|endswith: '\dllhost.exe'
-    CommandLine|contains:
+  Image|endswith: '\dllhost.exe'
+  CommandLine|contains:
       - '/Processid:'
       - 'CLSID'
   condition: dcom_execution or wmi_dcom or remote_dcom

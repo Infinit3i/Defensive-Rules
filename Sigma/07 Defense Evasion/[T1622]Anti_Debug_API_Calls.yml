@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_apis:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'IsDebuggerPresent'
       - 'CheckRemoteDebuggerPresent'
       - 'NtQueryInformationProcess'
@@ -25,23 +25,23 @@ detection:
       - 'NtSetInformationThread'
       - 'ThreadHideFromDebugger'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-Process | Where Name -like "*debug*"'
       - 'Get-WmiObject Win32_Process | Where Name -like "*debug*"'
       - 'Test-Path "*debug*"'
       - '[Environment]::TickCount'
       - 'Stopwatch'
   selection_processes:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'tasklist | findstr debug'
       - 'wmic process get name | findstr debug'
       - 'query process'
       - 'tlist'
   debugger_names:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'windbg'
       - 'x64dbg'
       - 'ollydbg'

@@ -11,8 +11,8 @@ logsource:
   service: powershell-classic
 detection:
   selection_download:
-    EventID: 4104
-    Message|contains:
+  EventID: 4104
+  Message|contains:
       - 'DownloadString'
       - 'DownloadFile'
       - 'Invoke-WebRequest'
@@ -23,8 +23,8 @@ detection:
       - 'Net.WebClient'
       - 'Start-BitsTransfer'
   selection_execute:
-    EventID: 4104
-    Message|contains:
+  EventID: 4104
+  Message|contains:
       - 'Invoke-Expression'
       - 'iex'
       - 'Invoke-Command'
@@ -35,8 +35,8 @@ detection:
       - 'cmd /c'
       - 'powershell -c'
   selection_fileless:
-    EventID: 4104
-    Message|contains:
+  EventID: 4104
+  Message|contains:
       - 'FromBase64String'
       - 'EncodedCommand'
       - 'Reflection.Assembly'
@@ -45,7 +45,7 @@ detection:
       - 'GetMethod'
       - 'Invoke'
   suspicious_domains:
-    Message|contains:
+  Message|contains:
       - 'raw.githubusercontent'
       - 'pastebin.com'
       - 'hastebin'

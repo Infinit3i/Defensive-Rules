@@ -9,8 +9,8 @@ logsource:
   service: powershell-classic
 detection:
   selection_powershell_obfuscation:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - 'iex('
       - 'invoke-expression'
       - '&('
@@ -18,20 +18,20 @@ detection:
       - 'ForEach-Object'
       - '%{'
   selection_base64_powershell:
-    EventID: 4104
-    ScriptBlockText|re:
+  EventID: 4104
+  ScriptBlockText|re:
       - '.*[a-zA-Z0-9+/]{50,}={0,2}.*'
       - '.*\[System\.Convert\]::FromBase64String.*'
       - '.*\[System\.Text\.Encoding\]::.*\.GetString.*'
   selection_char_substitution:
-    EventID: 4104
-    ScriptBlockText|re:
+  EventID: 4104
+  ScriptBlockText|re:
       - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
       - '.*\[System\.Char\].*'
       - '.*-join\s*\(\s*\d+.*'
   selection_string_manipulation:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - '-replace'
       - '-split'
       - '-join'
@@ -40,21 +40,21 @@ detection:
       - 'tolower()'
       - 'toupper()'
   selection_format_operators:
-    EventID: 4104
-    ScriptBlockText|re:
+  EventID: 4104
+  ScriptBlockText|re:
       - '.*"{[0-9]+}".*-f.*'
       - '.*\$\w+\s*=\s*"{[0-9,]+}".*'
   selection_compression:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - 'System.IO.Compression.GzipStream'
       - 'System.IO.Compression.DeflateStream'
       - 'System.IO.MemoryStream'
       - 'FromBase64String'
   selection_cmd_obfuscation:
-    EventID: 1
-    Image|endswith: '\cmd.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\cmd.exe'
+  CommandLine|contains:
       - '^&'
       - '""'
       - "'"
@@ -63,18 +63,18 @@ detection:
       - '%SystemRoot%'
       - '%windir%'
   selection_batch_obfuscation:
-    EventID: 1
-    CommandLine|re:
+  EventID: 1
+  CommandLine|re:
       - '.*set\s+\w+=[^&]*&.*'
       - '.*for\s+/[lf]\s+.*'
       - '.*if\s+.*==.*'
   selection_wmi_obfuscation:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'wmic process call create'
       - 'wmic os get'
       - 'wmic computersystem get'
-    CommandLine|re:
+  CommandLine|re:
       - '.*"[^"]*\^[^"]*".*'
   condition: selection_powershell_obfuscation or selection_base64_powershell or selection_char_substitution or selection_string_manipulation or select
                ion_format_operators or selection_compression or selection_cmd_obfuscation or selection_batch_obfuscation or selection_wmi_obfuscation

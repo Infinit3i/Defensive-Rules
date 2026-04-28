@@ -29,16 +29,16 @@ logsource:
   service: conn
 detection:
   unusual_ports:
-    id.resp_p|gte: 8000
-    id.resp_p|lte: 65535
-    service: 'unknown'
+  id.resp_p|gte: 8000
+  id.resp_p|lte: 65535
+  service: 'unknown'
   high_ports:
-    id.resp_p|gte: 49152
-    orig_bytes|gte: 1000
-    resp_bytes|gte: 1000
+  id.resp_p|gte: 49152
+  orig_bytes|gte: 1000
+  resp_bytes|gte: 1000
   protocol_mismatch:
-    id.resp_p: 80
-    service: 'ssl'
+  id.resp_p: 80
+  service: 'ssl'
   condition: unusual_ports or high_ports or protocol_mismatch
 falsepositives:
   - Application-specific ports

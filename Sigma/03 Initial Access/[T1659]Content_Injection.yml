@@ -29,19 +29,19 @@ logsource:
   service: http
 detection:
   script_injection:
-    uri|contains:
+  uri|contains:
       - '<script>'
       - 'javascript:'
       - 'eval('
       - 'document.write'
   html_injection:
-    uri|contains:
+  uri|contains:
       - '<iframe>'
       - '<object>'
       - '<embed>'
       - '<form>'
   parameter_injection:
-    uri|contains:
+  uri|contains:
       - '%3Cscript%3E'
       - '%22%3E%3Cscript%3E'
       - 'javascript%3A'

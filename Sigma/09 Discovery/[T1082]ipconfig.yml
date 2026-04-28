@@ -24,16 +24,16 @@ logsource:
   service: sysmon
 detection:
   selection_network_commands:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "ipconfig"
       - "ipconfig /all"
       - "hostname"
       - "net config"
       - "net view"
   selection_images:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\ipconfig.exe'
       - '\hostname.exe'
       - '\net.exe'

@@ -6,27 +6,27 @@ description: Detects abuse of AlwaysInstallElevated for privilege escalation
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1548/004/
+  - https://attack.mitre.org/techniques/T1548/004/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_registry:
-        EventID: 13
-        TargetObject|contains:
-            - 'AlwaysInstallElevated'
-        Details: 'DWORD (0x00000001)'
-    selection_msiexec:
-        EventID: 1
-        Image|endswith: '\msiexec.exe'
-        CommandLine|contains:
-            - '/i'
-            - '/package'
-        IntegrityLevel: 'High'
-    condition: selection_registry or selection_msiexec
+  selection_registry:
+    EventID: 13
+    TargetObject|contains:
+      - 'AlwaysInstallElevated'
+    Details: 'DWORD (0x00000001)'
+  selection_msiexec:
+    EventID: 1
+    Image|endswith: '\msiexec.exe'
+    CommandLine|contains:
+      - '/i'
+      - '/package'
+    IntegrityLevel: 'High'
+  condition: selection_registry or selection_msiexec
 falsepositives:
-    - Legitimate software installations
-    - Administrative package deployments
+  - Legitimate software installations
+  - Administrative package deployments
 level: high
 tags:
   # MITRE ATT&CK tactic

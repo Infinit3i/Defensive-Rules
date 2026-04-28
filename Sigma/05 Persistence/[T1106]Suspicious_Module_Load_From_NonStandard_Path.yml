@@ -28,12 +28,12 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 7
-    Image|endswith:
+  EventID: 7
+  Image|endswith:
       - '\rundll32.exe'
       - '\svchost.exe'
       - '\explorer.exe'
-    TargetFilename|contains:
+  TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

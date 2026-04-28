@@ -20,32 +20,32 @@ logsource:
   service: system
 detection:
   unknown_pci_device:
-    EventID: 7000
-    EventData|contains:
+  EventID: 7000
+  EventData|contains:
       - 'PCI\VEN_'
-    ServiceName|contains:
+  ServiceName|contains:
       - 'Unknown'
       - 'Generic'
   suspicious_driver:
-    EventID: 7045
-    ServiceName|contains:
+  EventID: 7045
+  ServiceName|contains:
       - 'pci'
       - 'device'
       - 'unknown'
-    ImagePath|contains:
+  ImagePath|contains:
       - '\temp\'
       - '\users\'
       - '\programdata\'
   hardware_enumeration:
-    EventID: 7026
-    EventData|contains:
+  EventID: 7026
+  EventData|contains:
       - 'Hardware'
       - 'Device'
       - 'PCI'
   device_installation:
-    EventID: 20001
-    DeviceInstanceId|startswith: 'PCI\'
-    DriverName|contains:
+  EventID: 20001
+  DeviceInstanceId|startswith: 'PCI\'
+  DriverName|contains:
       - 'generic'
       - 'unknown'
       - 'temp'

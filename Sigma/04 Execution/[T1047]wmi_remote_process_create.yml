@@ -13,13 +13,13 @@ logsource:
   service: Microsoft-Windows-WMI-Activity/Operational
 detection:
   selection_5858:
-    EventID: 5858
+  EventID: 5858
   selection_method:
-    Message|contains|all:
+  Message|contains|all:
       - 'Win32_Process.Create'
       - 'Execute Method'
   filter_localhost:
-    Message|contains:
+  Message|contains:
       - 'ClientMachine=localhost'
       - 'ClientMachine=127.0.0.1'
   condition: selection_5858 and selection_method and not filter_localhost

@@ -5,40 +5,40 @@ description: Detects evasive RunOnce persistence using cleanup commands and dela
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_process:
-        EventID: 1
-        ParentCommandLine|contains: 'RunOnce'
-    selection_cleanup:
-        CommandLine|contains:
-            - 'reg delete'
-            - 'Remove-ItemProperty'
-            - 'del /f /q'
-            - 'rmdir /s'
-            - 'sdelete'
-    selection_delay:
-        CommandLine|contains:
-            - 'ping -n'
-            - 'timeout /t'
-            - 'Start-Sleep'
-            - 'waitfor'
-            - 'choice /t'
-    selection_chain:
-        CommandLine|contains:
-            - '&&'
-            - ';'
-            - '||'
-            - '|'
-            - 'cmd /c'
-            - 'powershell -c'
-    condition: selection_process and (selection_cleanup or (selection_delay and selection_chain))
+  selection_process:
+    EventID: 1
+    ParentCommandLine|contains: 'RunOnce'
+  selection_cleanup:
+    CommandLine|contains:
+      - 'reg delete'
+      - 'Remove-ItemProperty'
+      - 'del /f /q'
+      - 'rmdir /s'
+      - 'sdelete'
+  selection_delay:
+    CommandLine|contains:
+      - 'ping -n'
+      - 'timeout /t'
+      - 'Start-Sleep'
+      - 'waitfor'
+      - 'choice /t'
+  selection_chain:
+    CommandLine|contains:
+      - '&&'
+      - ';'
+      - '||'
+      - '|'
+      - 'cmd /c'
+      - 'powershell -c'
+  condition: selection_process and (selection_cleanup or (selection_delay and selection_chain))
 falsepositives:
-    - Legitimate software cleanup routines
-    - System maintenance scripts
+  - Legitimate software cleanup routines
+  - System maintenance scripts
 level: high
 tags:
   - attack.persistence

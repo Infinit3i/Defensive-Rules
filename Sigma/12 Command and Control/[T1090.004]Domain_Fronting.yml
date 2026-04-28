@@ -29,19 +29,19 @@ logsource:
   service: ssl
 detection:
   cdn_hosts:
-    server_name|endswith:
+  server_name|endswith:
       - '.cloudfront.net'
       - '.azureedge.net'
       - '.fastly.com'
       - '.cloudflare.com'
   sni_mismatch:
-    server_name: cert_subject
-    not: true
+  server_name: cert_subject
+  not: true
   unusual_cert:
-    cert_subject|contains:
+  cert_subject|contains:
       - 'cloudflare'
       - 'amazonaws'
-    established: true
+  established: true
   condition: cdn_hosts and (sni_mismatch or unusual_cert)
 falsepositives:
   - Legitimate CDN usage

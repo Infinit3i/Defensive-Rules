@@ -9,7 +9,7 @@ description: >
   involves port 3389 or mentions "Remote Desktop". This behavior can be indicative of an adversary enabling RDP
   for remote access.
 references:
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-security-audit-events
+  - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/basic-security-audit-events
 author: Infinit3i
 date: 2025-04-08
 tags:
@@ -23,16 +23,16 @@ tags:
   - attack.defense_evasion
   - attack.t1562
 logsource:
-    product: windows
-    service: security
+  product: windows
+  service: security
 detection:
-    selection:
-        EventID: 4946
-    rdp_indicators:
-        Message|contains:
-            - "3389"
-            - "Remote Desktop"
-    condition: selection and rdp_indicators
+  selection:
+    EventID: 4946
+  rdp_indicators:
+    Message|contains:
+      - "3389"
+      - "Remote Desktop"
+  condition: selection and rdp_indicators
 falsepositives:
-    - Legitimate administrative firewall rule changes for enabling RDP
+  - Legitimate administrative firewall rule changes for enabling RDP
 level: medium

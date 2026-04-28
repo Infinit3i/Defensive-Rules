@@ -5,38 +5,38 @@ description: Detects suspicious system shutdown commands through command line ex
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1529/
+  - https://attack.mitre.org/techniques/T1529/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_shutdown:
-        EventID: 1
-        Image|endswith:
-            - '\shutdown.exe'
-            - '\cmd.exe'
-            - '\powershell.exe'
-        CommandLine|contains:
-            - 'shutdown /s'
-            - 'shutdown -s'
-            - 'shutdown /r'
-            - 'shutdown -r'
-            - 'shutdown /f'
-            - 'shutdown -f'
-            - 'Stop-Computer'
-            - 'Restart-Computer'
-    selection_immediate:
-        CommandLine|contains:
-            - '/t 0'
-            - '-t 0'
-            - '/f /s'
-            - '-f -s'
-            - 'Force'
-    condition: selection_shutdown and selection_immediate
+  selection_shutdown:
+    EventID: 1
+    Image|endswith:
+      - '\shutdown.exe'
+      - '\cmd.exe'
+      - '\powershell.exe'
+    CommandLine|contains:
+      - 'shutdown /s'
+      - 'shutdown -s'
+      - 'shutdown /r'
+      - 'shutdown -r'
+      - 'shutdown /f'
+      - 'shutdown -f'
+      - 'Stop-Computer'
+      - 'Restart-Computer'
+  selection_immediate:
+    CommandLine|contains:
+      - '/t 0'
+      - '-t 0'
+      - '/f /s'
+      - '-f -s'
+      - 'Force'
+  condition: selection_shutdown and selection_immediate
 falsepositives:
-    - Legitimate system administration
-    - Scheduled maintenance
-    - Software installation requiring restart
+  - Legitimate system administration
+  - Scheduled maintenance
+  - Software installation requiring restart
 level: medium
 tags:
   - attack.impact

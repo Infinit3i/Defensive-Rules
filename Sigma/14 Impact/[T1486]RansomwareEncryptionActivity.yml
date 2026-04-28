@@ -5,41 +5,41 @@ description: Detects ransomware encryption activity through file extension chang
 author: Infinit3i
 date: 2026/04/28
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_encrypt_ext:
-        EventID: 11
-        TargetFilename|endswith:
-            - '.locked'
-            - '.encrypted'
-            - '.crypto'
-            - '.crypt'
-            - '.vault'
-            - '.onion'
-            - '.wcry'
-            - '.wncry'
-    selection_ransom_note:
-        EventID: 11
-        TargetFilename|contains:
-            - 'README'
-            - 'DECRYPT'
-            - 'RECOVERY'
-            - 'HELP_DECRYPT'
-        TargetFilename|endswith:
-            - '.txt'
-            - '.html'
-            - '.htm'
-    selection_crypto_process:
-        EventID: 1
-        Image|endswith:
-            - '\bcdedit.exe'
-            - '\vssadmin.exe'
-        CommandLine|contains:
-            - 'delete shadows'
-            - 'set recoveryenabled no'
-            - 'set bootstatuspolicy ignoreallfailures'
-    condition: selection_encrypt_ext or
+  selection_encrypt_ext:
+    EventID: 11
+    TargetFilename|endswith:
+      - '.locked'
+      - '.encrypted'
+      - '.crypto'
+      - '.crypt'
+      - '.vault'
+      - '.onion'
+      - '.wcry'
+      - '.wncry'
+  selection_ransom_note:
+    EventID: 11
+    TargetFilename|contains:
+      - 'README'
+      - 'DECRYPT'
+      - 'RECOVERY'
+      - 'HELP_DECRYPT'
+    TargetFilename|endswith:
+      - '.txt'
+      - '.html'
+      - '.htm'
+  selection_crypto_process:
+    EventID: 1
+    Image|endswith:
+      - '\bcdedit.exe'
+      - '\vssadmin.exe'
+    CommandLine|contains:
+      - 'delete shadows'
+      - 'set recoveryenabled no'
+      - 'set bootstatuspolicy ignoreallfailures'
+  condition: selection_encrypt_ext or
                selection_ransom_note or
                selection_crypto_process
 level: critical
@@ -49,7 +49,7 @@ tags:
   - sysmon
   - windows
 references:
-    - https://attack.mitre.org/techniques/T1486/
+  - https://attack.mitre.org/techniques/T1486/
 falsepositives:
-    - Legitimate backup encryption
-    - Security software operations
+  - Legitimate backup encryption
+  - Security software operations

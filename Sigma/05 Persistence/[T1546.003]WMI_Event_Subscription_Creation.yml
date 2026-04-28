@@ -5,40 +5,40 @@ description: Detects creation of WMI event subscriptions for persistence through
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1546/003/
-    - https://www.fireeye.com/blog/threat-research/2016/08/wmi_vs_wmi_the_use_of.html
+  - https://attack.mitre.org/techniques/T1546/003/
+  - https://www.fireeye.com/blog/threat-research/2016/08/wmi_vs_wmi_the_use_of.html
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_wmi_consumer:
-        EventID: 20
-        Destination:
-            - '*ActiveScriptEventConsumer*'
-            - '*CommandLineEventConsumer*'
-            - '*NTEventLogEventConsumer*'
-    selection_wmi_filter:
-        EventID: 21
-        Query|contains:
-            - 'SELECT * FROM Win32_VolumeChangeEvent'
-            - 'SELECT * FROM Win32_SystemConfigurationChangeEvent'
-            - 'SELECT * FROM Win32_ProcessStartTrace'
-    selection_wmi_binding:
-        EventID: 20
-        Consumer|contains:
-            - 'CommandLineEventConsumer'
-            - 'ActiveScriptEventConsumer'
-    condition: selection_wmi_consumer or selection_wmi_filter or selection_wmi_binding
+  selection_wmi_consumer:
+    EventID: 20
+    Destination:
+      - '*ActiveScriptEventConsumer*'
+      - '*CommandLineEventConsumer*'
+      - '*NTEventLogEventConsumer*'
+  selection_wmi_filter:
+    EventID: 21
+    Query|contains:
+      - 'SELECT * FROM Win32_VolumeChangeEvent'
+      - 'SELECT * FROM Win32_SystemConfigurationChangeEvent'
+      - 'SELECT * FROM Win32_ProcessStartTrace'
+  selection_wmi_binding:
+    EventID: 20
+    Consumer|contains:
+      - 'CommandLineEventConsumer'
+      - 'ActiveScriptEventConsumer'
+  condition: selection_wmi_consumer or selection_wmi_filter or selection_wmi_binding
 fields:
-    - EventType
-    - Operation
-    - Consumer
-    - Query
-    - Name
+  - EventType
+  - Operation
+  - Consumer
+  - Query
+  - Name
 falsepositives:
-    - Legitimate system administration tools
-    - Software installers using WMI
-    - Monitoring solutions
+  - Legitimate system administration tools
+  - Software installers using WMI
+  - Monitoring solutions
 level: high
 tags:
   - attack.persistence

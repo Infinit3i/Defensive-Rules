@@ -7,44 +7,44 @@ description: Detects suspicious scheduled task creation through command line too
 author: Infinit3i
 date: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1053/005/
+  - https://attack.mitre.org/techniques/T1053/005/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    schtasks_creation:
-        EventID: 1
-        CommandLine|contains:
-            - 'schtasks /create'
-            - 'Register-ScheduledTask'
-        CommandLine|contains|all:
-            - '/tr'
-            - '/sc'
-    powershell_task:
-        EventID: 1
-        Image|endswith: '\powershell.exe'
-        CommandLine|contains:
-            - 'New-ScheduledTask'
-            - 'Register-ScheduledTask'
-            - 'New-ScheduledTaskAction'
-    suspicious_locations:
-        EventID: 1
-        CommandLine|contains:
-            - '/tr "C:\Users\'
-            - '/tr "C:\Temp\'
-            - '/tr "C:\ProgramData\'
-            - '%APPDATA%'
-            - '%TEMP%'
-    condition: (schtasks_creation or powershell_task) and suspicious_locations
+  schtasks_creation:
+    EventID: 1
+    CommandLine|contains:
+      - 'schtasks /create'
+      - 'Register-ScheduledTask'
+    CommandLine|contains|all:
+      - '/tr'
+      - '/sc'
+  powershell_task:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'New-ScheduledTask'
+      - 'Register-ScheduledTask'
+      - 'New-ScheduledTaskAction'
+  suspicious_locations:
+    EventID: 1
+    CommandLine|contains:
+      - '/tr "C:\Users\'
+      - '/tr "C:\Temp\'
+      - '/tr "C:\ProgramData\'
+      - '%APPDATA%'
+      - '%TEMP%'
+  condition: (schtasks_creation or powershell_task) and suspicious_locations
 fields:
-    - CommandLine
-    - Image
-    - ParentImage
-    - User
-    - ComputerName
+  - CommandLine
+  - Image
+  - ParentImage
+  - User
+  - ComputerName
 falsepositives:
-    - Legitimate system administration tasks
-    - Software installation and update processes
+  - Legitimate system administration tasks
+  - Software installation and update processes
 level: high
 tags:
   # MITRE ATT&CK tactic

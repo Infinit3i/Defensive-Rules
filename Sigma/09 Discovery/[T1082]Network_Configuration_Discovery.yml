@@ -11,24 +11,24 @@ logsource:
   service: sysmon
 detection:
   selection_ipconfig:
-    EventID: 1
-    Image|endswith: '\ipconfig.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\ipconfig.exe'
+  CommandLine|contains:
       - '/all'
       - '/displaydns'
       - '/flushdns'
   selection_netsh:
-    EventID: 1
-    Image|endswith: '\netsh.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\netsh.exe'
+  CommandLine|contains:
       - 'interface'
       - 'profile'
       - 'wlan'
       - 'advfirewall'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-NetIPConfiguration'
       - 'Get-NetAdapter'
       - 'Get-DnsClientServerAddress'

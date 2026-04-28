@@ -26,30 +26,30 @@ logsource:
   service: sysmon
 detection:
   tzutil:
-    EventID: 1
-    Image|endswith: '\tzutil.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\tzutil.exe'
+  CommandLine|contains:
       - " /g"
       - " /s "
   w32tm:
-    EventID: 1
-    Image|endswith: '\w32tm.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\w32tm.exe'
+  CommandLine|contains:
       - "/query"
       - "/status"
       - "/configuration"
   date_time_cmd:
-    EventID: 1
-    Image|endswith: '\cmd.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\cmd.exe'
+  CommandLine|contains:
       - " time /t"
       - " date /t"
   ps_getdate:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Get-Date"
   condition: tzutil or w32tm or date_time_cmd or ps_getdate
 falsepositives:

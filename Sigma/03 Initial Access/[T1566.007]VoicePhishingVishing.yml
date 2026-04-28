@@ -5,36 +5,36 @@ description: Detects voice phishing attacks through suspicious call patterns and
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1566/007/
+  - https://attack.mitre.org/techniques/T1566/007/
 logsource:
-    product: telephony
-    service: call-analytics
+  product: telephony
+  service: call-analytics
 detection:
-    selection_spoofed_caller:
-        CallerIDSpoofed: true
-    selection_suspicious_keywords:
-        CallTranscript|contains:
-            - 'verify account'
-            - 'suspended account'
-            - 'security breach'
-            - 'urgent action'
-            - 'provide password'
-            - 'confirm PIN'
-    selection_impersonation:
-        CallerIDName|contains:
-            - 'Bank'
-            - 'Microsoft'
-            - 'Apple'
-            - 'Amazon'
-            - 'Support'
-            - 'Security'
-    selection_pressure_tactics:
-        CallTranscript|contains:
-            - 'within 24 hours'
-            - 'immediately'
-            - 'or your account'
-            - 'legal action'
-    condition: (selection_spoofed_caller or selection_impersonation) and
+  selection_spoofed_caller:
+    CallerIDSpoofed: true
+  selection_suspicious_keywords:
+    CallTranscript|contains:
+      - 'verify account'
+      - 'suspended account'
+      - 'security breach'
+      - 'urgent action'
+      - 'provide password'
+      - 'confirm PIN'
+  selection_impersonation:
+    CallerIDName|contains:
+      - 'Bank'
+      - 'Microsoft'
+      - 'Apple'
+      - 'Amazon'
+      - 'Support'
+      - 'Security'
+  selection_pressure_tactics:
+    CallTranscript|contains:
+      - 'within 24 hours'
+      - 'immediately'
+      - 'or your account'
+      - 'legal action'
+  condition: (selection_spoofed_caller or selection_impersonation) and
                (selection_suspicious_keywords or selection_pressure_tactics)
 level: high
 tags:

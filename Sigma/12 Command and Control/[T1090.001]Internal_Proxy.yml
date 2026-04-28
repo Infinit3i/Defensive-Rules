@@ -30,18 +30,18 @@ logsource:
   category: process_creation
 detection:
   proxy_tools:
-    Image|endswith:
+  Image|endswith:
       - '\netsh.exe'
       - '\socat.exe'
       - '\stunnel.exe'
   port_forwarding:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'portproxy'
       - 'interface'
       - 'forward'
       - 'tunnel'
   proxy_setup:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'add v4tov4'
       - 'connectaddress'
       - 'listenaddress'

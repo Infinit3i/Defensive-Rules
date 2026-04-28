@@ -12,7 +12,7 @@ logsource:
   category: account_management
 detection:
   selection_event:
-    EventID: 4740
+  EventID: 4740
   condition: selection_event
 fields:
   - TargetUserName

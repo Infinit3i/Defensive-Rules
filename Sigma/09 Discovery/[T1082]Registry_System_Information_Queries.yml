@@ -11,18 +11,18 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-    EventID: 1
-    Image|endswith: '\reg.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\reg.exe'
+  CommandLine|contains:
       - 'query'
       - 'HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
       - 'HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName'
       - 'HKLM\\HARDWARE\\DESCRIPTION\\System'
       - 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-ItemProperty'
       - 'HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion'
       - 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\ComputerName'

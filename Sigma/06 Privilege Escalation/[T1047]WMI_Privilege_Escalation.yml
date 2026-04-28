@@ -6,32 +6,32 @@ description: Detects WMI process creation with elevated privileges
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1047/
+  - https://attack.mitre.org/techniques/T1047/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_wmi:
-        EventID: 1
-        ParentImage|endswith:
-            - '\wmiprvse.exe'
-            - '\wmiapsrv.exe'
-        CommandLine|contains:
-            - 'cmd.exe'
-            - 'powershell.exe'
-            - 'net user'
-            - 'net localgroup'
-    selection_wmic:
-        EventID: 1
-        Image|endswith: '\wmic.exe'
-        CommandLine|contains:
-            - 'process call create'
-            - 'service'
-            - '/privileged'
-    condition: selection_wmi or selection_wmic
+  selection_wmi:
+    EventID: 1
+    ParentImage|endswith:
+      - '\wmiprvse.exe'
+      - '\wmiapsrv.exe'
+    CommandLine|contains:
+      - 'cmd.exe'
+      - 'powershell.exe'
+      - 'net user'
+      - 'net localgroup'
+  selection_wmic:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'process call create'
+      - 'service'
+      - '/privileged'
+  condition: selection_wmi or selection_wmic
 falsepositives:
-    - Legitimate system administration
-    - WMI-based monitoring tools
+  - Legitimate system administration
+  - WMI-based monitoring tools
 level: medium
 tags:
   # MITRE ATT&CK tactic

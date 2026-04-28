@@ -5,32 +5,32 @@ description: Detects suspicious hardware additions through USB device enumeratio
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1200/
+  - https://attack.mitre.org/techniques/T1200/
 logsource:
-    product: windows
-    service: system
+  product: windows
+  service: system
 detection:
-    selection_usb:
-        EventID: 20001
-        Source: 'Microsoft-Windows-USB-USBPORT'
-        Message|contains:
-            - 'USB'
-            - 'device'
-    selection_network:
-        EventID: 4703
-        Source: 'Microsoft-Windows-Security-Auditing'
-        ProcessName|contains: 'svchost.exe'
-    selection_unknown:
-        EventID: 6005
-        Message|contains:
-            - 'unknown'
-            - 'unrecognized'
-            - 'generic'
-    timeframe: 30s
-    condition: (selection_usb and selection_network) or selection_unknown
+  selection_usb:
+    EventID: 20001
+    Source: 'Microsoft-Windows-USB-USBPORT'
+    Message|contains:
+      - 'USB'
+      - 'device'
+  selection_network:
+    EventID: 4703
+    Source: 'Microsoft-Windows-Security-Auditing'
+    ProcessName|contains: 'svchost.exe'
+  selection_unknown:
+    EventID: 6005
+    Message|contains:
+      - 'unknown'
+      - 'unrecognized'
+      - 'generic'
+  timeframe: 30s
+  condition: (selection_usb and selection_network) or selection_unknown
 falsepositives:
-    - Legitimate hardware installations
-    - Driver updates and installations
+  - Legitimate hardware installations
+  - Driver updates and installations
 level: high
 tags:
   - attack.initial_access

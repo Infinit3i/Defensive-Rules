@@ -29,16 +29,16 @@ logsource:
   service: exchange
 detection:
   internal_sender:
-    Operation: 'Send'
-    SenderDomain: '@company.com'
+  Operation: 'Send'
+  SenderDomain: '@company.com'
   suspicious_attachment:
-    AttachmentExtension|contains:
+  AttachmentExtension|contains:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.vbs'
   phishing_keywords:
-    Subject|contains:
+  Subject|contains:
       - 'urgent action required'
       - 'verify account'
       - 'click here'

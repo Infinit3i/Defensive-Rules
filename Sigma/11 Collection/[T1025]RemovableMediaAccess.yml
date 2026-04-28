@@ -5,33 +5,33 @@ description: Detects data collection activities targeting removable media drives
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1025/
+  - https://attack.mitre.org/techniques/T1025/
 tags:
   - attack.collection
   - attack.t1025
   - sysmon
   - windows
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 1
-    removable_drives:
-        CommandLine|contains:
-            - 'E:\'
-            - 'F:\'
-            - 'G:\'
-            - 'H:\'
-    commands:
-        CommandLine|contains:
-            - 'copy'
-            - 'xcopy'
-            - 'robocopy'
-            - 'dir'
-            - 'tree'
-    condition: selection and removable_drives and commands
+  selection:
+    EventID: 1
+  removable_drives:
+    CommandLine|contains:
+      - 'E:\'
+      - 'F:\'
+      - 'G:\'
+      - 'H:\'
+  commands:
+    CommandLine|contains:
+      - 'copy'
+      - 'xcopy'
+      - 'robocopy'
+      - 'dir'
+      - 'tree'
+  condition: selection and removable_drives and commands
 falsepositives:
-    - Legitimate file operations
-    - Backup to external drives
+  - Legitimate file operations
+  - Backup to external drives
 level: low

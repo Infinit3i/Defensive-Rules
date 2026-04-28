@@ -5,38 +5,38 @@ description: Detects suspicious persistence via RunOnce registry keys with focus
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_reg:
-        EventID: 13
-        TargetObject|contains:
-            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
-            - '\Software\Microsoft\Windows\CurrentVersion\RunOnceEx\'
-    selection_evasive:
-        - Details|contains:
-            - 'regsvr32 /s'
-            - 'mshta'
-            - 'certutil'
-            - 'bitsadmin'
-            - 'ping -n'
-            - 'timeout'
-            - 'sleep'
-        - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
-        - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
-    selection_location:
-        Details|contains:
-            - '\AppData\Roaming\'
-            - '\AppData\Local\'
-            - '\Users\Public\'
-            - '\Windows\Temp\'
-            - '\ProgramData\'
-    condition: selection_reg and (selection_evasive or selection_location)
+  selection_reg:
+    EventID: 13
+    TargetObject|contains:
+      - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+      - '\Software\Microsoft\Windows\CurrentVersion\RunOnceEx\'
+  selection_evasive:
+    - Details|contains:
+      - 'regsvr32 /s'
+      - 'mshta'
+      - 'certutil'
+      - 'bitsadmin'
+      - 'ping -n'
+      - 'timeout'
+      - 'sleep'
+    - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
+    - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
+  selection_location:
+    Details|contains:
+      - '\AppData\Roaming\'
+      - '\AppData\Local\'
+      - '\Users\Public\'
+      - '\Windows\Temp\'
+      - '\ProgramData\'
+  condition: selection_reg and (selection_evasive or selection_location)
 falsepositives:
-    - Software installers using RunOnce
-    - System updates
+  - Software installers using RunOnce
+  - System updates
 level: high
 tags:
   - attack.persistence

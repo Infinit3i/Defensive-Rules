@@ -5,32 +5,32 @@ description: Detects installation of potentially malicious kernel modules
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: syslog
+  product: linux
+  service: syslog
 detection:
-    selection_kernel:
-        program: "kernel"
-        message|contains: "module"
-    selection_loaded:
-        message|contains:
-            - "module loaded"
-            - "insmod"
-            - "modprobe"
-    selection_suspicious_names:
-        message|contains:
-            - "rootkit"
-            - "backdoor"
-            - "keylog"
-            - "hide"
-            - "stealth"
-            - "evil"
-            - "malware"
-    selection_unsigned:
-        message|contains:
-            - "unsigned module"
-            - "module verification failed"
-            - "loading unsigned module"
-    condition: (selection_kernel and selection_loaded) and
+  selection_kernel:
+    program: "kernel"
+    message|contains: "module"
+  selection_loaded:
+    message|contains:
+      - "module loaded"
+      - "insmod"
+      - "modprobe"
+  selection_suspicious_names:
+    message|contains:
+      - "rootkit"
+      - "backdoor"
+      - "keylog"
+      - "hide"
+      - "stealth"
+      - "evil"
+      - "malware"
+  selection_unsigned:
+    message|contains:
+      - "unsigned module"
+      - "module verification failed"
+      - "loading unsigned module"
+  condition: (selection_kernel and selection_loaded) and
                (selection_suspicious_names or selection_unsigned)
 level: critical
 tags:
@@ -41,7 +41,7 @@ tags:
   - linux
   - syslog
 references:
-    - https://attack.mitre.org/techniques/T1547/006/
+  - https://attack.mitre.org/techniques/T1547/006/
 falsepositives:
-    - Development environments with unsigned modules
-    - Testing custom kernel modules
+  - Development environments with unsigned modules
+  - Testing custom kernel modules

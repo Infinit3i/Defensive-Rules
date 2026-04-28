@@ -6,31 +6,31 @@ description: Detects UAC bypass using CMSTP.exe connection manager profiles
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1548/002/
+  - https://attack.mitre.org/techniques/T1548/002/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_cmstp:
-        EventID: 1
-        Image|endswith: '\cmstp.exe'
-        CommandLine|contains:
-            - '/au'
-            - '/s'
-    selection_inf_file:
-        EventID: 11
-        TargetFilename|endswith: '.inf'
-        TargetFilename|contains:
-            - '\Temp\'
-            - '\AppData\'
-    selection_registry:
-        EventID: 13
-        TargetObject|contains: 'Connection Manager'
-    condition: selection_cmstp and (selection_inf_file or
+  selection_cmstp:
+    EventID: 1
+    Image|endswith: '\cmstp.exe'
+    CommandLine|contains:
+      - '/au'
+      - '/s'
+  selection_inf_file:
+    EventID: 11
+    TargetFilename|endswith: '.inf'
+    TargetFilename|contains:
+      - '\Temp\'
+      - '\AppData\'
+  selection_registry:
+    EventID: 13
+    TargetObject|contains: 'Connection Manager'
+  condition: selection_cmstp and (selection_inf_file or
                selection_registry)
 falsepositives:
-    - Legitimate VPN connection setups
-    - Network profile installations
+  - Legitimate VPN connection setups
+  - Network profile installations
 level: medium
 tags:
   # MITRE ATT&CK tactic

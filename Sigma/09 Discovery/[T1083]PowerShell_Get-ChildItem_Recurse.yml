@@ -26,16 +26,16 @@ logsource:
   service: powershell
 detection:
   selection_scriptblock:
-    EventID: 4104
-    ScriptBlockText|contains|all:
+  EventID: 4104
+  ScriptBlockText|contains|all:
       - "Get-ChildItem"
       - "-Recurse"
   selection_cmdline:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Get-ChildItem -Recurse"
       - "gci -Recurse"
       - "Get-ChildItem -Path * -Recurse"

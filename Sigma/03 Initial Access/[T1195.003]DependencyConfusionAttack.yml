@@ -5,31 +5,31 @@ description: Detects dependency confusion attacks targeting internal package nam
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1195/003/
+  - https://attack.mitre.org/techniques/T1195/003/
 logsource:
-    product: package-manager
-    service: pip
+  product: package-manager
+  service: pip
 detection:
-    selection_internal_pattern:
-        PackageName|contains:
-            - 'internal-'
-            - 'company-'
-            - 'corp-'
-            - 'private-'
-            - 'org-'
-    selection_public_repo:
-        RepositoryURL|contains:
-            - 'pypi.org'
-            - 'npmjs.com'
-            - 'rubygems.org'
-    selection_suspicious_version:
-        PackageVersion|contains:
-            - '99.'
-            - '999.'
-            - '9999.'
-    selection_recent_upload:
-        UploadDate|gte: 'now-7d'
-    condition: selection_internal_pattern and selection_public_repo and (selection_suspicious_version or selection_recent_upload)
+  selection_internal_pattern:
+    PackageName|contains:
+      - 'internal-'
+      - 'company-'
+      - 'corp-'
+      - 'private-'
+      - 'org-'
+  selection_public_repo:
+    RepositoryURL|contains:
+      - 'pypi.org'
+      - 'npmjs.com'
+      - 'rubygems.org'
+  selection_suspicious_version:
+    PackageVersion|contains:
+      - '99.'
+      - '999.'
+      - '9999.'
+  selection_recent_upload:
+    UploadDate|gte: 'now-7d'
+  condition: selection_internal_pattern and selection_public_repo and (selection_suspicious_version or selection_recent_upload)
 level: high
 tags:
   - attack.initial-access

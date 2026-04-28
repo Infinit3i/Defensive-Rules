@@ -30,22 +30,22 @@ logsource:
   category: process_creation
 detection:
   browser_launch:
-    Image|endswith:
+  Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'http'
       - 'https'
   suspicious_domains:
-    CommandLine|contains:
+  CommandLine|contains:
       - '.tk/'
       - '.ml/'
       - '.cf/'
       - 'bit.ly'
       - 'tinyurl'
   download_activity:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'download'
       - 'save'
       - 'temp'

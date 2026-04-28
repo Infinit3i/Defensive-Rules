@@ -5,34 +5,34 @@ description: Detects scheduled tasks configured for data collection activities
 author: Infinit3i
 date: 2026/04/28
 references:
-    - https://attack.mitre.org/techniques/T1119/
+  - https://attack.mitre.org/techniques/T1119/
 tags:
   - attack.collection
   - attack.t1119
   - sysmon
   - windows
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 1
-    schtasks:
-        - Image|endswith: '\schtasks.exe'
-        - CommandLine|contains: '/create'
-    collection_actions:
-        CommandLine|contains:
-            - 'robocopy'
-            - 'xcopy'
-            - 'powershell'
-            - '.ps1'
-    targets:
-        CommandLine|contains:
-            - 'Users'
-            - 'Documents'
-            - 'AppData'
-    condition: selection and schtasks and collection_actions and targets
+  selection:
+    EventID: 1
+  schtasks:
+    - Image|endswith: '\schtasks.exe'
+    - CommandLine|contains: '/create'
+  collection_actions:
+    CommandLine|contains:
+      - 'robocopy'
+      - 'xcopy'
+      - 'powershell'
+      - '.ps1'
+  targets:
+    CommandLine|contains:
+      - 'Users'
+      - 'Documents'
+      - 'AppData'
+  condition: selection and schtasks and collection_actions and targets
 falsepositives:
-    - Legitimate backup tasks
-    - System maintenance
+  - Legitimate backup tasks
+  - System maintenance
 level: medium

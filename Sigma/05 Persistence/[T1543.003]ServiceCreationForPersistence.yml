@@ -7,48 +7,48 @@ description: Detects service creation with suspicious characteristics indicating
 author: Infinit3i
 date: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1543/003/
+  - https://attack.mitre.org/techniques/T1543/003/
 logsource:
-    product: windows
+  product: windows
 detection:
-    service_creation:
-        EventID: 7045
-        ServiceType: 0x10
-    sc_command:
-        EventID: 1
-        CommandLine|contains:
-            - 'sc create'
-            - 'sc config'
-            - 'New-Service'
-    powershell_service:
-        EventID: 1
-        Image|endswith: '\powershell.exe'
-        CommandLine|contains:
-            - 'New-Service'
-            - 'Set-Service'
-    suspicious_service_paths:
-        EventID: 7045
-        ImagePath|contains:
-            - 'C:\Users\'
-            - 'C:\Temp\'
-            - 'C:\ProgramData\'
-            - '%APPDATA%'
-            - '%TEMP%'
-            - 'rundll32'
-            - 'regsvr32'
-    condition: (service_creation or sc_command or powershell_service) and
+  service_creation:
+    EventID: 7045
+    ServiceType: 0x10
+  sc_command:
+    EventID: 1
+    CommandLine|contains:
+      - 'sc create'
+      - 'sc config'
+      - 'New-Service'
+  powershell_service:
+    EventID: 1
+    Image|endswith: '\powershell.exe'
+    CommandLine|contains:
+      - 'New-Service'
+      - 'Set-Service'
+  suspicious_service_paths:
+    EventID: 7045
+    ImagePath|contains:
+      - 'C:\Users\'
+      - 'C:\Temp\'
+      - 'C:\ProgramData\'
+      - '%APPDATA%'
+      - '%TEMP%'
+      - 'rundll32'
+      - 'regsvr32'
+  condition: (service_creation or sc_command or powershell_service) and
                suspicious_service_paths
 fields:
-    - ServiceName
-    - ImagePath
-    - ServiceType
-    - CommandLine
-    - User
-    - ComputerName
+  - ServiceName
+  - ImagePath
+  - ServiceType
+  - CommandLine
+  - User
+  - ComputerName
 falsepositives:
-    - Legitimate software installations
-    - System administration activities
-    - Third-party service management tools
+  - Legitimate software installations
+  - System administration activities
+  - Third-party service management tools
 level: high
 tags:
   # MITRE ATT&CK tactic

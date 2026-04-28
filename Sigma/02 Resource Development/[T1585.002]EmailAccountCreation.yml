@@ -14,10 +14,10 @@ logsource:
   service: registration
 detection:
   selection_bulk_registration:
-    event_type: account_created
-    ip_address: '*'
+  event_type: account_created
+  ip_address: '*'
   selection_suspicious_naming:
-    email|contains:
+  email|contains:
       - 'noreply'
       - 'no-reply'
       - 'admin'
@@ -28,7 +28,7 @@ detection:
       - 'update'
       - 'service'
   selection_domain_spoofing:
-    email|contains:
+  email|contains:
       - 'microsft'
       - 'gooogle'
       - 'paypaI'
@@ -37,7 +37,7 @@ detection:
       - 'gmail.co'
       - 'outlook.co'
   selection_temporary_providers:
-    email|endswith:
+  email|endswith:
       - '@10minutemail.com'
       - '@guerrillamail.com'
       - '@mailinator.com'

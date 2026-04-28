@@ -12,13 +12,13 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-    EventID: 13
+  EventID: 13
   selection_ifeo:
-    TargetObject|contains: '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\'
+  TargetObject|contains: '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\'
   selection_debugger:
-    TargetObject|endswith: '\Debugger'
+  TargetObject|endswith: '\Debugger'
   filter_legitimate:
-    Details|contains:
+  Details|contains:
       - 'ntsd.exe'
       - 'windbg.exe'
       - 'cdb.exe'

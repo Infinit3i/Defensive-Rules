@@ -5,35 +5,35 @@ description: Detects process execution initiated from Registry Run keys through 
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1547/001/
+  - https://attack.mitre.org/techniques/T1547/001/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_parent:
-        EventID: 1
-        ParentImage|endswith: '\explorer.exe'
-    selection_cmdline:
-        CommandLine|contains:
-            - 'HKLM\Software\Microsoft\Windows\CurrentVersion\Run'
-            - 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
-            - 'CurrentVersion\Run'
-    selection_suspicious:
-        - Image|contains:
-            - '\AppData\'
-            - '\Temp\'
-            - '\Users\Public\'
-            - '\ProgramData\'
-        - CommandLine|contains:
-            - ' -enc '
-            - ' -e '
-            - 'powershell'
-            - 'cmd /c'
-            - 'rundll32'
-    condition: selection_parent and (selection_cmdline or selection_suspicious)
+  selection_parent:
+    EventID: 1
+    ParentImage|endswith: '\explorer.exe'
+  selection_cmdline:
+    CommandLine|contains:
+      - 'HKLM\Software\Microsoft\Windows\CurrentVersion\Run'
+      - 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
+      - 'CurrentVersion\Run'
+  selection_suspicious:
+    - Image|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+    - CommandLine|contains:
+      - ' -enc '
+      - ' -e '
+      - 'powershell'
+      - 'cmd /c'
+      - 'rundll32'
+  condition: selection_parent and (selection_cmdline or selection_suspicious)
 falsepositives:
-    - Legitimate startup applications
-    - Software update mechanisms
+  - Legitimate startup applications
+  - Software update mechanisms
 level: high
 tags:
   - attack.persistence

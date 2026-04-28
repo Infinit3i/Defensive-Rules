@@ -30,18 +30,18 @@ logsource:
   category: process_creation
 detection:
   log_commands:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'wevtutil'
       - 'Get-EventLog'
       - 'Get-WinEvent'
       - 'eventvwr'
   log_file_access:
-    TargetFilename|contains:
+  TargetFilename|contains:
       - '\Windows\System32\winevt\Logs\'
       - '.evtx'
       - '.log'
   log_export:
-    CommandLine|contains:
+  CommandLine|contains:
       - '/export'
       - '/query'
       - '/format'

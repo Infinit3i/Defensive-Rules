@@ -24,7 +24,7 @@ logsource:
   category: authentication
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "Failed password for"
   condition: selection
 falsepositives:

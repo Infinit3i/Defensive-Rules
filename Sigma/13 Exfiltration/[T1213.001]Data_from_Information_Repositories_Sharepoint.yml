@@ -29,18 +29,18 @@ logsource:
   service: sharepoint
 detection:
   bulk_download:
-    Operation: 'FileDownloaded'
-    ItemType: 'File'
-    ObjectId|count|gte: 50
+  Operation: 'FileDownloaded'
+  ItemType: 'File'
+  ObjectId|count|gte: 50
   automated_access:
-    UserAgent|contains:
+  UserAgent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'powershell'
   sensitive_files:
-    Operation: 'FileAccessed'
-    SourceFileName|endswith:
+  Operation: 'FileAccessed'
+  SourceFileName|endswith:
       - '.xlsx'
       - '.docx'
       - '.pdf'

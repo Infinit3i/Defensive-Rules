@@ -29,20 +29,20 @@ logsource:
   service: asterisk
 detection:
   suspicious_keywords:
-    call_transcript|contains:
+  call_transcript|contains:
       - 'verify account'
       - 'urgent security'
       - 'suspend account'
       - 'payment issue'
   impersonation_attempts:
-    caller_id|contains:
+  caller_id|contains:
       - 'IT Support'
       - 'Security Team'
       - 'Help Desk'
       - 'Microsoft'
   high_frequency:
-    source_number|count|gte: 10
-    time_window: '1h'
+  source_number|count|gte: 10
+  time_window: '1h'
   condition: suspicious_keywords or impersonation_attempts or high_frequency
 falsepositives:
   - Legitimate support calls

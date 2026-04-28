@@ -13,11 +13,11 @@ logsource:
   service: signinlogs
 detection:
   selection:
-    ResultType: 0
-    Location:
+  ResultType: 0
+  Location:
       - '*'
   filter_known_locations:
-    Location:
+  Location:
       - 'United States'
       - 'Canada'
   condition: selection and not filter_known_locations

@@ -12,21 +12,21 @@ logsource:
   service: auditd
 detection:
   selection_grub_files:
-    - type: PATH
+  - type: PATH
       name|contains:
-        - /boot/grub/grub.cfg
-        - /boot/grub2/grub.cfg
-        - /etc/grub.d/
-        - /etc/default/grub
+    - /boot/grub/grub.cfg
+    - /boot/grub2/grub.cfg
+    - /etc/grub.d/
+    - /etc/default/grub
   selection_suspicious_commands:
-    - type: EXECVE
+  - type: EXECVE
       a0|contains:
-        - grub-mkconfig
-        - grub2-mkconfig
-        - update-grub
-        - grub-install
+    - grub-mkconfig
+    - grub2-mkconfig
+    - update-grub
+    - grub-install
   selection_file_write:
-    - type: SYSCALL
+  - type: SYSCALL
       syscall: openat
       a2: 577  # O_WRONLY|O_CREAT
   condition: (selection_grub_files and selection_file_write) or selection_suspicious_commands

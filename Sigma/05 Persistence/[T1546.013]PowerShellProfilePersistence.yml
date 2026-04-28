@@ -5,18 +5,18 @@ description: Detects PowerShell profile script modification for persistence exec
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection:
-        EventID: 11
-        TargetFilename|contains:
-            - 'Microsoft.PowerShell_profile.ps1'
-            - 'profile.ps1'
-            - '\WindowsPowerShell\'
-            - '\PowerShell\7\'
-        TargetFilename|endswith: '.ps1'
-    condition: selection
+  selection:
+    EventID: 11
+    TargetFilename|contains:
+      - 'Microsoft.PowerShell_profile.ps1'
+      - 'profile.ps1'
+      - '\WindowsPowerShell\'
+      - '\PowerShell\7\'
+    TargetFilename|endswith: '.ps1'
+  condition: selection
 level: medium
 tags:
   - attack.persistence
@@ -25,4 +25,4 @@ tags:
   - windows
   - powershell
 references:
-    - https://attack.mitre.org/techniques/T1546/013/
+  - https://attack.mitre.org/techniques/T1546/013/

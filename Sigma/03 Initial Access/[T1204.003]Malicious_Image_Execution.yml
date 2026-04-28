@@ -30,23 +30,23 @@ logsource:
   category: process_creation
 detection:
   image_viewers:
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\mspaint.exe'
       - '\PhotoViewer.exe'
       - '\Photos.exe'
-    Image|endswith: '.exe'
+  Image|endswith: '.exe'
   steganography_tools:
-    Image|contains:
+  Image|contains:
       - 'steghide'
       - 'openstego'
       - 'outguess'
   suspicious_image_process:
-    CommandLine|contains:
+  CommandLine|contains:
       - '.jpg'
       - '.png'
       - '.bmp'
       - '.gif'
-    Image|endswith: '.exe'
+  Image|endswith: '.exe'
   condition: image_viewers or steganography_tools or suspicious_image_process
 falsepositives:
   - Legitimate image processing applications

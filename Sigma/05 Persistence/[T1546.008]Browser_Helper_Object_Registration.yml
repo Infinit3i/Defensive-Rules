@@ -11,19 +11,19 @@ logsource:
   service: sysmon
 detection:
   selection_bho_reg:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\Browser Helper Objects\'
   selection_clsid_reg:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SOFTWARE\Classes\CLSID\'
-    TargetObject|endswith:
+  TargetObject|endswith:
       - '\InprocServer32\(Default)'
       - '\InprocServer32\ThreadingModel'
   filter_known_paths:
-    Details|contains:
+  Details|contains:
       - 'C:\Program Files\'
       - 'C:\Program Files (x86)\'
       - 'C:\Windows\System32\'

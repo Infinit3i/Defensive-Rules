@@ -14,23 +14,23 @@ logsource:
   service: sysmon
 detection:
   selection_dcom_execution:
-    EventID: 1
-    ParentImage|endswith: '\svchost.exe'
-    ParentCommandLine|contains: '-k DcomLaunch'
-    Image|endswith:
+  EventID: 1
+  ParentImage|endswith: '\svchost.exe'
+  ParentCommandLine|contains: '-k DcomLaunch'
+  Image|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\wmic.exe'
   selection_wmi_dcom:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - '/node:'
       - 'process call create'
   selection_dcom_network:
-    EventID: 3
-    DestinationPort: 135
-    Image|endswith:
+  EventID: 3
+  DestinationPort: 135
+  Image|endswith:
       - '\svchost.exe'
       - '\wmiprvse.exe'
   condition: selection_dcom_execution or selection_wmi_dcom or selection_dcom_network

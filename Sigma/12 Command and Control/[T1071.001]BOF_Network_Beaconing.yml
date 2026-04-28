@@ -7,41 +7,41 @@ description: Detects BOF C2 beaconing through regular intervals and payload patt
 author: matthewiver@protonmail.com
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1071/001/
-    - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
+  - https://attack.mitre.org/techniques/T1071/001/
+  - https://www.cobaltstrike.com/blog/beacon-object-files-luser-defined-reflective-loader/
 logsource:
-    product: zeek
-    service: http
+  product: zeek
+  service: http
 detection:
-    regular_beacons:
-        method: 'GET'
-        uri|contains:
-            - '/updates'
-            - '/check'
-            - '/ping'
-    payload_patterns:
-        uri|contains:
-            - 'exec='
-            - 'cmd='
-            - 'run='
-        user_agent|contains:
-            - 'Mozilla/4.0'
-            - 'curl'
-    timing_pattern:
-        interval_variance|lte: 5
-        request_count|gte: 10
-    condition: (regular_beacons or payload_patterns) and timing_pattern
+  regular_beacons:
+    method: 'GET'
+    uri|contains:
+      - '/updates'
+      - '/check'
+      - '/ping'
+  payload_patterns:
+    uri|contains:
+      - 'exec='
+      - 'cmd='
+      - 'run='
+    user_agent|contains:
+      - 'Mozilla/4.0'
+      - 'curl'
+  timing_pattern:
+    interval_variance|lte: 5
+    request_count|gte: 10
+  condition: (regular_beacons or payload_patterns) and timing_pattern
 fields:
-    - src_ip
-    - dest_ip
-    - uri
-    - user_agent
-    - method
-    - response_code
+  - src_ip
+  - dest_ip
+  - uri
+  - user_agent
+  - method
+  - response_code
 falsepositives:
-    - Legitimate software update checks
-    - Health monitoring systems
-    - Automated backup systems
+  - Legitimate software update checks
+  - Health monitoring systems
+  - Automated backup systems
 level: medium
 tags:
   - attack.command_and_control

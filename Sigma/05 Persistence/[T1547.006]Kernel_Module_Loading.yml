@@ -5,29 +5,29 @@ description: Detects loading of kernel modules for persistence or privilege esca
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_commands:
-        comm:
-            - "insmod"
-            - "modprobe"
-            - "rmmod"
-        type: "SYSCALL"
-        syscall: "execve"
-    selection_init_module:
-        type: "SYSCALL"
-        syscall: "init_module"
-    selection_finit_module:
-        type: "SYSCALL"
-        syscall: "finit_module"
-    selection_suspicious_paths:
-        a1|contains:
-            - "/tmp/"
-            - "/var/tmp/"
-            - "/dev/shm/"
-            - "/home/"
-    condition: selection_commands or selection_init_module or
+  selection_commands:
+    comm:
+      - "insmod"
+      - "modprobe"
+      - "rmmod"
+    type: "SYSCALL"
+    syscall: "execve"
+  selection_init_module:
+    type: "SYSCALL"
+    syscall: "init_module"
+  selection_finit_module:
+    type: "SYSCALL"
+    syscall: "finit_module"
+  selection_suspicious_paths:
+    a1|contains:
+      - "/tmp/"
+      - "/var/tmp/"
+      - "/dev/shm/"
+      - "/home/"
+  condition: selection_commands or selection_init_module or
                selection_finit_module or
                (selection_commands and selection_suspicious_paths)
 level: high
@@ -39,7 +39,7 @@ tags:
   - linux
   - auditd
 references:
-    - https://attack.mitre.org/techniques/T1547/006/
+  - https://attack.mitre.org/techniques/T1547/006/
 falsepositives:
-    - System administration
-    - Hardware driver installation
+  - System administration
+  - Hardware driver installation

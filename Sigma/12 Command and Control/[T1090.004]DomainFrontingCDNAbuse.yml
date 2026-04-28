@@ -9,7 +9,7 @@ logsource:
   service: web
 detection:
   selection_cdn_providers:
-    c-uri|contains:
+  c-uri|contains:
       - 'cloudfront.net'
       - 'fastly.com'
       - 'cloudflare.com'
@@ -17,24 +17,24 @@ detection:
       - 'azure.com'
       - 'amazonaws.com'
   selection_host_mismatch:
-    c-uri|contains:
+  c-uri|contains:
       - 'amazonaws.com'
-    cs-host|contains:
+  cs-host|contains:
       - 'cloudfront.net'
   selection_suspicious_paths:
-    c-uri|contains:
+  c-uri|contains:
       - '/api/v1/'
       - '/endpoint/'
       - '/gateway/'
       - '/proxy/'
       - '/tunnel/'
   selection_encrypted_traffic:
-    cs-method: 'POST'
-    sc-bytes|gt: 512
-    cs-bytes|gt: 256
+  cs-method: 'POST'
+  sc-bytes|gt: 512
+  cs-bytes|gt: 256
   selection_https_tunnel:
-    cs-method: 'CONNECT'
-    cs-uri-port:
+  cs-method: 'CONNECT'
+  cs-uri-port:
       - 443
       - 8443
       - 9443

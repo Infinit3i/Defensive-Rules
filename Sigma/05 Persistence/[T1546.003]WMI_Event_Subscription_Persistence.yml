@@ -6,27 +6,27 @@ description: Detects WMI event subscription persistence through consumer and fil
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    sel_wmi_consumer:
-        EventID: 20
-        Consumer|contains:
-            - 'ActiveScriptEventConsumer'
-            - 'CommandLineEventConsumer'
-            - 'LogFileEventConsumer'
-    sel_wmi_filter:
-        EventID: 19
-        EventNamespace: 'root\subscription'
-    sel_wmi_binding:
-        EventID: 21
-        Consumer|contains:
-            - 'ActiveScript'
-            - 'CommandLine'
-    condition: sel_wmi_consumer or (sel_wmi_filter and sel_wmi_binding)
+  sel_wmi_consumer:
+    EventID: 20
+    Consumer|contains:
+      - 'ActiveScriptEventConsumer'
+      - 'CommandLineEventConsumer'
+      - 'LogFileEventConsumer'
+  sel_wmi_filter:
+    EventID: 19
+    EventNamespace: 'root\subscription'
+  sel_wmi_binding:
+    EventID: 21
+    Consumer|contains:
+      - 'ActiveScript'
+      - 'CommandLine'
+  condition: sel_wmi_consumer or (sel_wmi_filter and sel_wmi_binding)
 falsepositives:
-    - Legitimate system administration scripts
-    - Security monitoring software
+  - Legitimate system administration scripts
+  - Security monitoring software
 level: high
 tags:
   # MITRE ATT&CK tactic
@@ -42,5 +42,5 @@ tags:
   - windows
   - wmi
 references:
-    - https://attack.mitre.org/techniques/T1546/003/
-    - https://learn.microsoft.com/en-us/windows/win32/wmisdk/
+  - https://attack.mitre.org/techniques/T1546/003/
+  - https://learn.microsoft.com/en-us/windows/win32/wmisdk/

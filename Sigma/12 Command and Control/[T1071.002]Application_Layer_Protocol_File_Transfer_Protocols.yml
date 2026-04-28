@@ -29,19 +29,19 @@ logsource:
   service: conn
 detection:
   ftp_ports:
-    id.resp_p|contains:
+  id.resp_p|contains:
       - 21
       - 22
       - 990
       - 989
   suspicious_transfer:
-    service: 'ftp'
-    orig_bytes|gte: 1000
-    resp_bytes|gte: 1000
+  service: 'ftp'
+  orig_bytes|gte: 1000
+  resp_bytes|gte: 1000
   encrypted_ftp:
-    service: 'ssh'
-    id.resp_p: 22
-    orig_bytes|lte: 10000
+  service: 'ssh'
+  id.resp_p: 22
+  orig_bytes|lte: 10000
   condition: ftp_ports and (suspicious_transfer or encrypted_ftp)
 falsepositives:
   - Legitimate file transfers

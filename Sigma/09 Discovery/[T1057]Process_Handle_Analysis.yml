@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'handle.exe'
       - 'Get-Process | Select Handles'
       - 'wmic process get handlecount'

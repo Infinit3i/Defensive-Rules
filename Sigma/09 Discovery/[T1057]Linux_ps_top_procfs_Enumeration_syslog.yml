@@ -26,16 +26,16 @@ logsource:
   service: syslog
 detection:
   sel_ps:
-    Message|contains:
+  Message|contains:
       - " ps -ef"
       - " ps aux"
       - " ps -eo"
   sel_top_batch:
-    Message|contains:
+  Message|contains:
       - " top -b"
       - " top -n "
   sel_procfs:
-    Message|contains:
+  Message|contains:
       - "/proc/*/cmdline"
       - "/proc/*/status"
       - "pgrep "

@@ -26,13 +26,13 @@ logsource:
   service: wmi
 detection:
   sel_query:
-    EventID: 5857
-    Query|contains:
+  EventID: 5857
+  Query|contains:
       - "Select * from Win32_Process"
       - "select Name,ProcessId from Win32_Process"
   sel_consumer:
-    EventID: 5858
-    Consumer|contains: "Win32_Process"
+  EventID: 5858
+  Consumer|contains: "Win32_Process"
   condition: sel_query or sel_consumer
 falsepositives:
   - Enterprise management tooling performing inventory via WMI.

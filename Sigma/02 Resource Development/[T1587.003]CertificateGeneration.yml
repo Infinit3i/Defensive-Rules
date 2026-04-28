@@ -14,26 +14,26 @@ logsource:
   service: sysmon
 detection:
   selection_openssl_activity:
-    EventID: 1
-    Image|endswith: '\openssl.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\openssl.exe'
+  CommandLine|contains:
       - 'req -new'
       - 'x509 -req'
       - 'genrsa'
       - 'genpkey'
   selection_cert_tools:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\certreq.exe'
       - '\makecert.exe'
       - '\certutil.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '-new'
       - '-submit'
       - '-install'
   selection_suspicious_subjects:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'CN=Microsoft'
       - 'CN=Google'
       - 'CN=Apple'
@@ -45,14 +45,14 @@ detection:
       - 'CN=secure'
       - 'CN=update'
   selection_cert_files:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID: 11
+  TargetFilename|endswith:
       - '.csr'
       - '.pem'
       - '.p12'
       - '.pfx'
       - '.key'
-    TargetFilename|contains:
+  TargetFilename|contains:
       - 'microsoft'
       - 'google'
       - 'paypal'

@@ -11,19 +11,19 @@ logsource:
   service: sysmon
 detection:
   selection_systeminfo:
-    EventID: 1
-    Image|endswith: '\systeminfo.exe'
+  EventID: 1
+  Image|endswith: '\systeminfo.exe'
   selection_wmic_qfe:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - 'qfe'
       - 'os get'
       - 'computersystem get'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-HotFix'
       - 'Get-WmiObject Win32_QuickFixEngineering'
       - 'Get-ComputerInfo'

@@ -30,23 +30,23 @@ logsource:
   category: process_creation
 detection:
   package_managers:
-    Image|endswith:
+  Image|endswith:
       - '\npm.exe'
       - '\pip.exe'
       - '\composer.exe'
       - '\nuget.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'install'
       - 'update'
   suspicious_repos:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'pypi.org'
       - 'npmjs.com'
       - 'packagist.org'
       - 'typosquatting'
       - 'similar'
   private_install:
-    CommandLine|contains:
+  CommandLine|contains:
       - '--index-url'
       - '--extra-index-url'
       - '--registry'

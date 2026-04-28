@@ -29,20 +29,20 @@ logsource:
   service: msexchange-management
 detection:
   mailbox_rules:
-    EventID: 1
-    OperationName|contains:
+  EventID: 1
+  OperationName|contains:
       - 'New-InboxRule'
       - 'Set-InboxRule'
       - 'New-MailboxRule'
   admin_changes:
-    OperationName|contains:
+  OperationName|contains:
       - 'Add-RoleGroupMember'
       - 'New-ManagementRoleAssignment'
       - 'Set-OrganizationConfig'
   suspicious_forwarding:
-    OperationName|contains:
+  OperationName|contains:
       - 'Set-Mailbox'
-    Parameters|contains:
+  Parameters|contains:
       - 'ForwardingAddress'
       - 'ForwardingSmtpAddress'
   condition: mailbox_rules or admin_changes or suspicious_forwarding

@@ -29,19 +29,19 @@ logsource:
   service: exchange
 detection:
   forwarding_rule:
-    Operation: 'New-InboxRule'
-    Parameters|contains:
+  Operation: 'New-InboxRule'
+  Parameters|contains:
       - 'ForwardTo'
       - 'ForwardAsAttachmentTo'
       - 'RedirectTo'
   transport_rule:
-    Operation: 'New-TransportRule'
-    Parameters|contains:
+  Operation: 'New-TransportRule'
+  Parameters|contains:
       - 'BlindCopyTo'
       - 'RedirectMessageTo'
   mailbox_forwarding:
-    Operation: 'Set-Mailbox'
-    Parameters|contains:
+  Operation: 'Set-Mailbox'
+  Parameters|contains:
       - 'ForwardingAddress'
       - 'ForwardingSmtpAddress'
   condition: forwarding_rule or transport_rule or mailbox_forwarding

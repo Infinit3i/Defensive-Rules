@@ -10,11 +10,11 @@ logsource:
   product: windows
 detection:
   windows_event:
-    EventID: 4728
-    GroupName|endswith: 'Domain Admins'
+  EventID: 4728
+  GroupName|endswith: 'Domain Admins'
   sysmon_process:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'net group'
       - 'Domain Admins'
       - '/add'

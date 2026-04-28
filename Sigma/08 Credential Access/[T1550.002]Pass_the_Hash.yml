@@ -23,9 +23,9 @@ logsource:
   service: security
 detection:
   selection:
-    EventID: 4624
-    LogonType: 3
-    AuthenticationPackageName: "NTLM"
+  EventID: 4624
+  LogonType: 3
+  AuthenticationPackageName: "NTLM"
   condition: selection
 falsepositives:
   - Legitimate network logon activity that uses NTLM authentication.

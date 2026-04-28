@@ -12,19 +12,19 @@ logsource:
   product: windows
 detection:
   sysmon_event:
-    EventID:
+  EventID:
       - 8
       - 10
   sysmon_target:
-    TargetImage|endswith:
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\explorer.exe'
   security_event:
-    EventID:
+  EventID:
       - 4673
       - 4674
   security_target:
-    Message|contains:
+  Message|contains:
       - 'lsass.exe'
       - 'explorer.exe'
   condition: (sysmon_event and sysmon_target) or (security_event and security_target)

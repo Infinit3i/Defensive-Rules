@@ -7,89 +7,89 @@ author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1195/
-    - https://attack.mitre.org/techniques/T1195.002/
+  - https://attack.mitre.org/techniques/T1195/
+  - https://attack.mitre.org/techniques/T1195.002/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_package_managers:
-        EventID: 1
-        Image|endswith:
-            - '\npm.exe'
-            - '\pip.exe'
-            - '\gem.exe'
-            - '\nuget.exe'
-            - '\yarn.exe'
-            - '\composer.exe'
-            - '\cargo.exe'
-            - '\go.exe'
-        CommandLine|contains:
-            - 'install'
-            - 'add'
-            - 'update'
-    selection_typosquatting:
-        EventID: 1
-        CommandLine|contains:
-            - 'react-dom'  # Common typosquats
-            - 'lodash'
-            - 'express'
-            - 'axios'
-            - 'moment'
-            - 'underscore'
-            - 'bootstrap'
-            - 'jquery'
-    selection_suspicious_install:
-        EventID: 1
-        CommandLine|contains:
-            - '--force'
-            - '--ignore-scripts'
-            - '--unsafe-perm'
-            - '--allow-root'
-            - 'postinstall'
-    selection_network_exfil:
-        EventID: 3
-        Image|contains:
-            - 'node.exe'
-            - 'python.exe'
-            - 'ruby.exe'
-        DestinationPort:
-            - 443
-            - 80
-            - 8080
-            - 9000
-        Initiated: true
-    selection_file_creation:
-        EventID: 11
-        Image|contains:
-            - 'npm'
-            - 'pip'
-            - 'gem'
-            - 'nuget'
-        TargetFilename|contains:
-            - '\AppData\Roaming\npm\'
-            - '\site-packages\'
-            - '\gems\'
-            - '\packages\'
-    selection_malicious_scripts:
-        EventID: 1
-        ParentImage|contains:
-            - 'npm'
-            - 'pip'
-            - 'gem'
-        Image|endswith:
-            - '\powershell.exe'
-            - '\cmd.exe'
-            - '\bash.exe'
-            - '\sh.exe'
-        CommandLine|contains:
-            - 'curl'
-            - 'wget'
-            - 'Invoke-WebRequest'
-            - 'Start-Process'
-            - 'IEX'
-            - 'DownloadString'
-    condition: selection_package_managers and (selection_typosquatting or selection_suspicious_install or selection_malicious_scripts) or (selection_network_exfil and selection_file_creation)
+  selection_package_managers:
+    EventID: 1
+    Image|endswith:
+      - '\npm.exe'
+      - '\pip.exe'
+      - '\gem.exe'
+      - '\nuget.exe'
+      - '\yarn.exe'
+      - '\composer.exe'
+      - '\cargo.exe'
+      - '\go.exe'
+    CommandLine|contains:
+      - 'install'
+      - 'add'
+      - 'update'
+  selection_typosquatting:
+    EventID: 1
+    CommandLine|contains:
+      - 'react-dom'  # Common typosquats
+      - 'lodash'
+      - 'express'
+      - 'axios'
+      - 'moment'
+      - 'underscore'
+      - 'bootstrap'
+      - 'jquery'
+  selection_suspicious_install:
+    EventID: 1
+    CommandLine|contains:
+      - '--force'
+      - '--ignore-scripts'
+      - '--unsafe-perm'
+      - '--allow-root'
+      - 'postinstall'
+  selection_network_exfil:
+    EventID: 3
+    Image|contains:
+      - 'node.exe'
+      - 'python.exe'
+      - 'ruby.exe'
+    DestinationPort:
+      - 443
+      - 80
+      - 8080
+      - 9000
+    Initiated: true
+  selection_file_creation:
+    EventID: 11
+    Image|contains:
+      - 'npm'
+      - 'pip'
+      - 'gem'
+      - 'nuget'
+    TargetFilename|contains:
+      - '\AppData\Roaming\npm\'
+      - '\site-packages\'
+      - '\gems\'
+      - '\packages\'
+  selection_malicious_scripts:
+    EventID: 1
+    ParentImage|contains:
+      - 'npm'
+      - 'pip'
+      - 'gem'
+    Image|endswith:
+      - '\powershell.exe'
+      - '\cmd.exe'
+      - '\bash.exe'
+      - '\sh.exe'
+    CommandLine|contains:
+      - 'curl'
+      - 'wget'
+      - 'Invoke-WebRequest'
+      - 'Start-Process'
+      - 'IEX'
+      - 'DownloadString'
+  condition: selection_package_managers and (selection_typosquatting or selection_suspicious_install or selection_malicious_scripts) or (selection_network_exfil and selection_file_creation)
 level: critical
 tags:
   # MITRE ATT&CK tactic
@@ -110,6 +110,6 @@ tags:
   - package_manager
   - dependency_confusion
 falsepositives:
-    - Legitimate package installations with --force flag
-    - Development environments with custom package repositories
-    - Automated CI/CD pipeline package updates
+  - Legitimate package installations with --force flag
+  - Development environments with custom package repositories
+  - Automated CI/CD pipeline package updates

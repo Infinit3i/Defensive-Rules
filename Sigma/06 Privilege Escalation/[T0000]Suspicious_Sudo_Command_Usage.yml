@@ -25,7 +25,7 @@ logsource:
   category: authentication
 detection:
   selection:
-    Message|contains:
+  Message|contains:
       - "sudo:"
       - "COMMAND="
   condition: selection

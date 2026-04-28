@@ -10,7 +10,7 @@ logsource:
   product: zeek
 detection:
   selection:
-    icmp_type:
+  icmp_type:
       - 0
       - 8
   condition: selection

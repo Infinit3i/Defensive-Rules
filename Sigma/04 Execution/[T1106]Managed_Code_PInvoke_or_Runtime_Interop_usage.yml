@@ -34,15 +34,15 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "Add-Type"
       - "System.Runtime.InteropServices"
       - "PInvoke"
   selection_dotnet:
-    EventID: 1
-    Image|endswith: '\dotnet.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\dotnet.exe'
+  CommandLine|contains:
       - "DllImport"
       - "Marshal."
   condition: selection or selection_dotnet

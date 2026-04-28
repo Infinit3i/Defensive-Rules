@@ -11,14 +11,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - 'stop'
       - 'delete'
       - 'config'
       - 'disable'
   database_services:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'MSSQLSERVER'
       - 'SQLSERVERAGENT'
       - 'MSSQLLaunchpad'

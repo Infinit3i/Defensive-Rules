@@ -29,20 +29,20 @@ logsource:
   service: security
 detection:
   usb_insertion:
-    EventID: 6416
-    DeviceDescription|contains:
+  EventID: 6416
+  DeviceDescription|contains:
       - 'USB'
       - 'Mass Storage'
   unknown_driver:
-    EventID: 7045
-    ServiceName|contains:
+  EventID: 7045
+  ServiceName|contains:
       - 'usb'
       - 'storage'
       - 'disk'
-    StartType: 3
+  StartType: 3
   pnp_device:
-    EventID: 6005
-    DeviceInstanceId|startswith:
+  EventID: 6005
+  DeviceInstanceId|startswith:
       - 'USB\'
       - 'USBSTOR\'
   condition: usb_insertion or unknown_driver or pnp_device

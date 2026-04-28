@@ -5,28 +5,28 @@ description: Detects installation of typosquatted packages that mimic legitimate
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1195/001/
+  - https://attack.mitre.org/techniques/T1195/001/
 logsource:
-    product: package-manager
-    service: npm
+  product: package-manager
+  service: npm
 detection:
-    selection_suspicious_names:
-        PackageName|contains:
-            - 'requesst'
-            - 'beautifulsoup'
-            - 'urllibz'
-            - 'numpyy'
-            - 'pillow1'
-            - 'lodaash'
-    selection_low_downloads:
-        DownloadCount|lt: 1000
-    selection_recent_creation:
-        PackageAge|lt: 30
-    selection_suspicious_author:
-        - AuthorName|length: 3
-        - AuthorEmail|contains: 'temp'
-        - AuthorEmail|contains: 'disposable'
-    condition: selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
+  selection_suspicious_names:
+    PackageName|contains:
+      - 'requesst'
+      - 'beautifulsoup'
+      - 'urllibz'
+      - 'numpyy'
+      - 'pillow1'
+      - 'lodaash'
+  selection_low_downloads:
+    DownloadCount|lt: 1000
+  selection_recent_creation:
+    PackageAge|lt: 30
+  selection_suspicious_author:
+    - AuthorName|length: 3
+    - AuthorEmail|contains: 'temp'
+    - AuthorEmail|contains: 'disposable'
+  condition: selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
 level: high
 tags:
   - attack.initial-access

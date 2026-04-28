@@ -5,27 +5,27 @@ description: Detects MFA push bombing attacks through repeated authentication at
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1556/006/
+  - https://attack.mitre.org/techniques/T1556/006/
 logsource:
-    product: azure
-    service: activedirectory
+  product: azure
+  service: activedirectory
 detection:
-    selection_push:
-        Category: 'Authentication'
-        OperationName: 'Sign-in activity'
-        AuthenticationMethod: 'Phone App Notification'
-    selection_repeated:
-        ResultType:
-            - 'Failure'
-            - 'Success'
-        UserPrincipalName: '*'
-    selection_timing:
-        TimeGenerated: '*'
-    timeframe: 120s
-    condition: selection_push and selection_repeated | count() > 5
+  selection_push:
+    Category: 'Authentication'
+    OperationName: 'Sign-in activity'
+    AuthenticationMethod: 'Phone App Notification'
+  selection_repeated:
+    ResultType:
+      - 'Failure'
+      - 'Success'
+    UserPrincipalName: '*'
+  selection_timing:
+    TimeGenerated: '*'
+  timeframe: 120s
+  condition: selection_push and selection_repeated | count() > 5
 falsepositives:
-    - Users accidentally triggering multiple MFA prompts
-    - Application retry mechanisms
+  - Users accidentally triggering multiple MFA prompts
+  - Application retry mechanisms
 level: high
 tags:
   - attack.initial_access

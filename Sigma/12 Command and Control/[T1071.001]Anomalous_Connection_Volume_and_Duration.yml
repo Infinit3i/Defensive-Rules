@@ -26,9 +26,9 @@ logsource:
   service: conn
 detection:
   long_duration:
-    duration|gt: 600.0  # connections > 10 minutes
+  duration|gt: 600.0  # connections > 10 minutes
   high_volume:
-    history|contains: "S"  # many TCP SYNs, i.e. initiating lots of connections
+  history|contains: "S"  # many TCP SYNs, i.e. initiating lots of connections
   condition: long_duration OR high_volume
 falsepositives:
   - Backup systems, monitoring agents, or CDN connections.

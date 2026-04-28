@@ -28,8 +28,8 @@ logsource:
   category: process_creation
 detection:
   selection:
-    Image|endswith: '\cmd.exe'
-    CommandLine|contains:
+  Image|endswith: '\cmd.exe'
+  CommandLine|contains:
       - '/c'
       - '&&'
       - '||'

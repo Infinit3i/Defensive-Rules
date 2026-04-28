@@ -30,18 +30,18 @@ logsource:
   category: process_creation
 detection:
   share_enum:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'net share'
       - 'net view'
       - 'dir \\'
   smb_tools:
-    Image|endswith:
+  Image|endswith:
       - '\smbclient.exe'
       - '\enum4linux.exe'
       - '\nbtscan.exe'
   powershell_enum:
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-WmiObject'
       - 'Win32_Share'
       - 'Get-SmbShare'

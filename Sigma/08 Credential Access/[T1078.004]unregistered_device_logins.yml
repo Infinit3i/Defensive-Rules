@@ -13,11 +13,11 @@ logsource:
   service: cloudtrail
 detection:
   selection:
-    eventName: "ConsoleLogin"
-    additionalEventData.MFAUsed: "No"
-    userIdentity.type: "IAMUser"
+  eventName: "ConsoleLogin"
+  additionalEventData.MFAUsed: "No"
+  userIdentity.type: "IAMUser"
   filter_known_devices:
-    sourceIPAddress:
+  sourceIPAddress:
       - '10.*'
       - '192.168.*'
   condition: selection and not filter_known_devices

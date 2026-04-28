@@ -30,20 +30,20 @@ logsource:
   category: process_creation
 detection:
   suspicious_extensions:
-    Image|endswith:
+  Image|endswith:
       - '.scr'
       - '.pif'
       - '.com'
       - '.bat'
       - '.vbs'
   temp_execution:
-    Image|startswith:
+  Image|startswith:
       - 'C:\Users\'
       - 'C:\Temp\'
       - 'C:\Windows\Temp\'
-    Image|endswith: '.exe'
+  Image|endswith: '.exe'
   download_execution:
-    Image|contains:
+  Image|contains:
       - '\Downloads\'
       - '\Desktop\'
       - '\Documents\'

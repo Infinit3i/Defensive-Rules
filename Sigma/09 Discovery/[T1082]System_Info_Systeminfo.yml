@@ -24,11 +24,11 @@ logsource:
   service: sysmon
 detection:
   selection:
-    EventID: 1
-    Image|endswith: '\systeminfo.exe'
+  EventID: 1
+  Image|endswith: '\systeminfo.exe'
   commandline_indicators:
-    EventID: 1
-    CommandLine|contains:
+  EventID: 1
+  CommandLine|contains:
       - "systeminfo"
   condition: selection or commandline_indicators
 falsepositives:

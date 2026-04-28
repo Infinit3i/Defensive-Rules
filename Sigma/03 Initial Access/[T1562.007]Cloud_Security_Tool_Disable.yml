@@ -5,71 +5,71 @@ id: 475i82ad-b23e-4567-8901-cdef01234567
 status: experimental
 description: Detects cloud-based security attacks and access attempts.
 references:
-    - https://attack.mitre.org/techniques/T1562/007/
-    - https://docs.aws.amazon.com/cloudtrail/latest/userguide/
+  - https://attack.mitre.org/techniques/T1562/007/
+  - https://docs.aws.amazon.com/cloudtrail/latest/userguide/
 logsource:
-    product: aws
-    service: cloudtrail
+  product: aws
+  service: cloudtrail
 detection:
-    selection_cloudtrail_disable:
-        eventName:
-            - 'StopLogging'
-            - 'DeleteTrail'
-            - 'PutEventSelectors'
-        responseElements.trail.includeGlobalServiceEvents: false
-    selection_guardduty_disable:
-        eventName:
-            - 'DeleteDetector'
-            - 'UpdateDetector'
-            - 'DeleteIPSet'
-            - 'DeleteThreatIntelSet'
-            # GuardDuty security service tampering
-    selection_security_hub_disable:
-        eventName:
-            - 'DisableSecurityHub'
-            - 'DeleteInsight'
-            - 'BatchDisableStandards'
-            # Security Hub disabling
-    selection_config_disable:
-        eventName:
-            - 'StopConfigurationRecorder'
-            - 'DeleteConfigurationRecorder'
-            - 'DeleteDeliveryChannel'
-            # AWS Config service disabling
-    selection_vpc_flow_logs_disable:
-        eventName:
-            - 'DeleteFlowLogs'
-            - 'ModifyVpcAttribute'
-        requestParameters.enableDnsHostnames: false
-    selection_cloudwatch_tampering:
-        eventName:
-            - 'DeleteLogGroup'
-            - 'DeleteLogStream'
-            - 'DeleteMetricAlarm'
-            # CloudWatch monitoring disabling
-    selection_iam_logging_disable:
-        eventName:
-            - 'DeleteAccessKey'
-            - 'DeactivateMFADevice'
-            - 'DeleteAccountPasswordPolicy'
-            # IAM security feature disabling
-    selection_network_security_disable:
-        eventName:
-            - 'DeleteSecurityGroup'
-            - 'AuthorizeSecurityGroupIngress'
-            - 'RevokeSecurityGroupEgress'
-        requestParameters.groupId: '*'
-        requestParameters.ipPermissions.cidrIp: '0.0.0.0/0'
-    condition: selection_cloudtrail_disable or selection_guardduty_disable or
+  selection_cloudtrail_disable:
+    eventName:
+      - 'StopLogging'
+      - 'DeleteTrail'
+      - 'PutEventSelectors'
+    responseElements.trail.includeGlobalServiceEvents: false
+  selection_guardduty_disable:
+    eventName:
+      - 'DeleteDetector'
+      - 'UpdateDetector'
+      - 'DeleteIPSet'
+      - 'DeleteThreatIntelSet'
+      # GuardDuty security service tampering
+  selection_security_hub_disable:
+    eventName:
+      - 'DisableSecurityHub'
+      - 'DeleteInsight'
+      - 'BatchDisableStandards'
+      # Security Hub disabling
+  selection_config_disable:
+    eventName:
+      - 'StopConfigurationRecorder'
+      - 'DeleteConfigurationRecorder'
+      - 'DeleteDeliveryChannel'
+      # AWS Config service disabling
+  selection_vpc_flow_logs_disable:
+    eventName:
+      - 'DeleteFlowLogs'
+      - 'ModifyVpcAttribute'
+    requestParameters.enableDnsHostnames: false
+  selection_cloudwatch_tampering:
+    eventName:
+      - 'DeleteLogGroup'
+      - 'DeleteLogStream'
+      - 'DeleteMetricAlarm'
+      # CloudWatch monitoring disabling
+  selection_iam_logging_disable:
+    eventName:
+      - 'DeleteAccessKey'
+      - 'DeactivateMFADevice'
+      - 'DeleteAccountPasswordPolicy'
+      # IAM security feature disabling
+  selection_network_security_disable:
+    eventName:
+      - 'DeleteSecurityGroup'
+      - 'AuthorizeSecurityGroupIngress'
+      - 'RevokeSecurityGroupEgress'
+    requestParameters.groupId: '*'
+    requestParameters.ipPermissions.cidrIp: '0.0.0.0/0'
+  condition: selection_cloudtrail_disable or selection_guardduty_disable or
                selection_security_hub_disable or selection_config_disable or
                selection_vpc_flow_logs_disable or selection_cloudwatch_tampering or
                selection_iam_logging_disable or selection_network_security_disable
 falsepositives:
-    - Legitimate administrative maintenance activities
-    - Cost optimization efforts to disable unused services
-    - Authorized security tool reconfiguration
-    - Disaster recovery and backup operations
-    - Compliance-driven security configuration changes
+  - Legitimate administrative maintenance activities
+  - Cost optimization efforts to disable unused services
+  - Authorized security tool reconfiguration
+  - Disaster recovery and backup operations
+  - Compliance-driven security configuration changes
 level: critical
 tags:
   # MITRE ATT&CK tactic

@@ -29,17 +29,17 @@ logsource:
   service: sshd
 detection:
   concurrent_sessions:
-    program: 'sshd'
-    message|contains: 'Accepted'
-    user|count|gte: 2
+  program: 'sshd'
+  message|contains: 'Accepted'
+  user|count|gte: 2
   session_reuse:
-    program: 'sshd'
-    message|contains:
+  program: 'sshd'
+  message|contains:
       - 'session opened'
       - 'session closed'
   pty_allocation:
-    program: 'sshd'
-    message|contains:
+  program: 'sshd'
+  message|contains:
       - 'Allocated pty'
       - 'Released pty'
   condition: concurrent_sessions or (session_reuse and pty_allocation)

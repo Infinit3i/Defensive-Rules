@@ -6,29 +6,29 @@ description: Detects token impersonation through named pipe client connections
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1134/004/
+  - https://attack.mitre.org/techniques/T1134/004/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_pipe:
-        EventID: 18
-        PipeName|startswith:
-            - '\pipe\spoolss'
-            - '\pipe\samr'
-            - '\pipe\lsarpc'
-            - '\pipe\netlogon'
-    selection_process:
-        EventID: 1
-        CommandLine|contains:
-            - 'ImpersonateNamedPipeClient'
-            - 'CreateNamedPipe'
-        Image|endswith:
-            - '.exe'
-    condition: selection_pipe or selection_process
+  selection_pipe:
+    EventID: 18
+    PipeName|startswith:
+      - '\pipe\spoolss'
+      - '\pipe\samr'
+      - '\pipe\lsarpc'
+      - '\pipe\netlogon'
+  selection_process:
+    EventID: 1
+    CommandLine|contains:
+      - 'ImpersonateNamedPipeClient'
+      - 'CreateNamedPipe'
+    Image|endswith:
+      - '.exe'
+  condition: selection_pipe or selection_process
 falsepositives:
-    - Legitimate system services
-    - Print spooler operations
+  - Legitimate system services
+  - Print spooler operations
 level: medium
 tags:
   # MITRE ATT&CK tactic

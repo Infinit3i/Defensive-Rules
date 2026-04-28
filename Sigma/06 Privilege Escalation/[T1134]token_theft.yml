@@ -29,19 +29,19 @@ logsource:
 detection:
   # SECTION 1: Suspicious Process Access (Sysmon EID 10)
   suspicious_access:
-    EventID: 10
-    TargetImage|endswith:
+  EventID: 10
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\spoolsv.exe'
-    # Common suspicious access rights for token theft
-    #  - 0x1F0FFF or 0x1fffff = PROCESS_ALL_ACCESS
-    #  - 0x143A and 0x1410 are typical handles for duplication and injection
-    GrantedAccess|re: '(?i)0x1F0FFF|0x1fffff|0x143a|0x1410'
+  # Common suspicious access rights for token theft
+  #  - 0x1F0FFF or 0x1fffff = PROCESS_ALL_ACCESS
+  #  - 0x143A and 0x1410 are typical handles for duplication and injection
+  GrantedAccess|re: '(?i)0x1F0FFF|0x1fffff|0x143a|0x1410'
   # SECTION 2: CreateRemoteThread into LSASS or other system processes (Sysmon EID 8)
   suspicious_thread:
-    EventID: 8
-    TargetImage|endswith:
+  EventID: 8
+  TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\spoolsv.exe'

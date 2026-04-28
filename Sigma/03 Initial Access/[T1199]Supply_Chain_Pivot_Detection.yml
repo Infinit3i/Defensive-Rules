@@ -19,33 +19,33 @@ logsource:
   service: sysmon
 detection:
   network_connections:
-    EventID: 3
-    DestinationHostname|endswith:
+  EventID: 3
+  DestinationHostname|endswith:
       - '.supplier.com'
       - '.vendor.net'
       - '.partner.org'
-    ProcessName|contains:
+  ProcessName|contains:
       - 'powershell.exe'
       - 'cmd.exe'
       - 'wmic.exe'
   file_transfers:
-    EventID: 11
-    TargetFilename|endswith:
+  EventID: 11
+  TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.ps1'
       - '.bat'
-    ProcessName|contains:
+  ProcessName|contains:
       - 'scp.exe'
       - 'sftp.exe'
       - 'ftp.exe'
   process_creation:
-    EventID: 1
-    ParentProcessName|contains:
+  EventID: 1
+  ParentProcessName|contains:
       - 'ssh.exe'
       - 'putty.exe'
       - 'rdp'
-    ProcessName|contains:
+  ProcessName|contains:
       - 'powershell.exe'
       - 'cmd.exe'
   condition: network_connections or file_transfers or process_creation

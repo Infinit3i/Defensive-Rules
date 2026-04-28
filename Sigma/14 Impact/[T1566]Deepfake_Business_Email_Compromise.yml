@@ -7,96 +7,96 @@ author: Infinit3i
 date: 2024-12-01
 modified: 2026-04-27
 references:
-    - https://attack.mitre.org/techniques/T1566/
-    - https://attack.mitre.org/techniques/T1598/
+  - https://attack.mitre.org/techniques/T1566/
+  - https://attack.mitre.org/techniques/T1598/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_ai_tools:
-        EventID: 1
-        Image|endswith:
-            - '\python.exe'
-            - '\ffmpeg.exe'
-            - '\audacity.exe'
-        CommandLine|contains:
-            - 'deepfake'
-            - 'voice_clone'
-            - 'speech_synthesis'
-            - 'face_swap'
-            - 'wav2lip'
-            - 'real-esrgan'
-            - 'first-order'
-            - 'faceswap'
-            - 'deepvoice'
-    selection_media_generation:
-        EventID: 11
-        TargetFilename|endswith:
-            - '.wav'
-            - '.mp3'
-            - '.mp4'
-            - '.avi'
-            - '.mov'
-        Image|contains:
-            - 'synthesis'
-            - 'generate'
-            - 'clone'
-            - 'fake'
-    selection_email_clients:
-        EventID: 1
-        Image|endswith:
-            - '\outlook.exe'
-            - '\thunderbird.exe'
-            - '\mailbird.exe'
-        CommandLine|contains:
-            - 'attach'
-            - 'send'
-            - 'compose'
-    selection_recording_tools:
-        EventID: 1
-        Image|contains:
-            - 'record'
-            - 'capture'
-            - 'screen'
-            - 'audio'
-        CommandLine|contains:
-            - '--audio'
-            - '--video'
-            - '--microphone'
-            - '--camera'
-    selection_browser_activity:
-        EventID: 1
-        Image|endswith:
-            - '\chrome.exe'
-            - '\firefox.exe'
-            - '\msedge.exe'
-        CommandLine|contains:
-            - 'webrtc'
-            - 'getUserMedia'
-            - 'mediaRecorder'
-    selection_network_upload:
-        EventID: 3
-        DestinationPort:
-            - 443
-            - 587
-            - 993
-            - 995
-        Initiated: true
-        Image|contains:
-            - 'mail'
-            - 'smtp'
-            - 'email'
-    selection_suspicious_files:
-        EventID: 11
-        TargetFilename|contains:
-            - 'voice_'
-            - 'audio_'
-            - 'video_'
-            - 'deepfake_'
-            - 'synthetic_'
-            - 'generated_'
-            - 'cloned_'
-    condition: (selection_ai_tools and selection_media_generation) or
+  selection_ai_tools:
+    EventID: 1
+    Image|endswith:
+      - '\python.exe'
+      - '\ffmpeg.exe'
+      - '\audacity.exe'
+    CommandLine|contains:
+      - 'deepfake'
+      - 'voice_clone'
+      - 'speech_synthesis'
+      - 'face_swap'
+      - 'wav2lip'
+      - 'real-esrgan'
+      - 'first-order'
+      - 'faceswap'
+      - 'deepvoice'
+  selection_media_generation:
+    EventID: 11
+    TargetFilename|endswith:
+      - '.wav'
+      - '.mp3'
+      - '.mp4'
+      - '.avi'
+      - '.mov'
+    Image|contains:
+      - 'synthesis'
+      - 'generate'
+      - 'clone'
+      - 'fake'
+  selection_email_clients:
+    EventID: 1
+    Image|endswith:
+      - '\outlook.exe'
+      - '\thunderbird.exe'
+      - '\mailbird.exe'
+    CommandLine|contains:
+      - 'attach'
+      - 'send'
+      - 'compose'
+  selection_recording_tools:
+    EventID: 1
+    Image|contains:
+      - 'record'
+      - 'capture'
+      - 'screen'
+      - 'audio'
+    CommandLine|contains:
+      - '--audio'
+      - '--video'
+      - '--microphone'
+      - '--camera'
+  selection_browser_activity:
+    EventID: 1
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+    CommandLine|contains:
+      - 'webrtc'
+      - 'getUserMedia'
+      - 'mediaRecorder'
+  selection_network_upload:
+    EventID: 3
+    DestinationPort:
+      - 443
+      - 587
+      - 993
+      - 995
+    Initiated: true
+    Image|contains:
+      - 'mail'
+      - 'smtp'
+      - 'email'
+  selection_suspicious_files:
+    EventID: 11
+    TargetFilename|contains:
+      - 'voice_'
+      - 'audio_'
+      - 'video_'
+      - 'deepfake_'
+      - 'synthetic_'
+      - 'generated_'
+      - 'cloned_'
+  condition: (selection_ai_tools and selection_media_generation) or
                (selection_email_clients and selection_suspicious_files) or
                (selection_recording_tools and selection_browser_activity and selection_network_upload)
 level: critical
@@ -121,6 +121,6 @@ tags:
   - synthetic_media
   - voice_cloning
 falsepositives:
-    - Legitimate video/audio editing and production work
-    - Content creation and multimedia development
-    - Voice recognition and speech processing research
+  - Legitimate video/audio editing and production work
+  - Content creation and multimedia development
+  - Voice recognition and speech processing research

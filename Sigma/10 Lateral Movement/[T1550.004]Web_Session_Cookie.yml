@@ -29,16 +29,16 @@ logsource:
   service: http
 detection:
   session_cookie:
-    cookie|contains:
+  cookie|contains:
       - 'PHPSESSID'
       - 'JSESSIONID'
       - 'ASP.NET_SessionId'
       - 'session'
   multiple_ips:
-    cookie|count|gte: 2
-    id.orig_h|count|gte: 2
+  cookie|count|gte: 2
+  id.orig_h|count|gte: 2
   suspicious_ua:
-    user_agent|contains:
+  user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'

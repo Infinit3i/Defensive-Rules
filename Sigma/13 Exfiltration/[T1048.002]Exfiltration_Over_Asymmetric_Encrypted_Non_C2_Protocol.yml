@@ -29,16 +29,16 @@ logsource:
   service: x509
 detection:
   unusual_cert:
-    certificate.subject|contains:
+  certificate.subject|contains:
       - 'CN=temp'
       - 'CN=test'
       - 'CN=localhost'
   short_lived_cert:
-    certificate.not_valid_before|contains: '2026'
-    certificate.not_valid_after|contains: '2026'
+  certificate.not_valid_before|contains: '2026'
+  certificate.not_valid_after|contains: '2026'
   suspicious_key:
-    certificate.key_length|gte: 4096
-    certificate.key_type: 'rsa'
+  certificate.key_length|gte: 4096
+  certificate.key_type: 'rsa'
   condition: unusual_cert or short_lived_cert or suspicious_key
 falsepositives:
   - Legitimate certificate operations

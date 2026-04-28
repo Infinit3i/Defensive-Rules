@@ -5,30 +5,30 @@ description: Detects suspicious autorun execution from removable media devices t
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1091/
+  - https://attack.mitre.org/techniques/T1091/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_autorun:
-        EventID: 1
-        Image|contains:
-            - '\autorun.exe'
-            - '\setup.exe'
-            - '\install.exe'
-        CommandLine|contains: 'autorun'
-    selection_removable:
-        EventID: 1
-        Image|startswith:
-            - 'D:\'
-            - 'E:\'
-            - 'F:\'
-            - 'G:\'
-            - 'H:\'
-    condition: selection_autorun and selection_removable
+  selection_autorun:
+    EventID: 1
+    Image|contains:
+      - '\autorun.exe'
+      - '\setup.exe'
+      - '\install.exe'
+    CommandLine|contains: 'autorun'
+  selection_removable:
+    EventID: 1
+    Image|startswith:
+      - 'D:\'
+      - 'E:\'
+      - 'F:\'
+      - 'G:\'
+      - 'H:\'
+  condition: selection_autorun and selection_removable
 falsepositives:
-    - Legitimate software installation from removable media
-    - Authorized portable applications
+  - Legitimate software installation from removable media
+  - Authorized portable applications
 level: high
 tags:
   - attack.initial_access

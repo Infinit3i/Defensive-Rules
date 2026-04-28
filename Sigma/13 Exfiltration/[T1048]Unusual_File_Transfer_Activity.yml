@@ -25,15 +25,15 @@ logsource:
   service: files
 detection:
   suspicious_mime:
-    mime_type|contains:
+  mime_type|contains:
       - "application/x-dosexec"
       - "application/x-sh"
       - "application/x-executable"
       - "application/x-msdownload"
   large_file:
-    total_bytes|gt: 50000000  # >50MB
+  total_bytes|gt: 50000000  # >50MB
   protocol_anomaly:
-    tx_hosts|contains: "ftp"
+  tx_hosts|contains: "ftp"
   condition: suspicious_mime OR large_file OR protocol_anomaly
 falsepositives:
   - Legitimate large file transfers or patching events.

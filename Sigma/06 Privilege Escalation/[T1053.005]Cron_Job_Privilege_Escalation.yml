@@ -6,32 +6,32 @@ description: Detects suspicious cron job creation for privilege escalation
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1053/005/
+  - https://attack.mitre.org/techniques/T1053/005/
 logsource:
-    product: linux
-    service: auditd
+  product: linux
+  service: auditd
 detection:
-    selection_crontab:
-        type: 'SYSCALL'
-        comm: 'crontab'
-        success: 'yes'
-    selection_file_write:
-        type: 'PATH'
-        name|contains:
-            - '/etc/crontab'
-            - '/var/spool/cron'
-            - '/etc/cron.d'
-    selection_suspicious:
-        comm: 'crontab'
-        exe|contains:
-            - '/tmp/'
-            - '/var/tmp/'
-            - '/dev/shm/'
-    condition: (selection_crontab and selection_file_write) or
+  selection_crontab:
+    type: 'SYSCALL'
+    comm: 'crontab'
+    success: 'yes'
+  selection_file_write:
+    type: 'PATH'
+    name|contains:
+      - '/etc/crontab'
+      - '/var/spool/cron'
+      - '/etc/cron.d'
+  selection_suspicious:
+    comm: 'crontab'
+    exe|contains:
+      - '/tmp/'
+      - '/var/tmp/'
+      - '/dev/shm/'
+  condition: (selection_crontab and selection_file_write) or
                selection_suspicious
 falsepositives:
-    - Legitimate system administration
-    - Automated backup scripts
+  - Legitimate system administration
+  - Automated backup scripts
 level: medium
 tags:
   # MITRE ATT&CK tactic

@@ -11,13 +11,13 @@ logsource:
   service: sysmon
 detection:
   selection_time:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\time.exe'
       - '\date.exe'
       - '\tzutil.exe'
       - '\w32tm.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - 'time /t'
       - 'date /t'
       - 'tzutil /g'
@@ -25,15 +25,15 @@ detection:
       - 'w32tm /query'
       - 'w32tm /stripchart'
   selection_net_time:
-    EventID: 1
-    Image|endswith: '\net.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\net.exe'
+  CommandLine|contains:
       - 'net time'
       - 'net view'
   selection_powershell:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Get-Date'
       - 'Get-TimeZone'
       - '[DateTime]::Now'
@@ -43,9 +43,9 @@ detection:
       - 'Get-WmiObject Win32_LocalTime'
       - 'Get-CimInstance Win32_TimeZone'
   selection_wmic:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - 'wmic timezone'
       - 'wmic os get localdatetime'
       - 'wmic os get lastbootuptime'

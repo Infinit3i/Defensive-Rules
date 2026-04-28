@@ -11,19 +11,19 @@ logsource:
   service: sysmon
 detection:
   selection_print_processor_reg:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Print Processors\'
       - '\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Print Processors\'
   selection_spooler_dll:
-    EventID: 13
-    TargetObject|contains:
+  EventID: 13
+  TargetObject|contains:
       - '\SYSTEM\CurrentControlSet\Control\Print\Printers\'
-    TargetObject|endswith:
+  TargetObject|endswith:
       - '\PrintProcessor'
       - '\Print Processor'
   filter_system_processors:
-    Details|contains:
+  Details|contains:
       - 'winprint'
       - 'localspl'
       - 'C:\Windows\System32\'

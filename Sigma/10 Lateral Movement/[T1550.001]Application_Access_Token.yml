@@ -29,18 +29,18 @@ logsource:
   service: auditlogs
 detection:
   app_access:
-    Category: 'ApplicationManagement'
-    OperationName|contains:
+  Category: 'ApplicationManagement'
+  OperationName|contains:
       - 'Add application'
       - 'Update application credentials'
   token_usage:
-    Category: 'SignInLogs'
-    ClientAppUsed|contains:
+  Category: 'SignInLogs'
+  ClientAppUsed|contains:
       - 'Exchange Web Services'
       - 'Other clients'
   suspicious_scope:
-    ConsentContext.IsAdminConsent: 'true'
-    PermissionDisplayName|contains:
+  ConsentContext.IsAdminConsent: 'true'
+  PermissionDisplayName|contains:
       - 'Read all'
       - 'Full access'
   condition: app_access or token_usage or suspicious_scope

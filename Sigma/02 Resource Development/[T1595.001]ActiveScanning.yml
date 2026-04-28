@@ -14,12 +14,12 @@ logsource:
   service: conn
 detection:
   selection_port_scanning:
-    conn_state:
+  conn_state:
       - 'REJ'
       - 'S0'
-    dest_port|lt: 1024
+  dest_port|lt: 1024
   selection_scanning_tools:
-    user_agent|contains:
+  user_agent|contains:
       - 'nmap'
       - 'masscan'
       - 'zmap'
@@ -27,8 +27,8 @@ detection:
       - 'angry'
       - 'scanner'
   selection_rapid_connections:
-    proto: 'tcp'
-    conn_state: 'S0'
+  proto: 'tcp'
+  conn_state: 'S0'
   condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
   timeframe: 1m
   count: 50

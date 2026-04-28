@@ -29,19 +29,19 @@ logsource:
   service: sms
 detection:
   suspicious_links:
-    message_body|contains:
+  message_body|contains:
       - 'bit.ly'
       - 'tinyurl.com'
       - 'click here'
       - 'urgent action required'
   fake_alerts:
-    message_body|contains:
+  message_body|contains:
       - 'account suspended'
       - 'security alert'
       - 'verify account'
       - 'payment failed'
   impersonation:
-    sender|contains:
+  sender|contains:
       - 'bank'
       - 'paypal'
       - 'amazon'

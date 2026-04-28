@@ -10,33 +10,33 @@ tags:
   - google_workspace
   - cloud
 logsource:
-    product: google_workspace
-    service: admin
+  product: google_workspace
+  service: admin
 detection:
-    selection_download:
-        event_name:
-            - 'download'
-            - 'copy'
-            - 'view'
-    selection_volume:
-        event_name: download
-    selection_external:
-        actor.email|endswith:
-            - '@gmail.com'
-            - '@yahoo.com'
-            - '@hotmail.com'
-    condition: selection_download and (selection_volume or selection_external)
-    timeframe: 1h
-    count: 50
+  selection_download:
+    event_name:
+      - 'download'
+      - 'copy'
+      - 'view'
+  selection_volume:
+    event_name: download
+  selection_external:
+    actor.email|endswith:
+      - '@gmail.com'
+      - '@yahoo.com'
+      - '@hotmail.com'
+  condition: selection_download and (selection_volume or selection_external)
+  timeframe: 1h
+  count: 50
 level: high
 fields:
-    - actor.email
-    - target.name
-    - ip_address
-    - event_name
+  - actor.email
+  - target.name
+  - ip_address
+  - event_name
 falsepositives:
-    - Legitimate bulk downloads by authorized users
-    - Automated backup processes
+  - Legitimate bulk downloads by authorized users
+  - Automated backup processes
 references:
-    - https://attack.mitre.org/techniques/T1530/
+  - https://attack.mitre.org/techniques/T1530/
 technique: T1530

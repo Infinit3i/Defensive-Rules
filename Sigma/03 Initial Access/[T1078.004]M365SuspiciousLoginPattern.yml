@@ -10,31 +10,31 @@ tags:
   - microsoft365
   - cloud
 logsource:
-    product: microsoft365
-    service: audit
+  product: microsoft365
+  service: audit
 detection:
-    selection_signin:
-        Operation: UserLoggedIn
-    selection_suspicious:
-        - DeviceDetail.isCompliant: false
-        - IPAddress|startswith:
-            - '10.'
-            - '192.168.'
-            - '172.'
-        - UserAgent|contains:
-            - 'curl'
-            - 'python'
-            - 'bot'
-    condition: selection_signin and selection_suspicious
+  selection_signin:
+    Operation: UserLoggedIn
+  selection_suspicious:
+    - DeviceDetail.isCompliant: false
+    - IPAddress|startswith:
+      - '10.'
+      - '192.168.'
+      - '172.'
+    - UserAgent|contains:
+      - 'curl'
+      - 'python'
+      - 'bot'
+  condition: selection_signin and selection_suspicious
 level: high
 fields:
-    - UserId
-    - IPAddress
-    - UserAgent
-    - DeviceDetail
+  - UserId
+  - IPAddress
+  - UserAgent
+  - DeviceDetail
 falsepositives:
-    - Legitimate admin access from internal networks
-    - Authorized API applications
+  - Legitimate admin access from internal networks
+  - Authorized API applications
 references:
-    - https://attack.mitre.org/techniques/T1078/004/
+  - https://attack.mitre.org/techniques/T1078/004/
 technique: T1078.004

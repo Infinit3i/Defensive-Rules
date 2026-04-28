@@ -28,10 +28,10 @@ logsource:
   service: conn
 detection:
   internal_pair:
-    id.orig_h|startswith: "192.168."
-    id.resp_h|startswith: "192.168."
+  id.orig_h|startswith: "192.168."
+  id.resp_h|startswith: "192.168."
   uncommon_service:
-    service|contains:
+  service|contains:
       - "rdp"
       - "winrm"
       - "dcerpc"

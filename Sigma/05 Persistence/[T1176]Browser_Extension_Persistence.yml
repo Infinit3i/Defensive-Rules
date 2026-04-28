@@ -6,34 +6,34 @@ description: Detects browser extension persistence through malicious extension i
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    sel_chrome_ext:
-        EventID: 11
-        TargetFilename|contains: '\Chrome\User Data\'
-        TargetFilename|endswith: '\manifest.json'
-    sel_firefox_ext:
-        EventID: 11
-        TargetFilename|contains: '\Firefox\Profiles\'
-        TargetFilename|endswith: '.xpi'
-    sel_edge_ext:
-        EventID: 11
-        TargetFilename|contains: '\Edge\User Data\Default\Extensions\'
-    sel_browser_cmd:
-        EventID: 1
-        Image|endswith:
-            - '\chrome.exe'
-            - '\firefox.exe'
-            - '\msedge.exe'
-        CommandLine|contains:
-            - '--load-extension'
-            - '--install-extension'
-            - 'extensions.install'
-    condition: sel_chrome_ext or sel_firefox_ext or sel_edge_ext or sel_browser_cmd
+  sel_chrome_ext:
+    EventID: 11
+    TargetFilename|contains: '\Chrome\User Data\'
+    TargetFilename|endswith: '\manifest.json'
+  sel_firefox_ext:
+    EventID: 11
+    TargetFilename|contains: '\Firefox\Profiles\'
+    TargetFilename|endswith: '.xpi'
+  sel_edge_ext:
+    EventID: 11
+    TargetFilename|contains: '\Edge\User Data\Default\Extensions\'
+  sel_browser_cmd:
+    EventID: 1
+    Image|endswith:
+      - '\chrome.exe'
+      - '\firefox.exe'
+      - '\msedge.exe'
+    CommandLine|contains:
+      - '--load-extension'
+      - '--install-extension'
+      - 'extensions.install'
+  condition: sel_chrome_ext or sel_firefox_ext or sel_edge_ext or sel_browser_cmd
 falsepositives:
-    - Legitimate browser extension installation
-    - Administrative browser configuration
+  - Legitimate browser extension installation
+  - Administrative browser configuration
 level: medium
 tags:
   # MITRE ATT&CK tactic
@@ -49,4 +49,4 @@ tags:
   - windows
   - browser
 references:
-    - https://attack.mitre.org/techniques/T1176/
+  - https://attack.mitre.org/techniques/T1176/

@@ -12,44 +12,44 @@ tags:
   - windows
   - security
 logsource:
-    product: windows
-    service: security
+  product: windows
+  service: security
 detection:
-    selection_guest_logon:
-        EventID: 4624
-        TargetUserName|contains:
-            - 'guest'
-            - 'Guest'
-            - 'IUSR'
-    selection_suspicious_activity:
-        EventID:
-            - 4648  # Explicit credential use
-            - 4672  # Special privileges assigned
-            - 4673  # Privileged service called
-    selection_network_access:
-        LogonType:
-            - 3   # Network
-            - 8   # NetworkCleartext
-            - 9   # NewCredentials
-    selection_privilege_escalation:
-        PrivilegeList|contains:
-            - 'SeDebugPrivilege'
-            - 'SeImpersonatePrivilege'
-            - 'SeTakeOwnershipPrivilege'
-            - 'SeBackupPrivilege'
-    condition: selection_guest_logon and (selection_suspicious_activity or
+  selection_guest_logon:
+    EventID: 4624
+    TargetUserName|contains:
+      - 'guest'
+      - 'Guest'
+      - 'IUSR'
+  selection_suspicious_activity:
+    EventID:
+      - 4648  # Explicit credential use
+      - 4672  # Special privileges assigned
+      - 4673  # Privileged service called
+  selection_network_access:
+    LogonType:
+      - 3   # Network
+      - 8   # NetworkCleartext
+      - 9   # NewCredentials
+  selection_privilege_escalation:
+    PrivilegeList|contains:
+      - 'SeDebugPrivilege'
+      - 'SeImpersonatePrivilege'
+      - 'SeTakeOwnershipPrivilege'
+      - 'SeBackupPrivilege'
+  condition: selection_guest_logon and (selection_suspicious_activity or
                selection_network_access or selection_privilege_escalation)
 level: high
 fields:
-    - TargetUserName
-    - LogonType
-    - IpAddress
-    - PrivilegeList
-    - ProcessName
+  - TargetUserName
+  - LogonType
+  - IpAddress
+  - PrivilegeList
+  - ProcessName
 falsepositives:
-    - Legitimate guest account usage in kiosk environments
-    - Web server anonymous access
-    - Public computer access scenarios
+  - Legitimate guest account usage in kiosk environments
+  - Web server anonymous access
+  - Public computer access scenarios
 references:
-    - https://attack.mitre.org/techniques/T1078/003/
+  - https://attack.mitre.org/techniques/T1078/003/
 technique: T1078.003

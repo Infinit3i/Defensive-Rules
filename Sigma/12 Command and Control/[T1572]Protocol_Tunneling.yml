@@ -30,19 +30,19 @@ logsource:
   category: process_creation
 detection:
   tunnel_tools:
-    Image|endswith:
+  Image|endswith:
       - '\ssh.exe'
       - '\plink.exe'
       - '\stunnel.exe'
       - '\chisel.exe'
   tunnel_args:
-    CommandLine|contains:
+  CommandLine|contains:
       - '-L '
       - '-R '
       - '-D '
       - 'tunnel'
   port_forwarding:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'portproxy'
       - 'forward'
       - 'redirect'

@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-    EventID: 1
-    Image|endswith: '\wmic.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\wmic.exe'
+  CommandLine|contains:
       - '/node:'
       - 'process call create'
       - '/user:'
       - '/password:'
       - 'Win32_Process'
   selection_powershell_wmi:
-    EventID: 1
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains:
+  EventID: 1
+  Image|endswith: '\powershell.exe'
+  CommandLine|contains:
       - 'Invoke-WmiMethod'
       - 'Get-WmiObject'
       - 'gwmi'
@@ -32,11 +32,11 @@ detection:
       - '-ComputerName'
       - '-Credential'
   selection_wmiprvse:
-    EventID: 1
-    Image|endswith: '\wmiprvse.exe'
-    ParentImage|endswith: '\svchost.exe'
+  EventID: 1
+  Image|endswith: '\wmiprvse.exe'
+  ParentImage|endswith: '\svchost.exe'
   remote_indicators:
-    CommandLine|contains:
+  CommandLine|contains:
       - 'cmd.exe /c'
       - 'powershell.exe -c'
       - 'rundll32.exe'
@@ -45,7 +45,7 @@ detection:
       - 'bitsadmin.exe'
       - 'certutil.exe'
   network_indicators:
-    CommandLine|re: '.*\\\\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.*'
+  CommandLine|re: '.*\\\\[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}.*'
   condition: (selection_wmic or selection_powershell_wmi) and (remote_indicators or network_indicators) or selection_wmiprvse
 fields:
   - Image

@@ -14,19 +14,19 @@ logsource:
   service: syslog
 detection:
   selection_ssh_login:
-    program: sshd
-    message|contains:
+  program: sshd
+  message|contains:
       - 'Accepted password'
       - 'Accepted publickey'
       - 'session opened'
   selection_internal_ssh:
-    src_ip|startswith:
+  src_ip|startswith:
       - '10.'
       - '172.'
       - '192.168.'
   selection_rapid_connections:
-    program: sshd
-    message|contains: 'Connection from'
+  program: sshd
+  message|contains: 'Connection from'
   condition: selection_ssh_login and selection_internal_ssh
   timeframe: 5m
   count: 5

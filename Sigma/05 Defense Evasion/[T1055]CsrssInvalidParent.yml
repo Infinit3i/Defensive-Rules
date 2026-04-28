@@ -5,21 +5,21 @@ id: d4e5f6a7-b8c9-0123-def4-456789012345
 status: experimental
 description: Detects csrss.exe spawned by process other than smss.exe which indicates process masquerading or injection
 references:
-    - https://attack.mitre.org/techniques/T1055/
-    - https://attack.mitre.org/techniques/T1036/
+  - https://attack.mitre.org/techniques/T1055/
+  - https://attack.mitre.org/techniques/T1036/
 author: Infinit3i
 date: 2026/04/27
 logsource:
-    category: process_creation
-    product: windows
+  category: process_creation
+  product: windows
 detection:
-    selection:
-        Image|endswith: '\csrss.exe'
-    filter:
-        ParentImage|endswith: '\smss.exe'
-    condition: selection and not filter
+  selection:
+    Image|endswith: '\csrss.exe'
+  filter:
+    ParentImage|endswith: '\smss.exe'
+  condition: selection and not filter
 falsepositives:
-    - None known - CSRSS should always be spawned by smss.exe
+  - None known - CSRSS should always be spawned by smss.exe
 level: critical
 tags:
   # MITRE ATT&CK tactic

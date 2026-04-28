@@ -29,20 +29,20 @@ logsource:
   service: http
 detection:
   git_clone:
-    uri|contains:
+  uri|contains:
       - '/git-upload-pack'
       - '/info/refs'
       - '.git/'
-    method: 'GET'
+  method: 'GET'
   bulk_download:
-    host|endswith:
+  host|endswith:
       - '.github.com'
       - '.gitlab.com'
       - '.bitbucket.org'
-    orig_bytes|gte: 100000000
+  orig_bytes|gte: 100000000
   api_access:
-    uri|contains: '/api/'
-    user_agent|contains:
+  uri|contains: '/api/'
+  user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'

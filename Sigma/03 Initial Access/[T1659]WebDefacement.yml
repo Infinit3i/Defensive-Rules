@@ -5,35 +5,35 @@ description: Detects web defacement attempts through unauthorized content modifi
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1659/
+  - https://attack.mitre.org/techniques/T1659/
 logsource:
-    product: apache
-    service: access
+  product: apache
+  service: access
 detection:
-    selection_methods:
-        method:
-            - 'PUT'
-            - 'PATCH'
-            - 'DELETE'
-        status: 200
-    selection_injection:
-        uri|contains:
-            - '<script>'
-            - '<iframe>'
-            - 'javascript:'
-            - 'data:'
-        method: 'POST'
-    selection_upload:
-        uri|contains:
-            - 'upload'
-            - 'file'
-            - 'image'
-        status: 200
-        content_length: '>1000'
-    condition: selection_methods or selection_injection or selection_upload
+  selection_methods:
+    method:
+      - 'PUT'
+      - 'PATCH'
+      - 'DELETE'
+    status: 200
+  selection_injection:
+    uri|contains:
+      - '<script>'
+      - '<iframe>'
+      - 'javascript:'
+      - 'data:'
+    method: 'POST'
+  selection_upload:
+    uri|contains:
+      - 'upload'
+      - 'file'
+      - 'image'
+    status: 200
+    content_length: '>1000'
+  condition: selection_methods or selection_injection or selection_upload
 falsepositives:
-    - Legitimate content management operations
-    - File upload functionality
+  - Legitimate content management operations
+  - File upload functionality
 level: medium
 tags:
   - attack.initial_access

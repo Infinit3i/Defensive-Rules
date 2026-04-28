@@ -5,32 +5,32 @@ description: Detects attempts to bypass MFA through authentication process modif
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1556/006/
+  - https://attack.mitre.org/techniques/T1556/006/
 logsource:
-    product: azure
-    service: activedirectory
+  product: azure
+  service: activedirectory
 detection:
-    selection_mfa:
-        Category: 'Authentication'
-        OperationName|contains:
-            - 'Sign-in activity'
-            - 'User Risk Detection'
-    selection_bypass:
-        AuthenticationRequirement: 'multiFactorAuthentication'
-        ResultType: 'Success'
-        RiskState|contains:
-            - 'atRisk'
-            - 'confirmedCompromised'
-    selection_suspicious:
-        Location|contains: 'Unknown'
-        ClientAppUsed|contains:
-            - 'Browser'
-            - 'Modern Auth'
-    timeframe: 300s
-    condition: selection_mfa and selection_bypass and selection_suspicious
+  selection_mfa:
+    Category: 'Authentication'
+    OperationName|contains:
+      - 'Sign-in activity'
+      - 'User Risk Detection'
+  selection_bypass:
+    AuthenticationRequirement: 'multiFactorAuthentication'
+    ResultType: 'Success'
+    RiskState|contains:
+      - 'atRisk'
+      - 'confirmedCompromised'
+  selection_suspicious:
+    Location|contains: 'Unknown'
+    ClientAppUsed|contains:
+      - 'Browser'
+      - 'Modern Auth'
+  timeframe: 300s
+  condition: selection_mfa and selection_bypass and selection_suspicious
 falsepositives:
-    - Legitimate MFA exceptions
-    - New device registrations
+  - Legitimate MFA exceptions
+  - New device registrations
 level: high
 tags:
   - attack.initial_access

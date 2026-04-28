@@ -29,16 +29,16 @@ logsource:
   service: microsoft-windows-winrm
 detection:
   winrm_shell:
-    EventID: 142
-    ShellId|contains: 'Microsoft.PowerShell'
+  EventID: 142
+  ShellId|contains: 'Microsoft.PowerShell'
   remote_command:
-    EventID: 143
-    CommandLine|contains:
+  EventID: 143
+  CommandLine|contains:
       - 'Invoke-Command'
       - 'Enter-PSSession'
   suspicious_user:
-    EventID: 91
-    User|contains:
+  EventID: 91
+  User|contains:
       - 'admin'
       - 'service'
       - 'guest'

@@ -29,14 +29,14 @@ logsource:
   service: security
 detection:
   failed_logon:
-    EventID: 4625
-    LogonType:
+  EventID: 4625
+  LogonType:
       - 2
       - 3
       - 10
   success_after_failures:
-    EventID: 4624
-    LogonType:
+  EventID: 4624
+  LogonType:
       - 2
       - 3
       - 10

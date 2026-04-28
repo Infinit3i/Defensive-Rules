@@ -25,13 +25,13 @@ logsource:
   service: conn
 detection:
   selection:
-    service|contains:
+  service|contains:
       - "smb"
       - "rdp"
       - "ssh"
       - "winrm"
-    id_orig_h|startswith: "192.168."  # internal IP range (customize for your network)
-    id_resp_h|startswith: "192.168."
+  id_orig_h|startswith: "192.168."  # internal IP range (customize for your network)
+  id_resp_h|startswith: "192.168."
   condition: selection
 falsepositives:
   - Normal administrative operations or backups using remote management protocols.

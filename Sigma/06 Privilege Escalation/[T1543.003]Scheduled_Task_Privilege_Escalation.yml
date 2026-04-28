@@ -6,28 +6,28 @@ description: Detects scheduled task creation with elevated privileges
 author: Infinit3i
 date: 2024/04/27
 references:
-    - https://attack.mitre.org/techniques/T1543/003/
+  - https://attack.mitre.org/techniques/T1543/003/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_schtasks:
-        EventID: 1
-        Image|endswith: '\schtasks.exe'
-        CommandLine|contains:
-            - '/ru system'
-            - '/rl highest'
-            - 'NT AUTHORITY\SYSTEM'
-    selection_taskschd:
-        EventID: 1
-        ParentImage|endswith: '\taskschd.msc'
-    selection_registry:
-        EventID: 13
-        TargetObject|contains: '\Schedule\TaskCache\Tasks\'
-    condition: selection_schtasks or selection_taskschd or selection_registry
+  selection_schtasks:
+    EventID: 1
+    Image|endswith: '\schtasks.exe'
+    CommandLine|contains:
+      - '/ru system'
+      - '/rl highest'
+      - 'NT AUTHORITY\SYSTEM'
+  selection_taskschd:
+    EventID: 1
+    ParentImage|endswith: '\taskschd.msc'
+  selection_registry:
+    EventID: 13
+    TargetObject|contains: '\Schedule\TaskCache\Tasks\'
+  condition: selection_schtasks or selection_taskschd or selection_registry
 falsepositives:
-    - Legitimate system administration
-    - Software installation tasks
+  - Legitimate system administration
+  - Software installation tasks
 level: medium
 tags:
   # MITRE ATT&CK tactic

@@ -29,19 +29,19 @@ logsource:
   service: http
 detection:
   text_sites:
-    host|endswith:
+  host|endswith:
       - '.pastebin.com'
       - '.hastebin.com'
       - '.ghostbin.com'
       - '.dpaste.org'
       - 'gist.github.com'
   text_upload:
-    method: 'POST'
-    content_type|contains: 'text/plain'
+  method: 'POST'
+  content_type|contains: 'text/plain'
   large_text:
-    method: 'POST'
-    request_body_len|gte: 100000
-    uri|contains: 'paste'
+  method: 'POST'
+  request_body_len|gte: 100000
+  uri|contains: 'paste'
   condition: text_sites and (text_upload or large_text)
 falsepositives:
   - Legitimate code sharing

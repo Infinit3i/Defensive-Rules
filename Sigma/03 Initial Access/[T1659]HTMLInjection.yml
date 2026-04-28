@@ -5,34 +5,34 @@ description: Detects HTML injection attacks through malicious content insertion 
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1659/
+  - https://attack.mitre.org/techniques/T1659/
 logsource:
-    product: zeek
-    service: http
+  product: zeek
+  service: http
 detection:
-    selection_xss:
-        uri|contains:
-            - '%3Cscript%3E'
-            - '<script>'
-            - 'javascript:'
-            - 'onload='
-            - 'onerror='
-    selection_forms:
-        uri|contains:
-            - '<form'
-            - '<input'
-            - 'action='
-        method: 'GET'
-    selection_html:
-        user_agent|contains:
-            - '<html>'
-            - '<body>'
-            - '<div>'
-        status_code: 200
-    condition: selection_xss or selection_forms or selection_html
+  selection_xss:
+    uri|contains:
+      - '%3Cscript%3E'
+      - '<script>'
+      - 'javascript:'
+      - 'onload='
+      - 'onerror='
+  selection_forms:
+    uri|contains:
+      - '<form'
+      - '<input'
+      - 'action='
+    method: 'GET'
+  selection_html:
+    user_agent|contains:
+      - '<html>'
+      - '<body>'
+      - '<div>'
+    status_code: 200
+  condition: selection_xss or selection_forms or selection_html
 falsepositives:
-    - Legitimate HTML content in parameters
-    - Web development and testing
+  - Legitimate HTML content in parameters
+  - Web development and testing
 level: medium
 tags:
   - attack.initial_access

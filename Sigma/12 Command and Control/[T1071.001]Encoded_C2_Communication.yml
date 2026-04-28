@@ -10,12 +10,12 @@ logsource:
   service: http
 detection:
   selection:
-    request_body_len: '>100'
-    uri|contains:
+  request_body_len: '>100'
+  uri|contains:
       - '?data='
       - '&cmd='
       - 'payload='
-    post_data|re: '^[A-Za-z0-9+/]{20,}={0,2}$'
+  post_data|re: '^[A-Za-z0-9+/]{20,}={0,2}$'
   condition: selection
 tags:
   # MITRE ATT&CK tactic

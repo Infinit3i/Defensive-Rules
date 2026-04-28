@@ -14,21 +14,21 @@ logsource:
   service: cloudtrail
 detection:
   selection_assume_role:
-    eventName: AssumeRole
-    sourceIPAddress|startswith:
+  eventName: AssumeRole
+  sourceIPAddress|startswith:
       - '10.'
       - '192.168.'
       - '172.'
   selection_admin_roles:
-    responseElements.assumedRoleUser.arn|contains:
+  responseElements.assumedRoleUser.arn|contains:
       - 'Administrator'
       - 'PowerUser'
       - 'FullAccess'
       - 'root'
   selection_cross_account:
-    eventName: AssumeRole
-    recipientAccountId: '*'
-    userIdentity.accountId: '*'
+  eventName: AssumeRole
+  recipientAccountId: '*'
+  userIdentity.accountId: '*'
   condition: selection_assume_role and (selection_admin_roles or selection_cross_account)
   timeframe: 10m
   count: 5

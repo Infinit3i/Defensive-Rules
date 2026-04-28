@@ -20,8 +20,8 @@ logsource:
   service: powershell
 detection:
   selection:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "syscall"
       - "mov r10"
       - "mov eax"

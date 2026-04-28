@@ -6,52 +6,52 @@ description: Detects WMI process creation with elevated privileges bypassing UAC
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1047/
-    - https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent-Asynchronous-And-Fileless-Backdoor-wp.pdf
+  - https://attack.mitre.org/techniques/T1047/
+  - https://www.blackhat.com/docs/us-15/materials/us-15-Graeber-Abusing-Windows-Management-Instrumentation-WMI-To-Build-A-Persistent-Asynchronous-And-Fileless-Backdoor-wp.pdf
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_wmi_exec:
-        EventID: 1
-        ParentImage|endswith: '\wmiprvse.exe'
-        IntegrityLevel:
-            - 'High'
-            - 'System'
-        CommandLine|contains:
-            - 'cmd.exe /c'
-            - 'powershell.exe -'
-            - 'rundll32.exe'
-            - 'regsvr32.exe'
-    selection_wmic_priv:
-        EventID: 1
-        Image|endswith: '\wmic.exe'
-        CommandLine|contains|all:
-            - 'process'
-            - 'call'
-            - 'create'
-        CommandLine|contains:
-            - '/node:'
-            - '/user:'
-            - '/password:'
-            - 'runas'
-    selection_bypass_indicators:
-        EventID: 1
-        ParentImage|endswith: '\wmiprvse.exe'
-        User|contains:
-            - 'NT AUTHORITY\SYSTEM'
-            - 'BUILTIN\Administrators'
-        CommandLine|contains:
-            - 'whoami /priv'
-            - 'net localgroup administrators'
-            - 'reg add HKLM'
-            - 'bcdedit'
-    condition: selection_wmi_exec or selection_wmic_priv or
+  selection_wmi_exec:
+    EventID: 1
+    ParentImage|endswith: '\wmiprvse.exe'
+    IntegrityLevel:
+      - 'High'
+      - 'System'
+    CommandLine|contains:
+      - 'cmd.exe /c'
+      - 'powershell.exe -'
+      - 'rundll32.exe'
+      - 'regsvr32.exe'
+  selection_wmic_priv:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains|all:
+      - 'process'
+      - 'call'
+      - 'create'
+    CommandLine|contains:
+      - '/node:'
+      - '/user:'
+      - '/password:'
+      - 'runas'
+  selection_bypass_indicators:
+    EventID: 1
+    ParentImage|endswith: '\wmiprvse.exe'
+    User|contains:
+      - 'NT AUTHORITY\SYSTEM'
+      - 'BUILTIN\Administrators'
+    CommandLine|contains:
+      - 'whoami /priv'
+      - 'net localgroup administrators'
+      - 'reg add HKLM'
+      - 'bcdedit'
+  condition: selection_wmi_exec or selection_wmic_priv or
                selection_bypass_indicators
 falsepositives:
-    - Administrative remote management
-    - Legitimate system maintenance scripts
-    - Enterprise management solutions
+  - Administrative remote management
+  - Legitimate system maintenance scripts
+  - Enterprise management solutions
 level: high
 tags:
   # MITRE ATT&CK tactic

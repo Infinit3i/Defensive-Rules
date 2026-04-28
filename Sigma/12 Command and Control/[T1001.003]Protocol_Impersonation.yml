@@ -29,15 +29,15 @@ logsource:
   service: conn
 detection:
   port_mismatch:
-    id.resp_p: 80
-    service: 'ssl'
+  id.resp_p: 80
+  service: 'ssl'
   protocol_confusion:
-    id.resp_p: 443
-    service: 'ftp'
+  id.resp_p: 443
+  service: 'ftp'
   unusual_patterns:
-    orig_bytes: resp_bytes
-    duration|lte: 10
-    service: 'unknown'
+  orig_bytes: resp_bytes
+  duration|lte: 10
+  service: 'unknown'
   condition: port_mismatch or protocol_confusion or unusual_patterns
 falsepositives:
   - Misconfigured services

@@ -26,19 +26,19 @@ logsource:
   service: powershell
 detection:
   selection_scriptblock:
-    EventID: 4104
-    ScriptBlockText|contains:
+  EventID: 4104
+  ScriptBlockText|contains:
       - "Get-Date"
       - "Get-TimeZone"
       - "Get-Culture"
       - "Get-Uptime"
       - "Get-Date -UFormat"
   selection_proc:
-    EventID: 1
-    Image|endswith:
+  EventID: 1
+  Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - "Get-Date"
       - "Get-TimeZone"
   condition: selection_scriptblock or selection_proc

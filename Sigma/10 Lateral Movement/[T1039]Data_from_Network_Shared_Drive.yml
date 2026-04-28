@@ -29,18 +29,18 @@ logsource:
   service: security
 detection:
   share_access:
-    EventID: 5140
-    ShareName|endswith:
+  EventID: 5140
+  ShareName|endswith:
       - '$'
       - 'SHARE'
       - 'DATA'
   bulk_access:
-    EventID: 5145
-    AccessMask: '0x120089'
-    RelativeTargetName|count|gte: 10
+  EventID: 5145
+  AccessMask: '0x120089'
+  RelativeTargetName|count|gte: 10
   sensitive_files:
-    EventID: 5145
-    RelativeTargetName|endswith:
+  EventID: 5145
+  RelativeTargetName|endswith:
       - '.xlsx'
       - '.docx'
       - '.pdf'

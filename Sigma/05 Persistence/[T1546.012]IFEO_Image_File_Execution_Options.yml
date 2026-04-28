@@ -5,43 +5,43 @@ description: Detects IFEO registry modifications for process execution redirecti
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1546/012/
-    - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+  - https://attack.mitre.org/techniques/T1546/012/
+  - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
 logsource:
-    product: windows
-    service: sysmon
+  product: windows
+  service: sysmon
 detection:
-    selection_ifeo:
-        EventID: 13
-        TargetObject|contains: '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\'
-    selection_debugger:
-        EventID: 13
-        TargetObject|endswith: '\Debugger'
-        Details|contains:
-            - '.exe'
-            - 'cmd.exe'
-            - 'powershell.exe'
-            - 'rundll32.exe'
-    selection_globalflag:
-        EventID: 13
-        TargetObject|endswith: '\GlobalFlag'
-        Details:
-            - '0x200'
-            - '512'
-    selection_verifierdlls:
-        EventID: 13
-        TargetObject|endswith: '\VerifierDlls'
-        Details|contains: '.dll'
-    condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
+  selection_ifeo:
+    EventID: 13
+    TargetObject|contains: '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\'
+  selection_debugger:
+    EventID: 13
+    TargetObject|endswith: '\Debugger'
+    Details|contains:
+      - '.exe'
+      - 'cmd.exe'
+      - 'powershell.exe'
+      - 'rundll32.exe'
+  selection_globalflag:
+    EventID: 13
+    TargetObject|endswith: '\GlobalFlag'
+    Details:
+      - '0x200'
+      - '512'
+  selection_verifierdlls:
+    EventID: 13
+    TargetObject|endswith: '\VerifierDlls'
+    Details|contains: '.dll'
+  condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
 fields:
-    - TargetObject
-    - Details
-    - Image
-    - ProcessId
+  - TargetObject
+  - Details
+  - Image
+  - ProcessId
 falsepositives:
-    - Debugging and development tools
-    - Application troubleshooting
-    - System administration utilities
+  - Debugging and development tools
+  - Application troubleshooting
+  - System administration utilities
 level: high
 tags:
   - attack.persistence

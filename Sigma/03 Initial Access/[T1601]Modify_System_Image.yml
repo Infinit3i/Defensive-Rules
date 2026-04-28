@@ -30,19 +30,19 @@ logsource:
   service: system
 detection:
   firmware_update:
-    EventID: 6
-    DriverName|contains:
+  EventID: 6
+  DriverName|contains:
       - 'bios'
       - 'firmware'
       - 'uefi'
   boot_modification:
-    EventID: 12
-    RegistryKey|contains:
+  EventID: 12
+  RegistryKey|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Control\Boot'
       - 'HKLM\BCD'
   system_image:
-    EventID: 7045
-    ServiceName|contains:
+  EventID: 7045
+  ServiceName|contains:
       - 'boot'
       - 'image'
       - 'recovery'

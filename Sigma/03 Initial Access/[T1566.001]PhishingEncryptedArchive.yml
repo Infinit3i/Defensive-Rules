@@ -5,33 +5,33 @@ description: Detects phishing emails containing encrypted archives with password
 author: Infinit3i
 date: 2026/04/27
 references:
-    - https://attack.mitre.org/techniques/T1566/001/
+  - https://attack.mitre.org/techniques/T1566/001/
 logsource:
-    product: email-security
-    service: exchange
+  product: email-security
+  service: exchange
 detection:
-    selection_attachment:
-        AttachmentName|endswith:
-            - '.zip'
-            - '.rar'
-            - '.7z'
-            - '.tar.gz'
-    selection_password_keywords:
-        Body|contains:
-            - 'password:'
-            - 'pass:'
-            - 'pwd:'
-            - 'key:'
-            - 'unlock'
-            - 'extract'
-    selection_common_passwords:
-        Body|contains:
-            - '123456'
-            - 'password'
-            - 'infected'
-            - '2026'
-            - 'document'
-    condition: selection_attachment and (selection_password_keywords or selection_common_passwords)
+  selection_attachment:
+    AttachmentName|endswith:
+      - '.zip'
+      - '.rar'
+      - '.7z'
+      - '.tar.gz'
+  selection_password_keywords:
+    Body|contains:
+      - 'password:'
+      - 'pass:'
+      - 'pwd:'
+      - 'key:'
+      - 'unlock'
+      - 'extract'
+  selection_common_passwords:
+    Body|contains:
+      - '123456'
+      - 'password'
+      - 'infected'
+      - '2026'
+      - 'document'
+  condition: selection_attachment and (selection_password_keywords or selection_common_passwords)
 level: high
 tags:
   - attack.initial-access

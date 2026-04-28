@@ -16,26 +16,26 @@ logsource:
   service: audit
 detection:
   selection_rapid_provisioning:
-    event_name:
+  event_name:
       - 'CreateInstance'
       - 'RunInstances'
       - 'CreateVirtualMachine'
       - 'CreateCompute'
   selection_suspicious_regions:
-    region:
+  region:
       - 'us-gov-east-1'
       - 'us-gov-west-1'
       - 'cn-north-1'
       - 'cn-northwest-1'
   selection_bulk_resources:
-    event_name:
+  event_name:
       - 'CreateLoadBalancer'
       - 'CreateDomain'
       - 'CreateHostedZone'
       - 'CreateCdnProfile'
   selection_anonymous_access:
-    user_identity.type: 'Unknown'
-    source_ip_address|startswith:
+  user_identity.type: 'Unknown'
+  source_ip_address|startswith:
       - '10.'
       - '192.168.'
       - '172.'

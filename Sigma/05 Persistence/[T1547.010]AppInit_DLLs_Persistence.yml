@@ -12,15 +12,15 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-    EventID: 13
+  EventID: 13
   selection_appinit:
-    TargetObject|contains:
+  TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
   filter_empty:
-    Details: ''
+  Details: ''
   condition: selection_event and selection_appinit and not filter_empty
 fields:
   - Image

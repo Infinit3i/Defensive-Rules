@@ -30,16 +30,16 @@ logsource:
   category: process_creation
 detection:
   selection:
-    Image|endswith:
+  Image|endswith:
       - '\excel.exe'
       - '\winword.exe'
       - '\powerpnt.exe'
       - '\acrord32.exe'
-    CommandLine|contains:
+  CommandLine|contains:
       - '\Temp\'
       - '\AppData\Local\Microsoft\Windows\INetCache\'
       - '\Downloads\'
-    ParentImage|endswith:
+  ParentImage|endswith:
       - '\outlook.exe'
       - '\thunderbird.exe'
   condition: selection
