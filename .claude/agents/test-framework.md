@@ -77,8 +77,21 @@ mkdir -p test_results/{reports,coverage,performance}
 
 #### Run Test Suites
 ```bash
-# Validate all Sigma rules syntax
-find Sigma/ -name "*.yml" -exec yamllint {} \; > test_results/syntax_check.log
+# YAMLLINT VALIDATION (Critical First Step)
+yamllint Sigma/ > test_results/yamllint_report.txt 2>&1
+
+# Check for common yamllint issues systematically
+echo "Checking for missing newlines..."
+find Sigma -name "*.yml" -exec sh -c 'if [ $(tail -c1 "$1" | wc -l) -eq 0 ]; then echo "$1"; fi' _ {} \; > test_results/missing_newlines.txt
+
+echo "Checking for 4-space indentation issues..."
+find Sigma -name "*.yml" -exec grep -l "    - attack\." {} \; > test_results/wrong_indentation.txt
+
+echo "Checking for malformed tags sections..."
+find Sigma -name "*.yml" -exec grep -l -A10 "tags:" {} \; | xargs grep -l "^  - " | xargs grep -l "^    - " > test_results/malformed_tags.txt
+
+# Basic YAML syntax validation
+find Sigma/ -name "*.yml" -exec python3 -c "import yaml; yaml.safe_load(open('{}'))" \; 2> test_results/yaml_errors.log
 
 # Test rule conversion
 sigma convert --backend splunk Sigma/ --output test_results/converted_rules/
@@ -156,19 +169,37 @@ python scripts/coverage_analysis.py Sigma/ > test_results/coverage_report.json
 # CI pipeline for rule validation
 set -e
 
-echo "Running syntax validation..."
-find Sigma/ -name "*.yml" -exec yamllint {} \;
+echo "🔍 YAMLLINT VALIDATION (Critical First Step)..."
+yamllint Sigma/ || {
+    echo "❌ YAMLLINT FAILED - Common issues found:"
+    echo "📋 Run these commands to check for systemic issues:"
+    echo "   find Sigma -name '*.yml' -exec grep -l '    - attack\.' {} \; | wc -l"
+    echo "   find Sigma -name '*.yml' -exec sh -c 'if [ \$(tail -c1 \"\$1\" | wc -l) -eq 0 ]; then echo \"\$1\"; fi' _ {} \; | wc -l"
+    echo "💡 Fix with:"
+    echo "   find Sigma -name '*.yml' -exec sed -i 's/^    - attack\./  - attack./g' {} \;"
+    echo "   find Sigma -name '*.yml' -exec sh -c 'if [ \$(tail -c1 \"\$1\" | wc -l) -eq 0 ]; then echo \"\" >> \"\$1\"; fi' _ {} \;"
+    exit 1
+}
 
-echo "Testing rule conversions..."
+echo "✅ YAMLLINT PASSED"
+
+echo "📝 Running YAML syntax validation..."
+find Sigma/ -name "*.yml" -exec python3 -c "import yaml; yaml.safe_load(open('{}'))" \; 2>&1 | tee yaml_errors.log
+if [ -s yaml_errors.log ]; then
+    echo "❌ YAML syntax errors found"
+    exit 1
+fi
+
+echo "🔄 Testing rule conversions..."
 sigma convert --backend splunk Sigma/ --check-only
 
-echo "Running unit tests..."
+echo "🧪 Running unit tests..."
 pytest tests/unit/ -v
 
-echo "Generating coverage report..."
+echo "📊 Generating coverage report..."
 python scripts/mitre_coverage.py Sigma/ > coverage_report.html
 
-echo "All tests passed!"
+echo "🎉 All tests passed!"
 ```
 
 ## Test Result Analysis

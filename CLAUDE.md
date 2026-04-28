@@ -27,21 +27,48 @@ This is a cybersecurity detection rules repository containing Sigma rules, Splun
 
 ### Rule Structure Standards
 
-**Sigma Rules (YAML):**
+**CRITICAL: ALL Sigma rules MUST use the template at `Sigma/sigma_template.md`**
+**Claude agents: Use `.claude/templates/sigma-rule-template.yml` as the base**
+
+**Sigma Rules (YAML) - EXACT FORMAT REQUIRED:**
 ```yaml
-title: Human-readable detection name
-id: UUID v4 identifier
-status: experimental (all current rules)
-description: Attack technique description
-logsource: {product: windows/linux, service: sysmon/powershell/etc}
-detection: {selection: {...}, condition: selection}
-level: critical/high/medium/low
-tags: [attack.tactic, attack.technique, platform]
+title: Short descriptive title
+id: uuid4-format-required  
+status: experimental
+description: >-
+  Detailed description of detection purpose and context
+references:
+  - https://attack.mitre.org/techniques/TXXXX/
+author: Infinit3i
+date: YYYY-MM-DD
+tags:
+  - attack.tactic_name
+  - attack.tXXXX.XXX
+  - platform_tag
+  - tool_tag
+logsource:
+  product: windows/linux/azure/etc
+  service: sysmon/powershell/auditlogs/etc
+  category: process_creation/network_connection/etc
+detection:
+  selection:
+    EventID: X
+    # Add condition fields here
+  condition: selection
+falsepositives:
+  - Legitimate use case description
+level: low/medium/high/critical
 ```
 
 ### CRITICAL Formatting Requirements
 
 **ALL Sigma rule generation MUST follow these standards:**
+
+#### YAML Indentation (CRITICAL - FIXED 2026-04-28)
+- **2 SPACES ONLY** (never 4 spaces or tabs)
+- **NO mixed indentation** within any section
+- **Tags section**: All items at same 2-space level
+- **Comments aligned** with content they describe
 
 #### Line Length & Structure
 - **Maximum 200 characters per line**
@@ -57,14 +84,14 @@ condition: (sel_one and sel_two) or
 - **NO blank lines within YAML structure**
 - **Exactly ONE newline at file end**
 - **NO trailing spaces anywhere**
-- **Comments indented 4 spaces under parent element**
+- **Follow template order exactly**
 
 #### Validation Checklist
 Before finalizing any Sigma rule:
-1. Run yamllint validation
-2. Verify no duplicate keys exist
-3. Check all line length limits
-4. Confirm proper 4-space indentation
+1. Run yamllint validation (MUST pass)
+2. Verify follows `sigma_template.md` format exactly
+3. Check 2-space indentation throughout
+4. Confirm newline at file end
 5. Test condition syntax validity
 
 **These standards prevent the 100+ validation errors previously found across all tactics.**

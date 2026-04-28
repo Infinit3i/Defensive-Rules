@@ -1,0 +1,37 @@
+title: Short descriptive title of what this rule detects
+id: 00000000-0000-4000-8000-000000000000
+status: experimental
+description: >-
+  Detailed description of what this rule detects and why it's important.
+  Include context about the attack technique and how it manifests in logs.
+  Maximum 150 characters for conciseness.
+references:
+  - https://attack.mitre.org/techniques/TXXXX/XXX/
+author: Infinit3i
+date: 2026-04-28
+tags:
+  - attack.tactic_name
+  - attack.tXXXX.XXX
+  - platform
+  - tool
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection:
+    EventID: 1
+    # Add specific detection fields here
+    # Use proper field names for the log source
+    Image|endswith:
+      - '\suspicious.exe'
+      - '\malware.exe'
+    CommandLine|contains:
+      - 'suspicious_pattern'
+      - 'malicious_indicator'
+  condition: selection
+falsepositives:
+  - Legitimate software behavior
+  - Normal administrative activities
+  - System maintenance tasks
+level: medium
