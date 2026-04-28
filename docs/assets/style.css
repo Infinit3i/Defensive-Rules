@@ -310,8 +310,17 @@ body {
 .filter-section {
     display: flex;
     gap: 1rem;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+}
+
+.filter-section .filter-select {
+    flex: 1;
+}
+
+.filter-section .toggle-container {
+    flex: 0 0 auto;
 }
 
 /* Severity Slider */
@@ -1421,4 +1430,105 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #484f58;
+}
+
+/* Toggle Slider */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.toggle-label {
+    font-size: 14px;
+    color: #e0e0e0;
+    white-space: nowrap;
+}
+
+.toggle-count {
+    font-size: 12px;
+    color: #7d8590;
+}
+
+.toggle-slider {
+    position: relative;
+    width: 140px;
+    height: 32px;
+    background: #30363d;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #484f58;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-slider.active {
+    background: #58a6ff;
+    border-color: #58a6ff;
+}
+
+.toggle-text {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 500;
+    color: #e0e0e0;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.toggle-slider.active .toggle-text {
+    color: white;
+}
+
+.toggle-circle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-slider.active .toggle-circle {
+    transform: translateX(104px);
+}
+
+/* Mobile Toggle */
+.mobile-toggle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #161b22;
+    border-radius: 6px;
+    margin: 4px 0;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.mobile-toggle-container:hover {
+    background: #1c2128;
+}
+
+.mobile-toggle-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-toggle-content i {
+    color: #58a6ff;
+    width: 16px;
+}
+
+.mobile-toggle-content span {
+    color: #e0e0e0;
+    font-size: 14px;
 }

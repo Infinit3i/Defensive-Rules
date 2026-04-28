@@ -1,0 +1,62 @@
+title: Mining Pool Network Connections
+id: e13e67ab-6d46-4e4c-820e-9d2329e72b5a
+status: experimental
+description: Detects resource hijacking through network connections to cryptocurrency mining pools
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1496/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_mining_pools:
+        EventID: 3
+        DestinationHostname|contains:
+            - 'nanopool'
+            - 'ethermine'
+            - 'f2pool'
+            - 'antpool'
+            - 'slushpool'
+            - 'btc.com'
+            - 'viabtc'
+            - 'coinotron'
+            - 'multipool'
+            - 'nicehash'
+            - 'minergate'
+            - 'suprnova'
+            - 'mining'
+            - 'pool'
+    sel_mining_ports:
+        EventID: 3
+        DestinationPort:
+            - 4444
+            - 8080
+            - 8008
+            - 3333
+            - 7777
+            - 9999
+            - 14444
+            - 25
+    sel_stratum_protocol:
+        EventID: 3
+        DestinationHostname|startswith:
+            - 'stratum'
+            - 'tcp'
+            - 'ssl'
+    filter_legitimate:
+        Image|contains:
+            - 'chrome.exe'
+            - 'firefox.exe'
+            - 'iexplore.exe'
+            - 'edge.exe'
+    condition: (sel_mining_pools or (sel_mining_ports and sel_stratum_protocol)) and not filter_legitimate
+level: high
+tags:
+    - attack.impact
+    - attack.t1496
+    - sysmon
+    - windows
+    - network
+    - cryptocurrency
+    - mining

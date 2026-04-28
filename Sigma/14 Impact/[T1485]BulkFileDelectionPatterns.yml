@@ -1,0 +1,46 @@
+title: Bulk File Deletion Patterns
+id: f2e4c8d9-3a1b-4c5d-8e9f-2a3b4c5d6e7f
+status: experimental
+description: Detects bulk file deletion operations through high-volume delete commands
+author: Infinit3i
+date: 2026/04/28
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_delete:
+        EventID: 1
+        Image|endswith:
+            - '\cmd.exe'
+            - '\powershell.exe'
+            - '\del.exe'
+        CommandLine|contains:
+            - 'del /s /q'
+            - 'rmdir /s /q'
+            - 'Remove-Item -Recurse -Force'
+            - 'Get-ChildItem | Remove-Item'
+    selection_file_count:
+        EventID: 11
+        TargetFilename|endswith:
+            - '.txt'
+            - '.doc'
+            - '.docx'
+            - '.pdf'
+            - '.xls'
+            - '.xlsx'
+    condition: selection_delete or
+               (selection_file_count and
+                #selection_file_count > 50)
+    timeframe: 10m
+level: high
+tags:
+    - attack.impact
+    - attack.t1485
+    - sysmon
+    - windows
+references:
+    - https://attack.mitre.org/techniques/T1485/
+falsepositives:
+    - Legitimate system maintenance
+    - Software uninstallation
+    - Log rotation cleanup

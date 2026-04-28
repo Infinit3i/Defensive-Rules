@@ -17,7 +17,7 @@
               @click="activeRuleType = 'sigma'"
             >
               <i class="nf nf-fa-search"></i>
-              Sigma ({{ sigmaRules.length }})
+              Sigma
             </button>
             <button
               class="rule-type-btn"
@@ -25,7 +25,7 @@
               @click="activeRuleType = 'yara'"
             >
               <i class="nf nf-fa-bug"></i>
-              YARA ({{ yaraRules.length }})
+              YARA
             </button>
           </div>
         </div>
@@ -80,7 +80,7 @@
               @click="activeRuleType = 'sigma'; mobileMenuOpen = false"
             >
               <i class="nf nf-fa-search"></i>
-              Sigma Rules ({{ sigmaRules.length }})
+              Sigma Rules
             </button>
             <button
               class="mobile-menu-item"
@@ -88,7 +88,7 @@
               @click="activeRuleType = 'yara'; mobileMenuOpen = false"
             >
               <i class="nf nf-fa-bug"></i>
-              YARA Rules ({{ yaraRules.length }})
+              YARA Rules
             </button>
           </div>
 
@@ -115,7 +115,7 @@
           </div>
 
           <!-- Severity Section -->
-          <div class="mobile-section">
+          <div class="mobile-section" title="Filter rules by threat severity level (critical, high, medium, low)">
             <div class="mobile-section-header">Severity</div>
             <button
               class="mobile-menu-item"
@@ -159,47 +159,85 @@
             </button>
           </div>
 
-          <!-- Log Source Section (Sigma only) -->
-          <div v-if="activeRuleType === 'sigma'" class="mobile-section">
-            <div class="mobile-section-header">Log Source</div>
+          <!-- Product Section (Sigma only) -->
+          <div v-if="activeRuleType === 'sigma'" class="mobile-section" title="Filter by platform or security tool that generates the logs (e.g., Windows, Azure, Zeek)">
+            <div class="mobile-section-header">Product</div>
             <button
               class="mobile-menu-item"
-              :class="{ active: selectedLogSource === '' }"
-              @click="selectedLogSource = ''; mobileMenuOpen = false"
+              :class="{ active: selectedProduct === '' }"
+              @click="selectedProduct = ''; mobileMenuOpen = false"
             >
-              <i class="nf nf-fa-server"></i>
-              All Sources
+              <i class="nf nf-fa-cube"></i>
+              All Products
             </button>
             <button
-              v-for="source in logSources"
-              :key="source"
+              v-for="product in products"
+              :key="product"
               class="mobile-menu-item"
-              :class="{ active: selectedLogSource === source }"
-              @click="selectedLogSource = source; mobileMenuOpen = false"
+              :class="{ active: selectedProduct === product }"
+              @click="selectedProduct = product; mobileMenuOpen = false"
             >
-              {{ source.length > 20 ? source.substring(0, 17) + '...' : source }}
+              {{ product.length > 20 ? product.substring(0, 17) + '...' : product }}
+            </button>
+          </div>
+
+          <!-- Service Section (Sigma only) -->
+          <div v-if="activeRuleType === 'sigma'" class="mobile-section" title="Filter by specific log source within the platform (e.g., Sysmon, audit logs, HTTP)">
+            <div class="mobile-section-header">Service</div>
+            <button
+              class="mobile-menu-item"
+              :class="{ active: selectedService === '' }"
+              @click="selectedService = ''; mobileMenuOpen = false"
+            >
+              <i class="nf nf-fa-cogs"></i>
+              All Services
+            </button>
+            <button
+              v-for="service in services"
+              :key="service"
+              class="mobile-menu-item"
+              :class="{ active: selectedService === service }"
+              @click="selectedService = service; mobileMenuOpen = false"
+            >
+              {{ service.length > 20 ? service.substring(0, 17) + '...' : service }}
+            </button>
+          </div>
+
+          <!-- Category Section (Sigma only) -->
+          <div v-if="activeRuleType === 'sigma'" class="mobile-section" title="Filter by log event category type (e.g., process creation, network connection)">
+            <div class="mobile-section-header">Category</div>
+            <button
+              class="mobile-menu-item"
+              :class="{ active: selectedCategory === '' }"
+              @click="selectedCategory = ''; mobileMenuOpen = false"
+            >
+              <i class="nf nf-fa-tags"></i>
+              All Categories
+            </button>
+            <button
+              v-for="category in categories"
+              :key="category"
+              class="mobile-menu-item"
+              :class="{ active: selectedCategory === category }"
+              @click="selectedCategory = category; mobileMenuOpen = false"
+            >
+              {{ category.length > 20 ? category.substring(0, 17) + '...' : category }}
             </button>
           </div>
 
           <!-- Common Techniques Section (Sigma only) -->
           <div v-if="activeRuleType === 'sigma' && availableCommonTechniques.length > 0" class="mobile-section">
             <div class="mobile-section-header">Technique Frequency</div>
-            <button
-              class="mobile-menu-item"
-              :class="{ active: selectedCommonFilter === '' }"
-              @click="selectedCommonFilter = ''; mobileMenuOpen = false"
-            >
-              <i class="nf nf-fa-list"></i>
-              All Techniques
-            </button>
-            <button
-              class="mobile-menu-item"
-              :class="{ active: selectedCommonFilter === 'common' }"
-              @click="selectedCommonFilter = 'common'; mobileMenuOpen = false"
-            >
-              <i class="nf nf-fa-star"></i>
-              Common Techniques Only ({{ availableCommonTechniques.length }})
-            </button>
+            <div class="mobile-toggle-container" @click="showPopularOnly = !showPopularOnly; mobileMenuOpen = false" title="Filter to show only the most commonly used MITRE ATT&CK techniques">
+              <div class="mobile-toggle-content">
+                <i class="nf nf-fa-star"></i>
+                <span>Most Common</span>
+              </div>
+              <div class="toggle-slider" :class="{ active: showPopularOnly }">
+                <span class="toggle-text">Popular</span>
+                <div class="toggle-circle"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -221,23 +259,37 @@
           >
         </div>
         <div v-if="activeRuleType === 'sigma'" class="filter-section">
-          <select v-model="selectedSeverity" class="filter-select">
+          <select v-model="selectedSeverity" class="filter-select" title="Filter rules by threat severity level (critical, high, medium, low)">
             <option value="">All Severities</option>
             <option value="critical">Critical</option>
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
-          <select v-model="selectedLogSource" class="filter-select">
-            <option value="">All Log Sources</option>
-            <option v-for="source in logSources" :key="source" :value="source">
-              {{ source }}
+          <select v-model="selectedProduct" class="filter-select" title="Filter by platform or security tool that generates the logs (e.g., Windows, Azure, Zeek)">
+            <option value="">All Products</option>
+            <option v-for="product in products" :key="product" :value="product">
+              {{ product }}
             </option>
           </select>
-          <select v-model="selectedCommonFilter" class="filter-select" v-if="availableCommonTechniques.length > 0">
-            <option value="">All Techniques</option>
-            <option value="common">Common Techniques Only ({{ availableCommonTechniques.length }})</option>
+          <select v-model="selectedService" class="filter-select" title="Filter by specific log source within the platform (e.g., Sysmon, audit logs, HTTP)">
+            <option value="">All Services</option>
+            <option v-for="service in services" :key="service" :value="service">
+              {{ service }}
+            </option>
           </select>
+          <select v-model="selectedCategory" class="filter-select" title="Filter by log event category type (e.g., process creation, network connection)">
+            <option value="">All Categories</option>
+            <option v-for="category in categories" :key="category" :value="category">
+              {{ category }}
+            </option>
+          </select>
+          <div class="toggle-container" v-if="availableCommonTechniques.length > 0" title="Filter to show only the most commonly used MITRE ATT&CK techniques">
+            <div class="toggle-slider" :class="{ active: showPopularOnly }" @click="showPopularOnly = !showPopularOnly">
+              <span class="toggle-text">Popular</span>
+              <div class="toggle-circle"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -470,8 +522,10 @@ const activeRuleType = ref<'sigma' | 'yara'>('sigma')
 const searchQuery = ref('')
 const selectedTactic = ref('')
 const selectedSeverity = ref('')
-const selectedLogSource = ref('')
-const selectedCommonFilter = ref('')
+const selectedProduct = ref('')
+const selectedService = ref('')
+const selectedCategory = ref('')
+const showPopularOnly = ref(false)
 const selectedRule = ref<SelectedRule>(null)
 const mobileMenuOpen = ref(false)
 const sigmaRules = ref<SigmaRule[]>([])
@@ -520,28 +574,88 @@ const commonTechniques = [
 ]
 
 // Computed properties
-const logSources = computed(() => {
-  if (!selectedTactic.value) {
-    return allLogSources.value
+const products = computed(() => {
+  let filteredRules = selectedTactic.value
+    ? sigmaRules.value.filter(rule => rule.tactic.toLowerCase().includes(selectedTactic.value.toLowerCase()))
+    : sigmaRules.value
+
+  // Cascade: if service selected, only show products that have that service
+  if (selectedService.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.service?.toLowerCase() === selectedService.value.toLowerCase()
+    )
   }
 
-  const logSourcesSet = new Set<string>()
+  // Cascade: if category selected, only show products that have that category
+  if (selectedCategory.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.category?.toLowerCase() === selectedCategory.value.toLowerCase()
+    )
+  }
 
-  sigmaRules.value
-    .filter(rule => rule.tactic.toLowerCase().includes(selectedTactic.value.toLowerCase()))
-    .forEach(rule => {
-      if (rule.logsource) {
-        const product = rule.logsource.product || ''
-        const service = rule.logsource.service || ''
-        const category = rule.logsource.category || ''
+  const productsSet = new Set<string>()
+  filteredRules.forEach(rule => {
+    if (rule.logsource?.product) {
+      productsSet.add(rule.logsource.product)
+    }
+  })
+  return Array.from(productsSet).sort()
+})
 
-        if (product) logSourcesSet.add(product)
-        if (service) logSourcesSet.add(service)
-        if (category) logSourcesSet.add(category)
-      }
-    })
+const services = computed(() => {
+  let filteredRules = selectedTactic.value
+    ? sigmaRules.value.filter(rule => rule.tactic.toLowerCase().includes(selectedTactic.value.toLowerCase()))
+    : sigmaRules.value
 
-  return Array.from(logSourcesSet).sort()
+  // Cascade: if product selected, only show services that have that product
+  if (selectedProduct.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.product?.toLowerCase() === selectedProduct.value.toLowerCase()
+    )
+  }
+
+  // Cascade: if category selected, only show services that have that category
+  if (selectedCategory.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.category?.toLowerCase() === selectedCategory.value.toLowerCase()
+    )
+  }
+
+  const servicesSet = new Set<string>()
+  filteredRules.forEach(rule => {
+    if (rule.logsource?.service) {
+      servicesSet.add(rule.logsource.service)
+    }
+  })
+  return Array.from(servicesSet).sort()
+})
+
+const categories = computed(() => {
+  let filteredRules = selectedTactic.value
+    ? sigmaRules.value.filter(rule => rule.tactic.toLowerCase().includes(selectedTactic.value.toLowerCase()))
+    : sigmaRules.value
+
+  // Cascade: if product selected, only show categories that have that product
+  if (selectedProduct.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.product?.toLowerCase() === selectedProduct.value.toLowerCase()
+    )
+  }
+
+  // Cascade: if service selected, only show categories that have that service
+  if (selectedService.value) {
+    filteredRules = filteredRules.filter(rule =>
+      rule.logsource?.service?.toLowerCase() === selectedService.value.toLowerCase()
+    )
+  }
+
+  const categoriesSet = new Set<string>()
+  filteredRules.forEach(rule => {
+    if (rule.logsource?.category) {
+      categoriesSet.add(rule.logsource.category)
+    }
+  })
+  return Array.from(categoriesSet).sort()
 })
 
 const availableCommonTechniques = computed(() => {
@@ -578,21 +692,28 @@ const filteredSigmaRules = computed(() => {
     filtered = filtered.filter(rule => rule.level === selectedSeverity.value)
   }
 
-  if (selectedLogSource.value) {
+  if (selectedProduct.value) {
     filtered = filtered.filter(rule => {
-      const logSource = rule.logsource
-      if (!logSource) return false
-
-      const product = (logSource.product || '').toLowerCase()
-      const service = (logSource.service || '').toLowerCase()
-      const category = (logSource.category || '').toLowerCase()
-      const selected = selectedLogSource.value.toLowerCase()
-
-      return product === selected || service === selected || category === selected
+      const product = rule.logsource?.product || ''
+      return product.toLowerCase() === selectedProduct.value.toLowerCase()
     })
   }
 
-  if (selectedCommonFilter.value === 'common') {
+  if (selectedService.value) {
+    filtered = filtered.filter(rule => {
+      const service = rule.logsource?.service || ''
+      return service.toLowerCase() === selectedService.value.toLowerCase()
+    })
+  }
+
+  if (selectedCategory.value) {
+    filtered = filtered.filter(rule => {
+      const category = rule.logsource?.category || ''
+      return category.toLowerCase() === selectedCategory.value.toLowerCase()
+    })
+  }
+
+  if (showPopularOnly.value) {
     filtered = filtered.filter(rule => {
       if (!rule.technique) return false
       return availableCommonTechniques.value.some(commonTech => rule.technique!.includes(commonTech))
@@ -1237,7 +1358,7 @@ const closeModal = () => {
 }
 
 const getCurrentNavLabel = (): string => {
-  // Priority: Rule Type > Tactic > Severity > Log Source
+  // Priority: Rule Type > Tactic > Severity > Log Source filters
   if (activeRuleType.value === 'yara') {
     return 'YARA Rules'
   }
@@ -1247,8 +1368,12 @@ const getCurrentNavLabel = (): string => {
   if (selectedSeverity.value) {
     return `${selectedSeverity.value.charAt(0).toUpperCase() + selectedSeverity.value.slice(1)} Severity`
   }
-  if (selectedLogSource.value) {
-    return selectedLogSource.value
+  if (selectedProduct.value || selectedService.value || selectedCategory.value) {
+    const parts = []
+    if (selectedProduct.value) parts.push(selectedProduct.value)
+    if (selectedService.value) parts.push(selectedService.value)
+    if (selectedCategory.value) parts.push(selectedCategory.value)
+    return parts.join(' + ')
   }
   return 'Sigma Rules'
 }
@@ -1341,9 +1466,40 @@ watch(selectedRule, (newRule) => {
 })
 
 watch(selectedTactic, () => {
-  // Reset common filter when changing tactics if no common techniques available
-  if (selectedCommonFilter.value === 'common' && availableCommonTechniques.value.length === 0) {
-    selectedCommonFilter.value = ''
+  // Reset popular filter when changing tactics if no common techniques available
+  if (showPopularOnly.value && availableCommonTechniques.value.length === 0) {
+    showPopularOnly.value = false
+  }
+})
+
+// Cascading filter watchers - clear dependent filters when parent changes
+watch(selectedProduct, () => {
+  // When product changes, clear dependent filters if they're no longer valid
+  if (selectedService.value && !services.value.includes(selectedService.value)) {
+    selectedService.value = ''
+  }
+  if (selectedCategory.value && !categories.value.includes(selectedCategory.value)) {
+    selectedCategory.value = ''
+  }
+})
+
+watch(selectedService, () => {
+  // When service changes, clear dependent filters if they're no longer valid
+  if (selectedProduct.value && !products.value.includes(selectedProduct.value)) {
+    selectedProduct.value = ''
+  }
+  if (selectedCategory.value && !categories.value.includes(selectedCategory.value)) {
+    selectedCategory.value = ''
+  }
+})
+
+watch(selectedCategory, () => {
+  // When category changes, clear dependent filters if they're no longer valid
+  if (selectedProduct.value && !products.value.includes(selectedProduct.value)) {
+    selectedProduct.value = ''
+  }
+  if (selectedService.value && !services.value.includes(selectedService.value)) {
+    selectedService.value = ''
   }
 })
 

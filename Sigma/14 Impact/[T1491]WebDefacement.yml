@@ -1,0 +1,41 @@
+title: Web Server File Defacement Detection
+id: d5e29e90-1c5e-4a57-bd05-731fc662417e
+status: experimental
+description: Detects web server file modification indicating potential defacement through file system monitoring
+author: Infinit3i
+date: 2026/04/28
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_file_modify:
+        EventID: 2
+        TargetFilename|contains:
+            - '\wwwroot\'
+            - '\htdocs\'
+            - '\public_html\'
+            - '\inetpub\wwwroot\'
+        TargetFilename|endswith:
+            - '.html'
+            - '.htm'
+            - '.php'
+            - '.asp'
+            - '.aspx'
+            - '.jsp'
+    filter_legitimate:
+        ProcessName|contains:
+            - 'w3wp.exe'
+            - 'iis'
+            - 'apache'
+            - 'nginx'
+    condition: selection_file_modify and not filter_legitimate
+falsepositives:
+    - Legitimate web content updates
+    - Content management system operations
+    - Web development activities
+level: medium
+tags:
+    - attack.impact
+    - attack.t1491
+    - sysmon
+    - windows

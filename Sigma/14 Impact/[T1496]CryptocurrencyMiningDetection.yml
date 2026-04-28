@@ -1,0 +1,54 @@
+title: Cryptocurrency Mining Process Detection
+id: 6d172b7f-57e9-4efb-8ee7-5f32b9c1d21a
+status: experimental
+description: Detects cryptocurrency mining through suspicious mining process execution
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1496/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    sel_mining_processes:
+        EventID: 1
+        Image|contains:
+            - 'xmrig'
+            - 'ethminer'
+            - 'cgminer'
+            - 'bfgminer'
+            - 'ccminer'
+            - 'cpuminer'
+            - 'minerd'
+            - 'NiceHashMiner'
+            - 'phoenixminer'
+            - 'claymore'
+            - 't-rex'
+            - 'lolminer'
+            - 'teamredminer'
+            - 'srbminer'
+    sel_mining_args:
+        EventID: 1
+        CommandLine|contains:
+            - '--donate-level'
+            - '--pool'
+            - '--wallet'
+            - '--worker'
+            - '--algo'
+            - '--cuda'
+            - '--opencl'
+            - '--cpu-priority'
+            - 'stratum+tcp'
+            - 'stratum+ssl'
+            - '.pool.'
+            - 'mining'
+            - '--threads'
+    condition: sel_mining_processes or sel_mining_args
+level: high
+tags:
+    - attack.impact
+    - attack.t1496
+    - sysmon
+    - windows
+    - cryptocurrency
+    - mining

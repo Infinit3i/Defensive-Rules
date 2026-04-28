@@ -1,0 +1,46 @@
+title: Forced System Reboot via WMI or Registry
+id: 1f2e3d4c-5b6a-4789-8c9d-0e1f2a3b4c5d
+status: experimental
+description: Detects forced system reboots through WMI calls or registry modifications
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1529/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_wmi:
+        EventID: 1
+        Image|endswith:
+            - '\wmic.exe'
+            - '\powershell.exe'
+            - '\wmiprvse.exe'
+        CommandLine|contains:
+            - 'Win32_OperatingSystem'
+            - 'Reboot'
+            - 'Shutdown'
+    selection_powershell:
+        EventID: 1
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains:
+            - 'Get-WmiObject'
+            - 'Invoke-WmiMethod'
+            - 'Win32_OperatingSystem'
+            - 'Restart-Computer -Force'
+    selection_registry:
+        EventID: 13
+        TargetObject|contains:
+            - '\SYSTEM\CurrentControlSet\Control\Shutdown'
+            - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\shutdownwithoutlogon'
+    condition: selection_wmi or selection_powershell or selection_registry
+falsepositives:
+    - System administration scripts
+    - Remote management tools
+    - Automated deployment systems
+level: medium
+tags:
+    - attack.impact
+    - attack.t1529
+    - sysmon
+    - windows

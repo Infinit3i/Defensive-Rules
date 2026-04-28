@@ -1,0 +1,45 @@
+title: System Shutdown Command Execution
+id: a7b8c3d9-4e5f-4a1b-9c8d-7e6f5a4b3c2d
+status: experimental
+description: Detects suspicious system shutdown commands through command line execution
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1529/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_shutdown:
+        EventID: 1
+        Image|endswith:
+            - '\shutdown.exe'
+            - '\cmd.exe'
+            - '\powershell.exe'
+        CommandLine|contains:
+            - 'shutdown /s'
+            - 'shutdown -s'
+            - 'shutdown /r'
+            - 'shutdown -r'
+            - 'shutdown /f'
+            - 'shutdown -f'
+            - 'Stop-Computer'
+            - 'Restart-Computer'
+    selection_immediate:
+        CommandLine|contains:
+            - '/t 0'
+            - '-t 0'
+            - '/f /s'
+            - '-f -s'
+            - 'Force'
+    condition: selection_shutdown and selection_immediate
+falsepositives:
+    - Legitimate system administration
+    - Scheduled maintenance
+    - Software installation requiring restart
+level: medium
+tags:
+    - attack.impact
+    - attack.t1529
+    - sysmon
+    - windows

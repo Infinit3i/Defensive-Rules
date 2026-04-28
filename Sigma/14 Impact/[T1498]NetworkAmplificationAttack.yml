@@ -1,0 +1,59 @@
+title: Network Amplification DoS Attack Detection
+id: fbef3bb5-bb88-480f-8ad1-b635f199d8e0
+status: experimental
+description: Detects network denial of service through amplification attacks using DNS, NTP, and SNMP protocols
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1498/
+    - https://attack.mitre.org/techniques/T1498/002/
+logsource:
+    product: zeek
+    service: dns
+detection:
+    sel_dns_amplification:
+        query_type:
+            - 'ANY'
+            - 'TXT'
+            - 'DNSKEY'
+            - 'RRSIG'
+        query|contains:
+            - 'isc.org'
+            - 'ripe.net'
+            - 'gtld-servers.net'
+    sel_ntp_amplification:
+        dest_port: 123
+        query|contains:
+            - 'monlist'
+            - 'get_restrict'
+            - 'peer_list_sum'
+    sel_snmp_amplification:
+        dest_port: 161
+        community_string:
+            - 'public'
+            - 'private'
+            - 'cisco'
+    sel_memcached_amplification:
+        dest_port: 11211
+        command|contains:
+            - 'stats'
+            - 'version'
+            - 'get'
+    sel_ssdp_amplification:
+        dest_port: 1900
+        method: 'M-SEARCH'
+        user_agent|contains:
+            - 'linux'
+            - 'UPnP'
+    condition: sel_dns_amplification or sel_ntp_amplification or sel_snmp_amplification or
+               sel_memcached_amplification or sel_ssdp_amplification
+level: high
+tags:
+    - attack.impact
+    - attack.t1498
+    - attack.t1498.002
+    - zeek
+    - network
+    - dns
+    - amplification
+    - dos

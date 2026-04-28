@@ -1,0 +1,59 @@
+title: Partition Table Destruction Activities
+id: 2b3c4d5e-6f7a-4891-9abc-def012345678
+status: experimental
+description: Detects partition destruction through disk management utilities and raw disk access
+author: Infinit3i
+date: 2026/04/28
+references:
+    - https://attack.mitre.org/techniques/T1561/
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_mbr:
+        EventID: 1
+        Image|endswith:
+            - '\diskpart.exe'
+            - '\bootrec.exe'
+            - '\bcdedit.exe'
+        CommandLine|contains:
+            - 'clean'
+            - 'delete partition'
+            - '/fixmbr'
+            - '/fixboot'
+            - '/store'
+            - 'delete'
+    selection_raw_access:
+        EventID: 1
+        CommandLine|contains:
+            - '\\\\.\\PhysicalDrive'
+            - '\\\\.\\GLOBALROOT'
+            - 'dd if='
+            - 'dd of='
+    selection_powershell:
+        EventID: 1
+        Image|endswith: '\powershell.exe'
+        CommandLine|contains:
+            - 'Clear-Disk'
+            - 'Initialize-Disk'
+            - 'Remove-Partition'
+            - 'Get-Disk'
+            - 'Set-Disk'
+    selection_file_access:
+        EventID: 11
+        TargetFilename|contains:
+            - '\\\\.\\PhysicalDrive'
+            - '\\\\.\\GLOBALROOT'
+    condition: selection_mbr or selection_raw_access or selection_powershell or
+               selection_file_access
+falsepositives:
+    - Disk management operations
+    - System recovery procedures
+    - Virtualization software
+    - Backup and restore operations
+level: critical
+tags:
+    - attack.impact
+    - attack.t1561
+    - sysmon
+    - windows
