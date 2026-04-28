@@ -29,15 +29,8 @@ falsepositives:
   - Group Policy updates
 level: high
 tags:
-    # MITRE ATT&CK tactic
-    - attack.defense_evasion
-    # MITRE ATT&CK technique
-    - attack.t1562.002
-    # Platform/tool tags
-    - windows
-    - sysmon
   - attack.defense_evasion
-  - attack.t1562
   - attack.t1562.002
+  - attack.t1562
   - windows
   - sysmon
