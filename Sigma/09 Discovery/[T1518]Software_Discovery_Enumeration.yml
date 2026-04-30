@@ -1,0 +1,67 @@
+title: Software Discovery via WMI and PowerShell Enumeration
+id: 5b7e2f81-c4a3-4f6d-9e2c-d1b8a5f3c7e4
+status: experimental
+description: >-
+  Detects software enumeration activities using WMI, PowerShell, and registry
+  queries to list installed applications. Adversaries commonly enumerate
+  installed software to identify security tools and exploitable applications.
+references:
+  - https://attack.mitre.org/techniques/T1518/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.discovery
+  - attack.t1518
+  - windows
+  - sysmon
+  - powershell
+  - wmi
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_wmic_product:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'product get'
+      - 'product list'
+      - '/namespace:\\\\root\\securitycenter'
+      - 'antivirusproduct'
+      - 'firewallproduct'
+  selection_powershell_get:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - 'Get-WmiObject Win32_Product'
+      - 'Get-CimInstance Win32_Product'
+      - 'Get-Package'
+      - 'Get-ItemProperty HKLM:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall'
+      - 'Get-AppxPackage'
+      - 'Get-MpComputerStatus'
+      - 'Get-MpPreference'
+  selection_reg_uninstall:
+    EventID: 1
+    Image|endswith: '\reg.exe'
+    CommandLine|contains:
+      - 'query'
+    CommandLine|contains|all:
+      - '\Software\Microsoft\Windows\CurrentVersion\Uninstall'
+      - '/s'
+  selection_security_tools:
+    EventID: 1
+    CommandLine|contains:
+      - 'tasklist /svc'
+      - 'sc query type= service state= all'
+      - 'Get-Service | Where-Object'
+  condition: selection_wmic_product or selection_powershell_get or
+             selection_reg_uninstall or selection_security_tools
+falsepositives:
+  - Software asset management and inventory collection agents
+  - Patch management systems performing baseline checks
+  - Legitimate troubleshooting by IT support personnel
+level: medium
+tactic: Discovery

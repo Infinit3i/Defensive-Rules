@@ -1,0 +1,64 @@
+title: Remote System Discovery via Network Enumeration Commands
+id: 2c9d4e6f-7a1b-4c8d-b3e5-f9a8c7d6e2b1
+status: experimental
+description: >-
+  Detects execution of commands used to discover remote systems on the network,
+  including net view, nltest, ping sweeps, and ARP table enumeration commonly
+  performed by adversaries mapping the environment for lateral movement.
+references:
+  - https://attack.mitre.org/techniques/T1018/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.discovery
+  - attack.t1018
+  - windows
+  - sysmon
+  - lateral-movement-precursor
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_net_view:
+    EventID: 1
+    Image|endswith: '\net.exe'
+    CommandLine|contains:
+      - ' view'
+      - ' group "Domain Computers"'
+      - ' group "Domain Controllers"'
+  selection_nltest:
+    EventID: 1
+    Image|endswith: '\nltest.exe'
+    CommandLine|contains:
+      - '/dclist'
+      - '/domain_trusts'
+      - '/server:'
+      - '/dsgetdc'
+  selection_arp_ping:
+    EventID: 1
+    Image|endswith:
+      - '\arp.exe'
+      - '\ping.exe'
+      - '\nbtstat.exe'
+    CommandLine|contains:
+      - ' -a'
+      - ' -n'
+      - ' -A'
+  selection_dsquery:
+    EventID: 1
+    Image|endswith:
+      - '\dsquery.exe'
+      - '\dsget.exe'
+    CommandLine|contains:
+      - ' computer'
+      - ' subnet'
+      - ' server'
+  condition: selection_net_view or selection_nltest or
+             selection_arp_ping or selection_dsquery
+falsepositives:
+  - Network administrators performing legitimate inventory or troubleshooting
+  - Domain join scripts and login script execution
+  - Asset discovery and vulnerability scanning tools
+level: medium
+tactic: Discovery

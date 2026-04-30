@@ -1,0 +1,84 @@
+title: Suspicious Deobfuscation and Decoding via PowerShell or CertUtil
+id: 7a2c4e9b-5f8d-4a1e-b3c7-6e9f2d1a8c4b
+status: experimental
+description: >-
+  Detects deobfuscation activities including base64 decoding, certutil decoding, and
+  in-memory string manipulation patterns commonly used to unpack staged payloads.
+references:
+  - https://attack.mitre.org/techniques/T1140/
+  - https://attack.mitre.org/techniques/T1027/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.defense_evasion
+  - attack.t1140
+  - attack.t1027
+  - windows
+  - sysmon
+  - powershell
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_certutil_decode:
+    EventID: 1
+    Image|endswith: '\certutil.exe'
+    CommandLine|contains:
+      - '-decode'
+      - '/decode'
+      - '-decodehex'
+      - '/decodehex'
+      - '-urlcache'
+  selection_powershell_decode:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\powershell_ise.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - 'FromBase64String'
+      - '[Convert]::FromBase64'
+      - '-EncodedCommand'
+      - '-enc '
+      - ' -e '
+      - '[System.Text.Encoding]::UTF8.GetString'
+      - '[System.Text.Encoding]::ASCII.GetString'
+      - 'IO.Compression.GzipStream'
+      - 'IO.Compression.DeflateStream'
+      - '[System.Convert]::FromBase64String'
+      - 'Reflection.Assembly]::Load'
+  selection_xor_patterns:
+    EventID: 1
+    CommandLine|contains:
+      - '-bxor'
+      - 'ForEach-Object { $_ -bxor'
+      - "$_ -bxor "
+  selection_obfuscation_chains:
+    EventID: 1
+    CommandLine|contains|all:
+      - 'powershell'
+      - '-w hidden'
+    CommandLine|contains:
+      - 'FromBase64'
+      - 'IEX'
+      - 'Invoke-Expression'
+  filter_legit_admin:
+    ParentImage|endswith:
+      - '\sccm\ccmexec.exe'
+      - '\MsMpEng.exe'
+  condition: (selection_certutil_decode or selection_powershell_decode or
+             selection_xor_patterns or selection_obfuscation_chains)
+             and not filter_legit_admin
+fields:
+  - Image
+  - ParentImage
+  - CommandLine
+  - User
+  - ProcessId
+  - IntegrityLevel
+falsepositives:
+  - Legitimate administrative scripts using base64 for configuration
+  - Software installers using certutil for certificate operations
+  - Developer tools performing encoding operations
+level: high

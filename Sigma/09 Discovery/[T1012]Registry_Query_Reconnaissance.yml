@@ -1,0 +1,49 @@
+title: Registry Query for Reconnaissance via reg.exe
+id: 8a3f1c92-4e7b-4d2a-9c1e-f6a8b2d4e5c7
+status: experimental
+description: >-
+  Detects suspicious registry query operations using reg.exe targeting keys
+  commonly enumerated during reconnaissance, including installed software,
+  autoruns, services, network configuration, and security policies.
+references:
+  - https://attack.mitre.org/techniques/T1012/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.discovery
+  - attack.t1012
+  - windows
+  - sysmon
+  - reg
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_image:
+    EventID: 1
+    Image|endswith:
+      - '\reg.exe'
+      - '\reg.com'
+  selection_command:
+    CommandLine|contains:
+      - ' query '
+  selection_recon_keys:
+    CommandLine|contains:
+      - '\Software\Microsoft\Windows\CurrentVersion\Uninstall'
+      - '\Software\Microsoft\Windows\CurrentVersion\Run'
+      - '\Software\Microsoft\Windows\CurrentVersion\RunOnce'
+      - '\System\CurrentControlSet\Services'
+      - '\SYSTEM\CurrentControlSet\Control\Terminal Server'
+      - '\Software\Microsoft\Windows NT\CurrentVersion\Winlogon'
+      - '\SAM\SAM\Domains\Account\Users'
+      - '\Software\Policies\Microsoft\Windows Defender'
+      - '\Software\Microsoft\Windows\CurrentVersion\Internet Settings'
+      - '\Software\Microsoft\Windows\CurrentVersion\Group Policy'
+  condition: selection_image and selection_command and selection_recon_keys
+falsepositives:
+  - Software inventory tools and asset management agents
+  - Administrator scripts auditing system configuration
+  - Legitimate troubleshooting and diagnostic activity
+level: medium
+tactic: Discovery

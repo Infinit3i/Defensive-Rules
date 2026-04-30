@@ -1,0 +1,83 @@
+title: System Service Execution and Manipulation via sc.exe
+id: 9e4a8c2b-6f5d-4a1c-b7e3-a2d8f5c1b6e9
+status: experimental
+description: >-
+  Detects suspicious creation, modification, or execution of Windows services
+  using sc.exe, PsExec, or PowerShell that can indicate adversaries abusing
+  the service control manager for code execution and persistence.
+references:
+  - https://attack.mitre.org/techniques/T1569/002/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.execution
+  - attack.t1569.002
+  - windows
+  - sysmon
+  - service-abuse
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_sc_create:
+    EventID: 1
+    Image|endswith: '\sc.exe'
+    CommandLine|contains:
+      - ' create '
+      - ' config '
+      - ' failure '
+    CommandLine|contains|all:
+      - 'binPath'
+  selection_suspicious_binpath:
+    EventID: 1
+    Image|endswith: '\sc.exe'
+    CommandLine|contains:
+      - 'cmd.exe /c'
+      - 'powershell'
+      - 'rundll32'
+      - 'mshta'
+      - 'regsvr32'
+      - '\\Users\\'
+      - '\\Temp\\'
+      - '\\AppData\\'
+      - 'http://'
+      - 'https://'
+  selection_psexec_service:
+    EventID: 1
+    Image|endswith:
+      - '\psexec.exe'
+      - '\psexesvc.exe'
+      - '\paexec.exe'
+    CommandLine|contains:
+      - '-s '
+      - '\\\\'
+  selection_powershell_service:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - 'New-Service'
+      - 'Set-Service'
+      - 'Start-Service'
+    CommandLine|contains|all:
+      - '-BinaryPathName'
+  selection_suspicious_parent:
+    EventID: 1
+    Image|endswith: '\services.exe'
+    ParentImage|endswith:
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\outlook.exe'
+      - '\wscript.exe'
+      - '\mshta.exe'
+  condition: (selection_sc_create and selection_suspicious_binpath) or
+             selection_psexec_service or selection_powershell_service or
+             selection_suspicious_parent
+falsepositives:
+  - Software installers creating legitimate services during setup
+  - Administrator scripts deploying enterprise services
+  - Endpoint management tools (SCCM, Intune) installing agents
+level: high
+tactic: Execution

@@ -1,0 +1,83 @@
+title: Accessibility Features Binary Replacement and Debugger Hijacking
+id: 9b3e7f2a-4d1c-4e8b-a6f2-1c9d8e5a7b3c
+status: experimental
+description: >-
+  Detects accessibility feature abuse via binary replacement, IFEO debugger hijacking, or
+  abnormal invocation from logon screen for persistence and privilege escalation.
+references:
+  - https://attack.mitre.org/techniques/T1546/008/
+  - https://attack.mitre.org/techniques/T1015/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.persistence
+  - attack.privilege_escalation
+  - attack.t1015
+  - attack.t1546.008
+  - windows
+  - sysmon
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_registry_ifeo:
+    EventID: 13
+    TargetObject|contains:
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Magnify.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
+      - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\AtBroker.exe\Debugger'
+  selection_file_replacement:
+    EventID: 11
+    TargetFilename|endswith:
+      - '\System32\sethc.exe'
+      - '\System32\utilman.exe'
+      - '\System32\osk.exe'
+      - '\System32\Magnify.exe'
+      - '\System32\Narrator.exe'
+      - '\System32\DisplaySwitch.exe'
+      - '\SysWOW64\sethc.exe'
+      - '\SysWOW64\utilman.exe'
+  selection_suspicious_child:
+    EventID: 1
+    ParentImage|endswith:
+      - '\sethc.exe'
+      - '\utilman.exe'
+      - '\osk.exe'
+      - '\Magnify.exe'
+      - '\Narrator.exe'
+      - '\DisplaySwitch.exe'
+    Image|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\powershell_ise.exe'
+      - '\pwsh.exe'
+      - '\mshta.exe'
+      - '\rundll32.exe'
+      - '\regsvr32.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+  filter_trusted_installer:
+    Image|endswith:
+      - '\TrustedInstaller.exe'
+      - '\TiWorker.exe'
+      - '\msiexec.exe'
+  condition: (selection_registry_ifeo or selection_file_replacement or selection_suspicious_child)
+             and not filter_trusted_installer
+fields:
+  - Image
+  - ParentImage
+  - TargetObject
+  - TargetFilename
+  - Details
+  - CommandLine
+  - User
+  - ProcessId
+falsepositives:
+  - Legitimate Windows updates via TrustedInstaller
+  - Accessibility software vendor installers
+  - Third-party assistive technology configuration
+level: critical

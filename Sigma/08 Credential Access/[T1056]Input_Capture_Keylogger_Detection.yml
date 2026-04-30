@@ -1,0 +1,85 @@
+title: Keylogger and Input Capture Mechanism Detection
+id: c5e8a3f1-2b7d-4c9a-91e6-4d8f7a2c5b9e
+status: experimental
+description: >-
+  Detects keylogging and input capture via SetWindowsHookEx API, GetAsyncKeyState polling,
+  raw input device registration, and suspicious DLL loads into interactive processes.
+references:
+  - https://attack.mitre.org/techniques/T1056/001/
+  - https://attack.mitre.org/techniques/T1056/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.credential_access
+  - attack.collection
+  - attack.t1056
+  - attack.t1056.001
+  - windows
+  - sysmon
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection_powershell_hook:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\powershell_ise.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - 'SetWindowsHookEx'
+      - 'GetAsyncKeyState'
+      - 'GetKeyboardState'
+      - 'WH_KEYBOARD_LL'
+      - 'WH_KEYBOARD'
+      - 'RegisterRawInputDevices'
+      - 'GetForegroundWindow'
+      - 'add-type -typedefinition'
+  selection_suspicious_dll_load:
+    EventID: 7
+    ImageLoaded|contains:
+      - '\AppData\Local\Temp\'
+      - '\AppData\Roaming\'
+      - '\Users\Public\'
+      - '\ProgramData\'
+    Image|endswith:
+      - '\explorer.exe'
+      - '\winlogon.exe'
+      - '\lsass.exe'
+      - '\svchost.exe'
+  selection_keyboard_driver:
+    EventID: 6
+    ImageLoaded|contains:
+      - '\AppData\'
+      - '\Temp\'
+      - '\Users\Public\'
+    Signature: '-'
+  selection_clipboard_capture:
+    EventID: 1
+    CommandLine|contains:
+      - 'Get-Clipboard'
+      - '[System.Windows.Forms.Clipboard]'
+      - 'OpenClipboard'
+      - 'GetClipboardData'
+  filter_dev_tools:
+    ParentImage|contains:
+      - '\Visual Studio\'
+      - '\JetBrains\'
+      - '\Program Files\Microsoft\Edge\'
+  condition: (selection_powershell_hook or selection_suspicious_dll_load or
+             selection_keyboard_driver or selection_clipboard_capture)
+             and not filter_dev_tools
+fields:
+  - Image
+  - ImageLoaded
+  - CommandLine
+  - ParentImage
+  - User
+  - Signature
+  - ProcessId
+falsepositives:
+  - Legitimate accessibility and assistive technology software
+  - Password managers reading clipboard
+  - Remote desktop and screen sharing tools
+  - Developer debugging tools and IDE plugins
+level: high

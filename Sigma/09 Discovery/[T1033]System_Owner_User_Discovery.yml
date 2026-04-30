@@ -1,0 +1,96 @@
+title: System Owner and User Account Discovery Enumeration
+id: 8f1d4b6a-3c9e-47a2-b5d8-2e7f9c3a1b4d
+status: experimental
+description: >-
+  Detects system owner and user enumeration through whoami, query user, quser, and
+  WMI queries combined with suspicious parent processes indicating reconnaissance.
+references:
+  - https://attack.mitre.org/techniques/T1033/
+author: Infinit3i
+date: 2026-04-30
+tags:
+  - attack.discovery
+  - attack.t1033
+  - windows
+  - sysmon
+logsource:
+  product: windows
+  service: sysmon
+  category: process_creation
+detection:
+  selection_whoami:
+    EventID: 1
+    Image|endswith: '\whoami.exe'
+    CommandLine|contains:
+      - '/all'
+      - '/upn'
+      - '/fqdn'
+      - '/logonid'
+      - '/user'
+      - '/groups'
+      - '/priv'
+  selection_query_user:
+    EventID: 1
+    Image|endswith:
+      - '\quser.exe'
+      - '\query.exe'
+    CommandLine|contains:
+      - 'quser'
+      - 'query user'
+      - 'query session'
+  selection_powershell_user:
+    EventID: 1
+    Image|endswith:
+      - '\powershell.exe'
+      - '\powershell_ise.exe'
+      - '\pwsh.exe'
+    CommandLine|contains:
+      - '$env:UserName'
+      - '$env:UserDomain'
+      - '[Environment]::UserName'
+      - '[Environment]::UserDomainName'
+      - 'Get-WmiObject Win32_ComputerSystem'
+      - 'Get-CimInstance Win32_ComputerSystem'
+      - 'Get-LocalUser'
+      - 'Get-ADUser'
+      - 'Win32_UserAccount'
+  selection_wmic_user:
+    EventID: 1
+    Image|endswith: '\wmic.exe'
+    CommandLine|contains:
+      - 'computersystem get username'
+      - 'useraccount'
+      - 'useraccount get'
+  suspicious_parent:
+    ParentImage|endswith:
+      - '\cmd.exe'
+      - '\powershell.exe'
+      - '\pwsh.exe'
+      - '\wscript.exe'
+      - '\cscript.exe'
+      - '\mshta.exe'
+      - '\rundll32.exe'
+      - '\regsvr32.exe'
+      - '\winword.exe'
+      - '\excel.exe'
+      - '\outlook.exe'
+  filter_admin_context:
+    ParentImage|endswith:
+      - '\SCNotification.exe'
+      - '\sccm\ccmexec.exe'
+    User|contains: 'SYSTEM'
+  condition: (selection_whoami or selection_query_user or selection_powershell_user
+             or selection_wmic_user) and suspicious_parent and not filter_admin_context
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - ParentCommandLine
+  - User
+  - ProcessId
+  - IntegrityLevel
+falsepositives:
+  - Legitimate IT inventory and asset management scripts
+  - User logon scripts that query identity
+  - Software installers requiring user context
+level: medium
