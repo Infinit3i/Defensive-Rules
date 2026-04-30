@@ -4,7 +4,8 @@ technique: T1656
 id: c7f4e9a6-9d8b-4e3f-c7f4-9e6a9d8b3c7b
 status: experimental
 description: >-
-  >- Detects account impersonation attempts by monitoring for suspicious logon activities, unusual user behavior patterns, or authentication events that may indicate an attacker impersonating legitimate users.
+  >- Detects account impersonation attempts by monitoring for suspicious logon activities, unusual user behavior patterns, or authentication events that may indicate an attacker impersonating
+  legitimate users.
 references:
   - https://attack.mitre.org/techniques/T1656/
 author: Infinit3i
@@ -27,12 +28,12 @@ detection:
       - 2
       - 3
       - 10
-    geographic_anomaly:
+  geographic_anomaly:
     IpAddress|startswith:
       - '192.168.'
       - '10.'
     WorkstationName|contains:
-    service_impersonation:
+  service_impersonation:
     EventID:
     TargetUserName|contains:
       - 'admin'

@@ -12,37 +12,37 @@ logsource:
   service: sysmon
 detection:
   selection_schtasks:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/create'
       - '/change'
   selection_taskschd:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskScheduler'
       - 'Register-ScheduledTask'
       - 'New-ScheduledTask'
   selection_suspicious:
-      - CommandLine|contains:
-      - '/tr'
-      - '/ru system'
-      - '/rl highest'
-      - '/f'
-      - 'SYSTEM'
-      - 'NT AUTHORITY'
-      - CommandLine|contains:
-      - 'powershell'
-      - 'cmd.exe'
-      - 'rundll32'
-      - 'regsvr32'
-      - 'mshta'
-      - CommandLine|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
+    - CommandLine|contains:
+    - '/tr'
+    - '/ru system'
+    - '/rl highest'
+    - '/f'
+    - 'SYSTEM'
+    - 'NT AUTHORITY'
+    - CommandLine|contains:
+    - 'powershell'
+    - 'cmd.exe'
+    - 'rundll32'
+    - 'regsvr32'
+    - 'mshta'
+    - CommandLine|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
   condition: (selection_schtasks or selection_taskschd) and selection_suspicious
 falsepositives:
   - Legitimate scheduled task creation

@@ -4,7 +4,8 @@ technique: T1219
 id: b2cfa123-45de-6789-abcd-ef1234567890
 status: experimental
 description: >-
-  > "Detects potential abuse of remote administration tools (e.g., psexec, winrs, wmic, wmiexec) from process creation events that may indicate lateral movement or unauthorized remote access attempts."
+  > "Detects potential abuse of remote administration tools (e.g., psexec, winrs, wmic, wmiexec) from process creation events that may indicate lateral movement or unauthorized remote access
+  attempts."
 references:
   - https://attack.mitre.org/techniques/T1219/
 author: Infinit3i
@@ -19,7 +20,7 @@ logsource:
   category: process_creation
 detection:
   selection:
-  CommandLine|contains:
+    CommandLine|contains:
       - "psexec"
       - "winrs"
       - "wmic /node:"

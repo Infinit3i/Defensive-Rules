@@ -11,17 +11,17 @@ logsource:
   service: system
 detection:
   selection_sc:
-  EventID:
-  Image|endswith:
+    EventID:
+    Image|endswith:
       - '\sc.exe'
       - '\net.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'stop'
       - 'delete'
       - 'config'
       - 'disable'
   service_names:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'WinDefend'          # Windows Defender
       - 'MsMpSvc'           # Windows Defender Antimalware
       - 'WdNisSvc'          # Windows Defender Network Inspection
@@ -38,9 +38,9 @@ detection:
       - 'Fax'               # Fax service
       - 'TermService'       # Terminal Services
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
       - 'Stop-Service'
       - 'Set-Service'
       - 'Remove-Service'

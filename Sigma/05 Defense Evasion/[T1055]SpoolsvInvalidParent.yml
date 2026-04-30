@@ -15,10 +15,10 @@ logsource:
   product: windows
 detection:
   selection:
-  Image|endswith:
+    Image|endswith:
   filter:
-  ParentImage|endswith:
-    condition: selection and not filter
+    ParentImage|endswith:
+  condition: selection and not filter
 falsepositives:
   - Unknown legitimate processes spawning spoolsv (rare)
 level: high

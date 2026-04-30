@@ -14,23 +14,23 @@ logsource:
   service: winrm
 detection:
   selection_winrm_connection:
-  EventID:
-  SourceName:
+    EventID:
+    SourceName:
   selection_powershell_remoting:
-  EventID:
-  Channel:
-  Message|contains:
+    EventID:
+    Channel:
+    Message|contains:
       - 'Enter-PSSession'
       - 'Invoke-Command'
       - 'New-PSSession'
   selection_winrs_execution:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
   selection_network_logon:
-  EventID:
-  LogonType:
-  ProcessName:
+    EventID:
+    LogonType:
+    ProcessName:
   condition: |
     selection_winrm_connection or selection_powershell_remoting or selection_winrs_execution or selection_network_logon
 level: medium

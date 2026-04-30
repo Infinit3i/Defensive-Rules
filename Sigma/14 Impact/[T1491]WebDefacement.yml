@@ -10,13 +10,13 @@ logsource:
   service: sysmon
 detection:
   selection_file_modify:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\wwwroot\'
       - '\htdocs\'
       - '\public_html\'
       - '\inetpub\wwwroot\'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.html'
       - '.htm'
       - '.php'
@@ -24,7 +24,7 @@ detection:
       - '.aspx'
       - '.jsp'
   filter_legitimate:
-  ProcessName|contains:
+    ProcessName|contains:
       - 'w3wp.exe'
       - 'iis'
       - 'apache'

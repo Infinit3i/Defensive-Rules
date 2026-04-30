@@ -14,14 +14,14 @@ logsource:
   service: authentication
 detection:
   selection_mfa_events:
-  event_type:
+    event_type:
       - 'mfa_bypass'
       - 'trusted_device_added'
       - 'mfa_disabled'
   selection_login_pattern:
-  event_type:
-  mfa_status:
-  risk_level:
+    event_type:
+    mfa_status:
+    risk_level:
       - 'high'
       - 'medium'
   condition: selection_mfa_events or selection_login_pattern

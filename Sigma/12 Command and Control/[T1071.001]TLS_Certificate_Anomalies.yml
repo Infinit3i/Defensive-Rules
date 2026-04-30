@@ -10,7 +10,7 @@ logsource:
   service: ssl
 detection:
   selection:
-  certificate_subject|contains:
+    certificate_subject|contains:
       - 'Self-Signed'
       - 'localhost'
       - 'test'

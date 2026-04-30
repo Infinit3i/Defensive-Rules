@@ -12,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\CLSID\'
       - '\InprocServer32\'
       - '\LocalServer32\'
-  Details|endswith:
+    Details|endswith:
       - '.dll'
       - '.exe'
   selection_process:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\explorer.exe'
       - '\dllhost.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/Processid:'
       - '-Embedding'
   condition: selection_registry or selection_process

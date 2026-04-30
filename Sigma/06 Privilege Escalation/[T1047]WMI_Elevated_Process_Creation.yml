@@ -13,35 +13,35 @@ logsource:
   service: sysmon
 detection:
   selection_wmi_exec:
-  EventID:
-  ParentImage|endswith:
-  IntegrityLevel:
+    EventID: 1
+    ParentImage|endswith:
+    IntegrityLevel:
       - 'High'
       - 'System'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'cmd.exe /c'
       - 'powershell.exe -'
       - 'rundll32.exe'
       - 'regsvr32.exe'
   selection_wmic_priv:
-  EventID:
-  Image|endswith:
-  CommandLine|contains|all:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains|all:
       - 'process'
       - 'call'
       - 'create'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/node:'
       - '/user:'
       - '/password:'
       - 'runas'
   selection_bypass_indicators:
-  EventID:
-  ParentImage|endswith:
-  User|contains:
+    EventID: 1
+    ParentImage|endswith:
+    User|contains:
       - 'NT AUTHORITY\SYSTEM'
       - 'BUILTIN\Administrators'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'whoami /priv'
       - 'net localgroup administrators'
       - 'reg add HKLM'

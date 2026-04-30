@@ -11,8 +11,8 @@ logsource:
   service: powershell-classic
 detection:
   selection_powershell_amsi:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - '[Ref].Assembly.GetType'
       - 'System.Management.Automation.AmsiUtils'
       - 'amsiInitFailed'
@@ -20,8 +20,8 @@ detection:
       - 'AmsiScanBuffer'
       - 'amsiSession'
   selection_amsi_bypass_strings:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Add-Type -TypeDefinition'
       - '[Runtime.InteropServices.Marshal]::Copy'
       - 'VirtualProtect'
@@ -29,33 +29,33 @@ detection:
       - 'LoadLibrary'
       - 'amsi.dll'
   selection_obfuscation:
-  EventID:
-  ScriptBlockText|re:
+    EventID:
+    ScriptBlockText|re:
       - '.*[aA][mM][sS][iI].*'
       - '.*\$[a-zA-Z0-9_]+\s*=\s*"[aAmMsS][mMsS][iI].*'
       - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
   selection_reflection:
-  EventID:
-  ScriptBlockText|contains|all:
+    EventID:
+    ScriptBlockText|contains|all:
       - '[System.Reflection.BindingFlags]'
       - 'NonPublic'
       - 'Static'
       - 'GetField'
   selection_com_hijack:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'New-Object -ComObject'
       - 'WScript.Shell'
       - 'HKEY_CURRENT_USER\Software\Classes\CLSID'
   selection_memory_patch:
-  EventID:
-  ScriptBlockText|contains|all:
+    EventID:
+    ScriptBlockText|contains|all:
       - 'System.Runtime.InteropServices.Marshal'
       - 'PtrToStructure'
       - 'StructureToPtr'
       - 'amsi'
   filter_legitimate:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'Get-Help about_*'
       - 'Import-Module'
       - 'Test-Path'

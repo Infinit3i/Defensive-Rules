@@ -16,14 +16,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
+    EventID: 1
   tools:
-      - Image|endswith: '\nircmd.exe'
-      - Image|endswith: '\screencapture.exe'
-      - Image|endswith: '\printscreen.exe'
-      - CommandLine|contains: 'savescreenshot'
+    - Image|endswith: '\nircmd.exe'
+    - Image|endswith: '\screencapture.exe'
+    - Image|endswith: '\printscreen.exe'
+    - CommandLine|contains: 'savescreenshot'
   powershell:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Add-Type -AssemblyName System.Windows.Forms'
       - '[System.Windows.Forms.Screen]'
       - 'CopyFromScreen'

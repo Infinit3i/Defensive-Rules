@@ -9,12 +9,12 @@ logsource:
   service: auditd
 detection:
   selection:
-  type:
-  comm:
+    type:
+    comm:
   selection_hook:
-  type:
-  a0|contains:
-    condition: selection or selection_hook
+    type:
+    a0|contains:
+  condition: selection or selection_hook
 level: low
 tags:
   - attack.persistence

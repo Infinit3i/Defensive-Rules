@@ -31,13 +31,13 @@ detection:
     TargetFilename|contains:
       - '\Temp\'
       - '\Downloads\'
-    script_download:
+  script_download:
     TargetFilename|endswith:
       - '.vbs'
       - '.js'
       - '.py'
       - '.pl'
-    suspicious_location:
+  suspicious_location:
     TargetFilename|startswith:
       - 'C:\Users\Public\'
       - 'C:\Windows\Temp\'

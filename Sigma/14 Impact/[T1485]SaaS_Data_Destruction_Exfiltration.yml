@@ -15,8 +15,8 @@ logsource:
   service: powershell
 detection:
   selection_o365_destruction:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Remove-Mailbox'
       - 'Remove-MailboxFolder'
       - 'Remove-UnifiedGroup'
@@ -26,8 +26,8 @@ detection:
       - 'Remove-AzureADUser'
       - 'Remove-MgUser'
   selection_google_workspace:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'gam delete'
       - 'gam remove'
       - 'gsuite delete'
@@ -35,25 +35,25 @@ detection:
       - 'drive.files().delete'
       - 'gmail.users().messages().delete'
   selection_salesforce_api:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'sfdx force:data:record:delete'
       - 'sf data delete'
       - 'salesforce api delete'
       - 'DELETE /services/data/'
   selection_bulk_operations:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Invoke-RestMethod'
       - 'Invoke-WebRequest'
       - 'HttpClient'
       - 'WebClient'
-  ScriptBlockText|regex:
+    ScriptBlockText|regex:
       - '.*delete.*\d{2,}.*'  # delete with numbers (bulk)
       - '.*remove.*\d{2,}.*'  # remove with numbers (bulk)
   selection_exfiltration:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Export-Mailbox'
       - 'Export-PST'
       - 'Get-Mailbox | ForEach'
@@ -61,28 +61,28 @@ detection:
       - 'Download-File'
       - 'Copy-Item'
   selection_api_tools:
-  EventID:
-  Image|endswith:
+    EventID:
+    Image|endswith:
       - '\powershell.exe'
       - '\python.exe'
       - '\curl.exe'
       - '\wget.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'api'
       - 'rest'
       - 'graph.microsoft.com'
       - 'googleapis.com'
       - 'salesforce.com'
   selection_network_activity:
-  EventID:
-  DestinationHostname|contains:
+    EventID:
+    DestinationHostname|contains:
       - 'graph.microsoft.com'
       - 'outlook.office365.com'
       - 'googleapis.com'
       - 'salesforce.com'
       - 'dropbox.com'
       - 'box.com'
-  DestinationPort:
+    DestinationPort:
   condition: |
     (selection_o365_destruction or selection_google_workspace or selection_salesforce_api) and
     selection_bulk_operations or (selection_exfiltration and selection_api_tools and selection_network_activity)

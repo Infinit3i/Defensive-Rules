@@ -23,8 +23,8 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith:
-  ParentImage|endswith:
+    Image|endswith:
+    ParentImage|endswith:
       - '\winword.exe'
       - '\excel.exe'
       - '\outlook.exe'

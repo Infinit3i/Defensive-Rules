@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'wevtutil qe'
       - 'Get-WinEvent | Sort TimeCreated'
       - 'Get-EventLog | Sort TimeGenerated'

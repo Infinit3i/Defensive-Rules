@@ -4,7 +4,8 @@ technique: T1106
 id: 3b8d4f1e-7c2a-4d45-9f6b-0e9a1c2b3d4f
 status: experimental
 description: >-
-  > Detect references to common native NT API function names (Nt*/Zw* like NtQueryInformationProcess, ZwCreateThread) inside script blocks, commandlines, or process creation events indicating direct native API usage.
+  > Detect references to common native NT API function names (Nt*/Zw* like NtQueryInformationProcess, ZwCreateThread) inside script blocks, commandlines, or process creation events indicating
+  direct native API usage.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -23,8 +24,8 @@ logsource:
   service: sysmon
 detection:
   selection_proc:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"
       - "NtOpenProcess"
@@ -32,8 +33,8 @@ detection:
       - "NtCreateThread"
       - "ZwCreateThread"
   selection_ps:
-  EventID:
-  ScriptBlockText|contains:
+    EventID: 1
+    ScriptBlockText|contains:
       - "NtQueryInformationProcess"
       - "ZwQueryInformationProcess"
       - "NtOpenProcess"

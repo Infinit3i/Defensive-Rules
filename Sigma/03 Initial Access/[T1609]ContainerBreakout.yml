@@ -12,23 +12,23 @@ logsource:
   service: auditd
 detection:
   selection_mount:
-  type:
-  syscall:
-  a1|contains:
+    type:
+    syscall:
+    a1|contains:
       - '/proc'
       - '/sys'
       - '/dev'
       - '/host'
   selection_namespace:
-  type:
-  syscall|contains:
+    type:
+    syscall|contains:
       - 'setns'
       - 'unshare'
-  success:
+    success:
   selection_capabilities:
-  type:
-  syscall:
-  capability|contains:
+    type:
+    syscall:
+    capability|contains:
       - 'cap_sys_admin'
       - 'cap_dac_override'
   condition: selection_mount or selection_namespace or selection_capabilities

@@ -13,27 +13,27 @@ logsource:
   service: auditd
 detection:
   selection_at_commands:
-      - type: EXECVE
-  a0|endswith:
+    type: EXECVE
+    a0|endswith:
       - /at
       - /batch
   selection_suspicious_content:
-      - a1|contains:
-      - wget
-      - curl
-      - nc
-      - ncat
-      - python
-      - perl
-      - bash
-      - /dev/tcp
-      - reverse
-      - shell
-      - base64
-      - chmod +x
+    - a1|contains:
+    - wget
+    - curl
+    - nc
+    - ncat
+    - python
+    - perl
+    - bash
+    - /dev/tcp
+    - reverse
+    - shell
+    - base64
+    - chmod +x
   selection_file_operations:
-      - type: PATH
-  name|contains:
+    type: PATH
+    name|contains:
       - /var/spool/at/
       - /var/spool/cron/atjobs/
   condition: selection_at_commands and (selection_suspicious_content or selection_file_operations)

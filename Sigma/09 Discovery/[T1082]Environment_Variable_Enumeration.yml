@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_set:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'set'
       - 'echo %'
       - '$env:'
@@ -20,8 +20,8 @@ detection:
       - 'dir env:'
       - 'printenv'
   selection_specific:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '%COMPUTERNAME%'
       - '%USERNAME%'
       - '%USERDOMAIN%'

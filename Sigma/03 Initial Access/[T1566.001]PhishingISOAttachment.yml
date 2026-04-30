@@ -12,19 +12,19 @@ logsource:
   service: exchange
 detection:
   selection_attachment:
-  AttachmentName|endswith:
+    AttachmentName|endswith:
       - '.iso'
       - '.vhd'
       - '.img'
       - '.dmg'
   selection_sender:
-  SenderDomain|contains:
+    SenderDomain|contains:
       - 'temp'
       - 'disposable'
       - 'guerrillamail'
       - '10minutemail'
   selection_subject:
-  Subject|contains:
+    Subject|contains:
       - 'urgent'
       - 'invoice'
       - 'payment'

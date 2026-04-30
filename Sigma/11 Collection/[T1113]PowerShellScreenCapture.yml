@@ -16,15 +16,15 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-  EventID:
+    EventID:
   screen_apis:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'System.Drawing.Graphics'
       - 'CopyFromScreen'
       - 'System.Windows.Forms.Screen'
       - 'GetBounds'
   file_save:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - '.Save('
       - 'bitmap'
       - '.png'

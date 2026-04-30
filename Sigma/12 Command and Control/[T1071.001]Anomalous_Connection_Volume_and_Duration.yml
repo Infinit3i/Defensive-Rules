@@ -22,10 +22,10 @@ logsource:
   service: conn
 detection:
   long_duration:
-  duration|gt:
+    duration|gt:
   high_volume:
-  history|contains:
-    condition: long_duration OR high_volume
+    history|contains:
+  condition: long_duration OR high_volume
 falsepositives:
   - Backup systems, monitoring agents, or CDN connections.
 level: medium

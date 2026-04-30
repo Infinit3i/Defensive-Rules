@@ -4,7 +4,8 @@ technique: T1566.003
 id: e6b9c4f7-3a8e-4d2c-b1f5-7e4a9c2d8f6b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects abuse of legitimate email services for malicious purposes including mass email sending, suspicious attachments, or phishing campaigns using compromised or newly created accounts.
+  Detects cloud-based security attacks and access attempts. Detects abuse of legitimate email services for malicious purposes including mass email sending, suspicious attachments, or phishing
+  campaigns using compromised or newly created accounts.
 references:
   - https://attack.mitre.org/techniques/T1566/003/
 author: Infinit3i
@@ -22,19 +23,19 @@ logsource:
   service: exchange
 detection:
   mass_email:
-  Operation:
-  RecipientCount|gte:
+    Operation:
+    RecipientCount|gte:
   suspicious_attachment:
-  Operation:
-  AttachmentExtension|contains:
+    Operation:
+    AttachmentExtension|contains:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.ps1'
       - '.vbs'
   external_sender:
-  Operation:
-  SenderDomain|contains:
+    Operation:
+    SenderDomain|contains:
       - 'gmail.com'
       - 'yahoo.com'
       - 'hotmail.com'

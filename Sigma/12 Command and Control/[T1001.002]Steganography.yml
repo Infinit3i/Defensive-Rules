@@ -27,13 +27,13 @@ detection:
       - '\steghide.exe'
       - '\openstego.exe'
       - '\outguess.exe'
-    image_processing:
+  image_processing:
     CommandLine|contains:
       - '.jpg'
       - '.png'
       - '.bmp'
       - '.wav'
-    embed_extract:
+  embed_extract:
     CommandLine|contains:
       - 'embed'
       - 'extract'

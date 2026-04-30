@@ -4,7 +4,8 @@ technique: T1204.003
 id: a3f6e8c9-7b4d-4e2f-c5a8-9f6e8d5c8a4b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects execution of malicious code embedded in image files by monitoring for steganography tools, image parsing vulnerabilities, or suspicious processes launched from image file interactions.
+  Detects cloud-based security attacks and access attempts. Detects execution of malicious code embedded in image files by monitoring for steganography tools, image parsing vulnerabilities, or
+  suspicious processes launched from image file interactions.
 references:
   - https://attack.mitre.org/techniques/T1204/003/
 author: Infinit3i
@@ -23,24 +24,24 @@ logsource:
   category: process_creation
 detection:
   image_viewers:
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\mspaint.exe'
       - '\PhotoViewer.exe'
       - '\Photos.exe'
-  Image|endswith:
+    Image|endswith:
   steganography_tools:
-  Image|contains:
+    Image|contains:
       - 'steghide'
       - 'openstego'
       - 'outguess'
   suspicious_image_process:
-  CommandLine|contains:
+    CommandLine|contains:
       - '.jpg'
       - '.png'
       - '.bmp'
       - '.gif'
-  Image|endswith:
-    condition: image_viewers or steganography_tools or suspicious_image_process
+    Image|endswith:
+  condition: image_viewers or steganography_tools or suspicious_image_process
 falsepositives:
   - Legitimate image processing applications
   - Photo editing software

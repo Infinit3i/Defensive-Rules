@@ -11,17 +11,17 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'process list'
       - 'process get'
       - 'process where'
       - 'process call'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Get-Process'
       - 'Get-WmiObject Win32_Process'
       - 'Get-CimInstance Win32_Process'
@@ -29,16 +29,16 @@ detection:
       - 'gcim Win32_Process'
       - 'ps'
   selection_advanced:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'tasklist /svc'
       - 'tasklist /m'
       - 'tasklist /v'
       - 'query process'
       - 'qprocess'
   selection_suspicious_filters:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'findstr /i antivirus'
       - 'findstr /i defender'
       - 'findstr /i security'

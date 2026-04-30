@@ -14,23 +14,23 @@ logsource:
   service: sysmon
 detection:
   schtasks_creation:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'schtasks /create'
       - 'Register-ScheduledTask'
-  CommandLine|contains|all:
+    CommandLine|contains|all:
       - '/tr'
       - '/sc'
   powershell_task:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'New-ScheduledTask'
       - 'Register-ScheduledTask'
       - 'New-ScheduledTaskAction'
   suspicious_locations:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '/tr "C:\Users\'
       - '/tr "C:\Temp\'
       - '/tr "C:\ProgramData\'

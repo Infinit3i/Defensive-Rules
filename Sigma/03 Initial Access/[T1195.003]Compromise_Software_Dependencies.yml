@@ -4,7 +4,8 @@ technique: T1195.003
 id: e8f5c2a9-7d4b-4e1f-a6c3-9f2e8d1c5a8b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects potential compromise of software dependencies by monitoring for unusual package installations, dependency confusion attacks, or suspicious library downloads that may indicate supply chain attacks.
+  Detects cloud-based security attacks and access attempts. Detects potential compromise of software dependencies by monitoring for unusual package installations, dependency confusion attacks, or
+  suspicious library downloads that may indicate supply chain attacks.
 references:
   - https://attack.mitre.org/techniques/T1195/003/
 author: Infinit3i
@@ -23,23 +24,23 @@ logsource:
   category: process_creation
 detection:
   package_managers:
-  Image|endswith:
+    Image|endswith:
       - '\npm.exe'
       - '\pip.exe'
       - '\composer.exe'
       - '\nuget.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'install'
       - 'update'
   suspicious_repos:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'pypi.org'
       - 'npmjs.com'
       - 'packagist.org'
       - 'typosquatting'
       - 'similar'
   private_install:
-  CommandLine|contains:
+    CommandLine|contains:
       - '--index-url'
       - '--extra-index-url'
       - '--registry'

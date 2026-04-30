@@ -15,8 +15,8 @@ logsource:
   service: sysmon
 detection:
   selection_package_managers:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\npm.exe'
       - '\pip.exe'
       - '\gem.exe'
@@ -25,13 +25,13 @@ detection:
       - '\composer.exe'
       - '\cargo.exe'
       - '\go.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'install'
       - 'add'
       - 'update'
   selection_typosquatting:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'react-dom'  # Common typosquats
       - 'lodash'
       - 'express'
@@ -41,49 +41,49 @@ detection:
       - 'bootstrap'
       - 'jquery'
   selection_suspicious_install:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '--force'
       - '--ignore-scripts'
       - '--unsafe-perm'
       - '--allow-root'
       - 'postinstall'
   selection_network_exfil:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'node.exe'
       - 'python.exe'
       - 'ruby.exe'
-  DestinationPort:
+    DestinationPort:
       - 443
       - 80
       - 8080
       - 9000
-  Initiated:
+    Initiated:
   selection_file_creation:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'npm'
       - 'pip'
       - 'gem'
       - 'nuget'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - '\AppData\Roaming\npm\'
       - '\site-packages\'
       - '\gems\'
       - '\packages\'
   selection_malicious_scripts:
-  EventID:
-  ParentImage|contains:
+    EventID: 1
+    ParentImage|contains:
       - 'npm'
       - 'pip'
       - 'gem'
-  Image|endswith:
+    Image|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\bash.exe'
       - '\sh.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'curl'
       - 'wget'
       - 'Invoke-WebRequest'

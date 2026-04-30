@@ -12,34 +12,34 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
   selection_values:
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\ImagePath'
       - '\ServiceDll'
       - '\Parameters\ServiceDll'
       - '\Start'
       - '\Type'
   selection_suspicious:
-      - Details|contains:
-      - 'powershell'
-      - 'cmd.exe'
-      - 'rundll32'
-      - 'regsvr32'
-      - 'mshta'
-      - 'wscript'
-      - 'cscript'
-      - Details|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
-      - Details|endswith:
-      - '.bat'
-      - '.vbs'
-      - '.js'
-      - '.ps1'
+    - Details|contains:
+    - 'powershell'
+    - 'cmd.exe'
+    - 'rundll32'
+    - 'regsvr32'
+    - 'mshta'
+    - 'wscript'
+    - 'cscript'
+    - Details|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
+    - Details|endswith:
+    - '.bat'
+    - '.vbs'
+    - '.js'
+    - '.ps1'
   condition: selection_reg and selection_values and selection_suspicious
 falsepositives:
   - Legitimate service updates

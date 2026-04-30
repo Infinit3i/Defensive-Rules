@@ -12,19 +12,19 @@ logsource:
   service: sysmon
 detection:
   selection_schtasks:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/ru system'
       - '/rl highest'
       - 'NT AUTHORITY\SYSTEM'
   selection_taskschd:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
   selection_registry:
-  EventID:
-  TargetObject|contains:
-    condition: selection_schtasks or selection_taskschd or selection_registry
+    EventID: 1
+    TargetObject|contains:
+  condition: selection_schtasks or selection_taskschd or selection_registry
 falsepositives:
   - Legitimate system administration
   - Software installation tasks

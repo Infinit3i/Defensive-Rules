@@ -12,20 +12,20 @@ logsource:
   service: cloudtrail
 detection:
   selection_api:
-  eventName|contains:
+    eventName|contains:
       - 'AssumeRole'
       - 'GetSessionToken'
       - 'CreateAccessKey'
   selection_suspicious:
-  sourceIPAddress|regex:
-  userAgent|contains:
+    sourceIPAddress|regex:
+    userAgent|contains:
       - 'aws-cli'
       - 'boto'
       - 'python'
   selection_timing:
-  eventTime:
+    eventTime:
   timeframe:
-    condition: selection_api and selection_suspicious and selection_timing | count() > 10
+  condition: selection_api and selection_suspicious and selection_timing | count() > 10
 falsepositives:
   - Legitimate API usage from external IPs
   - Automated scripts and CI/CD pipelines

@@ -4,7 +4,8 @@ technique: T1537
 id: b8e5f2a9-9c6d-4e7f-b8e5-2f9a9c6d7b8b
 status: experimental
 description: >-
-  >- Detects unauthorized transfer of data to cloud accounts by monitoring for suspicious cloud uploads, account synchronization activities, or data transfers to personal cloud storage from corporate environments.
+  >- Detects unauthorized transfer of data to cloud accounts by monitoring for suspicious cloud uploads, account synchronization activities, or data transfers to personal cloud storage from
+  corporate environments.
 references:
   - https://attack.mitre.org/techniques/T1537/
 author: Infinit3i
@@ -22,17 +23,17 @@ logsource:
   service: sharepoint
 detection:
   external_sharing:
-  Operation:
-  EventSource:
-  SharingLevel:
+    Operation:
+    EventSource:
+    SharingLevel:
   large_upload:
-  Operation:
-  ItemType:
-  ObjectId|contains:
+    Operation:
+    ItemType:
+    ObjectId|contains:
   sync_activity:
-  Operation:
-  UserAgent|contains:
-    condition: external_sharing or large_upload or sync_activity
+    Operation:
+    UserAgent|contains:
+  condition: external_sharing or large_upload or sync_activity
 falsepositives:
   - Legitimate business cloud sharing
   - Authorized file synchronization

@@ -11,8 +11,8 @@ logsource:
   service: http
 detection:
   selection_rapid_clicks:
-  method:
-  uri|contains:
+    method:
+    uri|contains:
       - 'click'
       - 'ad'
       - 'banner'
@@ -22,7 +22,7 @@ detection:
       - 'adsense'
       - 'doubleclick'
   selection_user_agents:
-  user_agent|contains:
+    user_agent|contains:
       - 'bot'
       - 'crawler'
       - 'spider'
@@ -33,16 +33,16 @@ detection:
       - 'chrome/99'  # Suspicious static versions
       - 'firefox/99'
   selection_suspicious_referrers:
-  referrer|contains:
+    referrer|contains:
       - 'google.com/search?q=click'
       - 'bing.com/search?q=click'
       - 'clickfarm'
       - 'autoclick'
       - 'botclick'
-  rapid_requests:
+    rapid_requests:
   # Would need correlation rule for timing
-  src_ip:
-    condition: (selection_rapid_clicks and selection_user_agents) or selection_suspicious_referrers
+    src_ip:
+  condition: (selection_rapid_clicks and selection_user_agents) or selection_suspicious_referrers
 fields:
   - src_ip
   - dst_ip

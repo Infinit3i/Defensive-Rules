@@ -12,34 +12,34 @@ logsource:
   service: sysmon
 detection:
   selection_lnk:
-  EventID:
-  TargetFilename|endswith:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|endswith:
+    TargetFilename|contains:
       - '\Start Menu\Programs\Startup\'
       - '\Start Menu\Programs\StartUp\'
   selection_process:
-  EventID:
-  ParentImage|endswith:
-  CommandLine|contains:
+    EventID: 1
+    ParentImage|endswith:
+    CommandLine|contains:
   selection_suspicious:
-      - CommandLine|contains:
-      - 'powershell'
-      - 'cmd.exe /c'
-      - 'rundll32'
-      - 'mshta'
-      - 'wscript'
-      - 'cscript'
-      - CommandLine|contains:
-      - ' -w hidden'
-      - ' -windowstyle hidden'
-      - ' -enc '
-      - ' -e '
-      - 'bypass'
-      - Image|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
+    - CommandLine|contains:
+    - 'powershell'
+    - 'cmd.exe /c'
+    - 'rundll32'
+    - 'mshta'
+    - 'wscript'
+    - 'cscript'
+    - CommandLine|contains:
+    - ' -w hidden'
+    - ' -windowstyle hidden'
+    - ' -enc '
+    - ' -e '
+    - 'bypass'
+    - Image|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
   condition: (selection_lnk or selection_process) and selection_suspicious
 falsepositives:
   - Legitimate application shortcuts

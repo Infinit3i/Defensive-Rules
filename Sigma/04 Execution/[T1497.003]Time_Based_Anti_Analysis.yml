@@ -14,8 +14,8 @@ logsource:
   service: sysmon
 detection:
   selection_timing_functions:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'QueryPerformanceCounter'
       - 'GetTickCount'
       - 'timeGetTime'
@@ -24,47 +24,47 @@ detection:
       - 'clock_gettime'
       - 'gettimeofday'
   selection_sleep_delays:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'Sleep('
       - 'sleep '
       - 'usleep'
       - 'nanosleep'
       - 'select('
       - 'WaitForSingleObject'
-  CommandLine|re:
+    CommandLine|re:
   selection_date_checks:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - 'date'
       - 'time'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'GetSystemTime'
       - 'GetLocalTime'
       - 'SystemTimeToFileTime'
       - 'GetDateFormat'
       - 'GetTimeFormat'
   selection_execution_delay:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'ping 127.0.0.1'
       - 'ping localhost'
       - 'timeout'
       - 'waitfor'
-  CommandLine|re:
+    CommandLine|re:
   selection_vm_specific_timing:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - 'rdtsc'
       - 'cpu'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'frequency'
       - 'speed'
       - 'performance'
       - 'benchmark'
   selection_user_interaction:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'GetCursorPos'
       - 'GetAsyncKeyState'
       - 'GetForegroundWindow'
@@ -73,11 +73,11 @@ detection:
       - 'mouse_event'
       - 'keybd_event'
   selection_file_timestamps:
-  EventID:
+    EventID: 1
       - 11
       - 2  # File creation time change
-  TargetFilename|endswith:
-    condition: 2 of selection_*
+    TargetFilename|endswith:
+  condition: 2 of selection_*
 falsepositives:
   - Legitimate applications with timing requirements
   - Performance benchmarking tools

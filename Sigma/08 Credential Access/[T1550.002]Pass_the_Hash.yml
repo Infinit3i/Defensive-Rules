@@ -19,10 +19,10 @@ logsource:
   service: security
 detection:
   selection:
-  EventID:
-  LogonType:
-  AuthenticationPackageName:
-    condition: selection
+    EventID:
+    LogonType:
+    AuthenticationPackageName:
+  condition: selection
 falsepositives:
   - Legitimate network logon activity that uses NTLM authentication.
 level: high

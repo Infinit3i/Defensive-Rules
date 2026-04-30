@@ -4,7 +4,8 @@ technique: T1543.003
 id: 8ca2a7bf-42a1-4d95-8d55-93f4df3b4b7f
 status: experimental
 description: >-
-  > Detects the creation of a Windows service (Event ID 7045) referencing a named pipe path in the service file name (e.g., \\.\pipe\...). Attackers sometimes abuse named pipes when creating malicious services for lateral movement or privilege escalation.
+  > Detects the creation of a Windows service (Event ID 7045) referencing a named pipe path in the service file name (e.g., \\.\pipe\...). Attackers sometimes abuse named pipes when creating
+  malicious services for lateral movement or privilege escalation.
 references:
   - https://attack.mitre.org/techniques/T1543/003/
 author: Infinit3i
@@ -18,10 +19,10 @@ logsource:
   service: system
 detection:
   selection:
-  EventID:
+    EventID:
   # "A service was installed in the system"
-  ServiceFileName|contains:
-    condition: selection
+    ServiceFileName|contains:
+  condition: selection
 falsepositives:
   - Legitimate internal or custom services using named pipes
 level: high

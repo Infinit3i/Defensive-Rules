@@ -11,18 +11,18 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/node:'
       - 'process call create'
       - '/user:'
       - '/password:'
       - 'Win32_Process'
   selection_powershell_wmi:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Invoke-WmiMethod'
       - 'Get-WmiObject'
       - 'gwmi'
@@ -31,11 +31,11 @@ detection:
       - '-ComputerName'
       - '-Credential'
   selection_wmiprvse:
-  EventID:
-  Image|endswith:
-  ParentImage|endswith:
+    EventID: 1
+    Image|endswith:
+    ParentImage|endswith:
   remote_indicators:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'cmd.exe /c'
       - 'powershell.exe -c'
       - 'rundll32.exe'
@@ -44,7 +44,7 @@ detection:
       - 'bitsadmin.exe'
       - 'certutil.exe'
   network_indicators:
-  CommandLine|re:
+    CommandLine|re:
   condition: |
     (selection_wmic or selection_powershell_wmi) and (remote_indicators or network_indicators) or selection_wmiprvse
 fields:

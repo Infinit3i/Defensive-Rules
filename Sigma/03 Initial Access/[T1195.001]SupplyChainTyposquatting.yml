@@ -12,7 +12,7 @@ logsource:
   service: npm
 detection:
   selection_suspicious_names:
-  PackageName|contains:
+    PackageName|contains:
       - 'requesst'
       - 'beautifulsoup'
       - 'urllibz'
@@ -20,13 +20,13 @@ detection:
       - 'pillow1'
       - 'lodaash'
   selection_low_downloads:
-  DownloadCount|lt:
+    DownloadCount|lt:
   selection_recent_creation:
-  PackageAge|lt:
+    PackageAge|lt:
   selection_suspicious_author:
-      - AuthorName|length: 3
-      - AuthorEmail|contains: 'temp'
-      - AuthorEmail|contains: 'disposable'
+    - AuthorName|length: 3
+    - AuthorEmail|contains: 'temp'
+    - AuthorEmail|contains: 'disposable'
   condition: |
     selection_suspicious_names and (selection_low_downloads or selection_recent_creation or selection_suspicious_author)
 level: high

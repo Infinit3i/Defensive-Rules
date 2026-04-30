@@ -13,51 +13,51 @@ logsource:
   service: signinlogs
 detection:
   selection_impossible_travel:
-  EventName:
-  ResultType:
+    EventName:
+    ResultType:
     # Login from geographic locations impossible to reach in timeframe
   selection_multiple_failed_then_success:
-  EventName:
-  UserPrincipalName:
+    EventName:
+    UserPrincipalName:
   # Pattern: multiple failed attempts followed by successful login
   selection_off_hours_access:
-  EventName:
-  ResultType:
+    EventName:
+    ResultType:
     # Access outside typical business hours for user's timezone
   selection_new_device_access:
-  EventName:
-  ResultType:
-  DeviceDetail.isCompliant:
-  DeviceDetail.isManaged:
+    EventName:
+    ResultType:
+    DeviceDetail.isCompliant:
+    DeviceDetail.isManaged:
     # Access from unmanaged/non-compliant devices
   selection_privilege_changes:
-  EventName:
-  ActivityDisplayName:
+    EventName:
+    ActivityDisplayName:
       - 'Add member to role'
       - 'Remove member from role'
       - 'Update role'
-  TargetResources.userPrincipalName:
+    TargetResources.userPrincipalName:
     # Unexpected privilege changes
   selection_resource_enumeration:
-  EventName:
-  ActivityDisplayName:
+    EventName:
+    ActivityDisplayName:
       - 'List applications'
       - 'List service principals'
       - 'List users'
       - 'List groups'
     # Rapid enumeration activities post-login
   selection_suspicious_app_access:
-  EventName:
-  ResultType:
-  AppDisplayName|contains:
+    EventName:
+    ResultType:
+    AppDisplayName|contains:
       - 'Graph'
       - 'Exchange'
       - 'SharePoint'
       - 'PowerBI'
     # Access to high-value applications
   selection_api_abuse:
-  EventName:
-  ActivityDisplayName|contains:
+    EventName:
+    ActivityDisplayName|contains:
       - 'API'
       - 'Graph'
     # Unusual API usage patterns

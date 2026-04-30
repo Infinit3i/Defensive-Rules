@@ -4,7 +4,8 @@ technique: T1021.001
 id: b6f2e9d4-8c7a-4e3f-a1b5-9e2f8d7c4a6b
 status: experimental
 description: >-
-  >- Detects lateral movement via RDP by monitoring for RDP connections between internal hosts, suspicious RDP logon patterns, or unauthorized remote desktop access that may indicate attacker movement through the network.
+  >- Detects lateral movement via RDP by monitoring for RDP connections between internal hosts, suspicious RDP logon patterns, or unauthorized remote desktop access that may indicate attacker
+  movement through the network.
 references:
   - https://attack.mitre.org/techniques/T1021/001/
 author: Infinit3i
@@ -24,12 +25,12 @@ detection:
     EventID:
     LogonType:
     AuthenticationPackageName:
-    internal_source:
+  internal_source:
     IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-    unusual_account:
+  unusual_account:
     TargetUserName|contains:
       - 'admin'
       - 'service'

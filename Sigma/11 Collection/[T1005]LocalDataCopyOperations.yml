@@ -16,15 +16,15 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
+    EventID: 1
   commands:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'copy'
       - 'xcopy'
       - 'robocopy'
       - 'move'
   targets:
-  CommandLine|contains:
+    CommandLine|contains:
       - '\Users\'
       - '\Documents\'
       - '\AppData\'

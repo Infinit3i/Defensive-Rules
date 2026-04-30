@@ -4,7 +4,8 @@ technique: T1048
 id: b789c2f1-45e6-4d91-abcd-0987654321ef
 status: experimental
 description: >-
-  > "Detects unusual file transfer activity using Zeek logs, such as large file sizes, executable/script MIME types, or transfers over unexpected protocols like FTP or HTTP instead of secure channels."
+  > "Detects unusual file transfer activity using Zeek logs, such as large file sizes, executable/script MIME types, or transfers over unexpected protocols like FTP or HTTP instead of secure
+  channels."
 references:
   - https://attack.mitre.org/techniques/T1048/
 author: Infinit3i
@@ -19,16 +20,16 @@ logsource:
   service: files
 detection:
   suspicious_mime:
-  mime_type|contains:
+    mime_type|contains:
       - "application/x-dosexec"
       - "application/x-sh"
       - "application/x-executable"
       - "application/x-msdownload"
   large_file:
-  total_bytes|gt:
+    total_bytes|gt:
   protocol_anomaly:
-  tx_hosts|contains:
-    condition: suspicious_mime OR large_file OR protocol_anomaly
+    tx_hosts|contains:
+  condition: suspicious_mime OR large_file OR protocol_anomaly
 falsepositives:
   - Legitimate large file transfers or patching events.
 level: high

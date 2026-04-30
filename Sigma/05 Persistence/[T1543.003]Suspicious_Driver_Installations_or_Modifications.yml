@@ -19,11 +19,11 @@ logsource:
   service: system
 detection:
   selection:
-  EventID:
-  ServiceFileName|endswith:
+    EventID:
+    ServiceFileName|endswith:
   whitelist:
-  ServiceFileName|startswith:
-    condition: selection and not whitelist
+    ServiceFileName|startswith:
+  condition: selection and not whitelist
 falsepositives:
   - Legitimate driver updates or installations by trusted vendors in standard directories.
 level: high

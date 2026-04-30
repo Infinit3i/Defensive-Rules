@@ -12,23 +12,23 @@ logsource:
   service: pbx
 detection:
   selection_caller_pattern:
-  CallerID|startswith:
+    CallerID|startswith:
       - '+1800'
       - '+1855'
       - '+1866'
       - '+1877'
       - '+1888'
   selection_spoofed_number:
-      - CallerIDName|contains: 'Bank'
-      - CallerIDName|contains: 'Security'
-      - CallerIDName|contains: 'Support'
-      - CallerIDName|contains: 'Microsoft'
-      - CallerIDName|contains: 'Apple'
+    - CallerIDName|contains: 'Bank'
+    - CallerIDName|contains: 'Security'
+    - CallerIDName|contains: 'Support'
+    - CallerIDName|contains: 'Microsoft'
+    - CallerIDName|contains: 'Apple'
   selection_call_duration:
-  CallDuration|gte:
+    CallDuration|gte:
   selection_frequent_calls:
-  CallCount|gte:
-  TimeWindow:
+    CallCount|gte:
+    TimeWindow:
   condition: |
     (selection_caller_pattern and selection_spoofed_number) or (selection_call_duration and selection_frequent_calls)
 level: medium

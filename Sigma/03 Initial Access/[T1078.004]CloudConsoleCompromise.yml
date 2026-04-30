@@ -18,27 +18,27 @@ logsource:
   service: signin
 detection:
   selection_console_access:
-  Category:
-  AppDisplayName|contains:
+    Category:
+    AppDisplayName|contains:
       - 'Azure portal'
       - 'AWS Management Console'
       - 'Google Cloud Console'
       - 'Microsoft Azure PowerShell'
   selection_suspicious_location:
-  Location|exists:
+    Location|exists:
   selection_risk_indicators:
-  RiskLevelDuringSignIn:
+    RiskLevelDuringSignIn:
       - 'high'
       - 'medium'
-  RiskDetail|contains:
+    RiskDetail|contains:
       - 'unfamiliarFeatures'
       - 'anonymizedIPAddress'
       - 'maliciousIPAddress'
   selection_admin_roles:
-  UserPrincipalName|contains:
+    UserPrincipalName|contains:
       - 'admin'
       - 'root'
-  ConditionalAccessStatus:
+    ConditionalAccessStatus:
   condition: |
     selection_console_access and (selection_risk_indicators or
     (selection_suspicious_location and selection_admin_roles))

@@ -12,18 +12,18 @@ logsource:
   service: activedirectory
 detection:
   selection_push:
-  Category:
-  OperationName:
-  AuthenticationMethod:
+    Category:
+    OperationName:
+    AuthenticationMethod:
   selection_repeated:
-  ResultType:
+    ResultType:
       - 'Failure'
       - 'Success'
-  UserPrincipalName:
+    UserPrincipalName:
   selection_timing:
-  TimeGenerated:
+    TimeGenerated:
   timeframe:
-    condition: selection_push and selection_repeated | count() > 5
+  condition: selection_push and selection_repeated | count() > 5
 falsepositives:
   - Users accidentally triggering multiple MFA prompts
   - Application retry mechanisms

@@ -14,16 +14,16 @@ logsource:
   service: security
 detection:
   selection_rdp_logon:
-  EventID:
-  LogonType:
-  AuthenticationPackageName:
+    EventID:
+    LogonType:
+    AuthenticationPackageName:
   selection_network_logon:
-  EventID:
-  LogonType:
-  ProcessName:
-    condition: selection_rdp_logon or selection_network_logon
-    timeframe: 10m
-    count: 3
+    EventID:
+    LogonType:
+    ProcessName:
+  condition: selection_rdp_logon or selection_network_logon
+  timeframe: 10m
+  count: 3
 level: medium
 fields:
   - TargetUserName

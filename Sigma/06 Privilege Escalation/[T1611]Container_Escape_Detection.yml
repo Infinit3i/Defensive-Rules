@@ -12,22 +12,22 @@ logsource:
   service: auditd
 detection:
   selection_mount:
-  type:
-  syscall:
-  a0|contains:
+    type:
+    syscall:
+    a0|contains:
       - '/proc'
       - '/sys'
       - '/dev'
   selection_chroot:
-  type:
-  syscall:
+    type:
+    syscall:
       - 'chroot'
       - 'pivot_root'
   selection_capabilities:
-  type:
-  syscall:
-  success:
-    condition: selection_mount or selection_chroot or selection_capabilities
+    type:
+    syscall:
+    success:
+  condition: selection_mount or selection_chroot or selection_capabilities
 falsepositives:
   - Legitimate container operations
   - System maintenance

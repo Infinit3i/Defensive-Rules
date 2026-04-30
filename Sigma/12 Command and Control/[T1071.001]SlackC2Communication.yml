@@ -15,16 +15,16 @@ logsource:
   service: audit
 detection:
   selection_automated:
-  action:
+    action:
       - 'message_posted'
       - 'file_uploaded'
-  user_agent|contains:
+    user_agent|contains:
       - 'bot'
       - 'curl'
       - 'python'
       - 'powershell'
   selection_suspicious_content:
-  message|contains:
+    message|contains:
       - 'base64'
       - 'powershell'
       - 'cmd.exe'

@@ -13,23 +13,23 @@ logsource:
   product: windows
 detection:
   service_creation:
-  EventID:
-  ServiceType:
+    EventID:
+    ServiceType:
   sc_command:
-  EventID:
-  CommandLine|contains:
+    EventID:
+    CommandLine|contains:
       - 'sc create'
       - 'sc config'
       - 'New-Service'
   powershell_service:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
       - 'New-Service'
       - 'Set-Service'
   suspicious_service_paths:
-  EventID:
-  ImagePath|contains:
+    EventID:
+    ImagePath|contains:
       - 'C:\Users\'
       - 'C:\Temp\'
       - 'C:\ProgramData\'

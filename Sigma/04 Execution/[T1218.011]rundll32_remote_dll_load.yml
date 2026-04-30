@@ -15,8 +15,8 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith:
-  CommandLine|contains:
+    Image|endswith:
+    CommandLine|contains:
       - '\\\\'
       - 'http://'
       - 'https://'

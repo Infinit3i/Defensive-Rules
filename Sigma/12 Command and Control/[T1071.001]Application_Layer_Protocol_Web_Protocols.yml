@@ -28,11 +28,11 @@ detection:
       - 'python'
       - 'powershell'
       - 'empire'
-    beacon_pattern:
+  beacon_pattern:
     method:
     request_body_len|lte:
     response_body_len|lte:
-    encoded_communication:
+  encoded_communication:
     uri|contains:
       - 'base64'
       - '%20%20%20'

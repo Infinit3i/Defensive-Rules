@@ -4,7 +4,8 @@ technique: T1106
 id: 4c9e5a2b-6d3f-4e56-8a7b-1f2e3d4c5b6a
 status: experimental
 description: >-
-  > Detect processes loading native modules (DLLs) from unexpected or user-writable locations (AppData, Temp, user profile paths) which may indicate custom native API usage or dropped native helpers.
+  > Detect processes loading native modules (DLLs) from unexpected or user-writable locations (AppData, Temp, user profile paths) which may indicate custom native API usage or dropped native
+  helpers.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -23,12 +24,12 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\rundll32.exe'
       - '\svchost.exe'
       - '\explorer.exe'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

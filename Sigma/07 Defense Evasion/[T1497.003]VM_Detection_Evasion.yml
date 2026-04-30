@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'SELECT * FROM Win32_ComputerSystem'
       - 'SELECT * FROM Win32_BIOS'
       - 'SELECT * FROM Win32_BaseBoard'

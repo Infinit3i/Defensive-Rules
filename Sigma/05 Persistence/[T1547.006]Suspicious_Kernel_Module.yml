@@ -9,15 +9,15 @@ logsource:
   service: syslog
 detection:
   selection_kernel:
-  program:
-  message|contains:
+    program:
+    message|contains:
   selection_loaded:
-  message|contains:
+    message|contains:
       - "module loaded"
       - "insmod"
       - "modprobe"
   selection_suspicious_names:
-  message|contains:
+    message|contains:
       - "rootkit"
       - "backdoor"
       - "keylog"
@@ -26,7 +26,7 @@ detection:
       - "evil"
       - "malware"
   selection_unsigned:
-  message|contains:
+    message|contains:
       - "unsigned module"
       - "module verification failed"
       - "loading unsigned module"

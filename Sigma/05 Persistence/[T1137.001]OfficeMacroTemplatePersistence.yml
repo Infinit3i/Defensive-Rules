@@ -9,15 +9,15 @@ logsource:
   service: sysmon
 detection:
   selection_file:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\Microsoft Office\UnsafeLocations\'
       - '\Microsoft\Templates\'
       - '\STARTUP\'
       - 'Normal.dotm'
       - 'Personal.xlsb'
   selection_ext:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.dotm'
       - '.xlam'
       - '.ppam'

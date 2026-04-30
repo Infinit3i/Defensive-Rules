@@ -11,8 +11,8 @@ logsource:
   service: powershell-classic
 detection:
   selection_powershell_obfuscation:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'iex('
       - 'invoke-expression'
       - '&('
@@ -20,20 +20,20 @@ detection:
       - 'ForEach-Object'
       - '%{'
   selection_base64_powershell:
-  EventID:
-  ScriptBlockText|re:
+    EventID:
+    ScriptBlockText|re:
       - '.*[a-zA-Z0-9+/]{50,}={0,2}.*'
       - '.*\[System\.Convert\]::FromBase64String.*'
       - '.*\[System\.Text\.Encoding\]::.*\.GetString.*'
   selection_char_substitution:
-  EventID:
-  ScriptBlockText|re:
+    EventID:
+    ScriptBlockText|re:
       - '.*\[char\]\d+.*\[char\]\d+.*\[char\]\d+.*'
       - '.*\[System\.Char\].*'
       - '.*-join\s*\(\s*\d+.*'
   selection_string_manipulation:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - '-replace'
       - '-split'
       - '-join'
@@ -42,21 +42,21 @@ detection:
       - 'tolower()'
       - 'toupper()'
   selection_format_operators:
-  EventID:
-  ScriptBlockText|re:
+    EventID:
+    ScriptBlockText|re:
       - '.*"{[0-9]+}".*-f.*'
       - '.*\$\w+\s*=\s*"{[0-9,]+}".*'
   selection_compression:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'System.IO.Compression.GzipStream'
       - 'System.IO.Compression.DeflateStream'
       - 'System.IO.MemoryStream'
       - 'FromBase64String'
   selection_cmd_obfuscation:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
       - '^&'
       - '""'
       - "'"
@@ -65,18 +65,18 @@ detection:
       - '%SystemRoot%'
       - '%windir%'
   selection_batch_obfuscation:
-  EventID:
-  CommandLine|re:
+    EventID:
+    CommandLine|re:
       - '.*set\s+\w+=[^&]*&.*'
       - '.*for\s+/[lf]\s+.*'
       - '.*if\s+.*==.*'
   selection_wmi_obfuscation:
-  EventID:
-  CommandLine|contains:
+    EventID:
+    CommandLine|contains:
       - 'wmic process call create'
       - 'wmic os get'
       - 'wmic computersystem get'
-  CommandLine|re:
+    CommandLine|re:
       - '.*"[^"]*\^[^"]*".*'
   condition: |
     selection_powershell_obfuscation or selection_base64_powershell or selection_char_substitution or selection_string_manipulation or select

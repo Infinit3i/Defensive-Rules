@@ -12,26 +12,26 @@ logsource:
   service: sysmon
 detection:
   selection_timeout:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'timeout /t'
       - 'ping -n'
       - 'ping 127.0.0.1 -n'
       - 'ping localhost -n'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Start-Sleep'
       - 'sleep'
       - 'System.Threading.Thread.Sleep'
       - '[Threading.Thread]::Sleep'
   selection_batch:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\cmd.exe'
       - '\choice.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'choice /t'
       - 'choice /d'
       - '/t 10'
@@ -41,8 +41,8 @@ detection:
       - '/n 30'
       - '/n 60'
   long_delays:
-  CommandLine|re:
-    condition: (selection_timeout or selection_powershell or selection_batch) and long_delays
+    CommandLine|re:
+  condition: (selection_timeout or selection_powershell or selection_batch) and long_delays
 fields:
   - Image
   - CommandLine

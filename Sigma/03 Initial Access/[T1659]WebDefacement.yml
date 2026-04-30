@@ -12,26 +12,26 @@ logsource:
   service: access
 detection:
   selection_methods:
-  method:
+    method:
       - 'PUT'
       - 'PATCH'
       - 'DELETE'
-  status:
+    status:
   selection_injection:
-  uri|contains:
+    uri|contains:
       - '<script>'
       - '<iframe>'
       - 'javascript:'
       - 'data:'
-  method:
+    method:
   selection_upload:
-  uri|contains:
+    uri|contains:
       - 'upload'
       - 'file'
       - 'image'
-  status:
-  content_length:
-    condition: selection_methods or selection_injection or selection_upload
+    status:
+    content_length:
+  condition: selection_methods or selection_injection or selection_upload
 falsepositives:
   - Legitimate content management operations
   - File upload functionality

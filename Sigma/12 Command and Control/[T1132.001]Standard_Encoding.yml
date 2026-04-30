@@ -26,10 +26,10 @@ detection:
       - 'base64'
       - '==='
       - 'encode'
-    hex_encoding:
+  hex_encoding:
     uri|regex:
     method:
-    url_encoding:
+  url_encoding:
     uri|contains:
       - '%2F%2F'
       - '%3A%2F%2F'

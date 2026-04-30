@@ -4,7 +4,8 @@ technique: T1622
 id: b5e6f708-1234-5678-9abc-def012345678
 status: experimental
 description: >-
-  > Detect image/module load events where common debug / debugging helper DLLs (dbghelp.dll, dbgcore.dll, vsjitdebugger.exe components) are loaded from user-writable locations (Temp, AppData, Downloads) — suspicious for evasion or illicit debugging helpers.
+  > Detect image/module load events where common debug / debugging helper DLLs (dbghelp.dll, dbgcore.dll, vsjitdebugger.exe components) are loaded from user-writable locations (Temp, AppData,
+  Downloads) — suspicious for evasion or illicit debugging helpers.
 references:
   - https://attack.mitre.org/techniques/T1622/
 author: Infinit3i
@@ -23,14 +24,14 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - "dbghelp.dll"
       - "dbgcore.dll"
       - "vsjitdebugger.exe"
   selection_path_user:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

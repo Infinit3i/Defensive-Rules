@@ -21,19 +21,19 @@ tags:
   - Metasploit
 associated_groups: []
 associated_malware:
-- Metasploit
+  - Metasploit
 logsource:
   product: network
   service: zeek
 detection:
   selection_ftp:
-  zeek.ftp.request|exists:
+    zeek.ftp.request|exists:
   selection_smb:
-  zeek.smb.command|contains:
+    zeek.smb.command|contains:
       - "NT_CREATE_ANDX"
       - "SMB_COM_WRITE"
   selection_anonymous_upload:
-  zeek.ftp.request|contains:
+    zeek.ftp.request|contains:
       - "STOR"
       - "PUT"
       - "anonymous"

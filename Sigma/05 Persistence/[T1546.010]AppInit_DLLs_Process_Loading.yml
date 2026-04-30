@@ -11,22 +11,22 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-  EventID:
-  ImageLoaded|contains:
+    EventID: 1
+    ImageLoaded|contains:
       - '\AppData\'
       - '\Temp\'
       - '\ProgramData\'
       - '.tmp'
       - '.dat'
   selection_process:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'explorer.exe'
       - 'winlogon.exe'
       - 'userinit.exe'
       - 'dwm.exe'
   filter_legitimate:
-  ImageLoaded|contains:
+    ImageLoaded|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

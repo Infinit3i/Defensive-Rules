@@ -11,7 +11,7 @@ logsource:
   service: http
 detection:
   selection_user_agents:
-  user_agent|contains:
+    user_agent|contains:
       - 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)'
       - 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
       - 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1)'
@@ -23,10 +23,10 @@ detection:
       - 'WinHTTP'
       - ''  # Empty user agent
   selection_post_patterns:
-  method:
-  request_body_len:
+    method:
+    request_body_len:
   selection_suspicious_paths:
-  uri|contains:
+    uri|contains:
       - '/admin'
       - '/panel'
       - '/gate'
@@ -38,9 +38,9 @@ detection:
       - '.aspx?id='
       - '.jsp?id='
   selection_beaconing:
-  request_body_len:
-  status_code:
-  timing_patterns:
+    request_body_len:
+    status_code:
+    timing_patterns:
   condition: |
     (selection_user_agents or selection_suspicious_paths) and (selection_post_patterns or selection_beaconing)
 fields:

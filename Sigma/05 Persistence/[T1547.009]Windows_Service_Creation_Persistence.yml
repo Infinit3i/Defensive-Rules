@@ -12,31 +12,31 @@ logsource:
   service: sysmon
 detection:
   selection_sc:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'create'
       - 'config'
   selection_powershell:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'New-Service'
       - 'Set-Service'
       - 'Install-ServiceBinary'
   selection_suspicious:
-      - CommandLine|contains:
-      - 'binpath='
-      - 'binPath='
-      - 'DisplayName='
-      - CommandLine|re: '.*\\x[0-9a-fA-F]{2}.*'
-      - CommandLine|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
-      - 'powershell'
-      - 'cmd.exe'
-      - 'rundll32'
+    - CommandLine|contains:
+    - 'binpath='
+    - 'binPath='
+    - 'DisplayName='
+    - CommandLine|re: '.*\\x[0-9a-fA-F]{2}.*'
+    - CommandLine|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
+    - 'powershell'
+    - 'cmd.exe'
+    - 'rundll32'
   condition: (selection_sc or selection_powershell) and selection_suspicious
 falsepositives:
   - Legitimate service installations

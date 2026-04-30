@@ -17,11 +17,11 @@ detection:
     Message|contains:
       - 'USB'
       - 'device'
-    selection_network:
+  selection_network:
     EventID:
     Source:
     ProcessName|contains:
-    selection_unknown:
+  selection_unknown:
     EventID:
     Message|contains:
       - 'unknown'

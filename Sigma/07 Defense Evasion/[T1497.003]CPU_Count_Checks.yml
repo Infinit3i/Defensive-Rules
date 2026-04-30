@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'NUMBER_OF_PROCESSORS'
       - 'Win32_Processor'
       - 'Get-WmiObject.*Processor'

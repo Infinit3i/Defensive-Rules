@@ -10,19 +10,19 @@ logsource:
   service: sysmon
 detection:
   selection_wbadmin:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'wbadmin delete backup'
       - 'wbadmin delete catalog'
       - 'wbadmin delete systemstatebackup'
   selection_vssadmin:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'vssadmin delete shadows'
       - 'vssadmin delete backup'
   selection_diskshadow:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'diskshadow delete'
   condition: selection_wbadmin or selection_vssadmin or selection_diskshadow
 falsepositives:

@@ -12,17 +12,17 @@ logsource:
   product: syslog
 detection:
   selection:
-  src_ip|cidr:
+    src_ip|cidr:
       - "!10.0.0.0/8"
       - "!192.168.0.0/16"
       - "!172.16.0.0/12"
   condition1:
-  src_ip|cidr:
+    src_ip|cidr:
   condition2:
-  src_port:
+    src_port:
   condition3:
-  dest_port:
-    condition: selection and (condition1 or condition2 or condition3)
+    dest_port:
+  condition: selection and (condition1 or condition2 or condition3)
 fields:
   - _time
   - src_ip
@@ -44,15 +44,15 @@ tags:
   - isakmp
   - yara_compatible
 metadata:
-author: Matthew Iverson
-created: 2025-04-15
-last_modified: 2025-04-15
-test_date: ""
-priority: high
-mitre_version: 16
-apt_group: Volt Typhoon
-hunting_trigger: Detects suspicious connections to non-private IPs or port 500 usage.
-mitre_tactic: Discovery
-mitre_technique: Network Service Scanning
-mitre_technique_id: T1046
-mitre_link: https://attack.mitre.org/techniques/T1046/
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: ""
+  priority: high
+  mitre_version: 16
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects suspicious connections to non-private IPs or port 500 usage.
+  mitre_tactic: Discovery
+  mitre_technique: Network Service Scanning
+  mitre_technique_id: T1046
+  mitre_link: https://attack.mitre.org/techniques/T1046/

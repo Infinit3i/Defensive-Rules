@@ -23,9 +23,9 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - " /g"
       - " /s "
       - " /l"

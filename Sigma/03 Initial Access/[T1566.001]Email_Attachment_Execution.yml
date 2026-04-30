@@ -4,7 +4,8 @@ technique: T1566.001
 id: f4c2e8a7-1b39-4df2-8c5e-3a7b9c4d6f8e
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects execution of potentially malicious email attachments by monitoring process creation events for common attachment file types executed from temporary directories or email client locations.
+  Detects cloud-based security attacks and access attempts. Detects execution of potentially malicious email attachments by monitoring process creation events for common attachment file types
+  executed from temporary directories or email client locations.
 references:
   - https://attack.mitre.org/techniques/T1566/001/
 author: Infinit3i
@@ -22,16 +23,16 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith:
+    Image|endswith:
       - '\excel.exe'
       - '\winword.exe'
       - '\powerpnt.exe'
       - '\acrord32.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '\Temp\'
       - '\AppData\Local\Microsoft\Windows\INetCache\'
       - '\Downloads\'
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\outlook.exe'
       - '\thunderbird.exe'
   condition: selection

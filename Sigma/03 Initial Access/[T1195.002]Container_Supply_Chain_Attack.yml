@@ -14,49 +14,49 @@ logsource:
   service: audit
 detection:
   selection_suspicious_image_source:
-  verb:
-  objectRef.resource:
-  requestObject.spec.containers.image|contains:
+    verb:
+    objectRef.resource:
+    requestObject.spec.containers.image|contains:
       - 'dockerhub.com'
       - 'ghcr.io'
       - 'quay.io'
     # Images from public registries without organization control
-  requestObject.spec.containers.image|endswith:
+    requestObject.spec.containers.image|endswith:
       - ':latest'
       - ':main'
       - ':master'
     # Using mutable tags instead of specific versions
   selection_privileged_containers:
-  verb:
-  objectRef.resource:
-  requestObject.spec.containers.securityContext.privileged:
-  requestObject.spec.containers.securityContext.runAsRoot:
+    verb:
+    objectRef.resource:
+    requestObject.spec.containers.securityContext.privileged:
+    requestObject.spec.containers.securityContext.runAsRoot:
   selection_excessive_capabilities:
-  verb:
-  objectRef.resource:
-  requestObject.spec.containers.securityContext.capabilities.add|contains:
+    verb:
+    objectRef.resource:
+    requestObject.spec.containers.securityContext.capabilities.add|contains:
       - 'SYS_ADMIN'
       - 'NET_ADMIN'
       - 'SYS_PTRACE'
       - 'SYS_MODULE'
   selection_suspicious_registry:
-  verb:
-  objectRef.resource:
-  requestObject.spec.containers.image|contains:
+    verb:
+    objectRef.resource:
+    requestObject.spec.containers.image|contains:
       - '.onion'
       - 'tor'
       - 'anonymous'
       - 'proxy'
   selection_untrusted_namespace:
-  verb:
-  objectRef.resource:
-  objectRef.namespace:
+    verb:
+    objectRef.resource:
+    objectRef.namespace:
       - 'default'
       - 'kube-public'
     # Deployments in default or public namespaces
   selection_image_without_digest:
-  verb:
-  objectRef.resource:
+    verb:
+    objectRef.resource:
     # Images without SHA256 digest verification
   condition: |
     selection_suspicious_image_source or selection_privileged_containers or

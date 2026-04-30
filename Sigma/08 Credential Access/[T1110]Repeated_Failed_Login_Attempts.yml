@@ -20,13 +20,13 @@ logsource:
   category: authentication
 detection:
   selection:
-  Message|contains:
+    Message|contains:
       - "Failed password for"
     # Note: The aggregation/threshold capability may depend on the Sigma runner implementation.
   timeframe:
   threshold:
   count:
-    condition: selection
+  condition: selection
 falsepositives:
   - Legitimate authentication errors due to mistyped passwords or transient network issues.
 level: high

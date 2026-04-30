@@ -12,17 +12,17 @@ logsource:
   service: cloudtrail
 detection:
   selection_disable:
-  eventName|contains:
+    eventName|contains:
       - 'StopLogging'
       - 'DeleteTrail'
       - 'PutTrailStatus'
   selection_logging:
-  eventName|contains:
+    eventName|contains:
       - 'DeleteLogGroup'
       - 'DeleteLogStream'
       - 'PutRetentionPolicy'
   selection_config:
-  eventName|contains:
+    eventName|contains:
       - 'StopConfigurationRecorder'
       - 'DeleteConfigurationRecorder'
       - 'DeleteDeliveryChannel'

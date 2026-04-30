@@ -12,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_file:
-  EventID:
-  TargetFilename|contains:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|contains:
+    TargetFilename|endswith:
       - '.dll'
   selection_load:
-  EventID:
-  ImageLoaded|contains:
-  ImageLoaded|endswith:
-  Signed:
+    EventID: 1
+    ImageLoaded|contains:
+    ImageLoaded|endswith:
+    Signed:
   selection_process:
-  EventID:
-  Image|contains:
-  ParentImage|endswith:
-    condition: (selection_file or selection_load) and selection_process
+    EventID: 1
+    Image|contains:
+    ParentImage|endswith:
+  condition: (selection_file or selection_load) and selection_process
 falsepositives:
   - Legitimate third-party services
   - Software updates

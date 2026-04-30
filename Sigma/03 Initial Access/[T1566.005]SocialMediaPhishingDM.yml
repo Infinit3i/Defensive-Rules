@@ -12,16 +12,16 @@ logsource:
   service: platform-api
 detection:
   selection_direct_message:
-  MessageType:
+    MessageType:
   selection_suspicious_links:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'bit.ly'
       - 'tinyurl'
       - 'cutt.ly'
       - 'ow.ly'
       - 't.co'
   selection_urgent_language:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'urgent'
       - 'verify'
       - 'suspended'
@@ -29,9 +29,9 @@ detection:
       - 'limited time'
       - 'act now'
   selection_new_account:
-  SenderAccountAge|lt:
+    SenderAccountAge|lt:
   selection_low_followers:
-  SenderFollowerCount|lt:
+    SenderFollowerCount|lt:
   condition: |
     selection_direct_message and selection_suspicious_links and
     (selection_urgent_language or (selection_new_account and selection_low_followers))

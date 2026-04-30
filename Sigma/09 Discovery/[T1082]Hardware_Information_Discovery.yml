@@ -11,9 +11,9 @@ logsource:
   service: sysmon
 detection:
   selection_wmic:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'baseboard'
       - 'bios'
       - 'cpu'
@@ -22,9 +22,9 @@ detection:
       - 'computersystem'
       - 'systemenclosure'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Get-WmiObject Win32_BaseBoard'
       - 'Get-WmiObject Win32_BIOS'
       - 'Get-WmiObject Win32_Processor'

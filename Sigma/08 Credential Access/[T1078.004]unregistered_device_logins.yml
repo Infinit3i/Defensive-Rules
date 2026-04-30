@@ -14,11 +14,11 @@ logsource:
   service: cloudtrail
 detection:
   selection:
-  eventName:
-  additionalEventData.MFAUsed:
-  userIdentity.type:
+    eventName:
+    additionalEventData.MFAUsed:
+    userIdentity.type:
   filter_known_devices:
-  sourceIPAddress:
+    sourceIPAddress:
       - '10.*'
       - '192.168.*'
   condition: selection and not filter_known_devices

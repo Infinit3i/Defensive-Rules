@@ -14,31 +14,31 @@ logsource:
   service: sysmon
 detection:
   selection_cpuid_check:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\rundll32.exe'
       - '\regsvr32.exe'
       - '\powershell.exe'
       - '\cmd.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'cpuid'
       - 'rdtsc'
       - 'cpu_vendor'
       - 'hypervisor_present'
   selection_timing_attack:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - 'timer'
       - 'performance'
       - 'benchmark'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'QueryPerformanceCounter'
       - 'GetTickCount'
       - 'timeGetTime'
       - 'clock_gettime'
   selection_vm_artifacts:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'vmware'
       - 'virtualbox'
       - 'vbox'
@@ -47,20 +47,20 @@ detection:
       - 'hyper-v'
       - 'parallels'
   selection_registry_vm_check:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\HARDWARE\Description\System\BIOS'
       - '\HARDWARE\Description\System\SystemBiosVersion'
       - '\SYSTEM\CurrentControlSet\Services\Disk\Enum'
       - '\SYSTEM\ControlSet001\Services\Disk\Enum'
   selection_process_hollowing:
-  EventID:
-  GrantedAccess:
+    EventID: 1
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
       - '0x1410'
-  CallTrace|contains:
+    CallTrace|contains:
       - 'KERNELBASE.dll+CreateRemoteThread'
       - 'ntdll.dll+NtCreateThreadEx'
       - 'KERNEL32.dll+WriteProcessMemory'

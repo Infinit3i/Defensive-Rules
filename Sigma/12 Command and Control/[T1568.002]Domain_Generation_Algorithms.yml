@@ -22,17 +22,17 @@ logsource:
   service: dns
 detection:
   random_domains:
-  query|length|gte:
-  query|contains:
+    query|length|gte:
+    query|contains:
       - 'qwertyuiop'
       - 'abcdefgh'
       - 'aaaaaaa'
   entropy_check:
-  query|regex:
+    query|regex:
   numeric_domains:
-  query|contains:
-  qtype_name:
-    condition: random_domains or entropy_check or numeric_domains
+    query|contains:
+    qtype_name:
+  condition: random_domains or entropy_check or numeric_domains
 falsepositives:
   - CDN-generated subdomains
   - Legitimate random identifiers

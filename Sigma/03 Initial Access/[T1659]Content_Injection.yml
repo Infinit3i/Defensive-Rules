@@ -4,7 +4,8 @@ technique: T1659
 id: c7e4f9a3-8d2b-4e5f-a1c6-9f3e8d2c5a7b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects content injection attacks by monitoring for malicious script injection, HTML manipulation, or content spoofing attempts that may be used to compromise users or deliver malicious payloads.
+  Detects cloud-based security attacks and access attempts. Detects content injection attacks by monitoring for malicious script injection, HTML manipulation, or content spoofing attempts that
+  may be used to compromise users or deliver malicious payloads.
 references:
   - https://attack.mitre.org/techniques/T1659/
 author: Infinit3i
@@ -22,19 +23,19 @@ logsource:
   service: http
 detection:
   script_injection:
-  uri|contains:
+    uri|contains:
       - '<script>'
       - 'javascript:'
       - 'eval('
       - 'document.write'
   html_injection:
-  uri|contains:
+    uri|contains:
       - '<iframe>'
       - '<object>'
       - '<embed>'
       - '<form>'
   parameter_injection:
-  uri|contains:
+    uri|contains:
       - '%3Cscript%3E'
       - '%22%3E%3Cscript%3E'
       - 'javascript%3A'

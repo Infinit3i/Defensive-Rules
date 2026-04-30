@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'AlwaysInstallElevated'
-  Details:
+    Details:
   selection_msiexec:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/i'
       - '/package'
-  IntegrityLevel:
-    condition: selection_registry or selection_msiexec
+    IntegrityLevel:
+  condition: selection_registry or selection_msiexec
 falsepositives:
   - Legitimate software installations
   - Administrative package deployments

@@ -14,19 +14,19 @@ logsource:
   service: cloudtrail
 detection:
   selection_list_users:
-  eventName:
+    eventName:
       - 'ListUsers'
       - 'GetUser'
       - 'ListGroups'
       - 'ListRoles'
   selection_enumerate_permissions:
-  eventName:
+    eventName:
       - 'ListUserPolicies'
       - 'ListGroupPolicies'
       - 'ListRolePolicies'
       - 'GetPolicy'
   selection_cross_account:
-  eventName:
+    eventName:
       - 'ListAccounts'
       - 'DescribeOrganization'
       - 'ListAccountsForParent'

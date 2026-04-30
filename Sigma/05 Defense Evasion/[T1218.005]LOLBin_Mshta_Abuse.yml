@@ -11,10 +11,10 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
   selection_suspicious_args:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'javascript:'
       - 'vbscript:'
       - 'http://'
@@ -24,7 +24,7 @@ detection:
       - 'about:blank'
       - 'data:text/html'
   selection_encoded_content:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'FromBase64String'
       - 'MemoryStream'
       - 'GZipStream'
@@ -32,11 +32,11 @@ detection:
       - 'eval('
       - 'unescape('
   selection_network_download:
-  CommandLine|contains|all:
+    CommandLine|contains|all:
       - 'mshta'
       - 'http'
   selection_parent_suspicious:
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\wscript.exe'
@@ -46,12 +46,12 @@ detection:
       - '\powerpnt.exe'
       - '\outlook.exe'
   selection_network_connection:
-  EventID:
-  Image|endswith:
-  Protocol:
-  Initiated:
+    EventID: 1
+    Image|endswith:
+    Protocol:
+    Initiated:
   filter_legitimate:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'res://ieframe.dll'
       - 'res://mshtml.dll'
   condition: |

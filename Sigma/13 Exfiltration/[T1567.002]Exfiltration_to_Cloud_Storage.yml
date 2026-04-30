@@ -4,7 +4,8 @@ technique: T1567.002
 id: a3f7e9c5-8b4d-4e6f-a3f7-9e5c8b4d6a3b
 status: experimental
 description: >-
-  >- Detects data exfiltration to cloud storage services by monitoring for large uploads to Dropbox, Google Drive, OneDrive, or other cloud platforms that may be used to exfiltrate sensitive organizational data.
+  >- Detects data exfiltration to cloud storage services by monitoring for large uploads to Dropbox, Google Drive, OneDrive, or other cloud platforms that may be used to exfiltrate sensitive
+  organizational data.
 references:
   - https://attack.mitre.org/techniques/T1567/002/
 author: Infinit3i
@@ -22,22 +23,22 @@ logsource:
   service: http
 detection:
   cloud_services:
-  host|endswith:
+    host|endswith:
       - '.dropbox.com'
       - '.googledrive.com'
       - '.onedrive.com'
       - '.box.com'
       - '.mega.nz'
   large_upload:
-  method:
-  request_body_len|gte:
+    method:
+    request_body_len|gte:
   file_sync:
-  uri|contains:
+    uri|contains:
       - '/upload'
       - '/sync'
       - '/files'
-  method:
-    condition: cloud_services and (large_upload or file_sync)
+    method:
+  condition: cloud_services and (large_upload or file_sync)
 falsepositives:
   - Legitimate cloud storage usage
   - Business file synchronization

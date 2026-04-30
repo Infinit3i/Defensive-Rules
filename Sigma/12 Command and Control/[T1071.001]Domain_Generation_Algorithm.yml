@@ -10,8 +10,8 @@ logsource:
   service: dns
 detection:
   selection:
-  query|re:
-    condition: selection
+    query|re:
+  condition: selection
 tags:
   - attack.command_and_control
   - attack.t1071.001

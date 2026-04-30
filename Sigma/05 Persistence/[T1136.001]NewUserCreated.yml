@@ -13,8 +13,8 @@ logsource:
   category: account_management
 detection:
   selection_event:
-  EventID:
-    condition: selection_event
+    EventID:
+  condition: selection_event
 fields:
   - TargetUserName
   - SubjectUserName

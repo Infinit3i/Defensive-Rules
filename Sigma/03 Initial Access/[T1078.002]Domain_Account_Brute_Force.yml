@@ -4,7 +4,8 @@ technique: T1078.002
 id: d7a3e5f2-8c1b-4f6e-a9d4-2b7c6e3f1a8d
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects brute force attacks against domain accounts by monitoring for multiple failed authentication attempts followed by successful logins from the same source IP or user account.
+  Detects cloud-based security attacks and access attempts. Detects brute force attacks against domain accounts by monitoring for multiple failed authentication attempts followed by successful
+  logins from the same source IP or user account.
 references:
   - https://attack.mitre.org/techniques/T1078/002/
 author: Infinit3i
@@ -21,14 +22,14 @@ logsource:
   service: security
 detection:
   failed_logon:
-  EventID:
-  LogonType:
+    EventID:
+    LogonType:
       - 2
       - 3
       - 10
   success_after_failures:
-  EventID:
-  LogonType:
+    EventID:
+    LogonType:
       - 2
       - 3
       - 10

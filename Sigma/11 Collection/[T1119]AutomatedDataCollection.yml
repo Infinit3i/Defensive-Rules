@@ -16,20 +16,20 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-  EventID:
+    EventID:
   automation:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'foreach'
       - 'ForEach-Object'
       - 'Get-ChildItem -Recurse'
   collection:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'Copy-Item'
       - 'Move-Item'
       - 'Export-'
       - 'Out-File'
   multiple_dirs:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'Documents'
       - 'Desktop'
       - 'Downloads'

@@ -12,28 +12,28 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\Software\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\'
       - '\System\CurrentControlSet\Services\Schedule\JobSet\'
   selection_task_files:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
   selection_suspicious:
-      - Details|contains:
-      - 'powershell'
-      - 'cmd.exe'
-      - 'rundll32'
-      - 'mshta'
-      - 'wscript'
-      - 'cscript'
-      - TargetFilename|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
-      - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
-      - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
+    - Details|contains:
+    - 'powershell'
+    - 'cmd.exe'
+    - 'rundll32'
+    - 'mshta'
+    - 'wscript'
+    - 'cscript'
+    - TargetFilename|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
+    - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
+    - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
   condition: (selection_reg or selection_task_files) and selection_suspicious
 falsepositives:
   - System task scheduler operations

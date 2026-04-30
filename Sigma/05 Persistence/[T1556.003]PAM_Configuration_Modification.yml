@@ -13,8 +13,8 @@ logsource:
   service: auditd
 detection:
   selection_pam_configs:
-      - type: PATH
-  name|contains:
+    type: PATH
+    name|contains:
       - /etc/pam.d/common-auth
       - /etc/pam.d/common-password
       - /etc/pam.d/sshd
@@ -23,17 +23,17 @@ detection:
       - /etc/pam.d/sudo
       - /etc/pam.conf
   selection_write_operations:
-      - type: SYSCALL
-  syscall:
+    type: SYSCALL
+    syscall:
   selection_suspicious_content:
-      - comm|contains:
-      - sufficient
-      - optional
-      - nullok_secure
-      - try_first_pass
-      - use_first_pass
-      - pam_permit
-      - pam_deny
+    - comm|contains:
+    - sufficient
+    - optional
+    - nullok_secure
+    - try_first_pass
+    - use_first_pass
+    - pam_permit
+    - pam_deny
   condition: selection_pam_configs and selection_write_operations and selection_suspicious_content
 level: high
 tags:

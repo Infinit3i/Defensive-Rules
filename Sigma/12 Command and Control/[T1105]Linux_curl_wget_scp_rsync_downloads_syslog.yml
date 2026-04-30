@@ -20,14 +20,14 @@ tags:
   - mitre_version:16.1
   - Lazarus
 associated_groups:
-- Lazarus
+  - Lazarus
 associated_malware: []
 logsource:
   product: linux
   service: syslog
 detection:
   selection_curl_wget:
-  Message|contains:
+    Message|contains:
       - "curl -O"
       - "curl -o"
       - "wget "
@@ -35,7 +35,7 @@ detection:
       - "sftp "
       - "rsync "
   selection_target_path:
-  Message|contains:
+    Message|contains:
       - "/tmp/"
       - "/var/tmp/"
       - "/home/"

@@ -9,10 +9,10 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  ParentImage|endswith:
-  ParentCommandLine|contains:
-  Image|contains:
+    EventID: 1
+    ParentImage|endswith:
+    ParentCommandLine|contains:
+    Image|contains:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\rundll32.exe'

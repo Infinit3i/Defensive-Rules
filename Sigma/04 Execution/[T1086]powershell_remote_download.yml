@@ -15,9 +15,9 @@ logsource:
   category: process_creation
 detection:
   selection_image:
-  Image|endswith:
+    Image|endswith:
   selection_remote:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Invoke-WebRequest'
       - 'Start-BitsTransfer'
       - 'DownloadString'
@@ -25,7 +25,7 @@ detection:
       - 'Net.WebClient'
       - 'IEX'
   selection_protocol:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'http://'
       - 'https://'
       - '\\\\'

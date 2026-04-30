@@ -12,22 +12,22 @@ logsource:
   service: process-monitoring
 detection:
   selection_installer:
-  ProcessName|endswith:
+    ProcessName|endswith:
       - 'setup.exe'
       - 'install.exe'
       - 'update.exe'
       - 'msi'
   selection_suspicious_signature:
-      - DigitalSignature: null
-      - SignatureVerified: false
-      - CertificateIssuer|not|contains: 'trusted_ca'
+    - DigitalSignature: null
+    - SignatureVerified: false
+    - CertificateIssuer|not|contains: 'trusted_ca'
   selection_network_activity:
-  NetworkConnections|contains:
+    NetworkConnections|contains:
       - '.onion'
       - 'tor'
       - 'suspicious_domain'
   selection_file_creation:
-  FileCreated|contains:
+    FileCreated|contains:
       - '%APPDATA%'
       - '%TEMP%'
       - 'startup'

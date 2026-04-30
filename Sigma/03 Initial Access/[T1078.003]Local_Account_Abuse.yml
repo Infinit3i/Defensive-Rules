@@ -4,7 +4,8 @@ technique: T1078.003
 id: a1f4c7e8-2d9b-4e6f-b3c5-8a7e9f2d1c6b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects abuse of local accounts including privilege escalation attempts, unusual logon patterns, and suspicious activities from local user accounts that may indicate compromise.
+  Detects cloud-based security attacks and access attempts. Detects abuse of local accounts including privilege escalation attempts, unusual logon patterns, and suspicious activities from local
+  user accounts that may indicate compromise.
 references:
   - https://attack.mitre.org/techniques/T1078/003/
 author: Infinit3i
@@ -21,18 +22,18 @@ logsource:
   service: security
 detection:
   local_admin_logon:
-  EventID:
-  LogonType:
-  TargetUserName|endswith:
+    EventID:
+    LogonType:
+    TargetUserName|endswith:
   service_logon:
-  EventID:
-  LogonType:
-  TargetUserName|contains:
+    EventID:
+    LogonType:
+    TargetUserName|contains:
       - 'service'
       - 'svc'
   unusual_hours:
-  EventID:
-  TimeGenerated|contains:
+    EventID:
+    TimeGenerated|contains:
       - 'T22:'
       - 'T23:'
       - 'T00:'

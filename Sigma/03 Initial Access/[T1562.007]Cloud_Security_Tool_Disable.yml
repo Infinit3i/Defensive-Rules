@@ -13,54 +13,54 @@ logsource:
   service: cloudtrail
 detection:
   selection_cloudtrail_disable:
-  eventName:
+    eventName:
       - 'StopLogging'
       - 'DeleteTrail'
       - 'PutEventSelectors'
-  responseElements.trail.includeGlobalServiceEvents:
+    responseElements.trail.includeGlobalServiceEvents:
   selection_guardduty_disable:
-  eventName:
+    eventName:
       - 'DeleteDetector'
       - 'UpdateDetector'
       - 'DeleteIPSet'
       - 'DeleteThreatIntelSet'
     # GuardDuty security service tampering
   selection_security_hub_disable:
-  eventName:
+    eventName:
       - 'DisableSecurityHub'
       - 'DeleteInsight'
       - 'BatchDisableStandards'
     # Security Hub disabling
   selection_config_disable:
-  eventName:
+    eventName:
       - 'StopConfigurationRecorder'
       - 'DeleteConfigurationRecorder'
       - 'DeleteDeliveryChannel'
     # AWS Config service disabling
   selection_vpc_flow_logs_disable:
-  eventName:
+    eventName:
       - 'DeleteFlowLogs'
       - 'ModifyVpcAttribute'
-  requestParameters.enableDnsHostnames:
+    requestParameters.enableDnsHostnames:
   selection_cloudwatch_tampering:
-  eventName:
+    eventName:
       - 'DeleteLogGroup'
       - 'DeleteLogStream'
       - 'DeleteMetricAlarm'
     # CloudWatch monitoring disabling
   selection_iam_logging_disable:
-  eventName:
+    eventName:
       - 'DeleteAccessKey'
       - 'DeactivateMFADevice'
       - 'DeleteAccountPasswordPolicy'
     # IAM security feature disabling
   selection_network_security_disable:
-  eventName:
+    eventName:
       - 'DeleteSecurityGroup'
       - 'AuthorizeSecurityGroupIngress'
       - 'RevokeSecurityGroupEgress'
-  requestParameters.groupId:
-  requestParameters.ipPermissions.cidrIp:
+    requestParameters.groupId:
+    requestParameters.ipPermissions.cidrIp:
   condition: |
     selection_cloudtrail_disable or selection_guardduty_disable or
     selection_security_hub_disable or selection_config_disable or

@@ -4,7 +4,8 @@ technique: T1601
 id: b9f4e7c8-3a5d-4e2f-c6a1-9e3f8c5d2a7b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects unauthorized modification of system images including firmware, BIOS updates, bootloader changes, or operating system image tampering that may indicate persistent compromise or rootkit installation.
+  Detects cloud-based security attacks and access attempts. Detects unauthorized modification of system images including firmware, BIOS updates, bootloader changes, or operating system image
+  tampering that may indicate persistent compromise or rootkit installation.
 references:
   - https://attack.mitre.org/techniques/T1601/
 author: Infinit3i
@@ -23,19 +24,19 @@ logsource:
   service: system
 detection:
   firmware_update:
-  EventID:
-  DriverName|contains:
+    EventID:
+    DriverName|contains:
       - 'bios'
       - 'firmware'
       - 'uefi'
   boot_modification:
-  EventID:
-  RegistryKey|contains:
+    EventID:
+    RegistryKey|contains:
       - 'HKLM\SYSTEM\CurrentControlSet\Control\Boot'
       - 'HKLM\BCD'
   system_image:
-  EventID:
-  ServiceName|contains:
+    EventID:
+    ServiceName|contains:
       - 'boot'
       - 'image'
       - 'recovery'

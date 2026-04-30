@@ -4,7 +4,8 @@ technique: T1021.005
 id: f2c7e4a9-8b6d-4e5f-a3c2-9f7e8d6c4a9b
 status: experimental
 description: >-
-  >- Detects lateral movement via VNC by monitoring for VNC connections, remote desktop sharing sessions, or suspicious VNC server activities that may indicate unauthorized remote access for lateral movement.
+  >- Detects lateral movement via VNC by monitoring for VNC connections, remote desktop sharing sessions, or suspicious VNC server activities that may indicate unauthorized remote access for
+  lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1021/005/
 author: Infinit3i
@@ -22,24 +23,24 @@ logsource:
   service: conn
 detection:
   vnc_port:
-  id.resp_p|contains:
+    id.resp_p|contains:
       - 5900
       - 5901
       - 5902
       - 5903
   internal_connection:
-  id.orig_h|startswith:
+    id.orig_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  id.resp_h|startswith:
+    id.resp_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
   established_connection:
-  conn_state:
-  proto:
-    condition: vnc_port and internal_connection and established_connection
+    conn_state:
+    proto:
+  condition: vnc_port and internal_connection and established_connection
 falsepositives:
   - Legitimate VNC remote support
   - Authorized screen sharing applications

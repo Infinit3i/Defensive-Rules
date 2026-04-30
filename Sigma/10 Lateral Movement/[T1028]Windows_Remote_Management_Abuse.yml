@@ -4,7 +4,8 @@ technique: T1028
 id: a4c8f7e3-9b5d-4e6f-a4c8-7f3e9b5d6a4b
 status: experimental
 description: >-
-  >- Detects abuse of Windows Remote Management service by monitoring for suspicious WinRM activities, unauthorized remote PowerShell sessions, or malicious use of remote management capabilities for lateral movement.
+  >- Detects abuse of Windows Remote Management service by monitoring for suspicious WinRM activities, unauthorized remote PowerShell sessions, or malicious use of remote management capabilities
+  for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1028/
 author: Infinit3i
@@ -24,12 +25,12 @@ detection:
   winrm_shell:
     EventID:
     ShellId|contains:
-    remote_command:
+  remote_command:
     EventID:
     CommandLine|contains:
       - 'Invoke-Command'
       - 'Enter-PSSession'
-    suspicious_user:
+  suspicious_user:
     EventID:
     User|contains:
       - 'admin'

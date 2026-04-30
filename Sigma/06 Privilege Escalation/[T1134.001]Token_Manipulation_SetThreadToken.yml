@@ -12,15 +12,15 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-  EventID:
-  ImageLoaded|contains:
+    EventID: 1
+    ImageLoaded|contains:
   selection_process_access:
-  EventID:
-  CallTrace|contains:
+    EventID: 1
+    CallTrace|contains:
       - 'SetThreadToken'
       - 'ImpersonateLoggedOnUser'
       - 'DuplicateTokenEx'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1478'
       - '0x1400'
   condition: selection_image_load and selection_process_access

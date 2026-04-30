@@ -13,18 +13,18 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-  EventID:
+    EventID: 1
   selection_com_hijack:
-  TargetObject|contains:
+    TargetObject|contains:
       - '\SOFTWARE\Classes\CLSID\'
       - '\SOFTWARE\Classes\WOW6432Node\CLSID\'
   selection_com_keys:
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\InprocServer32\(Default)'
       - '\LocalServer32\(Default)'
       - '\InprocHandler32\(Default)'
   filter_system_paths:
-  Details|contains:
+    Details|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

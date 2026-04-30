@@ -23,19 +23,19 @@ logsource:
   service: sysmon
 detection:
   selection_dir_cmd:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\cmd.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - " dir /s"
       - " dir /b /s"
       - " dir /s /b"
       - " dir /a /s"
   selection_where:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\where.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - "where /r"
       - "where /R"
   condition: selection_dir_cmd or selection_where

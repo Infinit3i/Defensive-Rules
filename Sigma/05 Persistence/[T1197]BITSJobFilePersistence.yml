@@ -9,16 +9,16 @@ logsource:
   service: sysmon
 detection:
   selection_cmd:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/create'
       - '/addfile'
       - '/setnotifycmdline'
       - '/resume'
   selection_powershell:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'Start-BitsTransfer'
       - 'Add-BitsFile'
       - 'Complete-BitsTransfer'

@@ -14,26 +14,26 @@ logsource:
   service: audit
 detection:
   selection_bulk_download:
-  Operation:
+    Operation:
       - 'FileDownloaded'
       - 'FileAccessed'
       - 'FileViewed'
-  ItemType:
+    ItemType:
   selection_search_activity:
-  Operation:
-  Query|contains:
+    Operation:
+    Query|contains:
       - 'confidential'
       - 'secret'
       - 'password'
       - 'private'
       - 'sensitive'
   selection_external_sharing:
-  Operation:
+    Operation:
       - 'SharingSet'
       - 'AnonymousLinkCreated'
       - 'SecureLinkCreated'
   selection_api_access:
-  UserAgent|contains:
+    UserAgent|contains:
       - 'python'
       - 'curl'
       - 'powershell'

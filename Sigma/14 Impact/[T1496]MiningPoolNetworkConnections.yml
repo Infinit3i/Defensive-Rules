@@ -12,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   sel_mining_pools:
-  EventID:
-  DestinationHostname|contains:
+    EventID: 1
+    DestinationHostname|contains:
       - 'nanopool'
       - 'ethermine'
       - 'f2pool'
@@ -29,8 +29,8 @@ detection:
       - 'mining'
       - 'pool'
   sel_mining_ports:
-  EventID:
-  DestinationPort:
+    EventID: 1
+    DestinationPort:
       - 4444
       - 8080
       - 8008
@@ -40,13 +40,13 @@ detection:
       - 14444
       - 25
   sel_stratum_protocol:
-  EventID:
-  DestinationHostname|startswith:
+    EventID: 1
+    DestinationHostname|startswith:
       - 'stratum'
       - 'tcp'
       - 'ssl'
   filter_legitimate:
-  Image|contains:
+    Image|contains:
       - 'chrome.exe'
       - 'firefox.exe'
       - 'iexplore.exe'

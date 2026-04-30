@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'forfiles /s /m *.* /c "cmd /c if @fsize gtr 1000000'
       - 'Get-ChildItem -Recurse | Where-Object {$_.Length -gt'
       - 'find . -size +'

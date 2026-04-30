@@ -28,11 +28,11 @@ detection:
       - 'F:\'
       - 'G:\'
       - 'H:\'
-    large_files:
+  large_files:
     Image|endswith:
     TargetFilename|contains:
     FileSize|gte:
-    sensitive_data:
+  sensitive_data:
     TargetFilename|endswith:
       - '.xlsx'
       - '.docx'

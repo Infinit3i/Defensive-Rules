@@ -13,8 +13,8 @@ logsource:
   service: auditd
 detection:
   selection_bash_files:
-      - type: PATH
-  name|contains:
+    type: PATH
+    name|contains:
       - .bashrc
       - .bash_profile
       - .bash_aliases
@@ -22,20 +22,20 @@ detection:
       - /etc/bash.bashrc
       - /etc/profile
   selection_write_operations:
-      - type: SYSCALL
-  syscall:
+    type: SYSCALL
+    syscall:
   selection_alias_commands:
-      - comm|contains:
-      - alias ls=
-      - alias ps=
-      - alias sudo=
-      - alias su=
-      - alias ssh=
-      - alias wget=
-      - alias curl=
-      - alias cat=
-      - alias grep=
-      - alias top=
+    - comm|contains:
+    - alias ls=
+    - alias ps=
+    - alias sudo=
+    - alias su=
+    - alias ssh=
+    - alias wget=
+    - alias curl=
+    - alias cat=
+    - alias grep=
+    - alias top=
   condition: selection_bash_files and selection_write_operations and selection_alias_commands
 level: medium
 tags:

@@ -12,17 +12,17 @@ logsource:
   service: security
 detection:
   selection_hid:
-  EventID:
-  LogonType:
-  ProcessName|contains:
+    EventID:
+    LogonType:
+    ProcessName|contains:
       - 'powershell.exe'
       - 'cmd.exe'
       - 'rundll32.exe'
   selection_timing:
-  EventID:
-  LogonType:
+    EventID:
+    LogonType:
   timeframe:
-    condition: selection_hid and selection_timing | count() > 10
+  condition: selection_hid and selection_timing | count() > 10
 falsepositives:
   - Power users with rapid keyboard usage
   - Automation scripts via keyboard simulation

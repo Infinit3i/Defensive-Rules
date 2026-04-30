@@ -14,7 +14,7 @@ logsource:
   service: messaging
 detection:
   selection_encoded_messages:
-  message_content|contains:
+    message_content|contains:
       - 'base64'
       - 'powershell'
       - 'cmd /c'
@@ -22,21 +22,21 @@ detection:
       - 'download'
       - 'execute'
   selection_file_uploads:
-  event_type:
-  file_extension:
+    event_type:
+    file_extension:
       - '.exe'
       - '.bat'
       - '.ps1'
       - '.vbs'
       - '.scr'
   selection_external_links:
-  message_content|contains:
+    message_content|contains:
       - 'bit.ly'
       - 'tinyurl'
       - 'pastebin'
       - 'github.com/raw'
   selection_automated_posting:
-  user_agent|contains:
+    user_agent|contains:
       - 'bot'
       - 'python'
       - 'curl'

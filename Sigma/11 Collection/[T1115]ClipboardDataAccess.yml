@@ -16,12 +16,12 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
+    EventID: 1
   clipboard_tools:
-      - Image|endswith: '\clip.exe'
-      - CommandLine|contains: 'GetClipboardData'
+    - Image|endswith: '\clip.exe'
+    - CommandLine|contains: 'GetClipboardData'
   powershell:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Get-Clipboard'
       - '[System.Windows.Forms.Clipboard]'
       - 'Add-Type -AssemblyName System.Windows.Forms'

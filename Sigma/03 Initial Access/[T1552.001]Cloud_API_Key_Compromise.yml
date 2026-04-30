@@ -13,16 +13,16 @@ logsource:
   service: cloudtrail
 detection:
   selection_api_geographic_anomaly:
-  userIdentity.type:
+    userIdentity.type:
     # API calls from countries not typical for the user
-  awsRegion|contains:
+    awsRegion|contains:
       - 'ap-'
       - 'eu-'
       - 'sa-'
     # Focus on cross-region activities
   selection_rapid_enumeration:
-  userIdentity.type:
-  eventName:
+    userIdentity.type:
+    eventName:
       - 'ListUsers'
       - 'ListRoles'
       - 'ListPolicies'
@@ -32,8 +32,8 @@ detection:
       - 'GetCallerIdentity'
     # Multiple enumeration calls within short timeframe
   selection_sensitive_access:
-  userIdentity.type:
-  eventName:
+    userIdentity.type:
+    eventName:
       - 'GetSecretValue'
       - 'GetParameter'
       - 'DescribeDBInstances'
@@ -42,8 +42,8 @@ detection:
       - 'CreateRole'
     # Access to sensitive resources and credential creation
   selection_unusual_user_agent:
-  userIdentity.type:
-  userAgent|contains:
+    userIdentity.type:
+    userAgent|contains:
       - 'curl'
       - 'wget'
       - 'python-requests'
@@ -52,11 +52,11 @@ detection:
       - 'Postman'
     # Non-standard or programmatic user agents
   selection_concurrent_geographic_usage:
-  userIdentity.type:
+    userIdentity.type:
     # Same API key used from multiple geographic locations simultaneously
   selection_privilege_escalation:
-  userIdentity.type:
-  eventName:
+    userIdentity.type:
+    eventName:
       - 'AttachUserPolicy'
       - 'AttachRolePolicy'
       - 'PutUserPolicy'
@@ -65,8 +65,8 @@ detection:
       - 'AssumeRole'
     # Attempts to escalate privileges
   selection_suspicious_ip_ranges:
-  userIdentity.type:
-  sourceIPAddress|cidr:
+    userIdentity.type:
+    sourceIPAddress|cidr:
       - '0.0.0.0/8'
       - '10.0.0.0/8'
       - '172.16.0.0/12'

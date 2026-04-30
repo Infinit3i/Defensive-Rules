@@ -16,43 +16,43 @@ logsource:
   service: sysmon
 detection:
   selection_injection:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
       - '\lsass.exe'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
       - '0x1410'
       - '0x1038'
   selection_memory:
-  EventID:
-  ImageLoaded|contains:
-  Signed:
+    EventID: 1
+    ImageLoaded|contains:
+    Signed:
   selection_thread:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
-  StartModule:
+    StartModule:
   selection_hollowing:
-  EventID:
-  ParentImage|endswith:
-  CommandLine|contains:
+    EventID: 1
+    ParentImage|endswith:
+    CommandLine|contains:
       - 'VirtualAlloc'
       - 'WriteProcessMemory'
       - 'CreateRemoteThread'
   filter_legit:
-  Image|startswith:
+    Image|startswith:
       - 'C:\Program Files\'
       - 'C:\Program Files (x86)\'
       - 'C:\Windows\System32\'
-  Signed:
-    condition: (any of selection_*) and not filter_legit
+    Signed:
+  condition: (any of selection_*) and not filter_legit
 falsepositives:
   - Legitimate security software
   - System administration tools

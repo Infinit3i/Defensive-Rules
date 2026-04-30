@@ -10,12 +10,12 @@ logsource:
   service: sysmon
 detection:
   selection_format:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\format.com'
       - '\diskpart.exe'
       - '\powershell.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'format /q /x'
       - 'format c: /q'
       - 'select disk'
@@ -23,11 +23,11 @@ detection:
       - 'delete volume'
       - 'Clear-Disk -RemoveData'
   selection_wipe:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\sdelete.exe'
       - '\cipher.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'sdelete -z'
       - 'cipher /w:'
       - '-p 3'

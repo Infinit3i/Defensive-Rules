@@ -4,7 +4,8 @@ technique: T1563.001
 id: d4a9f6e8-2c7b-4e5f-a7d4-9f6e8c7b5a4b
 status: experimental
 description: >-
-  >- Detects SSH session hijacking by monitoring for suspicious SSH session activities, connection takeovers, or unauthorized access to existing SSH sessions that may indicate session hijacking attempts.
+  >- Detects SSH session hijacking by monitoring for suspicious SSH session activities, connection takeovers, or unauthorized access to existing SSH sessions that may indicate session hijacking
+  attempts.
 references:
   - https://attack.mitre.org/techniques/T1563/001/
 author: Infinit3i
@@ -25,12 +26,12 @@ detection:
     program:
     message|contains:
     user|count|gte:
-    session_reuse:
+  session_reuse:
     program:
     message|contains:
       - 'session opened'
       - 'session closed'
-    pty_allocation:
+  pty_allocation:
     program:
     message|contains:
       - 'Allocated pty'

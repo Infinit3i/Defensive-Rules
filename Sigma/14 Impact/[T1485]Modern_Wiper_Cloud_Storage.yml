@@ -15,8 +15,8 @@ logsource:
   service: sysmon
 detection:
   selection_cloud_sync_paths:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\OneDrive\'
       - '\Google Drive\'
       - '\Dropbox\'
@@ -24,38 +24,38 @@ detection:
       - '\iCloudDrive\'
       - '\pCloud\'
       - '\MEGA\'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.tmp'
       - '.lock'
       - '.conflict'
       - '.deleted'
   selection_mass_deletion:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'wiper'
       - 'destroy'
       - 'shred'
       - 'erase'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - '\OneDrive\'
       - '\Google Drive\'
       - '\Dropbox\'
   selection_sync_manipulation:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\OneDrive.exe'
       - '\GoogleDriveSync.exe'
       - '\Dropbox.exe'
       - '\Box.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/shutdown'
       - '/reset'
       - '/unlink'
       - '/signout'
       - '/pause'
   selection_api_abuse:
-  EventID:
-  DestinationHostname|contains:
+    EventID: 1
+    DestinationHostname|contains:
       - 'onedrive.live.com'
       - 'drive.google.com'
       - 'dropbox.com'
@@ -63,10 +63,10 @@ detection:
       - 's3.amazonaws.com'
       - 'blob.core.windows.net'
       - 'storage.googleapis.com'
-  DestinationPort:
+    DestinationPort:
   selection_powershell_destruction:
-  EventID:
-  ScriptBlockText|contains:
+    EventID: 1
+    ScriptBlockText|contains:
       - 'Remove-Item'
       - 'Clear-Content'
       - 'Set-Content'
@@ -78,23 +78,23 @@ detection:
       - '-Recurse'
       - '-Force'
   selection_registry_manipulation:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'OneDrive'
       - 'GoogleDrive'
       - 'Dropbox'
       - 'Box'
-  Details|contains:
+    Details|contains:
       - 'false'
       - '0'
       - 'disabled'
   selection_credential_theft:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\OneDrive.exe'
       - '\GoogleDriveSync.exe'
       - '\Dropbox.exe'
-  GrantedAccess:
+    GrantedAccess:
   condition: |
     (selection_mass_deletion and selection_cloud_sync_paths) or
     (selection_sync_manipulation and selection_api_abuse) or

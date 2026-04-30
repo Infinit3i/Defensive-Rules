@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection_encrypt_ext:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.locked'
       - '.encrypted'
       - '.crypto'
@@ -21,22 +21,22 @@ detection:
       - '.wcry'
       - '.wncry'
   selection_ransom_note:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - 'README'
       - 'DECRYPT'
       - 'RECOVERY'
       - 'HELP_DECRYPT'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.txt'
       - '.html'
       - '.htm'
   selection_crypto_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\bcdedit.exe'
       - '\vssadmin.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'delete shadows'
       - 'set recoveryenabled no'
       - 'set bootstatuspolicy ignoreallfailures'

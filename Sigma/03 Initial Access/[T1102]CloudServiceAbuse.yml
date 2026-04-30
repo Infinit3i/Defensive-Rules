@@ -12,22 +12,22 @@ logsource:
   service: http
 detection:
   selection_domains:
-  host|contains:
+    host|contains:
       - 'dropbox.com'
       - 'drive.google.com'
       - 'onedrive.live.com'
       - 'box.com'
       - 'mega.nz'
   selection_suspicious:
-  uri|contains:
+    uri|contains:
       - '/download'
       - '/files'
       - '/shared'
-  method:
+    method:
   selection_frequency:
-  status_code:
+    status_code:
   timeframe:
-    condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
+  condition: selection_domains and selection_suspicious and selection_frequency | count() > 5
 falsepositives:
   - Legitimate cloud storage synchronization
   - File sharing for business purposes

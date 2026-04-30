@@ -13,69 +13,69 @@ logsource:
   service: auditlogs
 detection:
   selection_federation_changes:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Set federation settings on domain'
       - 'Add federated domain'
       - 'Update federated domain'
       - 'Remove federated domain'
       - 'Set domain authentication'
-  Result:
+    Result:
   selection_saml_manipulation:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Update application'
       - 'Update service principal'
-  TargetResources.modifiedProperties.displayName|contains:
+    TargetResources.modifiedProperties.displayName|contains:
       - 'SamlMetadataUrl'
       - 'ReplyUrls'
       - 'SignOnUrl'
       - 'LogoutUrl'
     # Modifications to SAML configuration
   selection_identity_sync_attacks:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Add service principal'
       - 'Update application'
-  TargetResources.displayName|contains:
+    TargetResources.displayName|contains:
       - 'Azure AD Connect'
       - 'Directory Sync'
       - 'ADFS'
       - 'Identity Sync'
   selection_certificate_attacks:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Add application'
       - 'Update application'
       - 'Add service principal credentials'
-  TargetResources.modifiedProperties.displayName:
+    TargetResources.modifiedProperties.displayName:
     # Certificate-based authentication attacks
   selection_suspicious_token_signing:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Update application'
       - 'Add application'
-  TargetResources.modifiedProperties.displayName|contains:
+    TargetResources.modifiedProperties.displayName|contains:
       - 'TokenEncryptionKeyId'
       - 'TokenSigningCertificates'
   selection_identity_provider_abuse:
-  ActivityDisplayName:
-  AuthenticationDetails.succeeded:
-  AuthenticationProtocol:
+    ActivityDisplayName:
+    AuthenticationDetails.succeeded:
+    AuthenticationProtocol:
       - 'SAML2'
       - 'WS-Fed'
       - 'OAuth2'
     # Sign-ins through potentially compromised identity providers
-  UserPrincipalName|contains:
+    UserPrincipalName|contains:
   selection_privileged_federation_access:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Add member to role'
       - 'Add app role assignment'
-  TargetResources.displayName|contains:
+    TargetResources.displayName|contains:
       - 'Global Administrator'
       - 'Application Administrator'
       - 'Cloud Application Administrator'
     # Privilege escalation through federation
   selection_adfs_configuration_changes:
-  ActivityDisplayName|contains:
+    ActivityDisplayName|contains:
       - 'ADFS'
       - 'Federation Service'
-  OperationType:
+    OperationType:
       - 'Update'
       - 'Add'
       - 'Delete'

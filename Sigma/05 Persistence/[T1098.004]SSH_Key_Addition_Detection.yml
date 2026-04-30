@@ -11,7 +11,7 @@ detection:
   selection_ssh_keygen:
     program:
     message|contains:
-    selection_key_add:
+  selection_key_add:
     program:
       - "cat"
       - "echo"
@@ -21,7 +21,7 @@ detection:
       - "ssh-rsa"
       - "ssh-ed25519"
       - "ssh-dss"
-    selection_suspicious_timing:
+  selection_suspicious_timing:
     facility:
     message|contains:
       - "Accepted publickey"

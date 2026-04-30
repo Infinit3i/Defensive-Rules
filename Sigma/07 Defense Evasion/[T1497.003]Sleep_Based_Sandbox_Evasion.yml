@@ -11,9 +11,9 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|re:
-    condition: selection
+    EventID: 1
+    CommandLine|re:
+  condition: selection
 fields:
   - Image
   - CommandLine

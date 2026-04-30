@@ -14,33 +14,33 @@ logsource:
   service: sysmon
 detection:
   sel_thread_access:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
       - '\lsass.exe'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
   sel_thread_create:
-  EventID:
-  NewThreadId:
-  StartAddress|contains:
+    EventID: 1
+    NewThreadId:
+    StartAddress|contains:
   sel_context_apis:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'SuspendThread'
       - 'SetThreadContext'
       - 'ResumeThread'
       - 'GetThreadContext'
   sel_memory_access:
-  EventID:
-  CallTrace|contains:
+    EventID: 1
+    CallTrace|contains:
       - 'SetThreadContext'
       - 'UNKNOWN'
-  GrantedAccess:
+    GrantedAccess:
   sel_injection_pattern:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'OpenThread'
       - 'VirtualAllocEx'
       - 'WriteProcessMemory'

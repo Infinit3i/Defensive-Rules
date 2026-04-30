@@ -14,13 +14,13 @@ logsource:
   service: sysmon
 detection:
   selection_shared_file_modify:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\\*\NETLOGON\'
       - '\\*\SYSVOL\'
       - '\\*\shared\'
       - '\\*\public\'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
@@ -28,17 +28,17 @@ detection:
       - '.vbs'
       - '.scr'
   selection_network_share_write:
-  EventID:
-  AccessMask:
-  RelativeTargetName|endswith:
+    EventID: 1
+    AccessMask:
+    RelativeTargetName|endswith:
       - '.exe'
       - '.dll'
       - '.bat'
       - '.ps1'
   selection_shortcut_modification:
-  EventID:
-  TargetFilename|endswith:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|endswith:
+    TargetFilename|contains:
       - '\\Desktop\'
       - '\\Start Menu\'
       - '\\Startup\'

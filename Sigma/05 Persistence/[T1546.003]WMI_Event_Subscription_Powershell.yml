@@ -12,22 +12,22 @@ logsource:
   service: powershell-classic
 detection:
   selection_cmdlet:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Register-WmiEvent'
       - 'New-WmiEventFilter'
       - 'New-WmiEventConsumer'
       - 'New-WmiEventBinding'
   selection_wmi_class:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'Win32_VolumeChangeEvent'
       - 'Win32_ProcessStartTrace'
       - 'Win32_SystemConfigurationChangeEvent'
       - 'Win32_PowerManagementEvent'
   selection_consumer_type:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'CommandLineEventConsumer'
       - 'ActiveScriptEventConsumer'
       - 'NTEventLogEventConsumer'

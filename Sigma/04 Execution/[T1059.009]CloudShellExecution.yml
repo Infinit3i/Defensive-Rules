@@ -14,10 +14,10 @@ logsource:
   service: cloudshell
 detection:
   selection_cloud_shell:
-  OperationName:
-  ResourceType:
+    OperationName:
+    ResourceType:
   selection_suspicious_commands:
-  properties.message|contains:
+    properties.message|contains:
       - 'wget'
       - 'curl'
       - 'powershell'
@@ -26,13 +26,13 @@ detection:
       - 'base64'
       - 'encode'
   selection_file_operations:
-  properties.message|contains:
+    properties.message|contains:
       - 'az storage'
       - 'az keyvault'
       - 'az ad user'
       - 'get-azuser'
   selection_persistence_setup:
-  properties.message|contains:
+    properties.message|contains:
       - 'crontab'
       - 'systemctl'
       - 'service'

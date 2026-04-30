@@ -4,7 +4,8 @@ technique: T1542.007
 id: 2f7e9d45-8c3a-4d5e-bf90-1234567890ab
 status: experimental
 description: >-
-  > "Detects potential abnormal kernel module loading on Linux systems by monitoring syslog messages for module load commands (e.g., insmod, modprobe) executed from non-standard directories such as /tmp/."
+  > "Detects potential abnormal kernel module loading on Linux systems by monitoring syslog messages for module load commands (e.g., insmod, modprobe) executed from non-standard directories such
+  as /tmp/."
 references:
   - https://attack.mitre.org/techniques/T1542/007/
 author: Infinit3i
@@ -20,12 +21,12 @@ logsource:
   category: kernel
 detection:
   selection:
-  Message|contains:
+    Message|contains:
       - "insmod"
       - "modprobe"
   abnormal_path:
-  Message|contains:
-    condition: selection and abnormal_path
+    Message|contains:
+  condition: selection and abnormal_path
 falsepositives:
   - Legitimate kernel module loading during system updates or when modules are temporarily staged in /tmp/ during packaging.
 level: medium

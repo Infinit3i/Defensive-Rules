@@ -14,18 +14,18 @@ logsource:
   service: auditd
 detection:
   selection_privileged_container:
-  type:
-  syscall:
+    type:
+    syscall:
       - 'mount'
       - 'umount'
       - 'pivot_root'
       - 'chroot'
       - 'unshare'
       - 'clone'
-  success:
+    success:
   selection_proc_filesystem:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/proc/1/root'
       - '/proc/self/root'
       - '/proc/*/root'
@@ -33,8 +33,8 @@ detection:
       - '/var/lib/docker'
       - '/var/run/docker.sock'
   selection_device_access:
-  type:
-  name|startswith:
+    type:
+    name|startswith:
       - '/dev/disk'
       - '/dev/sd'
       - '/dev/nvme'
@@ -42,30 +42,30 @@ detection:
       - '/dev/dm-'
       - '/dev/mapper'
   selection_kernel_modules:
-  type:
-  syscall:
+    type:
+    syscall:
       - 'init_module'
       - 'finit_module'
       - 'delete_module'
-  success:
+    success:
   selection_namespace_escape:
-  type:
-  syscall:
-  a0|contains:
+    type:
+    syscall:
+    a0|contains:
       - '/proc/1/ns'
       - '/proc/self/ns'
-  success:
+    success:
   selection_cgroup_manipulation:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/sys/fs/cgroup'
       - '/proc/cgroups'
       - '/proc/self/cgroup'
   selection_capabilities:
-  type:
-  syscall:
-  success:
-    condition: 1 of selection_*
+    type:
+    syscall:
+    success:
+  condition: 1 of selection_*
 falsepositives:
   - Legitimate container orchestration operations
   - System administration tasks

@@ -23,17 +23,17 @@ logsource:
   service: syslog
 detection:
   selection_find:
-  Message|contains:
+    Message|contains:
       - "find / -type f"
       - "find / -name"
       - "find . -type f -name"
   selection_ls:
-  Message|contains:
+    Message|contains:
       - "ls -R"
       - "ls -laR"
       - "tree "
   selection_locate_updatedb:
-  Message|contains:
+    Message|contains:
       - "updatedb"
       - "locate "
   condition: selection_find or selection_ls or selection_locate_updatedb

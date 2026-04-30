@@ -15,10 +15,10 @@ logsource:
   service: registration
 detection:
   selection_bulk_creation:
-  event_type:
-  ip_address:
+    event_type:
+    ip_address:
   selection_suspicious_names:
-  display_name|contains:
+    display_name|contains:
       - 'CEO'
       - 'Manager'
       - 'Admin'
@@ -27,7 +27,7 @@ detection:
       - 'IT'
       - 'Help'
   selection_impersonation:
-  display_name|contains:
+    display_name|contains:
       - 'Microsoft'
       - 'Google'
       - 'Amazon'

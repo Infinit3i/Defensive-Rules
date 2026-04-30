@@ -19,16 +19,16 @@ logsource:
   service: powershell
 detection:
   selection_long_sleep:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "Start-Sleep -Seconds 60"
       - "Start-Sleep -Seconds 120"
       - "Start-Sleep -Seconds 300"
       - "Start-Sleep -Seconds 600"
       - "Start-Sleep -Seconds 900"
   selection_sleep_s:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "Start-Sleep -s 60"
       - "Start-Sleep -s 300"
   condition: selection_long_sleep or selection_sleep_s

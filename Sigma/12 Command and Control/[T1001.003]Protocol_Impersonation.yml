@@ -4,7 +4,8 @@ technique: T1001.003
 id: e4a7f9c5-6d8b-4e3f-e4a7-9f5c6d8b3e4b
 status: experimental
 description: >-
-  >- Detects protocol impersonation by monitoring for traffic that mimics legitimate protocols, protocol spoofing, or disguised communications that may be used to hide C2 traffic within expected network patterns.
+  >- Detects protocol impersonation by monitoring for traffic that mimics legitimate protocols, protocol spoofing, or disguised communications that may be used to hide C2 traffic within expected
+  network patterns.
 references:
   - https://attack.mitre.org/techniques/T1001/003/
 author: Infinit3i
@@ -22,16 +23,16 @@ logsource:
   service: conn
 detection:
   port_mismatch:
-  id.resp_p:
-  service:
+    id.resp_p:
+    service:
   protocol_confusion:
-  id.resp_p:
-  service:
+    id.resp_p:
+    service:
   unusual_patterns:
-  orig_bytes:
-  duration|lte:
-  service:
-    condition: port_mismatch or protocol_confusion or unusual_patterns
+    orig_bytes:
+    duration|lte:
+    service:
+  condition: port_mismatch or protocol_confusion or unusual_patterns
 falsepositives:
   - Misconfigured services
   - Protocol negotiations

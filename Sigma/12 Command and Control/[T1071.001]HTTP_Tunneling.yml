@@ -10,10 +10,10 @@ logsource:
   service: http
 detection:
   selection:
-  method:
-  status_code:
-  response_body_len:
-    condition: selection
+    method:
+    status_code:
+    response_body_len:
+  condition: selection
 tags:
   - attack.command_and_control
   - attack.t1071.001

@@ -11,15 +11,15 @@ logsource:
   service: sysmon
 detection:
   selection_tools:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\sdelete.exe'
       - '\cipher.exe'
       - '\diskpart.exe'
       - '\format.exe'
       - '\dban.exe'
       - '\wipe.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/w:'
       - '-w:'
       - '/zerospace'
@@ -29,16 +29,16 @@ detection:
       - '-s'
       - '-z'
   selection_cipher:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/w:'
       - '/u'
       - '/n'
   selection_diskpart:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'clean'
       - 'format'
       - 'active'

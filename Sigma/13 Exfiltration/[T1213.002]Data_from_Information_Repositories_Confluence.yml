@@ -22,21 +22,21 @@ logsource:
   service: audit
 detection:
   bulk_export:
-  action:
-  objectType:
-  objectName|count|gte:
+    action:
+    objectType:
+    objectName|count|gte:
   api_access:
-  action:
-  user_agent|contains:
+    action:
+    user_agent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'api'
   mass_viewing:
-  action:
-  objectType:
-  userId|count|gte:
-    condition: bulk_export or api_access or mass_viewing
+    action:
+    objectType:
+    userId|count|gte:
+  condition: bulk_export or api_access or mass_viewing
 falsepositives:
   - Legitimate documentation exports
   - Authorized API integrations

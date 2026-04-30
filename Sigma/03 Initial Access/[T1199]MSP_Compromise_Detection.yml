@@ -20,29 +20,29 @@ logsource:
   service: security
 detection:
   msp_account_activity:
-  EventID:
-  TargetUserName|contains:
+    EventID:
+    TargetUserName|contains:
       - 'admin@msp'
       - 'svc-msp'
       - '@partner.'
       - '@vendor.'
-  LogonType:
+    LogonType:
       - 2
       - 10
   privilege_escalation:
-  EventID:
-  PrivilegeList|contains:
+    EventID:
+    PrivilegeList|contains:
       - 'SeTakeOwnershipPrivilege'
       - 'SeBackupPrivilege'
       - 'SeDebugPrivilege'
   admin_group_changes:
-  EventID:
+    EventID:
       - 4732
       - 4728
-  TargetUserName|contains:
+    TargetUserName|contains:
       - 'admin@'
       - 'svc-'
-  GroupName|contains:
+    GroupName|contains:
       - 'Administrators'
       - 'Domain Admins'
   condition: msp_account_activity and (privilege_escalation or admin_group_changes)

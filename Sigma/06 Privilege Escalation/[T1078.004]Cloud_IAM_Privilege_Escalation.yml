@@ -12,19 +12,19 @@ logsource:
   service: activitylog
 detection:
   selection_role_assignment:
-  operationName:
+    operationName:
       - 'Create role assignment'
       - 'Delete role assignment'
-  properties.roleDefinitionName|contains:
+    properties.roleDefinitionName|contains:
       - 'Owner'
       - 'Contributor'
       - 'Global Administrator'
   selection_privilege_escalation:
-  operationName|contains:
+    operationName|contains:
       - 'Add member to role'
       - 'Update user'
-  properties.targetResources.userPrincipalName|endswith:
-    condition: selection_role_assignment or selection_privilege_escalation
+    properties.targetResources.userPrincipalName|endswith:
+  condition: selection_role_assignment or selection_privilege_escalation
 falsepositives:
   - Legitimate administrative changes
   - User onboarding processes

@@ -9,20 +9,20 @@ logsource:
   service: auditd
 detection:
   selection_commands:
-  comm:
+    comm:
       - "insmod"
       - "modprobe"
       - "rmmod"
-  type:
-  syscall:
+    type:
+    syscall:
   selection_init_module:
-  type:
-  syscall:
+    type:
+    syscall:
   selection_finit_module:
-  type:
-  syscall:
+    type:
+    syscall:
   selection_suspicious_paths:
-  a1|contains:
+    a1|contains:
       - "/tmp/"
       - "/var/tmp/"
       - "/dev/shm/"

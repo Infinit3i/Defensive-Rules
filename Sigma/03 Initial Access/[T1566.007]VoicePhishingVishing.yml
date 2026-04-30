@@ -12,9 +12,9 @@ logsource:
   service: call-analytics
 detection:
   selection_spoofed_caller:
-  CallerIDSpoofed:
+    CallerIDSpoofed:
   selection_suspicious_keywords:
-  CallTranscript|contains:
+    CallTranscript|contains:
       - 'verify account'
       - 'suspended account'
       - 'security breach'
@@ -22,7 +22,7 @@ detection:
       - 'provide password'
       - 'confirm PIN'
   selection_impersonation:
-  CallerIDName|contains:
+    CallerIDName|contains:
       - 'Bank'
       - 'Microsoft'
       - 'Apple'
@@ -30,7 +30,7 @@ detection:
       - 'Support'
       - 'Security'
   selection_pressure_tactics:
-  CallTranscript|contains:
+    CallTranscript|contains:
       - 'within 24 hours'
       - 'immediately'
       - 'or your account'

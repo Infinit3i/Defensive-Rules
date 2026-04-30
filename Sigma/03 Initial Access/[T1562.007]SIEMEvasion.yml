@@ -12,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_services:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\sc.exe'
       - '\net.exe'
       - '\wevtutil.exe'
   selection_commands:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'stop winlogbeat'
       - 'disable splunk'
       - 'clear eventlog'
       - 'wevtutil cl'
   selection_config:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - 'winlogbeat.yml'
       - 'splunk'
       - 'nxlog.conf'

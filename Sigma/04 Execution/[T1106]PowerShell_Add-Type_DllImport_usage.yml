@@ -23,8 +23,8 @@ logsource:
   service: powershell
 detection:
   selection_addtype:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "Add-Type"
       - "[DllImport"
       - "System.Runtime.InteropServices"

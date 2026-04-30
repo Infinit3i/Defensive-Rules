@@ -15,14 +15,14 @@ logsource:
   service: admin
 detection:
   selection_download:
-  event_name:
+    event_name:
       - 'download'
       - 'copy'
       - 'view'
   selection_volume:
-  event_name:
+    event_name:
   selection_external:
-  actor.email|endswith:
+    actor.email|endswith:
       - '@gmail.com'
       - '@yahoo.com'
       - '@hotmail.com'

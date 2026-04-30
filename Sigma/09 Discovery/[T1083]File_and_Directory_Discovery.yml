@@ -23,25 +23,25 @@ logsource:
   service: sysmon
 detection:
   cmd_dir:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - " dir "
       - " dir /s"
       - " dir /b"
   where_cmd:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\cmd.exe'
       - '\where.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - "where /r "
   powershell_gci:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - "Get-ChildItem -Recurse"
       - "gci -Recurse"
       - "Get-ChildItem -Path"

@@ -12,24 +12,24 @@ logsource:
   service: sysmon
 detection:
   selection_api_call:
-  EventID:
-  CallTrace|contains:
+    EventID: 1
+    CallTrace|contains:
       - 'CreateProcessWithTokenW'
       - 'CreateProcessAsUserW'
       - 'DuplicateTokenEx'
   selection_process:
-  EventID:
-  LogonId:
-  IntegrityLevel:
-  ParentImage|endswith:
+    EventID: 1
+    LogonId:
+    IntegrityLevel:
+    ParentImage|endswith:
       - '.exe'
   selection_token_access:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
-  GrantedAccess:
-    condition: selection_api_call and (selection_process or selection_token_access)
+    GrantedAccess:
+  condition: selection_api_call and (selection_process or selection_token_access)
 falsepositives:
   - Legitimate service processes
   - System authentication

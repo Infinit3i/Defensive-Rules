@@ -4,7 +4,8 @@ technique: T1039
 id: f3a7e9c5-8b6d-4e2f-f3a7-9e5c8b6d2f3b
 status: experimental
 description: >-
-  >- Detects suspicious data access from network shared drives by monitoring for unusual file access patterns, bulk data retrieval, or unauthorized access to sensitive shared resources during lateral movement.
+  >- Detects suspicious data access from network shared drives by monitoring for unusual file access patterns, bulk data retrieval, or unauthorized access to sensitive shared resources during
+  lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1039/
 author: Infinit3i
@@ -27,11 +28,11 @@ detection:
       - '$'
       - 'SHARE'
       - 'DATA'
-    bulk_access:
+  bulk_access:
     EventID:
     AccessMask:
     RelativeTargetName|count|gte:
-    sensitive_files:
+  sensitive_files:
     EventID:
     RelativeTargetName|endswith:
       - '.xlsx'

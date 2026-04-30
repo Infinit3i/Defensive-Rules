@@ -4,7 +4,8 @@ technique: T1090.001
 id: c5f8e6a3-9b7d-4e2f-c5f8-6e3a9b7d2c5b
 status: experimental
 description: >-
-  >- Detects internal proxy usage for command and control by monitoring for proxy server establishment, traffic redirection, or internal traffic forwarding that may be used to hide C2 communications.
+  >- Detects internal proxy usage for command and control by monitoring for proxy server establishment, traffic redirection, or internal traffic forwarding that may be used to hide C2
+  communications.
 references:
   - https://attack.mitre.org/techniques/T1090/001/
 author: Infinit3i
@@ -27,13 +28,13 @@ detection:
       - '\netsh.exe'
       - '\socat.exe'
       - '\stunnel.exe'
-    port_forwarding:
+  port_forwarding:
     CommandLine|contains:
       - 'portproxy'
       - 'interface'
       - 'forward'
       - 'tunnel'
-    proxy_setup:
+  proxy_setup:
     CommandLine|contains:
       - 'add v4tov4'
       - 'connectaddress'

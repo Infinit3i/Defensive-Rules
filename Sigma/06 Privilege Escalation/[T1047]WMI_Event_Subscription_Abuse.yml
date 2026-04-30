@@ -13,30 +13,30 @@ logsource:
   service: sysmon
 detection:
   selection_event_consumer:
-  EventID:
-  ParentImage|endswith:
-  CommandLine|contains:
+    EventID: 1
+    ParentImage|endswith:
+    CommandLine|contains:
       - '__EventConsumer'
       - 'CommandLineEventConsumer'
       - 'ActiveScriptEventConsumer'
       - 'LogFileEventConsumer'
   selection_event_filter:
-  EventID:
-  Image|endswith:
-  CommandLine|contains|all:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains|all:
       - '__EventFilter'
       - 'CREATE'
   selection_binding:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - '__FilterToConsumerBinding'
       - 'Consumer'
       - 'Filter'
   selection_privileged_execution:
-  EventID:
-  ParentImage|endswith:
-  IntegrityLevel:
-  CommandLine|contains:
+    EventID: 1
+    ParentImage|endswith:
+    IntegrityLevel:
+    CommandLine|contains:
       - 'whoami'
       - 'net user'
       - 'reg add'

@@ -4,7 +4,8 @@ technique: T1550.002
 id: d5a8f3e9-6c4b-4e7f-d5a8-9f3e6c4b7d5b
 status: experimental
 description: >-
-  >- Detects pass the hash attacks by monitoring for NTLM authentication events with suspicious characteristics, unusual logon patterns, or authentication attempts that may indicate hash credential reuse.
+  >- Detects pass the hash attacks by monitoring for NTLM authentication events with suspicious characteristics, unusual logon patterns, or authentication attempts that may indicate hash
+  credential reuse.
 references:
   - https://attack.mitre.org/techniques/T1550/002/
 author: Infinit3i
@@ -22,18 +23,18 @@ logsource:
   service: security
 detection:
   ntlm_logon:
-  EventID:
-  LogonType:
-  AuthenticationPackageName:
+    EventID:
+    LogonType:
+    AuthenticationPackageName:
   unusual_source:
-  WorkstationName|contains:
+    WorkstationName|contains:
       - 'WORKSTATION'
       - 'UNKNOWN'
       - 'DESKTOP'
   no_password:
-  LogonProcessName:
-  SubStatus:
-    condition: ntlm_logon and (unusual_source or no_password)
+    LogonProcessName:
+    SubStatus:
+  condition: ntlm_logon and (unusual_source or no_password)
 falsepositives:
   - Legacy NTLM applications
   - Normal network authentication

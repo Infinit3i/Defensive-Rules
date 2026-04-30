@@ -12,22 +12,22 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'COR_PROFILER'
       - 'COR_PROFILER_PATH'
   selection_environment:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'COR_ENABLE_PROFILING=1'
       - 'COR_PROFILER='
       - 'COR_PROFILER_PATH='
   selection_dotnet:
-  EventID:
-  Image|contains:
-  ImageLoaded|endswith:
-  Signed:
-    condition: selection_registry or selection_environment or selection_dotnet
+    EventID: 1
+    Image|contains:
+    ImageLoaded|endswith:
+    Signed:
+  condition: selection_registry or selection_environment or selection_dotnet
 falsepositives:
   - Legitimate .NET profiling tools
   - Development environments

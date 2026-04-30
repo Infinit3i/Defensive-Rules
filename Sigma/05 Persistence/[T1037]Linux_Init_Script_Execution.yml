@@ -9,14 +9,14 @@ logsource:
   service: syslog
 detection:
   selection_init:
-  program:
+    program:
       - "init"
       - "systemd"
       - "rc.local"
       - "update-rc.d"
       - "service"
   selection_suspicious:
-  message|contains:
+    message|contains:
       - "curl"
       - "wget"
       - "nc -"

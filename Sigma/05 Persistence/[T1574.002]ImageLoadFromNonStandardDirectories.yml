@@ -13,12 +13,12 @@ logsource:
   category: image_load
 detection:
   selection_event:
-  EventID:
+    EventID: 1
   selection_path:
-  ImageLoaded|startswith:
+    ImageLoaded|startswith:
       - 'C:\Users\'
       - 'C:\Windows\Temp\'
-  ImageLoaded|contains:
+    ImageLoaded|contains:
       - '\\'
   condition: selection_event and selection_path
 fields:

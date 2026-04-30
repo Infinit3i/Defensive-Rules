@@ -11,7 +11,7 @@ logsource:
   service: web
 detection:
   selection_fake_update:
-  c-uri|contains:
+    c-uri|contains:
       - '/fake-update'
       - '/software-update'
       - '/security-patch'
@@ -20,21 +20,21 @@ detection:
       - '/download-fix'
       - '/install-patch'
   selection_suspicious_domains:
-  c-uri|contains:
+    c-uri|contains:
       - 'update-security'
       - 'fix-computer'
       - 'repair-now'
       - 'install-update'
       - 'security-alert'
   selection_fake_installers:
-  c-uri|endswith:
+    c-uri|endswith:
       - '.exe'
       - '.msi'
       - '.bat'
       - '.scr'
       - '.com'
   selection_user_agents:
-  c-useragent|contains:
+    c-useragent|contains:
       - 'Windows-Update'
       - 'SecurityUpdate'
       - 'Microsoft-Patch'

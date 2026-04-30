@@ -4,7 +4,8 @@ technique: T1048.001
 id: b6f4e8c2-9d7a-4e3f-b6f4-8e2c9d7a3b6b
 status: experimental
 description: >-
-  >- Detects data exfiltration over symmetric encrypted non-C2 protocols by monitoring for unusual encrypted communications, suspicious protocol usage, or large data transfers over encrypted channels.
+  >- Detects data exfiltration over symmetric encrypted non-C2 protocols by monitoring for unusual encrypted communications, suspicious protocol usage, or large data transfers over encrypted
+  channels.
 references:
   - https://attack.mitre.org/techniques/T1048/001/
 author: Infinit3i
@@ -26,10 +27,10 @@ detection:
       - 'AES'
       - 'ChaCha'
     cert_subject|contains:
-    large_encrypted:
+  large_encrypted:
     orig_bytes|gte:
     duration|gte:
-    suspicious_cert:
+  suspicious_cert:
     cert_subject|contains:
       - 'localhost'
       - 'test'

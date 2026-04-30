@@ -14,10 +14,10 @@ logsource:
   service: exchange
 detection:
   selection_internal_email:
-  sender_domain:
-  recipient_domain:
+    sender_domain:
+    recipient_domain:
   selection_suspicious_attachments:
-  attachment_type:
+    attachment_type:
       - '.exe'
       - '.scr'
       - '.bat'
@@ -27,7 +27,7 @@ detection:
       - '.zip'
       - '.rar'
   selection_phishing_keywords:
-  subject|contains:
+    subject|contains:
       - 'urgent'
       - 'action required'
       - 'verify account'
@@ -35,7 +35,7 @@ detection:
       - 'suspended'
       - 'click here'
   selection_external_links:
-  body|contains:
+    body|contains:
       - 'http://'
       - 'https://'
       - 'bit.ly'

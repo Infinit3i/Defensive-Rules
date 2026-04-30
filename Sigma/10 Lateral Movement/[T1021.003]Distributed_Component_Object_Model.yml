@@ -4,7 +4,8 @@ technique: T1021.003
 id: d7a4f8e2-6c9b-4e3f-a5d1-9f4e8d3c6a7b
 status: experimental
 description: >-
-  >- Detects lateral movement via Distributed Component Object Model (DCOM) by monitoring for suspicious DCOM object creation, remote DCOM execution, or unusual DCOM service activities that may indicate attacker abuse.
+  >- Detects lateral movement via Distributed Component Object Model (DCOM) by monitoring for suspicious DCOM object creation, remote DCOM execution, or unusual DCOM service activities that may
+  indicate attacker abuse.
 references:
   - https://attack.mitre.org/techniques/T1021/003/
 author: Infinit3i
@@ -26,10 +27,10 @@ detection:
     CommandLine|contains:
       - '-k DcomLaunch'
       - 'rpcss'
-    wmi_dcom:
+  wmi_dcom:
     Image|endswith:
     ParentImage|endswith:
-    remote_dcom:
+  remote_dcom:
     Image|endswith:
     CommandLine|contains:
       - '/Processid:'

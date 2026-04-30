@@ -11,32 +11,32 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
   selection_suspicious:
-      - CommandLine|contains|all:
-      - 'javascript:'
-      - 'eval('
-      - CommandLine|contains:
-      - 'vbscript:'
-      - 'data:text/html'
-      - '.dat,'
-      - '.tmp,'
-      - 'shell32.dll,Control_RunDLL'
-      - 'advpack.dll,LaunchINFSection'
-      - 'ieadvpack.dll,LaunchINFSection'
-      - 'setupapi.dll,InstallHinfSection'
-      - 'syssetup.dll,SetupInfObjectInstallAction'
-      - 'zipfldr.dll,RouteTheCall'
-      - 'url.dll,OpenURL'
-      - 'url.dll,FileProtocolHandler'
-      - CommandLine|re: '.*rundll32\.exe.*\w+\.\w+,#\d+'
+    - CommandLine|contains|all:
+    - 'javascript:'
+    - 'eval('
+    - CommandLine|contains:
+    - 'vbscript:'
+    - 'data:text/html'
+    - '.dat,'
+    - '.tmp,'
+    - 'shell32.dll,Control_RunDLL'
+    - 'advpack.dll,LaunchINFSection'
+    - 'ieadvpack.dll,LaunchINFSection'
+    - 'setupapi.dll,InstallHinfSection'
+    - 'syssetup.dll,SetupInfObjectInstallAction'
+    - 'zipfldr.dll,RouteTheCall'
+    - 'url.dll,OpenURL'
+    - 'url.dll,FileProtocolHandler'
+    - CommandLine|re: '.*rundll32\.exe.*\w+\.\w+,#\d+'
   selection_network_dll:
-  CommandLine|contains|all:
+    CommandLine|contains|all:
       - 'rundll32'
       - 'http'
   filter_legitimate:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'shell32.dll,SHCreateLocalServerRunDll'
       - 'shell32.dll,OpenAs_RunDLL'
       - 'shell32.dll,ShellExec_RunDLL'

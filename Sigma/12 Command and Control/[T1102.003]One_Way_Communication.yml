@@ -4,7 +4,8 @@ technique: T1102.003
 id: f5b8e2a7-6c9d-4e3f-f5b8-2e7a6c9d3f5b
 status: experimental
 description: >-
-  >- Detects one-way communication via web services by monitoring for data retrieval without response, beacon-like patterns, or unidirectional data flow through web platforms for C2 communications.
+  >- Detects one-way communication via web services by monitoring for data retrieval without response, beacon-like patterns, or unidirectional data flow through web platforms for C2
+  communications.
 references:
   - https://attack.mitre.org/techniques/T1102/003/
 author: Infinit3i
@@ -22,21 +23,21 @@ logsource:
   service: http
 detection:
   beacon_pattern:
-  method:
-  response_code:
-  orig_bytes|lte:
-  resp_bytes|lte:
+    method:
+    response_code:
+    orig_bytes|lte:
+    resp_bytes|lte:
   data_retrieval:
-  method:
-  uri|contains:
+    method:
+    uri|contains:
       - '/data'
       - '/config'
       - '/update'
   periodic_access:
-  host|count|gte:
-  method:
-  time_interval:
-    condition: beacon_pattern or data_retrieval or periodic_access
+    host|count|gte:
+    method:
+    time_interval:
+  condition: beacon_pattern or data_retrieval or periodic_access
 falsepositives:
   - Legitimate data synchronization
   - Application updates

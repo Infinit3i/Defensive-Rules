@@ -11,10 +11,10 @@ logsource:
   product: windows
 detection:
   windows_event:
-  EventID:
+    EventID:
   sysmon_process:
-  EventID:
-  CommandLine|contains:
+    EventID:
+    CommandLine|contains:
       - 'sc create'
       - 'New-Service'
       - 'srvany.exe'

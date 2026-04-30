@@ -10,18 +10,18 @@ logsource:
   service: sysmon
 detection:
   sel_profile_file:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\WindowsPowerShell\profile.ps1'
       - '\PowerShell\profile.ps1'
       - '\Microsoft.PowerShell_profile.ps1'
       - '\Microsoft.VSCode_profile.ps1'
   sel_profile_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\powershell.exe'
       - '\pwsh.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '$profile'
       - 'Add-Content'
       - 'Set-Content'

@@ -10,13 +10,13 @@ logsource:
   service: http
 detection:
   selection:
-  request_body_len:
-  uri|contains:
+    request_body_len:
+    uri|contains:
       - '?data='
       - '&cmd='
       - 'payload='
-  post_data|re:
-    condition: selection
+    post_data|re:
+  condition: selection
 tags:
   - attack.command_and_control
   - attack.t1071.001

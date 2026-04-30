@@ -28,13 +28,13 @@ detection:
       - '\winrar.exe'
       - '\zip.exe'
       - '\tar.exe'
-    archive_creation:
+  archive_creation:
     CommandLine|contains:
       - ' a '
       - ' -a '
       - 'create'
       - 'compress'
-    sensitive_directories:
+  sensitive_directories:
     CommandLine|contains:
       - 'C:\Users\'
       - 'Documents'

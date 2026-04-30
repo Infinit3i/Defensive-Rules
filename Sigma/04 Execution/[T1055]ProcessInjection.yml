@@ -4,26 +4,27 @@ technique: T1055
 id: 57e5e43f-ae10-4db4-88a5-49980d05e7cc
 status: experimental
 description: >-
-  > Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like lsass.exe or explorer.exe are accessed in a privileged manner.
+  > Detects process injection behavior either via Sysmon (CreateRemoteThread, ProcessAccess) or Windows Security logs when sensitive processes like lsass.exe or explorer.exe are accessed in a
+  privileged manner.
 author: Infinit3i
 date: 2025/04/20
 logsource:
   product: windows
 detection:
   sysmon_event:
-  EventID:
+    EventID:
       - 8
       - 10
   sysmon_target:
-  TargetImage|endswith:
+    TargetImage|endswith:
       - '\lsass.exe'
       - '\explorer.exe'
   security_event:
-  EventID:
+    EventID:
       - 4673
       - 4674
   security_target:
-  Message|contains:
+    Message|contains:
       - 'lsass.exe'
       - 'explorer.exe'
   condition: (sysmon_event and sysmon_target) or (security_event and security_target)

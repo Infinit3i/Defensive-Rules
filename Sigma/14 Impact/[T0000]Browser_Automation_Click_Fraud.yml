@@ -11,26 +11,26 @@ logsource:
   service: sysmon
 detection:
   selection_automation_tools:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\chromedriver.exe'
       - '\geckodriver.exe'
       - '\selenium-server.exe'
       - '\phantom.exe'
       - '\phantomjs.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '--headless'
       - '--no-sandbox'
       - '--disable-gpu'
       - '--remote-debugging'
       - '--user-data-dir'
   selection_suspicious_scripts:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\python.exe'
       - '\node.exe'
       - '\powershell.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'selenium'
       - 'webdriver'
       - 'puppeteer'
@@ -39,12 +39,12 @@ detection:
       - 'clickbot'
       - 'adclick'
   selection_browser_args:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '--disable-blink-features=AutomationControlled'
       - '--disable-web-security'
       - '--allow-running-insecure-content'
@@ -52,13 +52,13 @@ detection:
       - '--remote-debugging-port'
       - '--enable-automation'
   selection_click_scripts:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.py'
       - '.js'
       - '.ps1'
       - '.vbs'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - 'click'
       - 'auto'
       - 'bot'

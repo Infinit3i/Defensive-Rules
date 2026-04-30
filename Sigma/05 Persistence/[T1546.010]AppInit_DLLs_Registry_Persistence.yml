@@ -11,18 +11,18 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_DLLs'
   selection_enable:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
       - '\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\LoadAppInit_DLLs'
-  Details:
+    Details:
   filter_system:
-  Image|contains:
+    Image|contains:
       - 'C:\Windows\System32\'
       - 'C:\Windows\SysWOW64\'
       - 'C:\Program Files\'

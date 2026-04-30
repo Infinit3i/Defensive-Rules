@@ -21,37 +21,37 @@ logsource:
   service: syslog
 detection:
   malicious_build_commands:
-  process|contains:
+    process|contains:
       - 'curl http'
       - 'wget http'
       - 'nc -e'
       - 'bash -i'
-  facility:
+    facility:
   unauthorized_dependencies:
-  message|contains:
+    message|contains:
       - 'pip install'
       - 'npm install'
       - 'gem install'
-  source|contains:
+    source|contains:
       - 'jenkins'
       - 'gitlab'
       - 'github'
       - 'buildkite'
   environment_manipulation:
-  message|contains:
+    message|contains:
       - 'export'
       - 'setenv'
       - 'ENV'
-  keyword|contains:
+    keyword|contains:
       - 'TOKEN'
       - 'KEY'
       - 'SECRET'
       - 'PASSWORD'
   code_injection:
-  message|contains:
+    message|contains:
       - 'echo'
       - 'printf'
-  pattern|contains:
+    pattern|contains:
       - '>>'
       - 'dockerfile'
       - 'makefile'

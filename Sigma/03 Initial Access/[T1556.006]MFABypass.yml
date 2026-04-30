@@ -16,13 +16,13 @@ detection:
     OperationName|contains:
       - 'Sign-in activity'
       - 'User Risk Detection'
-    selection_bypass:
+  selection_bypass:
     AuthenticationRequirement:
     ResultType:
     RiskState|contains:
       - 'atRisk'
       - 'confirmedCompromised'
-    selection_suspicious:
+  selection_suspicious:
     Location|contains:
     ClientAppUsed|contains:
       - 'Browser'

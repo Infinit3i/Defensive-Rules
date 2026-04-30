@@ -15,17 +15,17 @@ logsource:
   service: admin
 detection:
   selection_admin_action:
-  event_type:
+    event_type:
       - 'user_created'
       - 'user_deleted'
       - 'role_assigned'
       - 'permission_granted'
   selection_suspicious_timing:
-  timestamp|timeofday:
+    timestamp|timeofday:
       - '00:00-06:00'
       - '22:00-23:59'
   selection_bulk_ops:
-  event_type:
+    event_type:
       - 'user_created'
       - 'user_deleted'
   condition: selection_admin_action and (selection_suspicious_timing or selection_bulk_ops)

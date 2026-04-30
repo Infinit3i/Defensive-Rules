@@ -4,7 +4,8 @@ technique: T1550.001
 id: c9f4e7a8-5d6b-4e3f-c9f4-8e7a5d6b4c9b
 status: experimental
 description: >-
-  >- Detects abuse of application access tokens by monitoring for suspicious token usage, token theft attempts, or unauthorized application access that may indicate lateral movement through application credentials.
+  >- Detects abuse of application access tokens by monitoring for suspicious token usage, token theft attempts, or unauthorized application access that may indicate lateral movement through
+  application credentials.
 references:
   - https://attack.mitre.org/techniques/T1550/001/
 author: Infinit3i
@@ -26,12 +27,12 @@ detection:
     OperationName|contains:
       - 'Add application'
       - 'Update application credentials'
-    token_usage:
+  token_usage:
     Category:
     ClientAppUsed|contains:
       - 'Exchange Web Services'
       - 'Other clients'
-    suspicious_scope:
+  suspicious_scope:
     ConsentContext.IsAdminConsent:
     PermissionDisplayName|contains:
       - 'Read all'

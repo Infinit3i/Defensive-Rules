@@ -13,20 +13,20 @@ logsource:
   service: sysmon
 detection:
   selection_wmi_consumer:
-  EventID:
-  Destination:
+    EventID: 1
+    Destination:
       - '*ActiveScriptEventConsumer*'
       - '*CommandLineEventConsumer*'
       - '*NTEventLogEventConsumer*'
   selection_wmi_filter:
-  EventID:
-  Query|contains:
+    EventID: 1
+    Query|contains:
       - 'SELECT * FROM Win32_VolumeChangeEvent'
       - 'SELECT * FROM Win32_SystemConfigurationChangeEvent'
       - 'SELECT * FROM Win32_ProcessStartTrace'
   selection_wmi_binding:
-  EventID:
-  Consumer|contains:
+    EventID: 1
+    Consumer|contains:
       - 'CommandLineEventConsumer'
       - 'ActiveScriptEventConsumer'
   condition: selection_wmi_consumer or selection_wmi_filter or selection_wmi_binding

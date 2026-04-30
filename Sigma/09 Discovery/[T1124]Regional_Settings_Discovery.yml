@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'systeminfo | findstr /i "time zone"'
       - 'Get-WinSystemLocale'
       - 'Get-Culture'

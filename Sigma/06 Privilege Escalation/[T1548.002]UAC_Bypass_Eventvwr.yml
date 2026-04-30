@@ -12,15 +12,15 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'mscfile\shell\open\command'
       - 'Classes\mscfile'
-  Details|contains:
+    Details|contains:
   selection_process:
-  EventID:
-  Image|endswith:
-  ParentImage|endswith:
+    EventID: 1
+    Image|endswith:
+    ParentImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
   condition: selection_registry or selection_process

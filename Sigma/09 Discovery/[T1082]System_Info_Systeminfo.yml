@@ -21,11 +21,11 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
   commandline_indicators:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "systeminfo"
   condition: selection or commandline_indicators
 falsepositives:

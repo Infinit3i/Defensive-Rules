@@ -11,14 +11,14 @@ logsource:
   service: sysmon
 detection:
   selection_sc:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'config'
       - 'start= disabled'
       - 'stop'
   critical_services:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Themes'
       - 'AudioSrv'
       - 'Browser'
@@ -36,9 +36,9 @@ detection:
       - 'W32Time'
       - 'Workstation'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Set-Service'
       - 'Stop-Service'
       - '-StartupType Disabled'

@@ -12,12 +12,12 @@ logsource:
   service: sms-gateway
 detection:
   selection_suspicious_sender:
-      - SenderNumber|startswith: '+'
-      - SenderNumber|length: 5
-      - SenderID|contains: 'Bank'
-      - SenderID|contains: 'Security'
+    - SenderNumber|startswith: '+'
+    - SenderNumber|length: 5
+    - SenderID|contains: 'Bank'
+    - SenderID|contains: 'Security'
   selection_phishing_content:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'click link'
       - 'verify account'
       - 'suspended'
@@ -25,13 +25,13 @@ detection:
       - 'limited time'
       - 'expires today'
   selection_malicious_links:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'http'
       - 'bit.ly'
       - 'tinyurl'
       - 'cutt.ly'
   selection_financial_keywords:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'bank'
       - 'card'
       - 'payment'

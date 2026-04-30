@@ -13,27 +13,27 @@ logsource:
   service: sysmon
 detection:
   selection_image_load:
-  EventID:
-  Signed:
+    EventID: 1
+    Signed:
   selection_suspicious_path:
-  EventID:
-  ImageLoaded|contains:
+    EventID: 1
+    ImageLoaded|contains:
       - '\Users\'
       - '\Temp\'
       - '\AppData\'
       - '\ProgramData\'
       - 'C:\Windows\Tasks\'
   selection_common_hijack:
-  EventID:
-  ImageLoaded|endswith:
+    EventID: 1
+    ImageLoaded|endswith:
       - '\version.dll'
       - '\uxtheme.dll'
       - '\dwmapi.dll'
       - '\winmm.dll'
       - '\wtsapi32.dll'
   selection_system_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
       - '\csrss.exe'

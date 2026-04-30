@@ -14,22 +14,22 @@ logsource:
   service: sysmon
 detection:
   autorun_keys:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices'
   com_hijack:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Classes\CLSID'
       - '\SOFTWARE\Classes\Interface'
-  Details|contains:
+    Details|contains:
       - 'rundll32'
       - 'regsvr32'
   suspicious_values:
-  EventID:
-  Details|contains:
+    EventID: 1
+    Details|contains:
       - '.tmp'
       - '.dat'
       - 'powershell -e'

@@ -15,16 +15,16 @@ logsource:
   category: process_creation
 detection:
   selection_parent_wmic:
-  ParentImage|endswith:
+    ParentImage|endswith:
   selection_image_wmic:
-  Image|endswith:
+    Image|endswith:
   selection_params:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'process call create'
       - '/node:'
       - '/user:'
   selection_spawned:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'cmd.exe /c'
       - 'powershell.exe'
       - 'pwsh.exe'

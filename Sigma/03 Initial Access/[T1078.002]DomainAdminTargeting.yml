@@ -17,23 +17,23 @@ logsource:
   service: security
 detection:
   selection_admin_logon:
-  EventID:
-  TargetUserName|endswith:
+    EventID:
+    TargetUserName|endswith:
       - 'admin'
       - 'administrator'
-  LogonType:
+    LogonType:
       - 2   # Interactive
       - 10  # RemoteInteractive
   selection_privilege_groups:
-  MemberName|contains:
+    MemberName|contains:
       - 'Domain Admins'
       - 'Enterprise Admins'
       - 'Schema Admins'
       - 'Backup Operators'
   selection_unusual_access:
-  WorkstationName|re:
+    WorkstationName|re:
   selection_time_anomaly:
-  TimeGenerated|re:
+    TimeGenerated|re:
   condition: |
     selection_admin_logon and (selection_privilege_groups or
     (selection_unusual_access and selection_time_anomaly))

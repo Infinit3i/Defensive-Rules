@@ -13,39 +13,37 @@ logsource:
   service: sysmon
 detection:
   com_taskscheduler:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\powershell.exe'
       - '\cscript.exe'
       - '\wscript.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskService'
       - 'ITaskService'
       - 'NewTask'
   com_registration:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'regsvr32'
       - 'COM+'
-  CommandLine|contains:
       - 'taskschd.dll'
       - 'Task Scheduler'
   powershell_com:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'New-Object -ComObject'
       - '[System.Activator]::CreateInstance'
-  CommandLine|contains:
       - 'Schedule.Service'
       - 'TaskScheduler'
   wmi_taskscheduler:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'Win32_ScheduledJob'
       - 'Win32_Process'
-  CommandLine|contains|all:
+    CommandLine|contains|all:
       - 'Create'
       - 'schtasks'
   condition: com_taskscheduler or com_registration or powershell_com or wmi_taskscheduler

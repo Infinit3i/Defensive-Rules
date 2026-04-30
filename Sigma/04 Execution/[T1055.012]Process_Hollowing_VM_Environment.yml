@@ -14,61 +14,61 @@ logsource:
   service: sysmon
 detection:
   selection_process_creation:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
       - '\services.exe'
-  Image|endswith:
+    Image|endswith:
       - '\svchost.exe'
       - '\rundll32.exe'
       - '\dllhost.exe'
       - '\regsvr32.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/s'
       - '-s'
       - 'silent'
   selection_process_access:
-  EventID:
-  SourceImage|endswith:
+    EventID: 1
+    SourceImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\rundll32.exe'
       - '\regsvr32.exe'
-  TargetImage|endswith:
+    TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\winlogon.exe'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
       - '0x1410'
       - '0x1438'
   selection_image_load:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\winlogon.exe'
-  ImageLoaded|endswith:
+    ImageLoaded|endswith:
       - '\ntdll.dll'
       - '\kernel32.dll'
       - '\kernelbase.dll'
-  Signed:
+    Signed:
   selection_vm_timing:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - 'sleep'
       - 'delay'
-  CommandLine|contains:
+    CommandLine|contains:
       - '30000'
       - '60000'
       - '120000'
       - '180000'
   selection_api_calls:
-  EventID:
-  CallTrace|contains:
+    EventID: 1
+    CallTrace|contains:
       - 'CreateRemoteThread'
       - 'WriteProcessMemory'
       - 'VirtualAllocEx'

@@ -12,23 +12,23 @@ logsource:
   service: security
 detection:
   selection_vpn:
-  EventID:
-  LogonType:
-  ProcessName|contains:
+    EventID:
+    LogonType:
+    ProcessName|contains:
       - 'openvpn'
       - 'vpnclient'
       - 'anyconnect'
       - 'forticlient'
   selection_suspicious:
-  SourceNetworkAddress|startswith:
+    SourceNetworkAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  TargetUserName|contains:
+    TargetUserName|contains:
   selection_timing:
-  EventID:
+    EventID:
   timeframe:
-    condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
+  condition: selection_vpn and not selection_suspicious or (selection_timing | count() > 3)
 falsepositives:
   - Legitimate VPN connections from remote workers
   - VPN reconnection after network issues

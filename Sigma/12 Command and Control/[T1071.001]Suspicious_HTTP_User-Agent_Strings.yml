@@ -19,7 +19,7 @@ logsource:
   service: http
 detection:
   selection:
-  user_agent|contains:
+    user_agent|contains:
       - "curl/"
       - "python-requests"
       - "powershell"

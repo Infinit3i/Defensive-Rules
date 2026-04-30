@@ -15,21 +15,21 @@ logsource:
   service: oauth
 detection:
   selection_token_usage:
-  event_type:
-  grant_type:
+    event_type:
+    grant_type:
   selection_suspicious:
-      - ip_address|startswith:
-      - '10.'
-      - '192.168.'
-      - '172.'
-      - user_agent|contains:
-      - 'curl'
-      - 'python'
-      - 'bot'
-      - scope|contains:
-      - 'admin'
-      - 'write'
-      - 'delete'
+    - ip_address|startswith:
+    - '10.'
+    - '192.168.'
+    - '172.'
+    - user_agent|contains:
+    - 'curl'
+    - 'python'
+    - 'bot'
+    - scope|contains:
+    - 'admin'
+    - 'write'
+    - 'delete'
   condition: selection_token_usage and selection_suspicious
 level: high
 fields:

@@ -15,7 +15,7 @@ logsource:
   service: registration
 detection:
   selection_suspicious_domains:
-  domain|contains:
+    domain|contains:
       - 'paypal'
       - 'amazon'
       - 'microsoft'
@@ -26,17 +26,17 @@ detection:
       - 'update'
       - 'verification'
   selection_typosquatting:
-  domain|contains:
+    domain|contains:
       - 'micr0soft'
       - 'g00gle'
       - 'paypaI'
       - 'amaz0n'
       - 'app1e'
   selection_bulk_registration:
-  registrant_email:
-    condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
-    timeframe: 24h
-    count: 5
+    registrant_email:
+  condition: selection_suspicious_domains or selection_typosquatting or selection_bulk_registration
+  timeframe: 24h
+  count: 5
 level: medium
 fields:
   - domain

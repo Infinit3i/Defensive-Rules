@@ -9,20 +9,20 @@ logsource:
   service: auditd
 detection:
   selection_write:
-  type:
-  syscall:
-  a2:
+    type:
+    syscall:
+    a2:
   selection_paths:
-  name:
+    name:
       - "/etc/init.d/*"
       - "/etc/rc*.d/*"
       - "/etc/rc.local"
       - "/etc/rc.d/*"
   selection_chmod:
-  type:
-  syscall:
-  a1:
-    condition: (selection_write and selection_paths) or (selection_chmod and selection_paths)
+    type:
+    syscall:
+    a1:
+  condition: (selection_write and selection_paths) or (selection_chmod and selection_paths)
 level: high
 tags:
   - attack.persistence

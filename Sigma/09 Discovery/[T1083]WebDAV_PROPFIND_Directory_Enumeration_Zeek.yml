@@ -4,7 +4,8 @@ technique: T1083
 id: 3c4d5e6f-7081-92a0-b1c2-3d4e5f6a7b8c
 status: experimental
 description: >-
-  > Detect WebDAV/HTTP directory enumeration via PROPFIND requests and directory traversal-like URIs (Depth header, PROPFIND method) observed in Zeek/HTTP logs indicating remote directory discovery.
+  > Detect WebDAV/HTTP directory enumeration via PROPFIND requests and directory traversal-like URIs (Depth header, PROPFIND method) observed in Zeek/HTTP logs indicating remote directory
+  discovery.
 references:
   - https://attack.mitre.org/techniques/T1083/
 author: Infinit3i
@@ -23,14 +24,14 @@ logsource:
   service: zeek
 detection:
   selection_propfind:
-  zeek.http.method|contains:
+    zeek.http.method|contains:
       - "PROPFIND"
   selection_depth_header:
-  zeek.http.headers|contains:
+    zeek.http.headers|contains:
       - "Depth: 1"
       - "Depth: infinity"
   selection_path_pattern:
-  zeek.http.uri|matches:
+    zeek.http.uri|matches:
       - "^/.*(/|%2F).*"   # URIs containing directory-like patterns (basic)
   condition: selection_propfind and selection_depth_header
 falsepositives:

@@ -10,8 +10,8 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'echo'
       - 'copy'
       - 'move'
@@ -21,13 +21,13 @@ detection:
       - 'default.asp'
       - 'home.html'
   selection_script:
-  EventID:
-  ParentProcessName|endswith:
+    EventID: 1
+    ParentProcessName|endswith:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'wscript.exe'
       - 'cscript.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'replace'
       - 'overwrite'
       - 'hacked'

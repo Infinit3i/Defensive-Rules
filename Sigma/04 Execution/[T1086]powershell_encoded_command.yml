@@ -15,9 +15,9 @@ logsource:
   category: process_creation
 detection:
   selection_image:
-  Image|endswith:
+    Image|endswith:
   selection_encoded:
-  CommandLine|contains:
+    CommandLine|contains:
       - '-encodedCommand'
       - '-enc '
       - '/e '

@@ -12,12 +12,12 @@ logsource:
   service: sysmon
 detection:
   selection_mbr:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\diskpart.exe'
       - '\bootrec.exe'
       - '\bcdedit.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'clean'
       - 'delete partition'
       - '/fixmbr'
@@ -25,24 +25,24 @@ detection:
       - '/store'
       - 'delete'
   selection_raw_access:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '\\\\.\\PhysicalDrive'
       - '\\\\.\\GLOBALROOT'
       - 'dd if='
       - 'dd of='
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Clear-Disk'
       - 'Initialize-Disk'
       - 'Remove-Partition'
       - 'Get-Disk'
       - 'Set-Disk'
   selection_file_access:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\\\\.\\PhysicalDrive'
       - '\\\\.\\GLOBALROOT'
   condition: selection_mbr or selection_raw_access or selection_powershell or selection_file_access

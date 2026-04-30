@@ -11,23 +11,23 @@ logsource:
   service: system
 detection:
   selection_firmware:
-  EventID:
-  Source:
-  Message|contains:
+    EventID:
+    Source:
+    Message|contains:
       - 'firmware'
       - 'BIOS'
       - 'UEFI'
   selection_boot:
-  EventID:
-  Source:
-  ProcessName|contains:
+    EventID:
+    Source:
+    ProcessName|contains:
       - 'bootmgr'
       - 'winload'
   selection_suspicious:
-  EventID:
-  Source:
-  BugcheckCode:
-    condition: selection_firmware or selection_boot or selection_suspicious
+    EventID:
+    Source:
+    BugcheckCode:
+  condition: selection_firmware or selection_boot or selection_suspicious
 falsepositives:
   - Legitimate firmware updates
   - System hardware changes

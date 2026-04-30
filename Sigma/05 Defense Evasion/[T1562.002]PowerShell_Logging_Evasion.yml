@@ -11,34 +11,34 @@ logsource:
   service: sysmon
 detection:
   selection_registry_policy:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'HKLM\SOFTWARE\Policies\Microsoft\Windows\PowerShell'
       - 'HKLM\SOFTWARE\WOW6432Node\Policies\Microsoft\Windows\PowerShell'
       - 'HKCU\SOFTWARE\Policies\Microsoft\Windows\PowerShell'
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\ScriptBlockLogging\EnableScriptBlockLogging'
       - '\ScriptBlockLogging\EnableScriptBlockInvocationLogging'
       - '\Transcription\EnableTranscripting'
       - '\Transcription\EnableInvocationHeader'
       - '\ModuleLogging\EnableModuleLogging'
-  Details:
+    Details:
       - 'DWORD (0x00000000)'
       - '0'
   selection_registry_direct:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'HKLM\SOFTWARE\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell'
       - 'HKLM\SOFTWARE\Microsoft\PowerShell\3\ShellIds\Microsoft.PowerShell'
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\ExecutionPolicy'
-  Details|contains:
+    Details|contains:
       - 'Bypass'
       - 'Unrestricted'
   selection_powershell_commands:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Set-ExecutionPolicy Bypass'
       - 'Set-ExecutionPolicy Unrestricted'
       - '-ExecutionPolicy Bypass'
@@ -50,28 +50,28 @@ detection:
       - 'Clear-EventLog'
       - 'wevtutil cl'
   selection_process_manipulation:
-  EventID:
-  TargetImage|endswith:
-  CallTrace|contains:
+    EventID: 1
+    TargetImage|endswith:
+    CallTrace|contains:
       - 'ntdll.dll+NtWriteVirtualMemory'
       - 'kernel32.dll+WriteProcessMemory'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F3FFF'
       - '0x1FFFFF'
   selection_etw_tampering:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '[System.Diagnostics.Eventing.EventProvider]'
       - 'System.Management.Automation.Tracing.PSEtwLogProvider'
       - 'Disable-PSTrace'
       - 'Set-EtwTraceProvider'
   selection_assembly_loading:
-  EventID:
-  Image|endswith:
-  ImageLoaded|contains:
+    EventID: 1
+    Image|endswith:
+    ImageLoaded|contains:
       - 'System.Management.Automation'
       - 'Microsoft.PowerShell'
-  ProcessId:
+    ProcessId:
   condition: |
     selection_registry_policy or selection_registry_direct or selection_powershell_commands or (selection_process_manipulation and selection_
     assembly_loading) or selection_etw_tampering

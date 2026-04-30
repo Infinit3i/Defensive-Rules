@@ -12,20 +12,20 @@ logsource:
   service: sysmon
 detection:
   selection_disk:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\diskpart.exe'
       - '\bcdedit.exe'
       - '\bootrec.exe'
   selection_commands:
-  CommandLine|contains:
+    CommandLine|contains:
       - '/set bootstatuspolicy'
       - 'recoveryenabled no'
       - 'ignoreallfailures'
       - 'fixmbr'
   selection_files:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - 'bootmgr'
       - 'ntldr'
       - 'boot.ini'

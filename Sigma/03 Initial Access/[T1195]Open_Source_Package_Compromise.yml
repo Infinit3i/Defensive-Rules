@@ -20,32 +20,32 @@ logsource:
   service: auditd
 detection:
   package_installation:
-  syscall:
-  comm:
+    syscall:
+    comm:
       - 'pip'
       - 'npm'
       - 'gem'
       - 'go'
       - 'cargo'
-  exe|contains:
+    exe|contains:
       - '/bin/pip'
       - '/bin/npm'
       - '/bin/gem'
   suspicious_packages:
-  arguments|contains:
+    arguments|contains:
       - 'reqeusts'
       - 'urllib4'
       - 'colorcama'
       - 'python3-dateutil'
       - 'beatifulsoup'
   private_registry:
-  arguments|contains:
+    arguments|contains:
       - '--index-url'
       - '--extra-index-url'
       - 'registry='
       - '--registry'
   environment_variables:
-  key|contains:
+    key|contains:
       - 'PIP_INDEX_URL'
       - 'NPM_CONFIG_REGISTRY'
       - 'GEM_SOURCE'

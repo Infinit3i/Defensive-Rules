@@ -4,7 +4,8 @@ technique: T1195
 id: e2f4a789-bc12-345d-8abc-1234567890ab
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects unauthorized package manager activity on networking equipment by monitoring syslog events for commands like 'install add file', 'install activate', 'upgrade file', or 'software install' that may indicate unsanctioned software or firmware changes.
+  Detects cloud-based security attacks and access attempts. Detects unauthorized package manager activity on networking equipment by monitoring syslog events for commands like 'install add file',
+  'install activate', 'upgrade file', or 'software install' that may indicate unsanctioned software or firmware changes.
 references:
   - https://attack.mitre.org/techniques/T1195/
 author: Infinit3i
@@ -21,7 +22,7 @@ logsource:
   category: package
 detection:
   selection:
-  Message|contains:
+    Message|contains:
       - "install add file"
       - "install activate"
       - "upgrade file"

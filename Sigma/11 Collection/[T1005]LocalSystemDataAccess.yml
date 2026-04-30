@@ -17,15 +17,15 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-  EventID:
+    EventID:
   keywords:
-  Message|contains:
+    Message|contains:
       - 'Get-ChildItem'
       - 'gci'
       - 'dir'
       - 'ls'
   paths:
-  Message|contains:
+    Message|contains:
       - 'C:\Users'
       - 'Documents'
       - 'Desktop'

@@ -13,26 +13,26 @@ logsource:
   service: sysmon
 detection:
   file_creation:
-  EventID:
-  TargetFilename|contains:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|contains:
+    TargetFilename|endswith:
   file_modification:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
   xml_tools:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'schtasks /xml'
       - 'Export-ScheduledTask'
       - 'Import-ScheduledTask'
   direct_xml_access:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\notepad.exe'
       - '\wordpad.exe'
       - '\powershell.exe'
-  CommandLine|contains:
-    condition: (file_creation or file_modification) and (xml_tools or direct_xml_access)
+    CommandLine|contains:
+  condition: (file_creation or file_modification) and (xml_tools or direct_xml_access)
 fields:
   - TargetFilename
   - Image

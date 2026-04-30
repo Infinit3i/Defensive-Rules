@@ -4,7 +4,8 @@ technique: T1021.006
 id: a8d5e3f7-9c4b-4e6f-a2d8-8f5e9c4d7a3b
 status: experimental
 description: >-
-  >- Detects lateral movement via Windows Remote Management (WinRM) by monitoring for WinRM connections, PowerShell remoting sessions, or suspicious remote command execution that may indicate attacker lateral movement.
+  >- Detects lateral movement via Windows Remote Management (WinRM) by monitoring for WinRM connections, PowerShell remoting sessions, or suspicious remote command execution that may indicate
+  attacker lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1021/006/
 author: Infinit3i
@@ -25,12 +26,12 @@ detection:
     User|contains:
       - 'admin'
       - 'service'
-    remote_shell:
+  remote_shell:
     EventID:
     ProcessName|contains:
       - 'wsmprovhost.exe'
       - 'powershell.exe'
-    powershell_remoting:
+  powershell_remoting:
     EventID:
     ClientIP|startswith:
       - '10.'

@@ -23,15 +23,15 @@ logsource:
   service: syslog
 detection:
   selection_timedatectl:
-  Message|contains:
+    Message|contains:
       - "timedatectl"
       - "timedatectl status"
   selection_hwclock:
-  Message|contains:
+    Message|contains:
       - "hwclock"
       - "hwclock --show"
   selection_chronyc_ntpq:
-  Message|contains:
+    Message|contains:
       - "chronyc"
       - "ntpq"
       - "chronyc tracking"

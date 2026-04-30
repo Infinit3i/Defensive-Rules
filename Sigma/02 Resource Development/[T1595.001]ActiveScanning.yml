@@ -15,12 +15,12 @@ logsource:
   service: conn
 detection:
   selection_port_scanning:
-  conn_state:
+    conn_state:
       - 'REJ'
       - 'S0'
-  dest_port|lt:
+    dest_port|lt:
   selection_scanning_tools:
-  user_agent|contains:
+    user_agent|contains:
       - 'nmap'
       - 'masscan'
       - 'zmap'
@@ -28,11 +28,11 @@ detection:
       - 'angry'
       - 'scanner'
   selection_rapid_connections:
-  proto:
-  conn_state:
-    condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
-    timeframe: 1m
-    count: 50
+    proto:
+    conn_state:
+  condition: selection_port_scanning or selection_scanning_tools or selection_rapid_connections
+  timeframe: 1m
+  count: 50
 level: medium
 fields:
   - id.orig_h

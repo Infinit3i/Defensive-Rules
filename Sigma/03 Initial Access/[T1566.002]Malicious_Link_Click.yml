@@ -4,7 +4,8 @@ technique: T1566.002
 id: a8d3f7e2-9c4b-41f5-b2e8-7d6c3a9f1e4b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects potential malicious link clicks by monitoring browser process creation with suspicious URLs or domains that may originate from phishing emails.
+  Detects cloud-based security attacks and access attempts. Detects potential malicious link clicks by monitoring browser process creation with suspicious URLs or domains that may originate from
+  phishing emails.
 references:
   - https://attack.mitre.org/techniques/T1566/002/
 author: Infinit3i
@@ -22,19 +23,19 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith:
+    Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
       - '\iexplore.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'bit.ly'
       - 'tinyurl.com'
       - 'goo.gl'
       - 't.co'
       - 'short.link'
   suspicious_tld:
-  CommandLine|contains:
+    CommandLine|contains:
       - '.tk'
       - '.ml'
       - '.cf'

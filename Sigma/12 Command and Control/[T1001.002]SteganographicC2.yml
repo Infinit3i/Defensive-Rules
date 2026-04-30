@@ -11,7 +11,7 @@ logsource:
   service: web
 detection:
   selection_image_files:
-  c-uri|endswith:
+    c-uri|endswith:
       - '.jpg'
       - '.jpeg'
       - '.png'
@@ -20,28 +20,28 @@ detection:
       - '.tiff'
       - '.webp'
   selection_document_files:
-  c-uri|endswith:
+    c-uri|endswith:
       - '.pdf'
       - '.docx'
       - '.xlsx'
       - '.pptx'
       - '.rtf'
   selection_suspicious_size:
-  sc-bytes|gt:
+    sc-bytes|gt:
   selection_unusual_headers:
-  cs-content-type|contains:
+    cs-content-type|contains:
       - 'application/octet-stream'
       - 'text/plain'
   selection_frequent_downloads:
-  cs-method:
+    cs-method:
   selection_suspicious_paths:
-  c-uri|contains:
+    c-uri|contains:
       - '/upload/'
       - '/share/'
       - '/temp/'
       - '/tmp/'
       - '/cache/'
-  frequency_condition:
+    frequency_condition:
       - count() by src_ip > 10
       - timeframe: 5m
   condition: |

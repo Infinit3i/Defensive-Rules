@@ -12,21 +12,21 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|startswith:
+    EventID: 1
+    TargetObject|startswith:
       - 'HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID\'
       - 'HKEY_CURRENT_USER\SOFTWARE\Classes\CLSID\'
       - 'HKLM\SOFTWARE\Classes\CLSID\'
       - 'HKCU\SOFTWARE\Classes\CLSID\'
   selection_inprocserver:
-  EventID:
-  TargetObject|contains:
-  Details|contains:
+    EventID: 1
+    TargetObject|contains:
+    Details|contains:
       - '.dll'
       - '.exe'
   selection_suspicious_path:
-  EventID:
-  Details|contains:
+    EventID: 1
+    Details|contains:
       - '\Users\'
       - '\Temp\'
       - '\AppData\'

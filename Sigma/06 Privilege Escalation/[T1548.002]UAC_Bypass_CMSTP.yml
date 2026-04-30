@@ -12,21 +12,21 @@ logsource:
   service: sysmon
 detection:
   selection_cmstp:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '/au'
       - '/s'
   selection_inf_file:
-  EventID:
-  TargetFilename|endswith:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|endswith:
+    TargetFilename|contains:
       - '\Temp\'
       - '\AppData\'
   selection_registry:
-  EventID:
-  TargetObject|contains:
-    condition: selection_cmstp and (selection_inf_file or selection_registry)
+    EventID: 1
+    TargetObject|contains:
+  condition: selection_cmstp and (selection_inf_file or selection_registry)
 falsepositives:
   - Legitimate VPN connection setups
   - Network profile installations

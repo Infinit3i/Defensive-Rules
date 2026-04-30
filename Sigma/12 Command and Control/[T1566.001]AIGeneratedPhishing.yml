@@ -11,7 +11,7 @@ logsource:
   service: web
 detection:
   selection_phishing_domains:
-  c-uri|contains:
+    c-uri|contains:
       - 'phish'
       - 'secure-'
       - 'verify-'
@@ -19,23 +19,23 @@ detection:
       - 'confirm-'
       - 'account-'
   selection_ai_indicators:
-  c-uri|contains:
+    c-uri|contains:
       - 'chatgpt'
       - 'claude'
       - 'gemini'
       - 'copilot'
       - 'ai-assist'
   selection_fake_auth:
-  c-uri|contains:
+    c-uri|contains:
       - '/login'
       - '/signin'
       - '/auth'
       - '/verify'
       - '/confirm'
   selection_typosquatting:
-  c-uri|re:
+    c-uri|re:
   selection_suspicious_tlds:
-  c-uri|contains:
+    c-uri|contains:
       - '.tk'
       - '.ml'
       - '.ga'
@@ -43,8 +43,8 @@ detection:
       - '.top'
       - '.click'
   selection_post_data:
-  cs-method:
-  cs-bytes|gt:
+    cs-method:
+    cs-bytes|gt:
   condition: |
     (selection_phishing_domains or selection_typosquatting) and selection_fake_auth and selection_post_data and not selection_ai_indicators
 level: high

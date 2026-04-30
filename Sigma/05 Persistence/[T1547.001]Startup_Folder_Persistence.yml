@@ -12,12 +12,12 @@ logsource:
   service: sysmon
 detection:
   selection_file:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\Start Menu\Programs\Startup\'
       - '\Start Menu\Programs\StartUp\'
   selection_extension:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.exe'
       - '.bat'
       - '.cmd'
@@ -30,14 +30,14 @@ detection:
       - '.ps1'
       - '.lnk'
   selection_location:
-      - TargetFilename|contains:
-      - '\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
-      - '\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\'
-      - Image|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\Downloads\'
+    - TargetFilename|contains:
+    - '\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\'
+    - '\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp\'
+    - Image|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\Downloads\'
   condition: selection_file and selection_extension and selection_location
 falsepositives:
   - Legitimate software installations

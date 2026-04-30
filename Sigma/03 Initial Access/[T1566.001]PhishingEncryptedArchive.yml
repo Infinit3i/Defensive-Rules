@@ -12,13 +12,13 @@ logsource:
   service: exchange
 detection:
   selection_attachment:
-  AttachmentName|endswith:
+    AttachmentName|endswith:
       - '.zip'
       - '.rar'
       - '.7z'
       - '.tar.gz'
   selection_password_keywords:
-  Body|contains:
+    Body|contains:
       - 'password:'
       - 'pass:'
       - 'pwd:'
@@ -26,7 +26,7 @@ detection:
       - 'unlock'
       - 'extract'
   selection_common_passwords:
-  Body|contains:
+    Body|contains:
       - '123456'
       - 'password'
       - 'infected'

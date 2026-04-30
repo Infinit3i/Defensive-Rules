@@ -14,24 +14,24 @@ logsource:
   service: sysmon
 detection:
   sel_process:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\rundll32.exe'
       - '\regsvr32.exe'
       - '\powershell.exe'
   sel_dll_load:
-  EventID:
-  ImageLoaded|contains:
-  Signed:
+    EventID: 1
+    ImageLoaded|contains:
+    Signed:
   sel_memory:
-  EventID:
-  GrantedAccess:
-  CallTrace|contains:
+    EventID: 1
+    GrantedAccess:
+    CallTrace|contains:
       - 'ReflectiveLoader'
       - 'DllMain'
       - 'UNKNOWN'
   sel_cmdline:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'ReflectivePick'
       - 'ReflectiveLoader'
       - 'LoadLibrary'

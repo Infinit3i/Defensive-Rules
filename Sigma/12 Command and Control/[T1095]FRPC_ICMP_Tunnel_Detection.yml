@@ -12,7 +12,7 @@ logsource:
   product: zeek
 detection:
   selection:
-  icmp_type:
+    icmp_type:
       - 0
       - 8
   condition: selection
@@ -36,15 +36,15 @@ tags:
   - frpc
   - yara_compatible
 metadata:
-author: Matthew Iverson
-created: 2025-04-15
-last_modified: 2025-04-15
-test_date: ""
-priority: high
-mitre_version: 16.1
-apt_group: Volt Typhoon
-hunting_trigger: Detects ICMP-based communication indicative of covert FRPC tunneling.
-mitre_tactic: Command and Control
-mitre_technique: Non-Application Layer Protocol
-mitre_technique_id: T1095
-mitre_link: https://attack.mitre.org/techniques/T1095/
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: ""
+  priority: high
+  mitre_version: 16.1
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects ICMP-based communication indicative of covert FRPC tunneling.
+  mitre_tactic: Command and Control
+  mitre_technique: Non-Application Layer Protocol
+  mitre_technique_id: T1095
+  mitre_link: https://attack.mitre.org/techniques/T1095/

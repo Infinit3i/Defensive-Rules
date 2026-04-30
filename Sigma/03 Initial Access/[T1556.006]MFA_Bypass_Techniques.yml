@@ -13,61 +13,61 @@ logsource:
   service: auditlogs
 detection:
   selection_mfa_disable:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Disable Strong Authentication'
       - 'User disabled'
       - 'Update user'
-  TargetResources.modifiedProperties.displayName|contains:
+    TargetResources.modifiedProperties.displayName|contains:
       - 'StrongAuthenticationMethods'
       - 'StrongAuthenticationRequirements'
-  TargetResources.modifiedProperties.newValue:
+    TargetResources.modifiedProperties.newValue:
   selection_mfa_policy_changes:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Update conditional access policy'
       - 'Delete conditional access policy'
       - 'Update authentication methods policy'
-  TargetResources.displayName|contains:
+    TargetResources.displayName|contains:
       - 'MFA'
       - 'Multi-Factor'
       - 'Strong Authentication'
   selection_emergency_access:
-  ActivityDisplayName:
-  AuthenticationRequirement:
-  ConditionalAccessStatus:
-  UserPrincipalName|contains:
+    ActivityDisplayName:
+    AuthenticationRequirement:
+    ConditionalAccessStatus:
+    UserPrincipalName|contains:
       - 'breakglass'
       - 'emergency'
       - 'admin'
     # Emergency access accounts used without MFA
   selection_suspicious_auth_flow:
-  ActivityDisplayName:
-  AuthenticationDetails.succeeded:
-  AuthenticationMethodsUsed:
+    ActivityDisplayName:
+    AuthenticationDetails.succeeded:
+    AuthenticationMethodsUsed:
     # Successful authentication with only password, no MFA
-  RiskLevelDuringSignIn:
+    RiskLevelDuringSignIn:
       - 'high'
       - 'medium'
   selection_mfa_reset_abuse:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Reset user password'
       - 'Admin updated user'
       - 'User registered security info'
-  InitiatedBy.user.userPrincipalName|endswith:
+    InitiatedBy.user.userPrincipalName|endswith:
       - '@external.com'
       - '@guest.com'
     # External users performing MFA-related admin actions
   selection_token_replay:
-  ActivityDisplayName:
-  AuthenticationDetails.succeeded:
+    ActivityDisplayName:
+    AuthenticationDetails.succeeded:
     # Multiple sign-ins with identical authentication tokens
-  TokenIssuerType:
+    TokenIssuerType:
   selection_device_registration_bypass:
-  ActivityDisplayName:
+    ActivityDisplayName:
       - 'Add registered users'
       - 'Update device'
       - 'Register device'
-  TargetResources.modifiedProperties.displayName:
-  TargetResources.modifiedProperties.newValue:
+    TargetResources.modifiedProperties.displayName:
+    TargetResources.modifiedProperties.newValue:
   condition: |
     selection_mfa_disable or selection_mfa_policy_changes or selection_emergency_access or
     selection_suspicious_auth_flow or selection_mfa_reset_abuse or

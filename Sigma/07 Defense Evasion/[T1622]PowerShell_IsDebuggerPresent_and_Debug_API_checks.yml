@@ -4,7 +4,8 @@ technique: T1622
 id: d1a2b3c4-5d6e-7f80-1234-abcdef012345
 status: experimental
 description: >-
-  > Detect PowerShell scriptblocks that reference common anti-debugging APIs or strings such as IsDebuggerPresent, CheckRemoteDebuggerPresent, OutputDebugString, or CheckRemoteDebuggerPresent. Attackers may call these to detect attached debuggers.
+  > Detect PowerShell scriptblocks that reference common anti-debugging APIs or strings such as IsDebuggerPresent, CheckRemoteDebuggerPresent, OutputDebugString, or CheckRemoteDebuggerPresent.
+  Attackers may call these to detect attached debuggers.
 references:
   - https://attack.mitre.org/techniques/T1622/
 author: Infinit3i
@@ -19,8 +20,8 @@ logsource:
   service: powershell
 detection:
   selection_scriptblock:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "IsDebuggerPresent"
       - "CheckRemoteDebuggerPresent"
       - "OutputDebugString"

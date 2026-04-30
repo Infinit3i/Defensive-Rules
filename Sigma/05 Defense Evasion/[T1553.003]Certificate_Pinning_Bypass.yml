@@ -11,47 +11,47 @@ logsource:
   service: sysmon
 detection:
   selection_process_access:
-  EventID:
-  TargetImage|contains:
+    EventID: 1
+    TargetImage|contains:
       - 'chrome.exe'
       - 'firefox.exe'
       - 'msedge.exe'
       - 'iexplore.exe'
       - 'opera.exe'
-  CallTrace|contains:
+    CallTrace|contains:
       - 'crypt32.dll'
       - 'wininet.dll'
       - 'schannel.dll'
       - 'ncrypt.dll'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F3FFF'
       - '0x1FFFFF'
       - '0x143A'
   selection_registry_modification:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'HKLM\SOFTWARE\Policies\Microsoft\SystemCertificates'
       - 'HKCU\SOFTWARE\Microsoft\SystemCertificates'
       - 'HKLM\SOFTWARE\Microsoft\Cryptography\OID'
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\DisableCertificateTrustList'
       - '\DisableRootAutoUpdate'
       - '\EnableCertPaddingCheck'
   selection_file_modification:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\Local State\Local Storage'
       - '\User Data\Default\Local Storage'
       - '\AppData\Local\Google\Chrome\User Data'
       - '\AppData\Roaming\Mozilla\Firefox\Profiles'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.db'
       - '.sqlite'
       - '.json'
   selection_powershell_crypto:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'System.Net.ServicePointManager'
       - 'ServerCertificateValidationCallback'
       - 'CertificatePolicy'
@@ -61,22 +61,22 @@ detection:
       - '[System.Net.ServicePointManager]::CheckCertificateRevocationList'
       - '[Net.SecurityProtocolType]::Tls12'
   selection_dll_injection:
-  EventID:
-  ImageLoaded|endswith:
+    EventID: 1
+    ImageLoaded|endswith:
       - '\crypt32.dll'
       - '\wininet.dll'
       - '\schannel.dll'
-  ProcessId:
+    ProcessId:
   selection_network_anomaly:
-  EventID:
-  Protocol:
-  DestinationPort:
+    EventID: 1
+    Protocol:
+    DestinationPort:
       - 443
       - 8443
-  Initiated:
+    Initiated:
   selection_certificate_store:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - '\Microsoft\SystemCertificates\CA\Certificates'
       - '\Microsoft\SystemCertificates\ROOT\Certificates'
       - '\Microsoft\SystemCertificates\TrustedPublisher\Certificates'

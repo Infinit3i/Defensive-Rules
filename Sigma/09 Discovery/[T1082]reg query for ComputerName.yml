@@ -4,7 +4,8 @@ technique: T1082
 id: 7f1a4d50-6a9c-4b8d-9a2f-0b3e2c4d5e6f
 status: experimental
 description: >-
-  > Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName, SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host metadata.
+  > Detect use of 'reg query' targeting keys often used to gather system identity and hardware info (ComputerName, SystemBiosVersion, etc.). Attackers sometimes use reg query to collect host
+  metadata.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -21,11 +22,11 @@ logsource:
   service: sysmon
 detection:
   selection_reg_image:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
   selection_reg_keys:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "HKLM\\SYSTEM\\CurrentControlSet\\Control\\ComputerName"
       - "HKLM\\HARDWARE\\DESCRIPTION\\System"
       - "HKLM\\HARDWARE\\DESCRIPTION\\System\\BIOS"

@@ -16,28 +16,28 @@ logsource:
   product: windows
 detection:
   selection_apis:
-  Image|endswith:
-  CommandLine|contains:
+    Image|endswith:
+    CommandLine|contains:
       - 'VirtualAlloc'
       - 'VirtualProtect'
       - 'CreateThread'
       - 'ReflectiveLoader'
   selection_injection:
-  TargetImage|endswith:
+    TargetImage|endswith:
       - '\explorer.exe'
       - '\svchost.exe'
       - '\winlogon.exe'
-  CallTrace|contains:
+    CallTrace|contains:
       - 'UNKNOWN'
       - 'Unbacked'
   selection_memory:
-  EventID:
-  GrantedAccess:
+    EventID:
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x1FFFFF'
       - '0x143A'
-  CallTrace|contains:
-    condition: any of selection_*
+    CallTrace|contains:
+  condition: any of selection_*
 falsepositives:
   - Legitimate software using similar memory manipulation techniques
   - Security tools performing memory analysis

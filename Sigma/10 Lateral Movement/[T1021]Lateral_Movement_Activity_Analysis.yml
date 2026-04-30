@@ -4,7 +4,8 @@ technique: T1021
 id: e123fa45-6789-4dce-91ab-abcdef987654
 status: experimental
 description: >-
-  > "Detects potential lateral movement by identifying unexpected internal connections using protocols such as RDP, SMB, SSH, and WinRM. This rule uses Zeek conn logs to analyze host-to-host activity across the internal network."
+  > "Detects potential lateral movement by identifying unexpected internal connections using protocols such as RDP, SMB, SSH, and WinRM. This rule uses Zeek conn logs to analyze host-to-host
+  activity across the internal network."
 references:
   - https://attack.mitre.org/techniques/T1021/
 author: Infinit3i
@@ -19,14 +20,14 @@ logsource:
   service: conn
 detection:
   selection:
-  service|contains:
+    service|contains:
       - "smb"
       - "rdp"
       - "ssh"
       - "winrm"
-  id_orig_h|startswith:
-  id_resp_h|startswith:
-    condition: selection
+    id_orig_h|startswith:
+    id_resp_h|startswith:
+  condition: selection
 falsepositives:
   - Normal administrative operations or backups using remote management protocols.
 level: high

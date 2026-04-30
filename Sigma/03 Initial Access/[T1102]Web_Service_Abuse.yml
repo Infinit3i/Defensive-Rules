@@ -4,7 +4,8 @@ technique: T1102
 id: d8f3e6a2-9c4b-4e7f-a1d5-8f3e9c6d4a8b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects abuse of legitimate web services for malicious purposes including command and control communications, data exfiltration, or malware hosting using trusted platforms to bypass security controls.
+  Detects cloud-based security attacks and access attempts. Detects abuse of legitimate web services for malicious purposes including command and control communications, data exfiltration, or
+  malware hosting using trusted platforms to bypass security controls.
 references:
   - https://attack.mitre.org/techniques/T1102/
 author: Infinit3i
@@ -22,17 +23,17 @@ logsource:
   service: http
 detection:
   cloud_services:
-  host|endswith:
+    host|endswith:
       - '.dropbox.com'
       - '.googledrive.com'
       - '.onedrive.com'
       - '.github.com'
       - '.pastebin.com'
   suspicious_uploads:
-  method:
-  request_body_len|gte:
+    method:
+    request_body_len|gte:
   encoded_content:
-  uri|contains:
+    uri|contains:
       - 'base64'
       - 'encoded'
       - '%20%20%20'

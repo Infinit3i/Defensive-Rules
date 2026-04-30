@@ -13,16 +13,16 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  Image|endswith:
-  ParentImage|endswith:
+    EventID: 1
+    Image|endswith:
+    ParentImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\wscript.exe'
       - '\cscript.exe'
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'ms-settings\shell\open\command'
       - 'Classes\ms-settings'
   condition: selection_process or selection_registry

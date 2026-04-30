@@ -4,7 +4,8 @@ technique: T1080
 id: f6c9e4a7-8d3b-4e5f-a6f9-9e4c8d3b6a7b
 status: experimental
 description: >-
-  >- Detects tainting of shared content by monitoring for malicious modifications to shared files, network shares, or collaborative platforms that may be used to spread malware or gain access to other systems.
+  >- Detects tainting of shared content by monitoring for malicious modifications to shared files, network shares, or collaborative platforms that may be used to spread malware or gain access to
+  other systems.
 references:
   - https://attack.mitre.org/techniques/T1080/
 author: Infinit3i
@@ -27,14 +28,14 @@ detection:
       - '\\\'
       - 'C:\Share\'
       - 'C:\Public\'
-    suspicious_extension:
+  suspicious_extension:
     TargetFilename|endswith:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.vbs'
       - '.ps1'
-    document_macro:
+  document_macro:
     TargetFilename|endswith:
       - '.docm'
       - '.xlsm'

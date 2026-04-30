@@ -10,15 +10,15 @@ logsource:
   service: http
 detection:
   selection:
-  uri|contains:
+    uri|contains:
       - '/dns-query'
       - '/resolve'
-  host|contains:
+    host|contains:
       - 'cloudflare-dns.com'
       - 'dns.google'
       - 'dns.quad9.net'
-  method:
-    condition: selection
+    method:
+  condition: selection
 tags:
   - attack.command_and_control
   - attack.t1071.001

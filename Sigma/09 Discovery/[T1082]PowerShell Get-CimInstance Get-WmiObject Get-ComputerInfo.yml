@@ -21,8 +21,8 @@ logsource:
   service: powershell
 detection:
   selection_powershell_cmdline:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "Get-CimInstance"
       - "Get-WmiObject"
       - "Get-ComputerInfo"
@@ -30,9 +30,9 @@ detection:
       - "Win32_ComputerSystem"
       - "Win32_BIOS"
   selection_sysmon_proc:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
       - "Get-CimInstance"
       - "Get-WmiObject"
       - "Get-ComputerInfo"

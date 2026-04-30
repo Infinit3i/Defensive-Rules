@@ -21,7 +21,7 @@ logsource:
   category: authentication
 detection:
   selection:
-  Message|contains:
+    Message|contains:
       - "useradd"
       - "usermod"
       - "userdel"

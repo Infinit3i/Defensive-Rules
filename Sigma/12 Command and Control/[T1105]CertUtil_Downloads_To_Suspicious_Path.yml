@@ -4,7 +4,8 @@ technique: T1105
 id: d1105a01-0001-4c11-8a05-000000000001
 status: experimental
 description: >-
-  > Detects usage of certutil to download files (usually via URL) into user-writable or suspicious directories (e.g., %TEMP%, AppData, Downloads) — common technique for ingress tool transfer on Windows.
+  > Detects usage of certutil to download files (usually via URL) into user-writable or suspicious directories (e.g., %TEMP%, AppData, Downloads) — common technique for ingress tool transfer on
+  Windows.
 references:
   - https://attack.mitre.org/techniques/T1105/
 author: Infinit3i
@@ -22,22 +23,22 @@ tags:
   - certutil
 associated_groups: []
 associated_malware:
-- Cobalt Strike
+  - Cobalt Strike
 logsource:
   product: windows
   service: sysmon
 detection:
   selection_certutil:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - "-urlcache"
       - "-f"
       - "http://"
       - "https://"
   selection_target_path:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - "\\AppData\\"
       - "\\Local\\Temp\\"
       - "\\Temp\\"

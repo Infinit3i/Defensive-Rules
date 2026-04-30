@@ -15,9 +15,9 @@ logsource:
   category: process_creation
 detection:
   selection:
-  Image|endswith:
+    Image|endswith:
   filter_known:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'shell32.dll,Control_RunDLL'
       - 'desk.cpl'
       - 'appwiz.cpl'

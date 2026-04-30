@@ -9,8 +9,8 @@ logsource:
   service: powershell
 detection:
   selection:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - '$PROFILE'
       - 'Microsoft.PowerShell_profile'
       - 'Import-Module'

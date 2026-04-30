@@ -15,11 +15,11 @@ logsource:
   service: sysmon
 detection:
   selection_pqc_libraries:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\python.exe'
       - '\openssl.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'kyber'
       - 'dilithium'
       - 'falcon'
@@ -31,8 +31,8 @@ detection:
       - 'ntru'
       - 'rainbow'
   selection_quantum_encryption:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.qenc'
       - '.pqc'
       - '.quantum'
@@ -40,13 +40,13 @@ detection:
       - '.dilithium'
       - '.falcon'
       - '.locked'
-  Image|contains:
+    Image|contains:
       - 'encrypt'
       - 'crypto'
       - 'quantum'
   selection_crypto_process:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'CRYSTALS-Kyber'
       - 'CRYSTALS-Dilithium'
       - 'FALCON'
@@ -55,43 +55,43 @@ detection:
       - 'BIKE'
       - 'HQC'
   selection_ransom_note:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.txt'
       - '.html'
       - '.md'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - 'RANSOM'
       - 'DECRYPT'
       - 'QUANTUM'
       - 'PAYMENT'
       - 'RECOVERY'
   selection_mass_encryption:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'encrypt'
       - 'cipher'
       - 'crypto'
       - 'quantum'
-  ProcessId:
+    ProcessId:
   selection_network_c2:
-  EventID:
-  DestinationPort:
+    EventID: 1
+    DestinationPort:
       - 443
       - 8080
       - 9050  # Tor
       - 4444
-  Image|contains:
+    Image|contains:
       - 'python'
       - 'powershell'
       - 'cmd'
   selection_crypto_apis:
-  EventID:
-  ImageLoaded|endswith:
+    EventID: 1
+    ImageLoaded|endswith:
       - '\bcrypt.dll'
       - '\ncrypt.dll'
       - '\crypt32.dll'
-  ProcessName|contains:
+    ProcessName|contains:
       - 'encrypt'
       - 'crypto'
       - 'quantum'

@@ -12,15 +12,15 @@ logsource:
   service: sysmon
 detection:
   selection_autorun:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - '\autorun.exe'
       - '\setup.exe'
       - '\install.exe'
-  CommandLine|contains:
+    CommandLine|contains:
   selection_removable:
-  EventID:
-  Image|startswith:
+    EventID: 1
+    Image|startswith:
       - 'D:\'
       - 'E:\'
       - 'F:\'

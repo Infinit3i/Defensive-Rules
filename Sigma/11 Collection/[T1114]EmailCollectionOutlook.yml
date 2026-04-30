@@ -16,14 +16,14 @@ logsource:
   service: powershell-classic
 detection:
   selection:
-  EventID:
+    EventID:
   outlook_com:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - 'Microsoft.Office.Interop.Outlook'
       - 'New-Object -ComObject Outlook.Application'
       - 'CreateObject("Outlook.Application")'
   email_access:
-  ScriptBlockText|contains:
+    ScriptBlockText|contains:
       - '.GetDefaultFolder'
       - '.Items'
       - '.Body'

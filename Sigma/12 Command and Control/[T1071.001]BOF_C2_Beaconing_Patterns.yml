@@ -16,13 +16,13 @@ logsource:
   service: http
 detection:
   selection_user_agents:
-  user_agent|contains:
+    user_agent|contains:
       - 'Mozilla/5.0 (compatible; MSIE'
       - 'Mozilla/4.0 (compatible; MSIE'
       - 'Mozilla/5.0 (Windows NT'
-  user_agent|endswith:
+    user_agent|endswith:
   selection_uri_patterns:
-  uri|contains:
+    uri|contains:
       - '/jquery-'
       - '/bootstrap'
       - '/analytics'
@@ -30,18 +30,18 @@ detection:
       - '/pixel'
       - '/ga.js'
   selection_headers:
-  request_headers|contains:
+    request_headers|contains:
       - 'Cookie: __cfduid='
       - 'Cookie: SESSIONID='
       - 'Accept-Language: en-US,en'
       - 'Accept-Encoding: gzip, deflate'
   selection_timing:
-  status_code:
-  response_body_len:
+    status_code:
+    response_body_len:
   selection_post_data:
-  method:
-  request_body_len:
-  uri|contains:
+    method:
+    request_body_len:
+    uri|contains:
       - '/submit.php'
       - '/fakeurl.html'
       - '/updates.rss'

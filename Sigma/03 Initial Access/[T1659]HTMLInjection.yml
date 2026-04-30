@@ -12,25 +12,25 @@ logsource:
   service: http
 detection:
   selection_xss:
-  uri|contains:
+    uri|contains:
       - '%3Cscript%3E'
       - '<script>'
       - 'javascript:'
       - 'onload='
       - 'onerror='
   selection_forms:
-  uri|contains:
+    uri|contains:
       - '<form'
       - '<input'
       - 'action='
-  method:
+    method:
   selection_html:
-  user_agent|contains:
+    user_agent|contains:
       - '<html>'
       - '<body>'
       - '<div>'
-  status_code:
-    condition: selection_xss or selection_forms or selection_html
+    status_code:
+  condition: selection_xss or selection_forms or selection_html
 falsepositives:
   - Legitimate HTML content in parameters
   - Web development and testing

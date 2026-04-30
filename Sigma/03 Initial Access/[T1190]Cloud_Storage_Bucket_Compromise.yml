@@ -13,45 +13,45 @@ logsource:
   service: cloudtrail
 detection:
   selection_bucket_policy_changes:
-  eventName:
+    eventName:
       - 'PutBucketPolicy'
       - 'DeleteBucketPolicy'
       - 'PutBucketAcl'
       - 'PutObjectAcl'
-  responseElements.policy|contains:
+    responseElements.policy|contains:
       - '"Principal":"*"'
       - '"Effect":"Allow"'
       - '"Action":"s3:GetObject"'
   selection_suspicious_data_access:
-  eventName:
+    eventName:
       - 'GetObject'
       - 'ListObjects'
       - 'GetBucketLocation'
     # High volume of object access from single IP
-  sourceIPAddress|cidr:
+    sourceIPAddress|cidr:
       - '0.0.0.0/0'  # Will be filtered for known malicious ranges
   selection_bucket_enumeration:
-  eventName:
+    eventName:
       - 'ListBuckets'
       - 'GetBucketLocation'
       - 'GetBucketAcl'
       - 'GetBucketPolicy'
     # Rapid enumeration of multiple buckets
   selection_anonymous_access:
-  eventName:
-  userIdentity.type:
+    eventName:
+    userIdentity.type:
     # Anonymous access to bucket objects
   selection_tor_vpn_access:
-  eventName:
+    eventName:
       - 'GetObject'
       - 'ListObjects'
       - 'PutObject'
-  userAgent|contains:
+    userAgent|contains:
       - 'Tor'
       - 'anonymized'
       - 'proxy'
   selection_geographic_anomaly:
-  eventName:
+    eventName:
       - 'GetObject'
       - 'ListObjects'
     # Access from countries not typical for the organization

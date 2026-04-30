@@ -22,17 +22,17 @@ logsource:
   service: dns
 detection:
   calculated_pattern:
-  query|contains:
+    query|contains:
       - 'calc'
       - 'math'
       - 'sum'
       - 'hash'
   time_based:
-  query|contains:
-  qtype_name:
+    query|contains:
+    qtype_name:
   hex_patterns:
-  query|regex:
-    condition: calculated_pattern or time_based or hex_patterns
+    query|regex:
+  condition: calculated_pattern or time_based or hex_patterns
 falsepositives:
   - Timestamp-based services
   - Legitimate calculated identifiers

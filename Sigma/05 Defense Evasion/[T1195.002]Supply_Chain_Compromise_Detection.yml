@@ -11,20 +11,20 @@ logsource:
   service: sysmon
 detection:
   selection_suspicious_updates:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\Windows\System32\wuauclt.exe'
       - '\Windows\System32\svchost.exe'
-  Image|contains:
+    Image|contains:
       - 'update'
       - 'installer'
       - 'setup'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'http://'
       - 'https://'
   selection_package_managers:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\npm.exe'
       - '\pip.exe'
       - '\gem.exe'
@@ -33,74 +33,74 @@ detection:
       - '\composer.exe'
       - '\mvn.exe'
       - '\gradle.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'install'
       - 'update'
       - 'upgrade'
   selection_trusted_binary_modification:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '\Windows\System32\*.exe'
       - '\Windows\SysWOW64\*.exe'
       - '\Program Files\*.exe'
       - '\Program Files (x86)\*.exe'
   selection_certificate_anomaly:
-  EventID:
-  Signed:
-  Signature|contains:
+    EventID: 1
+    Signed:
+    Signature|contains:
       - 'CN=Microsoft'
       - 'CN=Adobe'
       - 'CN=Oracle'
       - 'CN=Apple'
-  SignatureStatus:
+    SignatureStatus:
   selection_network_suspicious:
-  EventID:
-  Protocol:
-  DestinationPort:
+    EventID: 1
+    Protocol:
+    DestinationPort:
       - 80
       - 443
       - 8080
-  Image|endswith:
+    Image|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\winlogon.exe'
   selection_registry_persistence:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
       - 'HKLM\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'
       - 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
       - 'HKLM\SYSTEM\CurrentControlSet\Services'
   selection_file_hash_mismatch:
-  EventID:
-  Hash|re:
-  TargetFilename|endswith:
+    EventID: 1
+    Hash|re:
+    TargetFilename|endswith:
       - '\System32\*.exe'
       - '\System32\*.dll'
       - '\SysWOW64\*.exe'
       - '\SysWOW64\*.dll'
   selection_process_creation_trusted:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\notepad.exe'
       - '\calc.exe'
       - '\mspaint.exe'
       - '\cmd.exe'
       - '\powershell.exe'
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'http'
       - 'download'
       - 'curl'
       - 'wget'
       - 'invoke-webrequest'
   selection_dll_sideloading:
-  EventID:
-  ImageLoaded|re:
-  Signed:
-  ProcessId:
+    EventID: 1
+    ImageLoaded|re:
+    Signed:
+    ProcessId:
   condition: |
     selection_suspicious_updates or (selection_package_managers and selection_network_suspicious) or
     (selection_trusted_binary_modification and selection_file_hash_mismatch) or

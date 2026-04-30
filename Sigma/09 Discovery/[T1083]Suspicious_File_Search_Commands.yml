@@ -12,11 +12,11 @@ logsource:
   service: sysmon
 detection:
   selection_dir:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\cmd.exe'
       - '\dir.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'dir /s'
       - 'dir /a'
       - 'dir /b'
@@ -30,19 +30,19 @@ detection:
       - 'dir *secret*'
       - 'dir *backup*'
   selection_where:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'where /r'
       - 'where *.exe'
       - 'where *.bat'
       - 'where *.ps1'
   selection_findstr:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\findstr.exe'
       - '\find.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '/s'
       - '/i password'
       - '/i admin'
@@ -50,9 +50,9 @@ detection:
       - '/i secret'
       - '/i key'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'Get-ChildItem -Recurse'
       - 'gci -r'
       - 'ls -r'
@@ -60,7 +60,7 @@ detection:
       - 'Select-String'
       - 'Get-Content | Select-String'
   sensitive_paths:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'C:\Users'
       - 'C:\Windows\System32'
       - 'C:\Program Files'

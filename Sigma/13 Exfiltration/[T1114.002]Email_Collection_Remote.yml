@@ -4,7 +4,8 @@ technique: T1114.002
 id: a5d8f2e9-6c4b-4e7f-a5d8-2f9e6c4b7a5b
 status: experimental
 description: >-
-  >- Detects remote email collection activities by monitoring for IMAP/POP3 connections, email server API access, or remote mailbox enumeration that may indicate email data harvesting from external sources.
+  >- Detects remote email collection activities by monitoring for IMAP/POP3 connections, email server API access, or remote mailbox enumeration that may indicate email data harvesting from
+  external sources.
 references:
   - https://attack.mitre.org/techniques/T1114/002/
 author: Infinit3i
@@ -22,20 +23,20 @@ logsource:
   service: conn
 detection:
   email_ports:
-  id.resp_p|contains:
+    id.resp_p|contains:
       - 993
       - 995
       - 143
       - 110
   large_download:
-  service:
-  resp_bytes|gte:
-  id.resp_p:
+    service:
+    resp_bytes|gte:
+    id.resp_p:
   api_access:
-  id.resp_p:
-  orig_bytes|gte:
-  service:
-    condition: email_ports and (large_download or api_access)
+    id.resp_p:
+    orig_bytes|gte:
+    service:
+  condition: email_ports and (large_download or api_access)
 falsepositives:
   - Legitimate email client synchronization
   - Authorized email access

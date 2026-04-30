@@ -9,11 +9,11 @@ logsource:
   service: auditd
 detection:
   selection_write:
-  type:
-  syscall:
-  a2:
+    type:
+    syscall:
+    a2:
   selection_profiles:
-  name:
+    name:
       - "*/.bashrc"
       - "*/.bash_profile"
       - "*/.bash_login"

@@ -12,19 +12,19 @@ logsource:
   service: sysmon
 detection:
   selection_wmi:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\wmiprvse.exe'
       - '\wmiapsrv.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'net user'
       - 'net localgroup'
   selection_wmic:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'process call create'
       - 'service'
       - '/privileged'

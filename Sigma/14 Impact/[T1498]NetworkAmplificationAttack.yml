@@ -13,37 +13,37 @@ logsource:
   service: dns
 detection:
   sel_dns_amplification:
-  query_type:
+    query_type:
       - 'ANY'
       - 'TXT'
       - 'DNSKEY'
       - 'RRSIG'
-  query|contains:
+    query|contains:
       - 'isc.org'
       - 'ripe.net'
       - 'gtld-servers.net'
   sel_ntp_amplification:
-  dest_port:
-  query|contains:
+    dest_port:
+    query|contains:
       - 'monlist'
       - 'get_restrict'
       - 'peer_list_sum'
   sel_snmp_amplification:
-  dest_port:
-  community_string:
+    dest_port:
+    community_string:
       - 'public'
       - 'private'
       - 'cisco'
   sel_memcached_amplification:
-  dest_port:
-  command|contains:
+    dest_port:
+    command|contains:
       - 'stats'
       - 'version'
       - 'get'
   sel_ssdp_amplification:
-  dest_port:
-  method:
-  user_agent|contains:
+    dest_port:
+    method:
+    user_agent|contains:
       - 'linux'
       - 'UPnP'
   condition: |

@@ -13,8 +13,8 @@ logsource:
   service: sysmon
 detection:
   selection_file_replace:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '\sethc.exe'
       - '\utilman.exe'
       - '\osk.exe'
@@ -23,22 +23,22 @@ detection:
       - '\displayswitch.exe'
       - '\atbroker.exe'
   selection_accessibility_execution:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\sethc.exe'
       - '\utilman.exe'
       - '\osk.exe'
       - '\narrator.exe'
       - '\magnify.exe'
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\winlogon.exe'
       - '\userinit.exe'
   selection_suspicious_child:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\sethc.exe'
       - '\utilman.exe'
-  Image|endswith:
+    Image|endswith:
       - '\cmd.exe'
       - '\powershell.exe'
       - '\rundll32.exe'

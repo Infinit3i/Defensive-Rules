@@ -12,15 +12,15 @@ logsource:
   service: dhcp
 detection:
   selection_dhcp:
-  msg_types|contains:
-  mac|regex:
+    msg_types|contains:
+    mac|regex:
   selection_unknown:
-  vendor_class|contains:
+    vendor_class|contains:
       - 'unknown'
       - 'generic'
       - ''
   selection_suspicious:
-  requested_addr|startswith:
+    requested_addr|startswith:
       - '169.254.'
       - '0.0.0.0'
   condition: selection_dhcp and (selection_unknown or selection_suspicious)

@@ -12,12 +12,12 @@ logsource:
   product: zeek
 detection:
   selection:
-      - id.orig_p:
-      - 6000
-      - 7000
-      - id.resp_p:
-      - 6000
-      - 7000
+    - id.orig_p:
+    - 6000
+    - 7000
+    - id.resp_p:
+    - 6000
+    - 7000
   condition: selection
 fields:
   - _time
@@ -42,15 +42,15 @@ tags:
   - zeek
   - yara_compatible
 metadata:
-author: Matthew Iverson
-created: 2025-04-15
-last_modified: 2025-04-15
-test_date: 2025-04-15
-priority: high
-mitre_version: 16.1
-apt_group: Volt Typhoon
-hunting_trigger: Detects FRPC communication using designated ports.
-mitre_tactic: Command and Control
-mitre_technique: Application Layer Protocol
-mitre_technique_id: T1071
-mitre_link: https://attack.mitre.org/techniques/T1071/
+  author: Matthew Iverson
+  created: 2025-04-15
+  last_modified: 2025-04-15
+  test_date: 2025-04-15
+  priority: high
+  mitre_version: 16.1
+  apt_group: Volt Typhoon
+  hunting_trigger: Detects FRPC communication using designated ports.
+  mitre_tactic: Command and Control
+  mitre_technique: Application Layer Protocol
+  mitre_technique_id: T1071
+  mitre_link: https://attack.mitre.org/techniques/T1071/

@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_injection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'NtCreateProcess'
       - 'NtCreateProcessEx'
       - 'NtCreateUserProcess'
@@ -20,8 +20,8 @@ detection:
       - 'ZwCreateProcess'
       - 'CreateRemoteProcess'
   selection_memory:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'NtAllocateVirtualMemory'
       - 'NtFreeVirtualMemory'
       - 'NtProtectVirtualMemory'
@@ -29,8 +29,8 @@ detection:
       - 'VirtualProtectEx'
       - 'NtMapViewOfSection'
   selection_threads:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'NtCreateThreadEx'
       - 'RtlCreateUserThread'
       - 'CreateRemoteThreadEx'

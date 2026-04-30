@@ -10,23 +10,23 @@ logsource:
   service: sysmon
 detection:
   sel_chrome_ext:
-  EventID:
-  TargetFilename|contains:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|contains:
+    TargetFilename|endswith:
   sel_firefox_ext:
-  EventID:
-  TargetFilename|contains:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|contains:
+    TargetFilename|endswith:
   sel_edge_ext:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
   sel_browser_cmd:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\chrome.exe'
       - '\firefox.exe'
       - '\msedge.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - '--load-extension'
       - '--install-extension'
       - 'extensions.install'

@@ -4,7 +4,8 @@ technique: T1134
 id: 12345678-9abc-def0-1234-56789abcdef0
 status: experimental
 description: >-
-  > Detects behavior that may indicate the theft or impersonation of domain tokens on a Windows system. This rule focuses on Sysmon events that capture process access operations (Event ID 10) and remote thread creation (Event ID 8) against high-value processes like LSASS or Winlogon, which are common targets for credential or token theft.
+  > Detects behavior that may indicate the theft or impersonation of domain tokens on a Windows system. This rule focuses on Sysmon events that capture process access operations (Event ID 10) and
+  remote thread creation (Event ID 8) against high-value processes like LSASS or Winlogon, which are common targets for credential or token theft.
 references:
   - https://attack.mitre.org/techniques/T1134/
 author: Infinit3i
@@ -21,19 +22,19 @@ logsource:
 detection:
   # SECTION 1: Suspicious Process Access (Sysmon EID 10)
   suspicious_access:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\spoolsv.exe'
     # Common suspicious access rights for token theft
     #  - 0x1F0FFF or 0x1fffff = PROCESS_ALL_ACCESS
     #  - 0x143A and 0x1410 are typical handles for duplication and injection
-  GrantedAccess|re:
+    GrantedAccess|re:
   # SECTION 2: CreateRemoteThread into LSASS or other system processes (Sysmon EID 8)
   suspicious_thread:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\lsass.exe'
       - '\winlogon.exe'
       - '\spoolsv.exe'

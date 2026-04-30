@@ -4,7 +4,8 @@ technique: T1195.001
 id: f2c8e4a1-9b7d-4e6c-a3f8-5d2b9e1c7a4f
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects potential supply chain compromises by monitoring for installation or execution of software from unexpected sources, unsigned binaries, or processes with suspicious digital signatures.
+  Detects cloud-based security attacks and access attempts. Detects potential supply chain compromises by monitoring for installation or execution of software from unexpected sources, unsigned
+  binaries, or processes with suspicious digital signatures.
 references:
   - https://attack.mitre.org/techniques/T1195/001/
 author: Infinit3i
@@ -23,18 +24,18 @@ logsource:
   category: process_creation
 detection:
   unsigned_process:
-  Signed:
-  Image|endswith:
+    Signed:
+    Image|endswith:
       - '.exe'
       - '.dll'
   suspicious_signer:
-  SignatureStatus:
-  Signature|contains:
+    SignatureStatus:
+    Signature|contains:
       - 'Test Certificate'
       - 'Self-signed'
       - 'Expired'
   unexpected_location:
-  Image|startswith:
+    Image|startswith:
       - 'C:\Users\Public\'
       - 'C:\Temp\'
       - 'C:\Windows\Temp\'

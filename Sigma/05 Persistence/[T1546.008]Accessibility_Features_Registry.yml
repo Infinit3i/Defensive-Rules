@@ -13,24 +13,24 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\narrator.exe'
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\magnify.exe'
   selection_debugger:
-  EventID:
-  TargetObject|endswith:
-  Details|contains:
+    EventID: 1
+    TargetObject|endswith:
+    Details|contains:
       - 'cmd.exe'
       - 'powershell.exe'
       - 'rundll32.exe'
   selection_accessibility_reg:
-  EventID:
-  TargetObject|contains:
-  Details|contains:
+    EventID: 1
+    TargetObject|contains:
+    Details|contains:
       - '.exe'
       - '.bat'
       - '.cmd'

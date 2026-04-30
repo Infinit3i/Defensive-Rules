@@ -12,11 +12,11 @@ logsource:
   service: teams
 detection:
   selection_external_link:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'http'
       - 'https'
   selection_suspicious_domains:
-  MessageContent|contains:
+    MessageContent|contains:
       - '.tk'
       - '.ml'
       - '.ga'
@@ -24,7 +24,7 @@ detection:
       - 'tinyurl.com'
       - 'cutt.ly'
   selection_urgency:
-  MessageContent|contains:
+    MessageContent|contains:
       - 'urgent'
       - 'immediate'
       - 'expires'
@@ -32,7 +32,7 @@ detection:
       - 'verify account'
       - 'click here'
   selection_external_sender:
-  SenderType:
+    SenderType:
   condition: |
     selection_external_link and selection_external_sender and (selection_suspicious_domains or selection_urgency)
 level: medium

@@ -17,19 +17,19 @@ logsource:
   service: security
 detection:
   selection_event:
-  EventID:
-  LogonType:
+    EventID:
+    LogonType:
   selection_domain_mismatch:
-  TargetDomainName|exists:
-  WorkstationName|exists:
+    TargetDomainName|exists:
+    WorkstationName|exists:
   filter_normal:
-  TargetDomainName|contains:
+    TargetDomainName|contains:
       - TargetUserName
   selection_suspicious_timing:
-  IpAddress|re:
-    condition: selection_event and selection_domain_mismatch and not filter_normal and selection_suspicious_timing
-    timeframe: 10m
-    count: 5
+    IpAddress|re:
+  condition: selection_event and selection_domain_mismatch and not filter_normal and selection_suspicious_timing
+  timeframe: 10m
+  count: 5
 level: high
 fields:
   - TargetUserName

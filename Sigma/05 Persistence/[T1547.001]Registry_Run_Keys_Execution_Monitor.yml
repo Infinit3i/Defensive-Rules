@@ -12,25 +12,25 @@ logsource:
   service: sysmon
 detection:
   selection_parent:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
   selection_cmdline:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'HKLM\Software\Microsoft\Windows\CurrentVersion\Run'
       - 'HKCU\Software\Microsoft\Windows\CurrentVersion\Run'
       - 'CurrentVersion\Run'
   selection_suspicious:
-      - Image|contains:
-      - '\AppData\'
-      - '\Temp\'
-      - '\Users\Public\'
-      - '\ProgramData\'
-      - CommandLine|contains:
-      - ' -enc '
-      - ' -e '
-      - 'powershell'
-      - 'cmd /c'
-      - 'rundll32'
+    - Image|contains:
+    - '\AppData\'
+    - '\Temp\'
+    - '\Users\Public\'
+    - '\ProgramData\'
+    - CommandLine|contains:
+    - ' -enc '
+    - ' -e '
+    - 'powershell'
+    - 'cmd /c'
+    - 'rundll32'
   condition: selection_parent and (selection_cmdline or selection_suspicious)
 falsepositives:
   - Legitimate startup applications

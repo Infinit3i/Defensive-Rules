@@ -19,23 +19,23 @@ logsource:
   service: sysmon
 detection:
   api_strings:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "IsDebuggerPresent"
       - "CheckRemoteDebuggerPresent"
       - "NtQueryInformationProcess"
       - "OutputDebugString"
   tool_checks:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "ollydbg"
       - "x64dbg"
       - "windbg"
       - "scylla_hide"
       - "procmon"
   powershell_blocks:
-  EventID:
-  ScriptBlockText|contains:
+    EventID: 1
+    ScriptBlockText|contains:
       - "IsDebuggerPresent"
       - "CheckRemoteDebuggerPresent"
   condition: api_strings or tool_checks or powershell_blocks

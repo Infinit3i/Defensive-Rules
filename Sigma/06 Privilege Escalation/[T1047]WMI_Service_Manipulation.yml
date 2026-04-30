@@ -13,37 +13,37 @@ logsource:
   service: sysmon
 detection:
   selection_service_creation:
-  EventID:
-  Image|endswith:
-  CommandLine|contains|all:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains|all:
       - 'service'
       - 'create'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'binPath='
       - 'type=own'
       - 'start=auto'
   selection_wmi_service_mod:
-  EventID:
-  ParentImage|endswith:
-  CommandLine|contains:
+    EventID: 1
+    ParentImage|endswith:
+    CommandLine|contains:
       - 'Win32_Service'
       - 'Create'
       - 'Change'
       - 'StartService'
   selection_privileged_service:
-  EventID:
-  CommandLine|contains|all:
+    EventID: 1
+    CommandLine|contains|all:
       - 'wmic'
       - 'service'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'LocalSystem'
       - 'LocalService'
       - 'NetworkService'
-  User|contains:
+    User|contains:
   selection_suspicious_binpath:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - 'binPath= cmd'
       - 'binPath= powershell'
       - 'binPath= rundll32'

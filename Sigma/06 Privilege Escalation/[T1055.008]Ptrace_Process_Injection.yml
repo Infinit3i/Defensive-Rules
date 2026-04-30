@@ -12,18 +12,18 @@ logsource:
   service: auditd
 detection:
   selection_ptrace:
-  type:
-  syscall:
-  success:
+    type:
+    syscall:
+    success:
   selection_attach:
-  a0:
-  a1:
+    a0:
+    a1:
   selection_suspicious:
-  comm:
-  ppid:
+    comm:
+    ppid:
   selection_injection:
-  syscall:
-  a0|contains:
+    syscall:
+    a0|contains:
       - '0x4'
       - '0x5'
       - '0x6'

@@ -10,17 +10,17 @@ logsource:
   service: sysmon
 detection:
   sel_wmi_consumer:
-  EventID:
-  Consumer|contains:
+    EventID: 1
+    Consumer|contains:
       - 'ActiveScriptEventConsumer'
       - 'CommandLineEventConsumer'
       - 'LogFileEventConsumer'
   sel_wmi_filter:
-  EventID:
-  EventNamespace:
+    EventID: 1
+    EventNamespace:
   sel_wmi_binding:
-  EventID:
-  Consumer|contains:
+    EventID: 1
+    Consumer|contains:
       - 'ActiveScript'
       - 'CommandLine'
   condition: sel_wmi_consumer or (sel_wmi_filter and sel_wmi_binding)

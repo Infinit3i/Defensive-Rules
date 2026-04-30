@@ -10,14 +10,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Office\'
       - '\Word\Addins\'
       - '\Excel\Addins\'
       - '\PowerPoint\Addins\'
       - '\Outlook\Addins\'
-  Details|contains:
+    Details|contains:
       - '.dll'
       - '.xll'
       - '.wll'

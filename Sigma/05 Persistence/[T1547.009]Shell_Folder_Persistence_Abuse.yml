@@ -13,19 +13,19 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-  EventID:
+    EventID: 1
   selection_shell_folders:
-  TargetObject|contains:
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders\'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders\'
   selection_suspicious_folders:
-  TargetObject|endswith:
+    TargetObject|endswith:
       - '\Common Startup'
       - '\Startup'
       - '\Common Programs'
       - '\Programs'
   filter_legitimate_paths:
-  Details|contains:
+    Details|contains:
       - 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup'
       - 'C:\Users\'
       - '%USERPROFILE%'

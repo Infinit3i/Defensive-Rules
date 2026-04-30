@@ -4,7 +4,8 @@ technique: T1133
 id: a8f3e7c1-5b9d-4e2f-c6a4-7e9f2d1c8b5a
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects abuse of external remote services by monitoring for suspicious VPN connections, RDP access from external networks, or unauthorized remote service usage that may indicate initial access attempts.
+  Detects cloud-based security attacks and access attempts. Detects abuse of external remote services by monitoring for suspicious VPN connections, RDP access from external networks, or
+  unauthorized remote service usage that may indicate initial access attempts.
 references:
   - https://attack.mitre.org/techniques/T1133/
 author: Infinit3i
@@ -22,23 +23,23 @@ logsource:
   service: security
 detection:
   external_rdp:
-  EventID:
-  LogonType:
-  IpAddress|startswith:
+    EventID:
+    LogonType:
+    IpAddress|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  not:
+    not:
   vpn_logon:
-  EventID:
-  LogonType:
-  AuthenticationPackageName:
-  WorkstationName|contains:
+    EventID:
+    LogonType:
+    AuthenticationPackageName:
+    WorkstationName|contains:
       - 'vpn'
       - 'remote'
   suspicious_source:
-  EventID:
-  IpAddress|contains:
+    EventID:
+    IpAddress|contains:
       - 'tor-exit'
       - 'proxy'
   condition: external_rdp or vpn_logon or suspicious_source

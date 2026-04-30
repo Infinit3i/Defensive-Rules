@@ -4,7 +4,8 @@ technique: T1095
 id: a9d6f3e8-7c5b-4e4f-a9d6-3f8e7c5b4a9b
 status: experimental
 description: >-
-  >- Detects command and control communications via non-standard ports by monitoring for services running on unusual ports, port hopping, or protocol mismatches that may indicate C2 evasion techniques.
+  >- Detects command and control communications via non-standard ports by monitoring for services running on unusual ports, port hopping, or protocol mismatches that may indicate C2 evasion
+  techniques.
 references:
   - https://attack.mitre.org/techniques/T1095/
 author: Infinit3i
@@ -22,17 +23,17 @@ logsource:
   service: conn
 detection:
   unusual_ports:
-  id.resp_p|gte:
-  id.resp_p|lte:
-  service:
+    id.resp_p|gte:
+    id.resp_p|lte:
+    service:
   high_ports:
-  id.resp_p|gte:
-  orig_bytes|gte:
-  resp_bytes|gte:
+    id.resp_p|gte:
+    orig_bytes|gte:
+    resp_bytes|gte:
   protocol_mismatch:
-  id.resp_p:
-  service:
-    condition: unusual_ports or high_ports or protocol_mismatch
+    id.resp_p:
+    service:
+  condition: unusual_ports or high_ports or protocol_mismatch
 falsepositives:
   - Application-specific ports
   - Development servers

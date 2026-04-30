@@ -23,26 +23,26 @@ logsource:
   category: process_creation
 detection:
   docker_execution:
-  Image|endswith:
+    Image|endswith:
       - '\docker.exe'
       - '\podman.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'run'
       - 'create'
   suspicious_registries:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'dockerhub.com'
       - 'quay.io'
       - 'gcr.io'
-  CommandLine|re:
+    CommandLine|re:
   privilege_escalation:
-  CommandLine|contains:
+    CommandLine|contains:
       - '--privileged'
       - '--cap-add'
       - '--user root'
       - '--security-opt'
   untrusted_sources:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'latest'
       - 'http://'
       - '--insecure-registry'

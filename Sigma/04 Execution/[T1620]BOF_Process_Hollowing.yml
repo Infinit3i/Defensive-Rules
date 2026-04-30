@@ -14,32 +14,32 @@ logsource:
   service: sysmon
 detection:
   sel_create_proc:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
-  ParentCommandLine|contains:
+    ParentCommandLine|contains:
       - 'CREATE_SUSPENDED'
       - 'SUSPENDED'
   sel_mem_write:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
-  GrantedAccess:
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x143A'
-  CallTrace|contains:
+    CallTrace|contains:
   sel_thread_resume:
-  EventID:
-  TargetImage|endswith:
+    EventID: 1
+    TargetImage|endswith:
       - '\svchost.exe'
       - '\explorer.exe'
       - '\notepad.exe'
   sel_apis:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'NtUnmapViewOfSection'
       - 'VirtualAllocEx'
       - 'WriteProcessMemory'

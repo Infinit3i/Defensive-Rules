@@ -11,8 +11,8 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'NtCreateSection'
       - 'NtMapViewOfSection'
       - 'NtUnmapViewOfSection'
@@ -29,9 +29,9 @@ detection:
       - 'LdrLoadDll'
       - 'RtlCreateUserThread'
   selection_powershell:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - '[DllImport("ntdll")]'
       - 'VirtualAlloc'
       - 'VirtualProtect'

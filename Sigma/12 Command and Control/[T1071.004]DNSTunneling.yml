@@ -13,12 +13,12 @@ logsource:
   category: dns_query
 detection:
   selection_event:
-  EventID:
+    EventID: 1
   selection_pattern:
-  QueryName|contains:
+    QueryName|contains:
       - '.'
   selection_anomalous:
-  QueryName|endswith:
+    QueryName|endswith:
       - '.com'
       - '.net'
       - '.org'

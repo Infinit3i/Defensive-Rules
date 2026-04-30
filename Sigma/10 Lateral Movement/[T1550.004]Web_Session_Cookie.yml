@@ -4,7 +4,8 @@ technique: T1550.004
 id: f7c4e8a3-9d6b-4e5f-f7c4-8e3a9d6b5f7b
 status: experimental
 description: >-
-  >- Detects web session cookie theft by monitoring for suspicious cookie usage, session hijacking attempts, or unusual web authentication patterns that may indicate stolen session cookies being used for lateral movement.
+  >- Detects web session cookie theft by monitoring for suspicious cookie usage, session hijacking attempts, or unusual web authentication patterns that may indicate stolen session cookies being
+  used for lateral movement.
 references:
   - https://attack.mitre.org/techniques/T1550/004/
 author: Infinit3i
@@ -27,10 +28,10 @@ detection:
       - 'JSESSIONID'
       - 'ASP.NET_SessionId'
       - 'session'
-    multiple_ips:
+  multiple_ips:
     cookie|count|gte:
     id.orig_h|count|gte:
-    suspicious_ua:
+  suspicious_ua:
     user_agent|contains:
       - 'curl'
       - 'wget'

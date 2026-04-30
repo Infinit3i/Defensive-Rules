@@ -21,32 +21,32 @@ logsource:
   service: system
 detection:
   unknown_pci_device:
-  EventID:
-  EventData|contains:
+    EventID:
+    EventData|contains:
       - 'PCI\VEN_'
-  ServiceName|contains:
+    ServiceName|contains:
       - 'Unknown'
       - 'Generic'
   suspicious_driver:
-  EventID:
-  ServiceName|contains:
+    EventID:
+    ServiceName|contains:
       - 'pci'
       - 'device'
       - 'unknown'
-  ImagePath|contains:
+    ImagePath|contains:
       - '\temp\'
       - '\users\'
       - '\programdata\'
   hardware_enumeration:
-  EventID:
-  EventData|contains:
+    EventID:
+    EventData|contains:
       - 'Hardware'
       - 'Device'
       - 'PCI'
   device_installation:
-  EventID:
-  DeviceInstanceId|startswith:
-  DriverName|contains:
+    EventID:
+    DeviceInstanceId|startswith:
+    DriverName|contains:
       - 'generic'
       - 'unknown'
       - 'temp'

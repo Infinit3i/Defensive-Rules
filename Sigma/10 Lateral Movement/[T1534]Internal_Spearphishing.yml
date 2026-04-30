@@ -4,7 +4,8 @@ technique: T1534
 id: a7d2f9c5-6b8e-4f3a-d7a2-8f9c6b8e4a7b
 status: experimental
 description: >-
-  >- Detects internal spearphishing attempts by monitoring for suspicious internal email communications, phishing content within the organization, or malicious attachments sent from compromised internal accounts.
+  >- Detects internal spearphishing attempts by monitoring for suspicious internal email communications, phishing content within the organization, or malicious attachments sent from compromised
+  internal accounts.
 references:
   - https://attack.mitre.org/techniques/T1534/
 author: Infinit3i
@@ -24,13 +25,13 @@ detection:
   internal_sender:
     Operation:
     SenderDomain:
-    suspicious_attachment:
+  suspicious_attachment:
     AttachmentExtension|contains:
       - '.exe'
       - '.scr'
       - '.bat'
       - '.vbs'
-    phishing_keywords:
+  phishing_keywords:
     Subject|contains:
       - 'urgent action required'
       - 'verify account'

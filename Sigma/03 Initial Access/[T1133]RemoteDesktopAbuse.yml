@@ -12,16 +12,16 @@ logsource:
   service: security
 detection:
   selection_rdp:
-  EventID:
-  LogonType:
-  ProcessName:
+    EventID:
+    LogonType:
+    ProcessName:
   selection_failed:
-  EventID:
-  LogonType:
+    EventID:
+    LogonType:
   selection_geographic:
-  SourceNetworkAddress|regex:
+    SourceNetworkAddress|regex:
   timeframe:
-    condition: (selection_rdp and selection_geographic) or (selection_failed | count() > 5)
+  condition: (selection_rdp and selection_geographic) or (selection_failed | count() > 5)
 falsepositives:
   - Legitimate remote administration
   - Users connecting from new locations

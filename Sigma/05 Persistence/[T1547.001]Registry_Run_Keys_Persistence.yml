@@ -12,25 +12,25 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\Software\Microsoft\Windows\CurrentVersion\Run\'
       - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
   selection_suspicious:
-      - Details|contains:
-      - 'powershell'
-      - 'cmd.exe'
-      - 'wscript'
-      - 'cscript'
-      - 'rundll32'
-      - 'regsvr32'
-      - Details|endswith:
-      - '.exe -h'
-      - '.exe --hidden'
-      - '.bat'
-      - '.vbs'
-      - '.js'
-      - '.ps1'
+    - Details|contains:
+    - 'powershell'
+    - 'cmd.exe'
+    - 'wscript'
+    - 'cscript'
+    - 'rundll32'
+    - 'regsvr32'
+    - Details|endswith:
+    - '.exe -h'
+    - '.exe --hidden'
+    - '.bat'
+    - '.vbs'
+    - '.js'
+    - '.ps1'
   condition: selection_reg and selection_suspicious
 falsepositives:
   - Legitimate software installations

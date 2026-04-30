@@ -15,9 +15,9 @@ logsource:
   product: windows
 detection:
   selection:
-  Image|endswith:
+    Image|endswith:
   filter:
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\winlogon.exe'
       - '\userinit.exe'
   condition: selection and not filter

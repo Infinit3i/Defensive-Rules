@@ -14,8 +14,8 @@ logsource:
   service: sysmon
 detection:
   selection_memory_dump:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'procdump'
       - 'dumpit'
       - 'winpmem'
@@ -23,21 +23,21 @@ detection:
       - 'rekall'
       - 'comae'
   selection_memory_manipulation:
-  EventID:
-  GrantedAccess:
+    EventID: 1
+    GrantedAccess:
       - '0x1F0FFF'  # PROCESS_ALL_ACCESS
       - '0x1FFFFF'  # PROCESS_ALL_ACCESS (extended)
       - '0x0010'    # PROCESS_VM_READ
       - '0x0020'    # PROCESS_VM_WRITE
-  CallTrace|contains:
+    CallTrace|contains:
       - 'VirtualAllocEx'
       - 'VirtualFreeEx'
       - 'WriteProcessMemory'
       - 'ReadProcessMemory'
       - 'VirtualProtectEx'
   selection_heap_spray:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'HeapAlloc'
       - 'HeapFree'
       - 'RtlAllocateHeap'
@@ -45,34 +45,34 @@ detection:
       - 'LocalAlloc'
       - 'GlobalAlloc'
   selection_code_cave:
-  EventID:
-  ImageLoaded|endswith:
+    EventID: 1
+    ImageLoaded|endswith:
       - '\ntdll.dll'
       - '\kernel32.dll'
       - '\kernelbase.dll'
-  Signed:
+    Signed:
   selection_process_overwrite:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\explorer.exe'
       - '\winlogon.exe'
       - '\services.exe'
-  Image|endswith:
+    Image|endswith:
       - '\svchost.exe'
       - '\rundll32.exe'
       - '\dllhost.exe'
-  CommandLine:
+    CommandLine:
   selection_memory_clearing:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'RtlZeroMemory'
       - 'SecureZeroMemory'
       - 'memset'
       - 'ZeroMemory'
       - 'RtlSecureZeroMemory'
   selection_debugger_evasion:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'IsDebuggerPresent'
       - 'CheckRemoteDebuggerPresent'
       - 'NtQueryInformationProcess'
@@ -84,17 +84,17 @@ detection:
       - 'immunity'
       - 'ida'
   selection_vm_memory_detection:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'GlobalMemoryStatusEx'
       - 'GetPhysicallyInstalledSystemMemory'
       - 'GetSystemInfo'
-  CommandLine|contains|all:
+    CommandLine|contains|all:
       - 'memory'
       - 'size'
   selection_hook_removal:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'SetWindowsHookEx'
       - 'UnhookWindowsHookEx'
       - 'CallNextHookEx'

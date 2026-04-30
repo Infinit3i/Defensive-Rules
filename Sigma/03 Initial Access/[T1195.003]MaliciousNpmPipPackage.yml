@@ -12,26 +12,26 @@ logsource:
   service: install-monitor
 detection:
   selection_package_manager:
-  Command|startswith:
+    Command|startswith:
       - 'npm install'
       - 'pip install'
       - 'yarn add'
   selection_suspicious_package:
-  PackageName|contains:
+    PackageName|contains:
       - 'discord-token'
       - 'crypto-wallet'
       - 'password-stealer'
       - 'keylogger'
       - 'reverse-shell'
   selection_obfuscated_code:
-  PackageContent|contains:
+    PackageContent|contains:
       - 'eval('
       - 'exec('
       - 'base64'
       - 'atob('
       - 'fromCharCode'
   selection_network_requests:
-  PackageContent|contains:
+    PackageContent|contains:
       - 'requests.post'
       - 'fetch('
       - 'XMLHttpRequest'

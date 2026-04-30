@@ -13,27 +13,27 @@ logsource:
   service: sysmon
 detection:
   selection_ifeo:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
   selection_debugger:
-  EventID:
-  TargetObject|endswith:
-  Details|contains:
+    EventID: 1
+    TargetObject|endswith:
+    Details|contains:
       - '.exe'
       - 'cmd.exe'
       - 'powershell.exe'
       - 'rundll32.exe'
   selection_globalflag:
-  EventID:
-  TargetObject|endswith:
-  Details:
+    EventID: 1
+    TargetObject|endswith:
+    Details:
       - '0x200'
       - '512'
   selection_verifierdlls:
-  EventID:
-  TargetObject|endswith:
-  Details|contains:
-    condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
+    EventID: 1
+    TargetObject|endswith:
+    Details|contains:
+  condition: selection_ifeo and (selection_debugger or selection_globalflag or selection_verifierdlls)
 fields:
   - TargetObject
   - Details

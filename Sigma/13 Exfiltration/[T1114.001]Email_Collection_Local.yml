@@ -4,7 +4,8 @@ technique: T1114.001
 id: f9c6e4a7-8b3d-4e5f-f9c6-4e7a8b3d5f9b
 status: experimental
 description: >-
-  >- Detects local email collection activities by monitoring for email database access, PST file operations, or mailbox enumeration that may indicate attempts to collect email data for exfiltration.
+  >- Detects local email collection activities by monitoring for email database access, PST file operations, or mailbox enumeration that may indicate attempts to collect email data for
+  exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1114/001/
 author: Infinit3i
@@ -27,11 +28,11 @@ detection:
       - '.pst'
       - '.ost'
       - '.edb'
-    outlook_db:
+  outlook_db:
     TargetFilename|contains:
       - '\Outlook\'
       - '\Microsoft\Outlook\'
-    email_export:
+  email_export:
     Image|endswith:
     CommandLine|contains:
       - '/export'

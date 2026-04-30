@@ -9,14 +9,14 @@ logsource:
   service: sysmon
 detection:
   selection:
-  EventID:
-  TargetFilename|contains:
+    EventID: 1
+    TargetFilename|contains:
       - 'Microsoft.PowerShell_profile.ps1'
       - 'profile.ps1'
       - '\WindowsPowerShell\'
       - '\PowerShell\7\'
-  TargetFilename|endswith:
-    condition: selection
+    TargetFilename|endswith:
+  condition: selection
 level: medium
 tags:
   - attack.persistence

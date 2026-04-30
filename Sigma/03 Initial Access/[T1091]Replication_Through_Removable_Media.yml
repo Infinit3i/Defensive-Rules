@@ -4,7 +4,8 @@ technique: T1091
 id: f6a4e8c2-9d7b-4f3e-a1c5-8e2f9c7d4a6b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects potential malware replication through removable media by monitoring for automatic execution of suspicious files from USB devices, creation of autorun files, or unusual file activities on removable drives.
+  Detects cloud-based security attacks and access attempts. Detects potential malware replication through removable media by monitoring for automatic execution of suspicious files from USB
+  devices, creation of autorun files, or unusual file activities on removable drives.
 references:
   - https://attack.mitre.org/techniques/T1091/
 author: Infinit3i
@@ -23,22 +24,22 @@ logsource:
   category: process_creation
 detection:
   usb_execution:
-  Image|startswith:
+    Image|startswith:
       - 'E:\'
       - 'F:\'
       - 'G:\'
       - 'H:\'
-  Image|endswith:
+    Image|endswith:
   autorun_creation:
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - 'autorun.inf'
       - 'desktop.ini'
-  TargetFilename|contains:
+    TargetFilename|contains:
   suspicious_files:
-  TargetFilename|contains:
+    TargetFilename|contains:
       - 'USB'
       - 'removable'
-  TargetFilename|endswith:
+    TargetFilename|endswith:
       - '.exe'
       - '.scr'
       - '.bat'

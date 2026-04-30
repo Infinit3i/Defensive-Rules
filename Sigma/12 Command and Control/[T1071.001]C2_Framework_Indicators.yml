@@ -10,7 +10,7 @@ logsource:
   service: http
 detection:
   selection:
-  uri|contains:
+    uri|contains:
       - '/admin/get.php'
       - '/admin/post.php'
       - '/gate.php'

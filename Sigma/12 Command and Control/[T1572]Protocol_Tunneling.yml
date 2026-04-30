@@ -4,7 +4,8 @@ technique: T1572
 id: b7d4e9f3-8c6a-4e5f-b7d4-9e3f8c6a5b7b
 status: experimental
 description: >-
-  >- Detects protocol tunneling by monitoring for encapsulated protocols, suspicious tunneling tools, or unusual protocol usage patterns that may be used to hide C2 communications within legitimate traffic.
+  >- Detects protocol tunneling by monitoring for encapsulated protocols, suspicious tunneling tools, or unusual protocol usage patterns that may be used to hide C2 communications within
+  legitimate traffic.
 references:
   - https://attack.mitre.org/techniques/T1572/
 author: Infinit3i
@@ -28,13 +29,13 @@ detection:
       - '\plink.exe'
       - '\stunnel.exe'
       - '\chisel.exe'
-    tunnel_args:
+  tunnel_args:
     CommandLine|contains:
       - '-L '
       - '-R '
       - '-D '
       - 'tunnel'
-    port_forwarding:
+  port_forwarding:
     CommandLine|contains:
       - 'portproxy'
       - 'forward'

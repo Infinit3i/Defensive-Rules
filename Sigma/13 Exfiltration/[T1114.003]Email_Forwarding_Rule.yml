@@ -27,12 +27,12 @@ detection:
       - 'ForwardTo'
       - 'ForwardAsAttachmentTo'
       - 'RedirectTo'
-    transport_rule:
+  transport_rule:
     Operation:
     Parameters|contains:
       - 'BlindCopyTo'
       - 'RedirectMessageTo'
-    mailbox_forwarding:
+  mailbox_forwarding:
     Operation:
     Parameters|contains:
       - 'ForwardingAddress'

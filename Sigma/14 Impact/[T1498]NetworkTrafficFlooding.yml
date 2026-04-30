@@ -12,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   sel_ddos_tools:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'hping'
       - 'nmap'
       - 'scapy'
@@ -27,8 +27,8 @@ detection:
       - 'loic'
       - 'hoic'
   sel_ddos_args:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - '--flood'
       - '--syn-flood'
       - '--udp-flood'
@@ -41,10 +41,9 @@ detection:
       - 'flood'
       - 'attack'
       - 'ddos'
-  sel_network_stress:
-  EventID:
-  Initiated:
-    condition: sel_ddos_tools or sel_ddos_args
+    sel_network_stress:
+    Initiated:
+  condition: sel_ddos_tools or sel_ddos_args
 level: high
 tags:
   - attack.impact

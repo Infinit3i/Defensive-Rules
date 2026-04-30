@@ -12,26 +12,26 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  ParentCommandLine|contains:
+    EventID: 1
+    ParentCommandLine|contains:
   selection_hijacked_binary:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\sethc.exe'
       - '\utilman.exe'
       - '\osk.exe'
       - '\narrator.exe'
       - '\magnify.exe'
-  ParentImage|endswith:
+    ParentImage|endswith:
   selection_suspicious_parent:
-  EventID:
-  ParentImage|contains:
+    EventID: 1
+    ParentImage|contains:
       - '\Temp\'
       - '\Users\'
       - '\AppData\'
   selection_registry_execution:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
   condition: |
     (selection_process and selection_suspicious_parent) or
     selection_hijacked_binary or selection_registry_execution

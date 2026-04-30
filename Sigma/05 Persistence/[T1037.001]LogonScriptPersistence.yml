@@ -13,15 +13,15 @@ logsource:
   category: registry_set
 detection:
   selection_event:
-  EventID:
+    EventID: 1
   selection_logonscript:
-  TargetObject|contains:
+    TargetObject|contains:
       - '\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\UserInitMprLogonScript'
       - '\SOFTWARE\Policies\Microsoft\Windows\System\Scripts\Logon\'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Logon\'
       - '\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Shell'
   filter_gpo:
-  Image|contains:
+    Image|contains:
       - 'C:\Windows\System32\GroupPolicy\'
       - 'C:\Windows\System32\gpupdate.exe'
   condition: selection_event and selection_logonscript and not filter_gpo

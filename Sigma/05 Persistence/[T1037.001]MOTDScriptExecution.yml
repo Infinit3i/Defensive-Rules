@@ -9,10 +9,10 @@ logsource:
   service: syslog
 detection:
   selection:
-  program:
-  message|contains:
+    program:
+    message|contains:
   selection_process:
-  message|contains:
+    message|contains:
       - 'update-motd'
       - '/etc/motd'
       - 'pam_motd'

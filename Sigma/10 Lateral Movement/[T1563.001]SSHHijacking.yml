@@ -14,24 +14,24 @@ logsource:
   service: auditd
 detection:
   selection_ssh_agent:
-  type:
-  comm:
-  syscall:
+    type:
+    comm:
+    syscall:
       - 'connect'
       - 'bind'
       - 'socket'
   selection_ssh_add:
-  type:
-  comm:
-  a0|contains:
+    type:
+    comm:
+    a0|contains:
   selection_ssh_session_reuse:
-  type:
-  exe:
-  res:
+    type:
+    exe:
+    res:
   selection_multiple_sessions:
-  type:
-  exe:
-  terminal:
+    type:
+    exe:
+    terminal:
   condition: |
     selection_ssh_agent or selection_ssh_add or (selection_ssh_session_reuse and selection_multiple_sessions)
   timeframe: 10m

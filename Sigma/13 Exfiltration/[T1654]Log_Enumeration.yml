@@ -4,7 +4,8 @@ technique: T1654
 id: f4a7e9c5-8b6d-4e2f-f4a7-9e5c8b6d2f4b
 status: experimental
 description: >-
-  >- Detects log enumeration activities by monitoring for log file access, event log queries, or log parsing activities that may be used to collect sensitive information from system logs for exfiltration.
+  >- Detects log enumeration activities by monitoring for log file access, event log queries, or log parsing activities that may be used to collect sensitive information from system logs for
+  exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1654/
 author: Infinit3i
@@ -28,12 +29,12 @@ detection:
       - 'Get-EventLog'
       - 'Get-WinEvent'
       - 'eventvwr'
-    log_file_access:
+  log_file_access:
     TargetFilename|contains:
       - '\Windows\System32\winevt\Logs\'
       - '.evtx'
       - '.log'
-    log_export:
+  log_export:
     CommandLine|contains:
       - '/export'
       - '/query'

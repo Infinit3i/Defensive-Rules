@@ -12,24 +12,24 @@ logsource:
   service: pip
 detection:
   selection_internal_pattern:
-  PackageName|contains:
+    PackageName|contains:
       - 'internal-'
       - 'company-'
       - 'corp-'
       - 'private-'
       - 'org-'
   selection_public_repo:
-  RepositoryURL|contains:
+    RepositoryURL|contains:
       - 'pypi.org'
       - 'npmjs.com'
       - 'rubygems.org'
   selection_suspicious_version:
-  PackageVersion|contains:
+    PackageVersion|contains:
       - '99.'
       - '999.'
       - '9999.'
   selection_recent_upload:
-  UploadDate|gte:
+    UploadDate|gte:
   condition: |
     selection_internal_pattern and selection_public_repo and (selection_suspicious_version or selection_recent_upload)
 level: high

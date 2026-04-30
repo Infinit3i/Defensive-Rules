@@ -19,17 +19,17 @@ logsource:
   service: sysmon
 detection:
   selection_timeout:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - "timeout /t 60"
       - "timeout /t 300"
       - "choice /t 60"
       - "choice /t 300"
   selection_ping_delay:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID: 1
+    Image|endswith:
+    CommandLine|contains:
       - "ping -n 60 127.0.0.1"
       - "ping -n 300 127.0.0.1"
   condition: selection_timeout or selection_ping_delay

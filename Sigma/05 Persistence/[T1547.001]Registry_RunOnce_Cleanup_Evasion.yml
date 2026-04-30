@@ -12,24 +12,24 @@ logsource:
   service: sysmon
 detection:
   selection_process:
-  EventID:
-  ParentCommandLine|contains:
+    EventID: 1
+    ParentCommandLine|contains:
   selection_cleanup:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'reg delete'
       - 'Remove-ItemProperty'
       - 'del /f /q'
       - 'rmdir /s'
       - 'sdelete'
   selection_delay:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'ping -n'
       - 'timeout /t'
       - 'Start-Sleep'
       - 'waitfor'
       - 'choice /t'
   selection_chain:
-  CommandLine|contains:
+    CommandLine|contains:
       - '&&'
       - ';'
       - '||'

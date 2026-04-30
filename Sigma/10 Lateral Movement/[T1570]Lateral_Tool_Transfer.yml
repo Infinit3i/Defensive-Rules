@@ -4,7 +4,8 @@ technique: T1570
 id: c3f8e7a6-9d5b-4e2f-a6c3-8f7e9d5c3a6b
 status: experimental
 description: >-
-  >- Detects lateral tool transfer by monitoring for file transfers between internal hosts, tool deployment activities, or suspicious binary movement that may indicate attacker tool propagation across the network.
+  >- Detects lateral tool transfer by monitoring for file transfers between internal hosts, tool deployment activities, or suspicious binary movement that may indicate attacker tool propagation
+  across the network.
 references:
   - https://attack.mitre.org/techniques/T1570/
 author: Infinit3i
@@ -32,13 +33,13 @@ detection:
       - 'C:\Windows\Temp\'
       - 'C:\Temp\'
       - 'C:\Users\Public\'
-    network_tool:
+  network_tool:
     TargetFilename|contains:
       - 'psexec'
       - 'mimikatz'
       - 'pwdump'
       - 'procdump'
-    remote_source:
+  remote_source:
     ProcessName|contains:
       - 'svchost.exe'
       - 'services.exe'

@@ -4,7 +4,8 @@ technique: T1106
 id: 5d0f6b3c-8e4a-4f67-9c8d-2b3f4e5d6c7b
 status: experimental
 description: >-
-  > Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke native syscalls directly.
+  > Detect occurrences of "syscall" usage strings or inline syscall opcodes in scripts or commandlines (shellcode-like patterns, raw syscall numbers) that indicate attempts to invoke native
+  syscalls directly.
 author: Infinit3i
 date: 2025-10-19
 references:
@@ -19,8 +20,8 @@ logsource:
   service: powershell
 detection:
   selection:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "syscall"
       - "mov r10"
       - "mov eax"

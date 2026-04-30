@@ -14,27 +14,27 @@ logsource:
   service: sysmon
 detection:
   sel_process:
-  EventID:
-  ParentImage|endswith:
+    EventID: 1
+    ParentImage|endswith:
       - '\powershell.exe'
       - '\cmd.exe'
       - '\rundll32.exe'
   sel_memory:
-  EventID:
-  GrantedAccess:
+    EventID: 1
+    GrantedAccess:
       - '0x1F0FFF'
       - '0x40'
       - '0x20'
-  CallTrace|contains:
+    CallTrace|contains:
   sel_alloc_pattern:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'VirtualAlloc'
       - 'VirtualProtect'
       - 'NtAllocateVirtualMemory'
       - 'PAGE_EXECUTE_READWRITE'
   sel_size_pattern:
-  CommandLine|re:
-    condition: sel_process and sel_memory and (sel_alloc_pattern or sel_size_pattern)
+    CommandLine|re:
+  condition: sel_process and sel_memory and (sel_alloc_pattern or sel_size_pattern)
 falsepositives:
   - JIT compilation in .NET applications
   - Browser JIT engines

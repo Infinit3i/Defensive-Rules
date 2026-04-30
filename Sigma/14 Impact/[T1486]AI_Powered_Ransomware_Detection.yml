@@ -15,12 +15,12 @@ logsource:
   service: sysmon
 detection:
   selection_ai_models:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\python.exe'
       - '\tensorflow.exe'
       - '\pytorch.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'tensorflow'
       - 'pytorch'
       - 'sklearn'
@@ -30,23 +30,23 @@ detection:
       - '.pb'
       - '.onnx'
   selection_encryption:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.locked'
       - '.encrypted'
       - '.ai_enc'
       - '.neural'
       - '.adaptive'
   selection_mass_file_ops:
-  EventID:
-  Image|contains:
+    EventID: 1
+    Image|contains:
       - 'encrypt'
       - 'cipher'
       - 'crypto'
-  ProcessId:
+    ProcessId:
   selection_adaptive_behavior:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'adaptive_encrypt'
       - 'ml_crypto'
       - 'neural_cipher'
@@ -54,12 +54,12 @@ detection:
       - 'smart_encrypt'
       - 'learning_crypto'
   selection_network_ml:
-  EventID:
-  DestinationPort:
+    EventID: 1
+    DestinationPort:
       - 443
       - 8080
       - 9090
-  Image|contains:
+    Image|contains:
       - 'ml_'
       - 'ai_'
       - 'neural_'

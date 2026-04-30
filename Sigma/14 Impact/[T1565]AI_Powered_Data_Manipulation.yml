@@ -15,12 +15,12 @@ logsource:
   service: sysmon
 detection:
   selection_ai_frameworks:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
       - '\python.exe'
       - '\R.exe'
       - '\julia.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'pandas'
       - 'numpy'
       - 'scikit-learn'
@@ -29,34 +29,34 @@ detection:
       - 'data_manipulation'
       - 'integrity_attack'
   selection_database_access:
-  EventID:
-  DestinationPort:
+    EventID: 1
+    DestinationPort:
       - 1433  # SQL Server
       - 3306  # MySQL
       - 5432  # PostgreSQL
       - 1521  # Oracle
       - 27017  # MongoDB
-  Image|contains:
+    Image|contains:
       - 'python'
       - 'ml_'
       - 'ai_'
   selection_data_modification:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.csv'
       - '.xlsx'
       - '.json'
       - '.xml'
       - '.db'
       - '.sqlite'
-  Image|contains:
+    Image|contains:
       - 'modify'
       - 'alter'
       - 'manipulate'
       - 'poison'
   selection_steganography:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'steghide'
       - 'outguess'
       - 'openstego'
@@ -64,8 +64,8 @@ detection:
       - 'embed_payload'
       - 'lsb_'  # Least Significant Bit
   selection_ml_models:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '.pkl'
       - '.joblib'
       - '.h5'
@@ -73,25 +73,25 @@ detection:
       - '.onnx'
       - '.pt'
       - '.pth'
-  TargetFilename|contains:
+    TargetFilename|contains:
       - 'poison'
       - 'backdoor'
       - 'manipulate'
       - 'adversarial'
   selection_network_exfil:
-  EventID:
-  DestinationPort:
-  Initiated:
-  Image|contains:
+    EventID: 1
+    DestinationPort:
+    Initiated:
+    Image|contains:
       - 'python'
       - 'curl'
       - 'wget'
   selection_registry_persistence:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\Software\Microsoft\Windows\CurrentVersion\Run'
       - '\Software\Policies\'
-  Details|contains:
+    Details|contains:
       - 'python'
       - 'ml_'
       - 'ai_'

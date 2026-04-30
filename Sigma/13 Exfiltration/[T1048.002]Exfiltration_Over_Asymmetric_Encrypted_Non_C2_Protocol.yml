@@ -4,7 +4,8 @@ technique: T1048.002
 id: c7a5f9e3-8c6b-4e4f-c7a5-9f3e8c6b4c7b
 status: experimental
 description: >-
-  >- Detects data exfiltration over asymmetric encrypted non-C2 protocols by monitoring for unusual PKI usage, suspicious certificate exchanges, or large data transfers using asymmetric encryption methods.
+  >- Detects data exfiltration over asymmetric encrypted non-C2 protocols by monitoring for unusual PKI usage, suspicious certificate exchanges, or large data transfers using asymmetric
+  encryption methods.
 references:
   - https://attack.mitre.org/techniques/T1048/002/
 author: Infinit3i
@@ -22,17 +23,17 @@ logsource:
   service: x509
 detection:
   unusual_cert:
-  certificate.subject|contains:
+    certificate.subject|contains:
       - 'CN=temp'
       - 'CN=test'
       - 'CN=localhost'
   short_lived_cert:
-  certificate.not_valid_before|contains:
-  certificate.not_valid_after|contains:
+    certificate.not_valid_before|contains:
+    certificate.not_valid_after|contains:
   suspicious_key:
-  certificate.key_length|gte:
-  certificate.key_type:
-    condition: unusual_cert or short_lived_cert or suspicious_key
+    certificate.key_length|gte:
+    certificate.key_type:
+  condition: unusual_cert or short_lived_cert or suspicious_key
 falsepositives:
   - Legitimate certificate operations
   - Development environments

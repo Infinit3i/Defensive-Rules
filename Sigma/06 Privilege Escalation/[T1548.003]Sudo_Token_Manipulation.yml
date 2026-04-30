@@ -12,18 +12,18 @@ logsource:
   service: auditd
 detection:
   selection_sudo:
-  type:
-  comm:
-  success:
+    type:
+    comm:
+    success:
   selection_timestamp:
-  type:
-  msg|contains:
+    type:
+    msg|contains:
       - 'sudo -S'
       - 'sudo -A'
       - 'sudo -k'
   selection_unusual:
-  comm:
-  exe|contains:
+    comm:
+    exe|contains:
       - '/tmp/'
       - '/var/tmp/'
       - '/dev/shm/'

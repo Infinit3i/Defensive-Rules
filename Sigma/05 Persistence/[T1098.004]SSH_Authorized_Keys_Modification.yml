@@ -9,18 +9,18 @@ logsource:
   service: auditd
 detection:
   selection_write:
-  type:
-  syscall:
-  a2:
+    type:
+    syscall:
+    a2:
   selection_ssh_keys:
-  name:
+    name:
       - "*/.ssh/authorized_keys"
       - "*/.ssh/authorized_keys2"
       - "/home/*/.ssh/authorized_keys"
       - "/root/.ssh/authorized_keys"
   selection_remote:
-  auid:
-    condition: selection_write and selection_ssh_keys
+    auid:
+  condition: selection_write and selection_ssh_keys
 level: high
 tags:
   - attack.persistence

@@ -15,20 +15,20 @@ logsource:
   service: auditd
 detection:
   selection_container_tools:
-  type:
-  exe:
+    type:
+    exe:
       - '/usr/bin/docker'
       - '/usr/bin/kubectl'
       - '/usr/bin/podman'
       - '/usr/bin/containerd'
-  a0|contains:
+    a0|contains:
       - 'run'
       - 'exec'
       - 'apply'
       - 'create'
   selection_mining_software:
-  type:
-  exe|endswith:
+    type:
+    exe|endswith:
       - 'xmrig'
       - 'cpuminer'
       - 'cgminer'
@@ -37,7 +37,7 @@ detection:
       - 'claymore'
       - 't-rex'
       - 'phoenixminer'
-  a1|contains:
+    a1|contains:
       - '--donate-level'
       - '--pool'
       - '--wallet'
@@ -45,8 +45,8 @@ detection:
       - '--cuda'
       - '--opencl'
   selection_container_images:
-  type:
-  a2|contains:
+    type:
+    a2|contains:
       - 'alpine/xmrig'
       - 'ubuntu/mining'
       - 'crypto/miner'
@@ -55,29 +55,29 @@ detection:
       - 'ethereum'
       - 'mining'
   selection_kubernetes_deployments:
-  type:
-  exe:
-  a1|contains:
+    type:
+    exe:
+    a1|contains:
       - 'apply'
       - 'create'
       - 'run'
-  a3|contains:
+    a3|contains:
       - 'deployment'
       - 'daemonset'
       - 'job'
       - 'cronjob'
   selection_resource_requests:
-  type:
-  a0|contains:
+    type:
+    a0|contains:
       - '--cpu='
       - '--memory='
       - '--gpus='
       - 'resources.requests'
       - 'resources.limits'
   selection_network_mining:
-  type:
-  syscall:
-  success:
+    type:
+    syscall:
+    success:
   condition: |
     (selection_container_tools and selection_mining_software) or
     (selection_kubernetes_deployments and selection_container_images) or

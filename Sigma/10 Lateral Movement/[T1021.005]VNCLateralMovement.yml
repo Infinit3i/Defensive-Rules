@@ -14,27 +14,27 @@ logsource:
   service: connection
 detection:
   selection_vnc_ports:
-  destination_port:
+    destination_port:
       - 5900
       - 5901
       - 5902
       - 5903
       - 5904
       - 5905
-  protocol:
+    protocol:
   selection_vnc_process:
-  EventID:
-  Image|contains:
+    EventID:
+    Image|contains:
       - 'vnc'
       - 'tightvnc'
       - 'ultravnc'
       - 'realvnc'
   selection_internal_network:
-  source_ip|startswith:
+    source_ip|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  destination_ip|startswith:
+    destination_ip|startswith:
       - '10.'
       - '172.'
       - '192.168.'

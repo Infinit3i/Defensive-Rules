@@ -4,7 +4,8 @@ technique: T1078.001
 id: d3a8e5f1-4c7b-4e2f-b6a9-8e1c3f7d2a5b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects abuse of default accounts by monitoring for authentication attempts using common default usernames, unchanged default passwords, or suspicious activities from well-known default service accounts.
+  Detects cloud-based security attacks and access attempts. Detects abuse of default accounts by monitoring for authentication attempts using common default usernames, unchanged default
+  passwords, or suspicious activities from well-known default service accounts.
 references:
   - https://attack.mitre.org/techniques/T1078/001/
 author: Infinit3i
@@ -22,8 +23,8 @@ logsource:
   service: security
 detection:
   default_users:
-  EventID:
-  TargetUserName|contains:
+    EventID:
+    TargetUserName|contains:
       - 'admin'
       - 'administrator'
       - 'guest'
@@ -32,12 +33,12 @@ detection:
       - 'default'
       - 'sa'
   service_accounts:
-  EventID:
-  TargetUserName|startswith:
+    EventID:
+    TargetUserName|startswith:
       - 'svc'
       - 'service'
-  LogonType:
-    condition: default_users or service_accounts
+    LogonType:
+  condition: default_users or service_accounts
 falsepositives:
   - Legitimate use of administrative accounts
   - Authorized service account activities

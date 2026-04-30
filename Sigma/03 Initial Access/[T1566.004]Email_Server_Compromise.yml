@@ -4,7 +4,8 @@ technique: T1566.004
 id: c5f8e2a9-1d4b-4e7c-a6f3-2b8e9c1d5a7e
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects compromise of email servers by monitoring for unauthorized access, configuration changes, suspicious email forwarding rules, or unexpected administrative activities on email infrastructure.
+  Detects cloud-based security attacks and access attempts. Detects compromise of email servers by monitoring for unauthorized access, configuration changes, suspicious email forwarding rules, or
+  unexpected administrative activities on email infrastructure.
 references:
   - https://attack.mitre.org/techniques/T1566/004/
 author: Infinit3i
@@ -22,20 +23,20 @@ logsource:
   service: msexchange-management
 detection:
   mailbox_rules:
-  EventID:
-  OperationName|contains:
+    EventID:
+    OperationName|contains:
       - 'New-InboxRule'
       - 'Set-InboxRule'
       - 'New-MailboxRule'
   admin_changes:
-  OperationName|contains:
+    OperationName|contains:
       - 'Add-RoleGroupMember'
       - 'New-ManagementRoleAssignment'
       - 'Set-OrganizationConfig'
   suspicious_forwarding:
-  OperationName|contains:
+    OperationName|contains:
       - 'Set-Mailbox'
-  Parameters|contains:
+    Parameters|contains:
       - 'ForwardingAddress'
       - 'ForwardingSmtpAddress'
   condition: mailbox_rules or admin_changes or suspicious_forwarding

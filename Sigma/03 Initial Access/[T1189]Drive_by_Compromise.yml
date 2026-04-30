@@ -4,7 +4,8 @@ technique: T1189
 id: e7f2c9a4-8b5d-4e1f-a3c6-9f2e7d8c4a1b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects drive-by compromise attempts by monitoring for malicious web content exploitation, suspicious JavaScript execution, and browser exploit patterns that may lead to initial system compromise.
+  Detects cloud-based security attacks and access attempts. Detects drive-by compromise attempts by monitoring for malicious web content exploitation, suspicious JavaScript execution, and browser
+  exploit patterns that may lead to initial system compromise.
 references:
   - https://attack.mitre.org/techniques/T1189/
 author: Infinit3i
@@ -22,20 +23,20 @@ logsource:
   service: http
 detection:
   malicious_js:
-  uri|contains:
+    uri|contains:
       - 'eval('
       - 'unescape('
       - 'fromCharCode('
-  method:
+    method:
   exploit_kit:
-  user_agent|contains:
+    user_agent|contains:
       - 'exploit'
       - 'kit'
       - 'angler'
       - 'blackhole'
   suspicious_redirect:
-  response_code:
-  location|contains:
+    response_code:
+    location|contains:
       - 'bit.ly'
       - 'tinyurl'
       - '.tk/'

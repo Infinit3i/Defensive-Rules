@@ -4,7 +4,8 @@ technique: T1566.005
 id: d4a7e3f8-9c2b-4e5f-a1d6-8e3f9c4d2a7b
 status: experimental
 description: >-
-  Detects cloud-based security attacks and access attempts. Detects email bombing attacks by monitoring for high volumes of emails sent to single recipients, mass subscription attempts, or email flood patterns that may be used to overwhelm targets or hide malicious activity.
+  Detects cloud-based security attacks and access attempts. Detects email bombing attacks by monitoring for high volumes of emails sent to single recipients, mass subscription attempts, or email
+  flood patterns that may be used to overwhelm targets or hide malicious activity.
 references:
   - https://attack.mitre.org/techniques/T1566/005/
 author: Infinit3i
@@ -22,13 +23,13 @@ logsource:
   service: exchange
 detection:
   high_volume:
-  Operation:
-  RecipientCount|gte:
+    Operation:
+    RecipientCount|gte:
   same_recipient:
-  Operation:
-  Recipients|count|gte:
+    Operation:
+    Recipients|count|gte:
   subscription_spam:
-  Subject|contains:
+    Subject|contains:
       - 'Welcome to'
       - 'Confirm subscription'
       - 'You have subscribed'

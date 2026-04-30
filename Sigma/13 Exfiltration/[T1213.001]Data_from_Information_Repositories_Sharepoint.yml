@@ -4,7 +4,8 @@ technique: T1213.001
 id: c9f6e3a8-7d4b-4e5f-c9f6-3e8a7d4b5c9b
 status: experimental
 description: >-
-  >- Detects suspicious data collection from SharePoint repositories by monitoring for bulk downloads, unusual access patterns, or automated data retrieval that may indicate data harvesting activities.
+  >- Detects suspicious data collection from SharePoint repositories by monitoring for bulk downloads, unusual access patterns, or automated data retrieval that may indicate data harvesting
+  activities.
 references:
   - https://attack.mitre.org/techniques/T1213/001/
 author: Infinit3i
@@ -25,13 +26,13 @@ detection:
     Operation:
     ItemType:
     ObjectId|count|gte:
-    automated_access:
+  automated_access:
     UserAgent|contains:
       - 'curl'
       - 'wget'
       - 'python'
       - 'powershell'
-    sensitive_files:
+  sensitive_files:
     Operation:
     SourceFileName|endswith:
       - '.xlsx'

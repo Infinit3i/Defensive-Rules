@@ -23,11 +23,11 @@ logsource:
   service: sysmon
 detection:
   sel_image:
-  EventID:
-  Image|endswith:
+    EventID: 1
+    Image|endswith:
   sel_cmd:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "wmic process list"
       - "wmic process get"
       - "wmic /node:"

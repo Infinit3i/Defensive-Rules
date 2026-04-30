@@ -14,60 +14,60 @@ logsource:
   service: auditd
 detection:
   selection_memfd_create:
-  type:
-  syscall:
-  success:
+    type:
+    syscall:
+    success:
   selection_proc_self_mem:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/proc/self/mem'
       - '/proc/*/mem'
       - '/dev/shm'
   selection_ptrace_injection:
-  type:
-  syscall:
-  a0|contains:
+    type:
+    syscall:
+    a0|contains:
       - 'PTRACE_POKETEXT'
       - 'PTRACE_POKEDATA'
       - 'PTRACE_SETREGS'
       - 'PTRACE_ATTACH'
-  success:
+    success:
   selection_mmap_execution:
-  type:
-  syscall:
-  a2|contains:
+    type:
+    syscall:
+    a2|contains:
       - 'PROT_EXEC'
       - 'PROT_READ|PROT_WRITE|PROT_EXEC'
-  success:
+    success:
   selection_execve_memfd:
-  type:
-  syscall:
-  a0|startswith:
+    type:
+    syscall:
+    a0|startswith:
       - '/proc/self/fd/'
       - '/dev/fd/'
-  success:
+    success:
   selection_container_escape:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/var/lib/docker'
       - '/var/run/docker.sock'
       - '/proc/1/root'
       - '/host'
   selection_shared_memory:
-  type:
-  syscall:
+    type:
+    syscall:
       - 'shmget'
       - 'shmat'
       - 'shmctl'
-  success:
+    success:
   selection_process_injection:
-  type:
-  syscall:
-  success:
+    type:
+    syscall:
+    success:
   selection_ld_preload:
-  type:
-  a2|contains:
-    condition: 1 of selection_*
+    type:
+    a2|contains:
+  condition: 1 of selection_*
 falsepositives:
   - Legitimate container runtime operations
   - Dynamic linking and library loading

@@ -22,11 +22,12 @@ logsource:
   service: http
 detection:
   post_method:
-  method:
+    method:
   timeframe:
-  threshold:
+  selection:
+    threshold:
   count:
-    condition: post_method
+  condition: post_method
 falsepositives:
   - High-volume API integrations or legitimate applications uploading data.
 level: high

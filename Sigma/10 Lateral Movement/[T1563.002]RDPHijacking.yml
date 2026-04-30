@@ -14,23 +14,23 @@ logsource:
   service: security
 detection:
   selection_session_hijack:
-  EventID:
-  ClientName:
-  ClientAddress:
+    EventID:
+    ClientName:
+    ClientAddress:
   selection_tscon_usage:
-  EventID:
-  Image|endswith:
-  CommandLine|contains:
+    EventID:
+    Image|endswith:
+    CommandLine|contains:
       - '/dest:'
       - '/password'
       - '/v'
   selection_rdp_reconnect:
-  EventID:
-  TargetLogonId:
+    EventID:
+    TargetLogonId:
   selection_multiple_sessions:
-  EventID:
-  LogonType:
-  IpAddress:
+    EventID:
+    LogonType:
+    IpAddress:
   condition: |
     selection_session_hijack or selection_tscon_usage or (selection_rdp_reconnect and selection_multiple_sessions)
   timeframe: 5m

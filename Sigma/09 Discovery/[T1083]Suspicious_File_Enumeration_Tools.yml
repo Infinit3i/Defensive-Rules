@@ -4,7 +4,8 @@ technique: T1083
 id: 4d5e6f70-8192-0a1b-2c3d-4e5f6a7b8c9d
 status: experimental
 description: >-
-  > Detect execution of common file-enumeration or bulk-copying utilities and commands that indicate broad file/directory discovery (robocopy, xcopy, tree, dirb/dirsearch) across Windows and Unix telemetry.
+  > Detect execution of common file-enumeration or bulk-copying utilities and commands that indicate broad file/directory discovery (robocopy, xcopy, tree, dirb/dirsearch) across Windows and Unix
+  telemetry.
 references:
   - https://attack.mitre.org/techniques/T1083/
 author: Infinit3i
@@ -23,15 +24,15 @@ logsource:
   service: sysmon
 detection:
   selection_windows_tools:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "robocopy"
       - "xcopy "
       - "tree "
       - "dir /s"
   selection_unix_tools:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - "dirb "
       - "dirsearch"
       - "find "

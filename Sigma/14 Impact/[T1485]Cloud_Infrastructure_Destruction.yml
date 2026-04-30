@@ -15,8 +15,8 @@ logsource:
   service: powershell
 detection:
   selection_aws_destruction:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'aws ec2 terminate-instances'
       - 'aws s3 rm'
       - 'aws s3api delete-bucket'
@@ -27,8 +27,8 @@ detection:
       - 'DeleteVolume'
       - 'DeleteSnapshot'
   selection_azure_destruction:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'az vm delete'
       - 'az storage account delete'
       - 'az sql db delete'
@@ -38,8 +38,8 @@ detection:
       - 'Remove-AzStorageAccount'
       - 'Remove-AzResourceGroup'
   selection_gcp_destruction:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - 'gcloud compute instances delete'
       - 'gcloud storage rm'
       - 'gcloud sql instances delete'
@@ -47,8 +47,8 @@ detection:
       - 'gcloud projects delete'
       - 'gsutil rm -r'
   selection_mass_operations:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - '--force'
       - '--yes'
       - '--quiet'
@@ -57,28 +57,28 @@ detection:
       - 'while'
       - 'for i in'
   selection_cli_tools:
-  EventID:
-  Image|endswith:
+    EventID:
+    Image|endswith:
       - '\aws.exe'
       - '\az.exe'
       - '\gcloud.exe'
       - '\kubectl.exe'
       - '\terraform.exe'
       - '\powershell.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'delete'
       - 'destroy'
       - 'terminate'
       - 'remove'
       - 'rm'
   selection_network_calls:
-  EventID:
-  DestinationHostname|contains:
+    EventID:
+    DestinationHostname|contains:
       - 'amazonaws.com'
       - 'azure.com'
       - 'googleapis.com'
       - 'gcp.com'
-  DestinationPort:
+    DestinationPort:
   condition: |
     (selection_aws_destruction or selection_azure_destruction or selection_gcp_destruction) and selection_mass_operations or (selection_cli_tools and selection_network_calls)
 level: critical

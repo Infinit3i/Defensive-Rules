@@ -22,20 +22,20 @@ logsource:
   service: http
 detection:
   text_sites:
-  host|endswith:
+    host|endswith:
       - '.pastebin.com'
       - '.hastebin.com'
       - '.ghostbin.com'
       - '.dpaste.org'
       - 'gist.github.com'
   text_upload:
-  method:
-  content_type|contains:
+    method:
+    content_type|contains:
   large_text:
-  method:
-  request_body_len|gte:
-  uri|contains:
-    condition: text_sites and (text_upload or large_text)
+    method:
+    request_body_len|gte:
+    uri|contains:
+  condition: text_sites and (text_upload or large_text)
 falsepositives:
   - Legitimate code sharing
   - Technical support activities

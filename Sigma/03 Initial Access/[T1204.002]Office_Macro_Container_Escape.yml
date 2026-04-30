@@ -22,28 +22,28 @@ logsource:
   category: process_creation
 detection:
   office_parent:
-  ParentImage|endswith:
+    ParentImage|endswith:
       - '\winword.exe'
       - '\excel.exe'
       - '\powerpnt.exe'
       - '\msaccess.exe'
   container_execution:
-  Image|endswith:
+    Image|endswith:
       - '\docker.exe'
       - '\podman.exe'
       - '\containerd.exe'
-  CommandLine|contains:
+    CommandLine|contains:
       - 'run'
       - 'exec'
       - '--privileged'
   macro_indicators:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'Application.Run'
       - 'Shell.Application'
       - 'CreateObject'
       - 'WScript.Shell'
   suspicious_downloads:
-  CommandLine|contains:
+    CommandLine|contains:
       - 'docker pull'
       - 'registry'
       - 'hub.docker'

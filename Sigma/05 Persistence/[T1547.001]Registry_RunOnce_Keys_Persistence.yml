@@ -12,23 +12,23 @@ logsource:
   service: sysmon
 detection:
   selection_reg:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
       - '\Software\Microsoft\Windows\CurrentVersion\RunOnceEx\'
   selection_evasive:
-      - Details|contains:
-      - 'regsvr32 /s'
-      - 'mshta'
-      - 'certutil'
-      - 'bitsadmin'
-      - 'ping -n'
-      - 'timeout'
-      - 'sleep'
-      - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
-      - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
+    - Details|contains:
+    - 'regsvr32 /s'
+    - 'mshta'
+    - 'certutil'
+    - 'bitsadmin'
+    - 'ping -n'
+    - 'timeout'
+    - 'sleep'
+    - Details|re: '.*\\x[0-9a-fA-F]{2}.*'
+    - Details|re: '.*[A-Za-z0-9+/]{20,}={0,2}.*'
   selection_location:
-  Details|contains:
+    Details|contains:
       - '\AppData\Roaming\'
       - '\AppData\Local\'
       - '\Users\Public\'

@@ -17,23 +17,23 @@ logsource:
   service: security
 detection:
   selection_guest_logon:
-  EventID:
-  TargetUserName|contains:
+    EventID:
+    TargetUserName|contains:
       - 'guest'
       - 'Guest'
       - 'IUSR'
   selection_suspicious_activity:
-  EventID:
+    EventID:
       - 4648  # Explicit credential use
       - 4672  # Special privileges assigned
       - 4673  # Privileged service called
   selection_network_access:
-  LogonType:
+    LogonType:
       - 3   # Network
       - 8   # NetworkCleartext
       - 9   # NewCredentials
   selection_privilege_escalation:
-  PrivilegeList|contains:
+    PrivilegeList|contains:
       - 'SeDebugPrivilege'
       - 'SeImpersonatePrivilege'
       - 'SeTakeOwnershipPrivilege'

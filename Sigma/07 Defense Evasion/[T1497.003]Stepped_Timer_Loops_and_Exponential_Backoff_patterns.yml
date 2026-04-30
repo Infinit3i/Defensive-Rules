@@ -19,14 +19,14 @@ logsource:
   service: powershell
 detection:
   selection_backoff_loop:
-  EventID:
-  ScriptBlockText|contains|all:
+    EventID:
+    ScriptBlockText|contains|all:
       - "for("
       - "Start-Sleep"
       - "$i++"
   selection_incremental_sleep:
-  EventID:
-  ScriptBlockText|contains:
+    EventID:
+    ScriptBlockText|contains:
       - "Start-Sleep ($i)"
       - "Start-Sleep -Seconds $i"
       - "Start-Sleep -Seconds ($i *"

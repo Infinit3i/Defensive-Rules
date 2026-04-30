@@ -4,7 +4,8 @@ technique: T1567.001
 id: f4a8e6c9-3b5d-4e7f-f4a8-6e9c3b5d7f4b
 status: experimental
 description: >-
-  >- Detects data exfiltration to code repositories by monitoring for suspicious uploads to GitHub, GitLab, or other version control platforms that may be used to exfiltrate sensitive data disguised as code commits.
+  >- Detects data exfiltration to code repositories by monitoring for suspicious uploads to GitHub, GitLab, or other version control platforms that may be used to exfiltrate sensitive data
+  disguised as code commits.
 references:
   - https://attack.mitre.org/techniques/T1567/001/
 author: Infinit3i
@@ -27,11 +28,11 @@ detection:
       - '.gitlab.com'
       - '.bitbucket.org'
       - '.sourceforge.net'
-    large_push:
+  large_push:
     method:
     request_body_len|gte:
     uri|contains:
-    suspicious_commit:
+  suspicious_commit:
     method:
     uri|contains:
       - '/upload'

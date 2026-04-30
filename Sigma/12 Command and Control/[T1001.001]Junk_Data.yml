@@ -25,10 +25,10 @@ detection:
     method:
     request_body_len|gte:
     response_body_len|lte:
-    padding_patterns:
+  padding_patterns:
     request_body_len:
     ratio|gte:
-    repeated_data:
+  repeated_data:
     uri|contains:
       - 'AAAAAAA'
       - '0000000'

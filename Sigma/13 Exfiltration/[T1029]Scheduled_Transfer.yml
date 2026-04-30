@@ -28,13 +28,13 @@ detection:
       - 'sync'
       - 'backup'
       - 'transfer'
-    recurring_task:
+  recurring_task:
     EventID:
     ActionName|contains:
       - 'curl'
       - 'wget'
       - 'powershell'
-    network_task:
+  network_task:
     EventID:
     TaskName|contains:
       - 'ftp'

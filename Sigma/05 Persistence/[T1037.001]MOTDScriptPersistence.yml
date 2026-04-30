@@ -9,13 +9,13 @@ logsource:
   service: auditd
 detection:
   selection:
-  type:
-  syscall:
+    type:
+    syscall:
       - 'openat'
       - 'write'
       - 'creat'
-  name|contains:
-    condition: selection
+    name|contains:
+  condition: selection
 level: medium
 tags:
   - attack.persistence

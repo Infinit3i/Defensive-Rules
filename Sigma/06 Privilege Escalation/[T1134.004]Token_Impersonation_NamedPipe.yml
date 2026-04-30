@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_pipe:
-  EventID:
-  PipeName|startswith:
+    EventID: 1
+    PipeName|startswith:
       - '\pipe\spoolss'
       - '\pipe\samr'
       - '\pipe\lsarpc'
       - '\pipe\netlogon'
   selection_process:
-  EventID:
-  CommandLine|contains:
+    EventID: 1
+    CommandLine|contains:
       - 'ImpersonateNamedPipeClient'
       - 'CreateNamedPipe'
-  Image|endswith:
+    Image|endswith:
       - '.exe'
   condition: selection_pipe or selection_process
 falsepositives:

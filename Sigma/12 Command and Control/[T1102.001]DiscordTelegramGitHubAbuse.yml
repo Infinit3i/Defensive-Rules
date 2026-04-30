@@ -11,37 +11,37 @@ logsource:
   service: web
 detection:
   selection_discord:
-  c-uri|contains:
+    c-uri|contains:
       - 'discord.com/api/webhooks'
       - 'discordapp.com/api/webhooks'
       - 'cdn.discordapp.com'
   selection_telegram:
-  c-uri|contains:
+    c-uri|contains:
       - 'api.telegram.org/bot'
       - 't.me/bot'
   selection_github:
-  c-uri|contains:
+    c-uri|contains:
       - 'api.github.com/repos'
       - 'raw.githubusercontent.com'
       - 'gist.githubusercontent.com'
   selection_pastebin:
-  c-uri|contains:
+    c-uri|contains:
       - 'pastebin.com/raw'
       - 'paste.ee/r'
       - 'hastebin.com/raw'
   selection_suspicious_activity:
-  cs-method:
+    cs-method:
       - 'POST'
       - 'PUT'
       - 'PATCH'
   selection_automated:
-  c-useragent|contains:
+    c-useragent|contains:
       - 'python'
       - 'curl'
       - 'wget'
       - 'powershell'
       - 'bot'
-  frequency_condition:
+    frequency_condition:
       - count() by src_ip > 20
       - timeframe: 5m
   condition: |

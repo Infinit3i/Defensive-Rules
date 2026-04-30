@@ -12,8 +12,8 @@ logsource:
   service: sysmon
 detection:
   selection_file_create:
-  EventID:
-  TargetFilename|endswith:
+    EventID: 1
+    TargetFilename|endswith:
       - '\version.dll'
       - '\msvcr71.dll'
       - '\msvcr100.dll'
@@ -21,13 +21,13 @@ detection:
       - '\dwmapi.dll'
       - '\wininet.dll'
   selection_image_load:
-  EventID:
-  ImageLoaded|endswith:
+    EventID: 1
+    ImageLoaded|endswith:
       - '\version.dll'
       - '\msvcr71.dll'
       - '\dwmapi.dll'
-  Signed:
-    condition: selection_file_create or selection_image_load
+    Signed:
+  condition: selection_file_create or selection_image_load
 falsepositives:
   - Legitimate software installations
   - Development environments

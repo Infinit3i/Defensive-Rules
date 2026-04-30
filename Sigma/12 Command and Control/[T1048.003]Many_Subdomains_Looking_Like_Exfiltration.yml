@@ -22,8 +22,8 @@ logsource:
   service: dns
 detection:
   encoded_query:
-  query|re:
-    condition: encoded_query
+    query|re:
+  condition: encoded_query
 falsepositives:
   - Legitimate telemetry domains (e.g., antivirus or EDR heartbeat pings) and some CDN services.
 level: high

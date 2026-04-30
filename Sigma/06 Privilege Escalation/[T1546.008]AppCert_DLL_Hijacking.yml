@@ -12,18 +12,18 @@ logsource:
   service: sysmon
 detection:
   selection_registry:
-  EventID:
-  TargetObject|contains:
+    EventID: 1
+    TargetObject|contains:
       - 'AppCertDlls'
       - 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls'
   selection_dll_load:
-  EventID:
-  ImageLoaded|contains:
-  Signed:
+    EventID: 1
+    ImageLoaded|contains:
+    Signed:
   selection_process:
-  EventID:
-  CommandLine|contains:
-    condition: selection_registry or selection_dll_load or selection_process
+    EventID: 1
+    CommandLine|contains:
+  condition: selection_registry or selection_dll_load or selection_process
 falsepositives:
   - Legitimate application certification tools
   - Security software installations

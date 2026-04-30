@@ -15,17 +15,17 @@ logsource:
   service: audit
 detection:
   selection_signin:
-  Operation:
+    Operation:
   selection_suspicious:
-      - DeviceDetail.isCompliant: false
-      - IPAddress|startswith:
-      - '10.'
-      - '192.168.'
-      - '172.'
-      - UserAgent|contains:
-      - 'curl'
-      - 'python'
-      - 'bot'
+    - DeviceDetail.isCompliant: false
+    - IPAddress|startswith:
+    - '10.'
+    - '192.168.'
+    - '172.'
+    - UserAgent|contains:
+    - 'curl'
+    - 'python'
+    - 'bot'
   condition: selection_signin and selection_suspicious
 level: high
 fields:

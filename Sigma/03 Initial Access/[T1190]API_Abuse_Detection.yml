@@ -20,31 +20,31 @@ logsource:
   service: http
 detection:
   rate_limiting_bypass:
-  method:
+    method:
       - 'GET'
       - 'POST'
-  status_code:
+    status_code:
       - 429
       - 503
-  user_agent|contains:
+    user_agent|contains:
       - 'curl'
       - 'python-requests'
       - 'scanner'
   auth_bypass:
-  uri|contains:
+    uri|contains:
       - '/api/v1/admin'
       - '/api/auth/bypass'
       - '/api/internal'
-  status_code:
-  method:
+    status_code:
+    method:
   excessive_requests:
-  method:
+    method:
       - 'GET'
       - 'POST'
       - 'PUT'
       - 'DELETE'
-  uri|startswith:
-    condition: rate_limiting_bypass or auth_bypass or excessive_requests
+    uri|startswith:
+  condition: rate_limiting_bypass or auth_bypass or excessive_requests
 falsepositives:
   - Legitimate API testing and monitoring tools
   - High-traffic applications with proper rate limiting

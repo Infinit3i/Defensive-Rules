@@ -11,43 +11,43 @@ logsource:
   service: auditd
 detection:
   sel_k8s_deploy:
-  type:
-  comm:
+    type:
+    comm:
       - 'kubectl'
       - 'docker'
       - 'podman'
-  a0|contains:
+    a0|contains:
       - 'create'
       - 'apply'
       - 'patch'
-  a1|contains:
+    a1|contains:
       - 'cronjob'
       - 'daemonset'
       - 'deployment'
   sel_docker_persist:
-  type:
-  comm:
-  a1|contains:
+    type:
+    comm:
+    a1|contains:
       - 'run'
       - 'create'
-  a2|contains:
+    a2|contains:
       - '--restart=always'
       - '--privileged'
       - '--net=host'
   sel_cron_persist:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/var/spool/cron'
       - '/etc/crontab'
       - '/etc/cron'
-  nametype:
+    nametype:
   sel_systemd_persist:
-  type:
-  name|contains:
+    type:
+    name|contains:
       - '/etc/systemd/system/'
       - '/usr/lib/systemd/system/'
-  nametype:
-    condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
+    nametype:
+  condition: sel_k8s_deploy or sel_docker_persist or sel_cron_persist or sel_systemd_persist
 falsepositives:
   - Legitimate container orchestration
   - Authorized system administration

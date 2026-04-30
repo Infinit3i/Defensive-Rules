@@ -11,7 +11,7 @@ logsource:
   service: web
 detection:
   selection_platforms:
-  c-uri|contains:
+    c-uri|contains:
       - 'twitter.com/api'
       - 'facebook.com/api'
       - 'instagram.com/api'
@@ -20,21 +20,21 @@ detection:
       - 'tiktok.com/api'
       - 'youtube.com/api'
   selection_suspicious_posts:
-  r-uri|contains:
+    r-uri|contains:
       - '/post'
       - '/comment'
       - '/message'
       - '/status'
   selection_encoded_content:
-  cs-method:
-  sc-bytes|gt:
+    cs-method:
+    sc-bytes|gt:
   selection_automated_patterns:
-  c-useragent|contains:
+    c-useragent|contains:
       - 'bot'
       - 'crawler'
       - 'automation'
       - 'script'
-  time_condition:
+    time_condition:
       - count() by src_ip > 50
       - timeframe: 10m
   condition: |

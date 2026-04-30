@@ -4,7 +4,8 @@ technique: T1041
 id: a5e9f3c7-8b2d-4e6f-a5e9-3f7c8b2d6a5b
 status: experimental
 description: >-
-  >- Detects data exfiltration over command and control channels by monitoring for large outbound data transfers, suspicious network communications, or data encoding patterns that may indicate C2 exfiltration.
+  >- Detects data exfiltration over command and control channels by monitoring for large outbound data transfers, suspicious network communications, or data encoding patterns that may indicate C2
+  exfiltration.
 references:
   - https://attack.mitre.org/techniques/T1041/
 author: Infinit3i
@@ -22,18 +23,18 @@ logsource:
   service: conn
 detection:
   large_upload:
-  orig_bytes|gte:
-  duration|gte:
+    orig_bytes|gte:
+    duration|gte:
   suspicious_destination:
-  id.resp_h|startswith:
+    id.resp_h|startswith:
       - '10.'
       - '172.'
       - '192.168.'
-  not:
+    not:
   encrypted_traffic:
-  service:
-  orig_bytes|gte:
-    condition: large_upload or (suspicious_destination and encrypted_traffic)
+    service:
+    orig_bytes|gte:
+  condition: large_upload or (suspicious_destination and encrypted_traffic)
 falsepositives:
   - Legitimate large file uploads
   - Cloud backup operations
